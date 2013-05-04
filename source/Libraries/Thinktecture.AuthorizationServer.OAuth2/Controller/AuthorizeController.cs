@@ -72,11 +72,7 @@ namespace Thinktecture.AuthorizationServer.OAuth2
                 return View("Error");
             }
 
-            var client = (from c in validRequest.Application.Clients
-                          where c.ClientId.Equals(request.client_id)
-                          select c)
-                         .FirstOrDefault();
-
+            var client = validRequest.Application.Clients.Get(request.client_id);
             if (client == null)
             {
                 ViewBag.Message = "Invalid client: " + request.client_id;
@@ -90,7 +86,7 @@ namespace Thinktecture.AuthorizationServer.OAuth2
                 validRequest.Client.Name,
                 validRequest.Client.ClientId);
 
-            // make sure uri is a valid uri, and in case of http is over ssl
+            // make sure redirect_uri is a valid uri, and in case of http is over ssl
             Uri redirectUri;
             if (Uri.TryCreate(request.redirect_uri, UriKind.Absolute, out redirectUri))
             {
@@ -101,7 +97,7 @@ namespace Thinktecture.AuthorizationServer.OAuth2
                 }
 
                 // make sure redirect uri is registered with client
-                var validUri = validRequest.Client.RedirectUris.Where(v => v.Uri.Equals(request.redirect_uri)).FirstOrDefault();
+                var validUri = validRequest.Client.RedirectUris.Get(request.redirect_uri);
                 
                 if (validUri == null)
                 {
@@ -179,7 +175,6 @@ namespace Thinktecture.AuthorizationServer.OAuth2
 
             return null;
         }
-
 
         private ActionResult ClientError(Uri redirectUri, string error, string responseType, string state = null)
         {

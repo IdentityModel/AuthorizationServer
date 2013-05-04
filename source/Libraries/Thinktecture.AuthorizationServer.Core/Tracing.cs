@@ -2,9 +2,6 @@
 
 namespace Thinktecture.AuthorizationServer
 {
-    /// <summary>
-    /// Helper class for Tracing
-    /// </summary>
     public static class Tracing
     {
         [DebuggerStepThrough]
@@ -77,7 +74,7 @@ namespace Thinktecture.AuthorizationServer
         [DebuggerStepThrough]
         public static void TraceEvent(TraceEventType type, string message)
         {
-            TraceSource ts = new TraceSource("Thinktecture.IdentityServer");
+            TraceSource ts = new TraceSource("Thinktecture.AuthorizationServer");
             ts.TraceEvent(type, 0, message);
         }
     }

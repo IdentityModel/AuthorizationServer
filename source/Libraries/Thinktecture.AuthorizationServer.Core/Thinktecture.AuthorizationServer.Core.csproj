@@ -50,7 +50,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Authentication.cs" />
     <Compile Include="Models\Application.cs" />
     <Compile Include="Models\Client.cs" />
     <Compile Include="Models\Clients.cs" />

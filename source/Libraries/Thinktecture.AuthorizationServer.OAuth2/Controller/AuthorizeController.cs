@@ -22,7 +22,18 @@ namespace Thinktecture.AuthorizationServer.OAuth2
                 return error;
             }
 
-            return View();
+            if (validRequest.Application.ShowConsent)
+            {
+                // show consent screen
+                return View("Consent");
+            }
+
+            return ProcessRequest(validRequest);
+        }
+
+        private ActionResult ProcessRequest(ValidatedAuthorizeRequest validRequest)
+        {
+            throw new NotImplementedException();
         }
 
         private ActionResult ValidateAuthorizationRequest(string appName, AuthorizeRequest request, out ValidatedAuthorizeRequest validRequest)
@@ -160,10 +171,9 @@ namespace Thinktecture.AuthorizationServer.OAuth2
             }
 
             var requestedScopes = request.scope.Split(' ').ToList();
-            var clientId = validRequest.Client.ClientId;
-            
             List<Scope> resultingScopes;
-            if (validRequest.Application.Scopes.TryValidateScopes(clientId, requestedScopes, out resultingScopes))
+
+            if (validRequest.Application.Scopes.TryValidateScopes(validRequest.Client.ClientId, requestedScopes, out resultingScopes))
             {
                 validRequest.Scopes = resultingScopes;
                 Tracing.InformationFormat("Request scopes: {0}", resultingScopes);

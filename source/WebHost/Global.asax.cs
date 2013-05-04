@@ -15,6 +15,8 @@ namespace Thinktecture.AuthorizationServer.WebHost
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
+
+            AuthorizationServerConfig.Configure();
         }
     }
 }

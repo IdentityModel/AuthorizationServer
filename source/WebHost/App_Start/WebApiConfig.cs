@@ -7,9 +7,9 @@ namespace Thinktecture.AuthorizationServer.WebHost
         public static void Register(HttpConfiguration config)
         {
             config.Routes.MapHttpRoute(
-                name: "DefaultApi",
-                routeTemplate: "api/{controller}/{id}",
-                defaults: new { id = RouteParameter.Optional }
+                name: "OAuth2 Token Endpoint",
+                routeTemplate: "oauth/{appName}/token",
+                defaults: new { Controller = "Token" }
             );
         }
     }

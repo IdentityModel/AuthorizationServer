@@ -1,6 +1,6 @@
 ﻿using System.Web.Optimization;
 
-namespace WebHost
+namespace Thinktecture.AuthorizationServer.WebHost
 {
     public class BundleConfig
     {

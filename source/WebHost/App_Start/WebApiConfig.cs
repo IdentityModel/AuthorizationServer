@@ -1,6 +1,6 @@
 ﻿using System.Web.Http;
 
-namespace WebHost
+namespace Thinktecture.AuthorizationServer.WebHost
 {
     public static class WebApiConfig
     {

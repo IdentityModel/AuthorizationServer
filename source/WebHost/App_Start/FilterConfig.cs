@@ -1,6 +1,6 @@
 ﻿using System.Web.Mvc;
 
-namespace WebHost
+namespace Thinktecture.AuthorizationServer.WebHost
 {
     public class FilterConfig
     {

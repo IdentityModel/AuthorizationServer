@@ -1,4 +1,9 @@
-﻿using System.Collections.Generic;
+﻿/*
+ * Copyright (c) Dominick Baier, Brock Allen.  All rights reserved.
+ * see license.txt
+ */
+
+using System.Collections.Generic;
 
 namespace Thinktecture.AuthorizationServer.Core.Models
 {

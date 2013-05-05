@@ -1,4 +1,9 @@
-﻿using System.Web.Http;
+﻿/*
+ * Copyright (c) Dominick Baier, Brock Allen.  All rights reserved.
+ * see license.txt
+ */
+
+using System.Web.Http;
 
 namespace Thinktecture.AuthorizationServer.WebHost
 {

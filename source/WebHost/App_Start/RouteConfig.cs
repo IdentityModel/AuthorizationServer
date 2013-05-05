@@ -1,4 +1,9 @@
-﻿using System.Web.Mvc;
+﻿/*
+ * Copyright (c) Dominick Baier, Brock Allen.  All rights reserved.
+ * see license.txt
+ */
+
+using System.Web.Mvc;
 using System.Web.Routing;
 
 namespace Thinktecture.AuthorizationServer.WebHost

@@ -1,4 +1,9 @@
-﻿using System.Web.Optimization;
+﻿/*
+ * Copyright (c) Dominick Baier, Brock Allen.  All rights reserved.
+ * see license.txt
+ */
+
+using System.Web.Optimization;
 
 namespace Thinktecture.AuthorizationServer.WebHost
 {

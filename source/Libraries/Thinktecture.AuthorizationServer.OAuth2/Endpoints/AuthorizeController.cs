@@ -1,4 +1,9 @@
-﻿using System;
+﻿/*
+ * Copyright (c) Dominick Baier, Brock Allen.  All rights reserved.
+ * see license.txt
+ */
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
@@ -38,6 +43,12 @@ namespace Thinktecture.AuthorizationServer.OAuth2
 
         private ActionResult ValidateAuthorizationRequest(string appName, AuthorizeRequest request, out ValidatedAuthorizeRequest validRequest)
         {
+            // If the request fails due to a missing, invalid, or mismatching
+            // redirection URI, or if the client identifier is missing or invalid,
+            // the authorization server SHOULD inform the resource owner of the
+            // error and MUST NOT automatically redirect the user-agent to the
+            // invalid redirection URI.
+
             validRequest = new ValidatedAuthorizeRequest();
             
             // validate request model binding

@@ -17,5 +17,23 @@ namespace Thinktecture.AuthorizationServer.Core.Models
                     select c)
                    .FirstOrDefault();
         }
+
+        public Client ValidateClient(string clientId, string clientSecret)
+        {
+            // todo: hashing etc
+
+            var client = Get(clientId);
+            if (client == null)
+            {
+                return null;
+            }
+
+            if (client.ClientSecret == clientSecret)
+            {
+                return client;
+            }
+
+            return null;
+        }
     }
 }

@@ -15,5 +15,11 @@ namespace Thinktecture.AuthorizationServer.Core.Models
         public string ResponseType { get; set; }
         public List<Scope> Scopes { get; set; }
         public string State { get; set; }
+
+        public string GrantType { get; set; }
+
+        public string Password { get; set; }
+
+        public string UserName { get; set; }
     }
 }

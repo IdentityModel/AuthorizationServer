@@ -91,7 +91,7 @@ namespace Thinktecture.AuthorizationServer.WebHost
                 TokenLifetime = 60
             };
 
-            Configuration.Applications = new List<Application>
+            AuthzConfiguration.Applications = new List<Application>
             {
                 application
             };

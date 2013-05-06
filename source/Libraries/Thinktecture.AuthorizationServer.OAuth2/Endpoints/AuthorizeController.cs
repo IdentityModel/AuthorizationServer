@@ -136,7 +136,7 @@ namespace Thinktecture.AuthorizationServer.OAuth2
             }
 
             // validate appName
-            var application = (from a in Configuration.Applications
+            var application = (from a in AuthzConfiguration.Applications
                                where a.Namespace.Equals(appName)
                                select a)
                               .FirstOrDefault();

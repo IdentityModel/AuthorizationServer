@@ -83,6 +83,7 @@
   <ItemGroup>
     <Compile Include="Endpoints\AuthorizeController.cs" />
     <Compile Include="Endpoints\TokenController.cs" />
+    <Compile Include="IResourceOwnerCredentialValidation.cs" />
     <Compile Include="Models\AuthorizeRequest.cs" />
     <Compile Include="Models\OAuthConstants.cs" />
     <Compile Include="Models\TokenRequest.cs" />

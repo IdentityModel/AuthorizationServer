@@ -10,6 +10,9 @@ namespace Thinktecture.AuthorizationServer.Core.Models
     public class Application
     {
         public string Name { get; set; }
+        public string Description { get; set; }
+        public string Logo { get; set; }
+
         public string Namespace { get; set; }
         public string Entropy { get; set; }
 
@@ -21,13 +24,6 @@ namespace Thinktecture.AuthorizationServer.Core.Models
 
         public Scopes Scopes { get; set; }
         public Clients Clients { get; set; }
-
-        public SigningCredentials GetSigningCredentials()
-        {
-            // todo
-
-            return null;
-            throw new System.NotImplementedException();
-        }
+        public SigningCredentials SigningCredentials { get; set; }
     }
 }

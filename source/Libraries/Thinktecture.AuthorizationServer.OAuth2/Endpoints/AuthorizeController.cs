@@ -34,11 +34,45 @@ namespace Thinktecture.AuthorizationServer.OAuth2
                 // show consent screen
                 Tracing.Verbose("Showing consent screen");
 
-                return View("Consent");
+                return View("Consent", validatedRequest);
             }
 
             Tracing.Verbose("No consent configured for application");
             return PerformGrant(validatedRequest);
+        }
+
+        [ActionName("Index")]
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult HandleConsentResponse(string appName, string button, AuthorizeRequest request)
+        {
+            Tracing.Start("OAuth2 Authorize Endoint - Consent response");
+
+            if (button == "no")
+            {
+                Tracing.Information("User denies access token request.");
+                return ClientError(new Uri(request.redirect_uri), OAuthConstants.Errors.AccessDenied, request.response_type, request.state);
+            }
+
+            if (button == "yes")
+            {
+                Tracing.Information("User allows access token request.");
+
+                ValidatedRequest validatedRequest;
+                var error = ValidateAuthorizationRequest(appName, request, out validatedRequest);
+                if (error != null)
+                {
+                    Tracing.Error("Aborting OAuth2 authorization request");
+                    return error;
+                }
+
+                // todo: parse scopes form post and substitue scopes
+
+                var grantResult = PerformGrant(validatedRequest);
+                if (grantResult != null) return grantResult;
+            }
+
+            return ClientError(new Uri(request.redirect_uri), OAuthConstants.Errors.InvalidRequest, request.response_type, request.state);
         }
 
         private ActionResult PerformGrant(ValidatedRequest validatedRequest)
@@ -79,13 +113,8 @@ namespace Thinktecture.AuthorizationServer.OAuth2
                     validatedRequest.RedirectUri.Uri,
                     tokenString);
 
+            Tracing.Information("Sending token response to redirect URI");
             return Redirect(redirectString);
-
-
-            //// return right error code
-            //return ClientError(client.RedirectUri, OAuth2Constants.Errors.InvalidRequest, request.response_type, request.state);
-
-            return null;
         }
 
         private ActionResult ValidateAuthorizationRequest(string appName, AuthorizeRequest request, out ValidatedRequest validatedRequest)
@@ -246,6 +275,10 @@ namespace Thinktecture.AuthorizationServer.OAuth2
                 validatedRequest.State = request.state;
                 Tracing.Information("State: " + validatedRequest.State);
             }
+            else
+            {
+                Tracing.Information("No state supplied.");
+            }
 
             return null;
         }
@@ -269,7 +302,7 @@ namespace Thinktecture.AuthorizationServer.OAuth2
                 url = string.Format("{0}{1}error={2}&state={3}", redirectUri.AbsoluteUri, separator, error, Server.UrlEncode(state));
             }
 
-            Tracing.Error("Sending back error response to client: " + url);
+            Tracing.Information("Sending back error response to client: " + url);
             return new RedirectResult(url);
         }
     }

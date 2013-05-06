@@ -1,0 +1,27 @@
+﻿@model Thinktecture.AuthorizationServer.Core.Models.ValidatedRequest
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Consent</h2>
+
+<p>
+    <strong>@Model.Client.Name</strong> want to access <strong>@Model.Application.Name</strong> on your behalf.
+</p>
+
+<ul>
+    @foreach (var scope in @Model.Scopes)
+    {
+        <li>
+            @scope.Description
+        </li> 
+    }
+</ul>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    <button name="button" value="yes">Allow</button>
+    <button name="button" value="no">Deny</button>
+}

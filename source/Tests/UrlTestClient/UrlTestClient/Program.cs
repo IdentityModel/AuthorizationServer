@@ -1,10 +1,13 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Net.Http;
 
 namespace UrlTestClient
 {
     class Program
     {
+        static string baseAddress = "https://roadie/authz/oauth/users/";
+
         static HttpClientHandler clientHandler = new HttpClientHandler
         {
             AllowAutoRedirect = false
@@ -12,7 +15,7 @@ namespace UrlTestClient
             
         static HttpClient client = new HttpClient(clientHandler)
         {
-            BaseAddress = new Uri("https://roadie/authz/oauth/users/")
+            BaseAddress = new Uri(baseAddress)
         };
 
         static void Main(string[] args)
@@ -24,8 +27,15 @@ namespace UrlTestClient
 
         private static void TestCodeClientValid()
         {
-            var request = "authorize?client_id=implicitclient&redirect_uri=https://test2.local&scope=read&response_type=token";
-            Run(request);
+            var request = "authorize?client_id=implicitclient&redirect_uri=https://test2.local&scope=read search&response_type=token";
+            
+            //Run(request);
+            Start(request);
+        }
+
+        private static void Start(string request)
+        {
+            Process.Start(baseAddress + request);
         }
 
         private static void Run(string url)

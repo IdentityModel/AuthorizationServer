@@ -5,8 +5,6 @@ using System.IdentityModel.Protocols.WSTrust;
 using System.IdentityModel.Tokens;
 using System.Linq;
 using System.Security.Claims;
-using System.Text;
-using System.Threading.Tasks;
 using Thinktecture.AuthorizationServer.Core.Models;
 
 namespace Thinktecture.AuthorizationServer.Core
@@ -15,23 +13,31 @@ namespace Thinktecture.AuthorizationServer.Core
     {
         public TokenResponse CreateToken(ValidatedRequest request, ClaimsPrincipal resourceOwner)
         {
-            var subject = CreateSubject(request, resourceOwner);
-            var descriptor = CreateDescriptor(request, subject);
-            var token = CreateToken(descriptor);
-
-            return new TokenResponse
+            try
             {
-                AccessToken = token,
-                ExpiresIn = request.Application.TokenLifetime,
-                TokenType = "Bearer",
-                RefreshToken = "todo"
-            };
+                var subject = CreateSubject(request, resourceOwner);
+                var descriptor = CreateDescriptor(request, subject);
+                var token = CreateToken(descriptor);
+
+                return new TokenResponse
+                {
+                    AccessToken = token,
+                    ExpiresIn = request.Application.TokenLifetime,
+                    TokenType = "Bearer",
+                    RefreshToken = "todo"
+                };
+            }
+            catch (Exception ex)
+            {
+                Tracing.Error(ex.ToString());
+                throw;
+            }
         }
 
-        private string CreateToken(SecurityTokenDescriptor descriptor)
+        protected virtual string CreateToken(SecurityTokenDescriptor descriptor)
         {
             var handler = new JWTSecurityTokenHandler();
-            
+
             var token = handler.CreateToken(descriptor);
             return handler.WriteToken(token);
         }
@@ -44,7 +50,7 @@ namespace Thinktecture.AuthorizationServer.Core
                 Lifetime = new Lifetime(DateTime.UtcNow, DateTime.UtcNow.AddMinutes(request.Application.TokenLifetime)),
                 TokenIssuerName = request.Application.IssuerName,
                 Subject = subject,
-                SigningCredentials = request.Application.GetSigningCredentials()
+                SigningCredentials = request.Application.SigningCredentials
             };
 
             return descriptor;

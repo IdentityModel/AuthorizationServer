@@ -86,7 +86,6 @@
     <Compile Include="Models\AuthorizeRequest.cs" />
     <Compile Include="Models\OAuthConstants.cs" />
     <Compile Include="Models\TokenRequest.cs" />
-    <Compile Include="Models\TokenResponse.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

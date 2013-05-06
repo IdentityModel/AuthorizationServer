@@ -6,7 +6,9 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Web.Mvc;
+using Thinktecture.AuthorizationServer.Core;
 using Thinktecture.AuthorizationServer.Core.Models;
 
 namespace Thinktecture.AuthorizationServer.OAuth2
@@ -19,29 +21,74 @@ namespace Thinktecture.AuthorizationServer.OAuth2
         {
             Tracing.Start("OAuth2 Authorize Endoint");
 
-            ValidatedAuthorizeRequest validRequest;
-            var error = ValidateAuthorizationRequest(appName, request, out validRequest);
+            ValidatedRequest validatedRequest;
+            var error = ValidateAuthorizationRequest(appName, request, out validatedRequest);
             if (error != null)
             {
                 Tracing.Error("Aborting OAuth2 authorization request");
                 return error;
             }
 
-            if (validRequest.Application.ShowConsent)
+            if (validatedRequest.Application.ShowConsent)
             {
                 // show consent screen
+                Tracing.Verbose("Showing consent screen");
+
                 return View("Consent");
             }
 
-            return ProcessRequest(validRequest);
+            Tracing.Verbose("No consent configured for application");
+            return PerformGrant(validatedRequest);
         }
 
-        private ActionResult ProcessRequest(ValidatedAuthorizeRequest validRequest)
+        private ActionResult PerformGrant(ValidatedRequest validatedRequest)
         {
-            throw new NotImplementedException();
+            // implicit grant
+            if (validatedRequest.ResponseType.Equals(OAuthConstants.ResponseTypes.Token, StringComparison.Ordinal))
+            {
+                return PerformImplicitGrant(validatedRequest);
+            }
+
+            // authorization code grant
+            //if (request.response_type.Equals(OAuth2Constants.ResponseTypes.Code, StringComparison.Ordinal))
+            //{
+            //    return PerformAuthorizationCodeGrant(request, client);
+            //}
+
+            return null;
         }
 
-        private ActionResult ValidateAuthorizationRequest(string appName, AuthorizeRequest request, out ValidatedAuthorizeRequest validRequest)
+        private ActionResult PerformImplicitGrant(ValidatedRequest validatedRequest)
+        {
+            Tracing.Information("Performing implict grant");
+
+            var sts = new TokenService();
+            var response = sts.CreateToken(validatedRequest, ClaimsPrincipal.Current);
+
+            var tokenString = string.Format("access_token={0}&token_type={1}&expires_in={2}",
+                    response.AccessToken,
+                    response.TokenType,
+                    response.ExpiresIn);
+
+            if (!string.IsNullOrWhiteSpace(validatedRequest.State))
+            {
+                tokenString = string.Format("{0}&state={1}", tokenString, Server.UrlEncode(validatedRequest.State));
+            }
+
+            var redirectString = string.Format("{0}#{1}",
+                    validatedRequest.RedirectUri.Uri,
+                    tokenString);
+
+            return Redirect(redirectString);
+
+
+            //// return right error code
+            //return ClientError(client.RedirectUri, OAuth2Constants.Errors.InvalidRequest, request.response_type, request.state);
+
+            return null;
+        }
+
+        private ActionResult ValidateAuthorizationRequest(string appName, AuthorizeRequest request, out ValidatedRequest validatedRequest)
         {
             // If the request fails due to a missing, invalid, or mismatching
             // redirection URI, or if the client identifier is missing or invalid,
@@ -49,8 +96,8 @@ namespace Thinktecture.AuthorizationServer.OAuth2
             // error and MUST NOT automatically redirect the user-agent to the
             // invalid redirection URI.
 
-            validRequest = new ValidatedAuthorizeRequest();
-            
+            validatedRequest = new ValidatedRequest();
+
             // validate request model binding
             if (request == null || string.IsNullOrWhiteSpace(appName))
             {
@@ -71,11 +118,11 @@ namespace Thinktecture.AuthorizationServer.OAuth2
                 return HttpNotFound();
             }
 
-            validRequest.Application = application;
-            Tracing.InformationFormat("OAuth2 application: {0} ({1})", 
-                validRequest.Application.Name, 
-                validRequest.Application.Namespace);
-            
+            validatedRequest.Application = application;
+            Tracing.InformationFormat("OAuth2 application: {0} ({1})",
+                validatedRequest.Application.Name,
+                validatedRequest.Application.Namespace);
+
             // make sure redirect uri is present
             if (string.IsNullOrWhiteSpace(request.redirect_uri))
             {
@@ -94,19 +141,19 @@ namespace Thinktecture.AuthorizationServer.OAuth2
                 return View("Error");
             }
 
-            var client = validRequest.Application.Clients.Get(request.client_id);
+            var client = validatedRequest.Application.Clients.Get(request.client_id);
             if (client == null)
             {
                 ViewBag.Message = "Invalid client: " + request.client_id;
                 Tracing.Error(ViewBag.Message);
-                
+
                 return View("Error");
             }
 
-            validRequest.Client = client;
-            Tracing.InformationFormat("Client: {0} ({1})", 
-                validRequest.Client.Name,
-                validRequest.Client.ClientId);
+            validatedRequest.Client = client;
+            Tracing.InformationFormat("Client: {0} ({1})",
+                validatedRequest.Client.Name,
+                validatedRequest.Client.ClientId);
 
             // make sure redirect_uri is a valid uri, and in case of http is over ssl
             Uri redirectUri;
@@ -119,8 +166,8 @@ namespace Thinktecture.AuthorizationServer.OAuth2
                 }
 
                 // make sure redirect uri is registered with client
-                var validUri = validRequest.Client.RedirectUris.Get(request.redirect_uri);
-                
+                var validUri = validatedRequest.Client.RedirectUris.Get(request.redirect_uri);
+
                 if (validUri == null)
                 {
                     ViewBag.Message = "Invalid redirect URI: " + request.redirect_uri;
@@ -129,10 +176,10 @@ namespace Thinktecture.AuthorizationServer.OAuth2
                     return View("Error");
                 }
 
-                validRequest.RedirectUri = validUri;
+                validatedRequest.RedirectUri = validUri;
                 Tracing.InformationFormat("Redirect URI: {0} ({1})",
-                    validRequest.RedirectUri.Uri,
-                    validRequest.RedirectUri.Description);
+                    validatedRequest.RedirectUri.Uri,
+                    validatedRequest.RedirectUri.Description);
             }
             else
             {
@@ -146,7 +193,7 @@ namespace Thinktecture.AuthorizationServer.OAuth2
             if (String.IsNullOrWhiteSpace(request.response_type))
             {
                 Tracing.Error("response_type is null or empty");
-                return ClientError(new Uri(validRequest.RedirectUri.Uri), OAuthConstants.Errors.InvalidRequest, string.Empty, request.state);
+                return ClientError(new Uri(validatedRequest.RedirectUri.Uri), OAuthConstants.Errors.InvalidRequest, string.Empty, request.state);
             }
 
             // check response type (only code and token are supported)
@@ -154,44 +201,50 @@ namespace Thinktecture.AuthorizationServer.OAuth2
                 !request.response_type.Equals(OAuthConstants.ResponseTypes.Code, StringComparison.Ordinal))
             {
                 Tracing.Error("response_type is not token or code: " + request.response_type);
-                return ClientError(new Uri(validRequest.RedirectUri.Uri), OAuthConstants.Errors.UnsupportedResponseType, string.Empty, request.state);
+                return ClientError(new Uri(validatedRequest.RedirectUri.Uri), OAuthConstants.Errors.UnsupportedResponseType, string.Empty, request.state);
             }
 
             // make sure response type allowed for this client
-            if (validRequest.Client.Flow == OAuthFlows.Code &&
+            if (validatedRequest.Client.Flow == OAuthFlows.Code &&
                 request.response_type != OAuthConstants.ResponseTypes.Code)
             {
                 Tracing.ErrorFormat("response_type {0} is not allowed", request.response_type);
-                return ClientError(new Uri(validRequest.RedirectUri.Uri), OAuthConstants.Errors.UnsupportedResponseType, request.response_type, request.state);
+                return ClientError(new Uri(validatedRequest.RedirectUri.Uri), OAuthConstants.Errors.UnsupportedResponseType, request.response_type, request.state);
             }
 
-            if (validRequest.Client.Flow == OAuthFlows.Implicit &&
+            if (validatedRequest.Client.Flow == OAuthFlows.Implicit &&
                 request.response_type != OAuthConstants.ResponseTypes.Token)
             {
                 Tracing.ErrorFormat("response_type {0} is not allowed", request.response_type);
-                return ClientError(new Uri(validRequest.RedirectUri.Uri), OAuthConstants.Errors.UnsupportedResponseType, request.response_type, request.state);
+                return ClientError(new Uri(validatedRequest.RedirectUri.Uri), OAuthConstants.Errors.UnsupportedResponseType, request.response_type, request.state);
             }
 
-            validRequest.ResponseType = request.response_type;
+            validatedRequest.ResponseType = request.response_type;
 
             // validate scopes
             if (string.IsNullOrEmpty(request.scope))
             {
                 Tracing.Error("Missing scope.");
-                return ClientError(new Uri(validRequest.RedirectUri.Uri), OAuthConstants.Errors.InvalidScope, validRequest.ResponseType, request.state);
+                return ClientError(new Uri(validatedRequest.RedirectUri.Uri), OAuthConstants.Errors.InvalidScope, validatedRequest.ResponseType, request.state);
             }
 
             var requestedScopes = request.scope.Split(' ').ToList();
             List<Scope> resultingScopes;
 
-            if (validRequest.Application.Scopes.TryValidateScopes(validRequest.Client.ClientId, requestedScopes, out resultingScopes))
+            if (validatedRequest.Application.Scopes.TryValidateScopes(validatedRequest.Client.ClientId, requestedScopes, out resultingScopes))
             {
-                validRequest.Scopes = resultingScopes;
-                Tracing.InformationFormat("Request scopes: {0}", resultingScopes);
+                validatedRequest.Scopes = resultingScopes;
+                Tracing.InformationFormat("Requested scopes: {0}", request.scope);
             }
             else
             {
-                return ClientError(new Uri(validRequest.RedirectUri.Uri), OAuthConstants.Errors.InvalidScope, validRequest.ResponseType, request.state);
+                return ClientError(new Uri(validatedRequest.RedirectUri.Uri), OAuthConstants.Errors.InvalidScope, validatedRequest.ResponseType, request.state);
+            }
+
+            if (!string.IsNullOrWhiteSpace(request.state))
+            {
+                validatedRequest.State = request.state;
+                Tracing.Information("State: " + validatedRequest.State);
             }
 
             return null;
@@ -216,6 +269,7 @@ namespace Thinktecture.AuthorizationServer.OAuth2
                 url = string.Format("{0}{1}error={2}&state={3}", redirectUri.AbsoluteUri, separator, error, Server.UrlEncode(state));
             }
 
+            Tracing.Error("Sending back error response to client: " + url);
             return new RedirectResult(url);
         }
     }

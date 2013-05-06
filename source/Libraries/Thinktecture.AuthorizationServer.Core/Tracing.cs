@@ -1,4 +1,5 @@
-﻿using System.Diagnostics;
+﻿using System;
+using System.Diagnostics;
 
 namespace Thinktecture.AuthorizationServer
 {
@@ -74,6 +75,11 @@ namespace Thinktecture.AuthorizationServer
         [DebuggerStepThrough]
         public static void TraceEvent(TraceEventType type, string message)
         {
+            if (Trace.CorrelationManager.ActivityId == Guid.Empty)
+            {
+                Trace.CorrelationManager.ActivityId = Guid.NewGuid();
+            }
+
             TraceSource ts = new TraceSource("Thinktecture.AuthorizationServer");
             ts.TraceEvent(type, 0, message);
         }

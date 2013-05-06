@@ -239,6 +239,10 @@
       <Project>{e8643146-28ae-437b-9bad-e4593509b4dc}</Project>
       <Name>Thinktecture.AuthorizationServer.Core</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Libraries\Thinktecture.AuthorizationServer.OAuth2\Thinktecture.AuthorizationServer.OAuth2.csproj">
+      <Project>{d776c229-b699-40dd-a023-5bf1f54e27d3}</Project>
+      <Name>Thinktecture.AuthorizationServer.OAuth2</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

@@ -5,7 +5,7 @@
 
 using Newtonsoft.Json;
 
-namespace Thinktecture.AuthorizationServer.OAuth2.Models
+namespace Thinktecture.AuthorizationServer.Core.Models
 {
     [JsonObject]
     public class TokenResponse

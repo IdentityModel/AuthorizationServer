@@ -87,7 +87,8 @@ namespace Thinktecture.AuthorizationServer.WebHost
                 Namespace = "users",
                 Scopes = new Scopes { readScope, searchScope, writeScope },
                 Clients = new Clients { CodeClient, ImplicitClient },
-                ShowConsent = false
+                ShowConsent = false,
+                TokenLifetime = 60
             };
 
             Configuration.Applications = new List<Application>

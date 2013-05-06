@@ -3,6 +3,8 @@
  * see license.txt
  */
 
+using System.IdentityModel.Tokens;
+
 namespace Thinktecture.AuthorizationServer.Core.Models
 {
     public class Application
@@ -19,5 +21,13 @@ namespace Thinktecture.AuthorizationServer.Core.Models
 
         public Scopes Scopes { get; set; }
         public Clients Clients { get; set; }
+
+        public SigningCredentials GetSigningCredentials()
+        {
+            // todo
+
+            return null;
+            throw new System.NotImplementedException();
+        }
     }
 }

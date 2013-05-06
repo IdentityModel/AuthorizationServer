@@ -14,6 +14,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Thinktecture.AuthorizationS
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Thinktecture.AuthorizationServer.Core", "Libraries\Thinktecture.AuthorizationServer.Core\Thinktecture.AuthorizationServer.Core.csproj", "{E8643146-28AE-437B-9BAD-E4593509B4DC}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{7FC0E4A5-696A-495D-9456-180794A71E28}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UrlTestClient", "Tests\UrlTestClient\UrlTestClient\UrlTestClient.csproj", "{22E5D61F-DFF0-4B36-A737-C09DCCC332F1}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -32,8 +36,15 @@ Global
 		{E8643146-28AE-437B-9BAD-E4593509B4DC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E8643146-28AE-437B-9BAD-E4593509B4DC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E8643146-28AE-437B-9BAD-E4593509B4DC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{22E5D61F-DFF0-4B36-A737-C09DCCC332F1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{22E5D61F-DFF0-4B36-A737-C09DCCC332F1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{22E5D61F-DFF0-4B36-A737-C09DCCC332F1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{22E5D61F-DFF0-4B36-A737-C09DCCC332F1}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{22E5D61F-DFF0-4B36-A737-C09DCCC332F1} = {7FC0E4A5-696A-495D-9456-180794A71E28}
 	EndGlobalSection
 EndGlobal

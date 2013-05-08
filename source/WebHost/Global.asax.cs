@@ -16,6 +16,7 @@ namespace Thinktecture.AuthorizationServer.WebHost
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
 
+            AutofacConfig.Configure();
             AuthorizationServerConfig.Configure();
         }
     }

@@ -8,12 +8,20 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
 using System.Web.Mvc;
+using Thinktecture.AuthorizationServer.Interfaces;
 using Thinktecture.AuthorizationServer.Models;
 
 namespace Thinktecture.AuthorizationServer.OAuth2
 {
     public class AuthorizeController : Controller
     {
+        ITokenHandleManager _handleManager;
+
+        public AuthorizeController(ITokenHandleManager handleManager)
+        {
+            _handleManager = handleManager;
+        }
+
         // GET /oauth/{appName}/authorize
         //
         public ActionResult Index(string appName, AuthorizeRequest request)
@@ -83,12 +91,37 @@ namespace Thinktecture.AuthorizationServer.OAuth2
             }
 
             // authorization code grant
-            //if (request.response_type.Equals(OAuth2Constants.ResponseTypes.Code, StringComparison.Ordinal))
-            //{
-            //    return PerformAuthorizationCodeGrant(request, client);
-            //}
+            if (validatedRequest.ResponseType.Equals(OAuthConstants.ResponseTypes.Code, StringComparison.Ordinal))
+            {
+                return PerformAuthorizationCodeGrant(validatedRequest);
+            }
 
             return null;
+        }
+
+        private ActionResult PerformAuthorizationCodeGrant(ValidatedRequest validatedRequest)
+        {
+            var handle = new TokenHandle
+            {
+                Type = TokenHandleType.AuthorizationCode,
+                ClientId = validatedRequest.Client.ClientId,
+                ResourceOwner = ClaimsPrincipal.Current,
+                Scopes = validatedRequest.Scopes 
+            };
+
+            _handleManager.Add(handle);
+            var tokenString = string.Format("code={0}", handle.HandleId);
+
+            if (!string.IsNullOrWhiteSpace(validatedRequest.State))
+            {
+                tokenString = string.Format("{0}&state={1}", tokenString, Server.UrlEncode(validatedRequest.State));
+            }
+
+            var redirectString = string.Format("{0}?{1}",
+                        validatedRequest.RedirectUri.Uri,
+                        tokenString);
+
+            return Redirect(redirectString);
         }
 
         private ActionResult PerformImplicitGrant(ValidatedRequest validatedRequest)

@@ -11,10 +11,15 @@ namespace Thinktecture.AuthorizationServer.Models
 {
     public class TokenHandle
     {
+        public TokenHandle()
+        {
+            HandleId = Guid.NewGuid().ToString("N");
+        }
+
         public string HandleId { get; set; }
         public string ClientId { get; set; }
         public ClaimsPrincipal ResourceOwner { get; set; }
-        public List<string> Scopes { get; set; }
+        public List<Scope> Scopes { get; set; }
         public TokenHandleType Type { get; set; }
         public DateTime TimeStamp { get; set; }
     }

@@ -16,6 +16,8 @@ namespace Thinktecture.AuthorizationServer.WebHost
 
             builder.RegisterType<WSTrustResourceOwnerCredentialValidation>().
                 As<IResourceOwnerCredentialValidation>();
+            builder.RegisterType<DummyTokenHandleManager>().
+                As<ITokenHandleManager>();
             
             builder.RegisterControllers(typeof(AutofacConfig).Assembly); 
             var container = builder.Build(); 
@@ -23,10 +25,8 @@ namespace Thinktecture.AuthorizationServer.WebHost
             // MVC
             DependencyResolver.SetResolver(new AutofacDependencyResolver(container));
 
-            // Create the depenedency resolver. 
-            var resolver = new AutofacWebApiDependencyResolver(container);
-
             // Web API
+            var resolver = new AutofacWebApiDependencyResolver(container);
             GlobalConfiguration.Configuration.DependencyResolver = resolver;
         }
     }

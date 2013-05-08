@@ -9,7 +9,7 @@ namespace Thinktecture.AuthorizationServer.Interfaces
 {
     public interface ITokenHandleManager
     {
-        string Add(TokenHandle handle);
+        void Add(TokenHandle handle);
         bool TryGet(string handleIdentifier, out TokenHandle handle);
         void Delete(string handleIdentifier);
         

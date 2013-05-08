@@ -9,7 +9,7 @@ namespace Thinktecture.AuthorizationServer.Models
     {
         public string Name { get; set; }
         public string Description { get; set; }
-        public bool IsCritical { get; set; }
+        public bool Emphasize { get; set; }
 
         public Clients AllowedClients { get; set; }
     }

@@ -163,7 +163,7 @@ namespace Thinktecture.AuthorizationServer.OAuth2
             // validate grant types against client configuration
             if (request.Grant_Type.Equals(OAuthConstants.GrantTypes.AuthorizationCode))
             {
-                if (validatedRequest.Client.Flow != OAuthFlows.Code)
+                if (validatedRequest.Client.Flow != OAuthFlow.Code)
                 {
                     Tracing.Error("Code flow not allowed for client");
                     return OAuthErrorResponseMessage(OAuthConstants.Errors.UnsupportedGrantType);
@@ -172,7 +172,7 @@ namespace Thinktecture.AuthorizationServer.OAuth2
 
             if (request.Grant_Type.Equals(OAuthConstants.GrantTypes.Password))
             {
-                if (validatedRequest.Client.Flow != OAuthFlows.ResourceOwner)
+                if (validatedRequest.Client.Flow != OAuthFlow.ResourceOwner)
                 {
                     Tracing.Error("Resource owner password flow not allowed for client");
                     return OAuthErrorResponseMessage(OAuthConstants.Errors.UnsupportedGrantType);
@@ -181,7 +181,7 @@ namespace Thinktecture.AuthorizationServer.OAuth2
 
             if (request.Grant_Type.Equals(OAuthConstants.GrantTypes.ClientCredentials))
             {
-                if (validatedRequest.Client.Flow != OAuthFlows.Client)
+                if (validatedRequest.Client.Flow != OAuthFlow.Client)
                 {
                     Tracing.Error("Client flow not allowed for client");
                     return OAuthErrorResponseMessage(OAuthConstants.Errors.UnsupportedGrantType);

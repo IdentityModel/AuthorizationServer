@@ -5,7 +5,7 @@
 
 namespace Thinktecture.AuthorizationServer.Models
 {
-    public enum OAuthFlows
+    public enum OAuthFlow
     {
         Code,
         Implicit,

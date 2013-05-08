@@ -1,4 +1,4 @@
-﻿@model Thinktecture.AuthorizationServer.Core.Models.ValidatedRequest
+﻿@model Thinktecture.AuthorizationServer.Models.ValidatedRequest
 
 @{
     ViewBag.Title = "Index";
@@ -14,7 +14,14 @@
     @foreach (var scope in @Model.Scopes)
     {
         <li>
-            @scope.Description
+            @if (scope.Emphasize)
+            {
+                <strong>@scope.Description</strong>
+            }
+            else
+            { 
+                @scope.Description
+            }
         </li> 
     }
 </ul>

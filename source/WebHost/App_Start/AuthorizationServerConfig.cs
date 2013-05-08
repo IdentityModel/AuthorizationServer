@@ -17,10 +17,10 @@ namespace Thinktecture.AuthorizationServer.WebHost
                 Name = "Code Flow Client",
                 ClientId = "codeclient",
                 ClientSecret = "secret",
-                ClientSecretType = "shared",
+                AuthenticationMethod = ClientAuthenticationMethod.SharedSecret,
 
                 AllowRefreshToken = true,
-                Flow = OAuthFlows.Code,
+                Flow = OAuthFlow.Code,
 
                 RedirectUris = new RedirectUris 
                     {
@@ -42,10 +42,10 @@ namespace Thinktecture.AuthorizationServer.WebHost
                 Name = "Implicit Flow Client",
                 ClientId = "implicitclient",
                 ClientSecret = "secret",
-                ClientSecretType = "shared",
+                AuthenticationMethod = ClientAuthenticationMethod.SharedSecret,
 
                 AllowRefreshToken = false,
-                Flow = OAuthFlows.Implicit,
+                Flow = OAuthFlow.Implicit,
 
                 RedirectUris = new RedirectUris 
                     {
@@ -62,7 +62,7 @@ namespace Thinktecture.AuthorizationServer.WebHost
                 AllowedClients = new Clients { CodeClient, ImplicitClient },
                 Name = "read",
                 Description = "Read data",
-                IsCritical = false
+                Emphasize = false
             };
 
             var searchScope = new Scope
@@ -70,7 +70,7 @@ namespace Thinktecture.AuthorizationServer.WebHost
                 AllowedClients = new Clients { CodeClient, ImplicitClient },
                 Name = "search",
                 Description = "Search data",
-                IsCritical = false
+                Emphasize = false
             };
 
             var writeScope = new Scope
@@ -78,7 +78,7 @@ namespace Thinktecture.AuthorizationServer.WebHost
                 AllowedClients = new Clients { CodeClient },
                 Name = "write",
                 Description = "write data",
-                IsCritical = true
+                Emphasize = true
             };
 
             var application = new Application

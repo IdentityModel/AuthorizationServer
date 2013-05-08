@@ -22,7 +22,12 @@ namespace Thinktecture.AuthorizationServer.WebHost
                 As<ITokenHandleManager>();
             builder.RegisterModule(new ConfigurationSettingsReader("autofac"));
 
-            builder.RegisterControllers(typeof(AutofacConfig).Assembly); 
+
+            builder.RegisterControllers(typeof(AuthorizeController).Assembly);
+            builder.RegisterControllers(typeof(AutofacConfig).Assembly);
+            builder.RegisterApiControllers(typeof(TokenController).Assembly);
+
+
             var container = builder.Build(); 
             
             // MVC

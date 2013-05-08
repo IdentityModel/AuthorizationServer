@@ -57,10 +57,11 @@
     <Compile Include="Interfaces\ITokenHandleManager.cs" />
     <Compile Include="Models\Application.cs" />
     <Compile Include="Models\Client.cs" />
+    <Compile Include="Models\ClientAuthenticationMethod.cs" />
     <Compile Include="Models\Clients.cs" />
     <Compile Include="Models\TokenHandle.cs" />
     <Compile Include="Models\Configuration.cs" />
-    <Compile Include="Models\OAuth2Flows.cs" />
+    <Compile Include="Models\OAuth2Flow.cs" />
     <Compile Include="Models\RedirectUri.cs" />
     <Compile Include="Models\RedirectUris.cs" />
     <Compile Include="Models\Scope.cs" />

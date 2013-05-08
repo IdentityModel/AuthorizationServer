@@ -6,7 +6,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Thinktecture.AuthorizationServer.Core.Models
+namespace Thinktecture.AuthorizationServer.Models
 {
     public class Scopes : List<Scope>
     {

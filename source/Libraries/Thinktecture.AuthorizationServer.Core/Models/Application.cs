@@ -5,7 +5,7 @@
 
 using System.IdentityModel.Tokens;
 
-namespace Thinktecture.AuthorizationServer.Core.Models
+namespace Thinktecture.AuthorizationServer.Models
 {
     public class Application
     {

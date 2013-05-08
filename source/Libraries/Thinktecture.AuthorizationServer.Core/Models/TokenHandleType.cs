@@ -5,10 +5,9 @@
 
 namespace Thinktecture.AuthorizationServer.Models
 {
-    public class RedirectUri
+    public enum TokenHandleType
     {
-        public int Id { get; set; }
-        public string Uri { get; set; }
-        public string Description { get; set; }
+        AuthorizationCode,
+        RefreshTokenIdentifier
     }
 }

@@ -5,7 +5,7 @@
 
 using System.Collections.Generic;
 
-namespace Thinktecture.AuthorizationServer.Core.Models
+namespace Thinktecture.AuthorizationServer.Models
 {
     public static class AuthzConfiguration
     {

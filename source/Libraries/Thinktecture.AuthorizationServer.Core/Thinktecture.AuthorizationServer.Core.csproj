@@ -56,12 +56,14 @@
     <Compile Include="Models\Application.cs" />
     <Compile Include="Models\Client.cs" />
     <Compile Include="Models\Clients.cs" />
+    <Compile Include="Models\TokenHandle.cs" />
     <Compile Include="Models\Configuration.cs" />
     <Compile Include="Models\OAuth2Flows.cs" />
     <Compile Include="Models\RedirectUri.cs" />
     <Compile Include="Models\RedirectUris.cs" />
     <Compile Include="Models\Scope.cs" />
     <Compile Include="Models\Scopes.cs" />
+    <Compile Include="Models\TokenHandleType.cs" />
     <Compile Include="Models\TokenResponse.cs" />
     <Compile Include="Models\ValidatedRequest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

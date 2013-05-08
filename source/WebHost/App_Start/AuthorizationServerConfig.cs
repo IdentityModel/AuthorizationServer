@@ -4,7 +4,7 @@
  */
 
 using System.Collections.Generic;
-using Thinktecture.AuthorizationServer.Core.Models;
+using Thinktecture.AuthorizationServer.Models;
 
 namespace Thinktecture.AuthorizationServer.WebHost
 {

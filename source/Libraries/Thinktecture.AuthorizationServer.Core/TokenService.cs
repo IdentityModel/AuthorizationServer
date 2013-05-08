@@ -1,11 +1,16 @@
-﻿using Microsoft.IdentityModel.Tokens.JWT;
+﻿/*
+ * Copyright (c) Dominick Baier, Brock Allen.  All rights reserved.
+ * see license.txt
+ */
+
+using Microsoft.IdentityModel.Tokens.JWT;
 using System;
 using System.Collections.Generic;
 using System.IdentityModel.Protocols.WSTrust;
 using System.IdentityModel.Tokens;
 using System.Linq;
 using System.Security.Claims;
-using Thinktecture.AuthorizationServer.Core.Models;
+using Thinktecture.AuthorizationServer.Models;
 
 namespace Thinktecture.AuthorizationServer.Core
 {

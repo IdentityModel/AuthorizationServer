@@ -3,7 +3,7 @@
  * see license.txt
  */
 
-namespace Thinktecture.AuthorizationServer.Core.Models
+namespace Thinktecture.AuthorizationServer.Models
 {
     public class Client
     {

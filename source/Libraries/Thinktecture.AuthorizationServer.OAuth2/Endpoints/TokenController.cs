@@ -10,7 +10,7 @@ using System.Net.Http;
 using System.Security.Claims;
 using System.Web.Http;
 using Thinktecture.AuthorizationServer.Core;
-using Thinktecture.AuthorizationServer.Core.Models;
+using Thinktecture.AuthorizationServer.Models;
 
 namespace Thinktecture.AuthorizationServer.OAuth2
 {

@@ -7,7 +7,7 @@
     <ProjectGuid>{E8643146-28AE-437B-9BAD-E4593509B4DC}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Thinktecture.AuthorizationServer.Core</RootNamespace>
+    <RootNamespace>Thinktecture.AuthorizationServer</RootNamespace>
     <AssemblyName>Thinktecture.AuthorizationServer.Core</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>

@@ -3,15 +3,14 @@
  * see license.txt
  */
 
-using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Security.Claims;
 using System.Web.Http;
-using Thinktecture.AuthorizationServer.Core.Models;
-using System.Linq;
-using System.Collections.Generic;
 using Thinktecture.AuthorizationServer.Core;
+using Thinktecture.AuthorizationServer.Core.Models;
 
 namespace Thinktecture.AuthorizationServer.OAuth2
 {
@@ -32,7 +31,7 @@ namespace Thinktecture.AuthorizationServer.OAuth2
             }
 
             // switch over the grant type
-            if (request.Grant_Type.Equals(OAuthConstants.GrantTypes.Password))
+            if (validatedRequest.GrantType.Equals(OAuthConstants.GrantTypes.Password))
             {
                 return ProcessResourceOwnerCredentialRequest(validatedRequest);
             }

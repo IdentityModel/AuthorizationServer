@@ -6,6 +6,7 @@ using System.Security.Claims;
 using System.ServiceModel;
 using System.ServiceModel.Description;
 using System.ServiceModel.Security;
+using Thinktecture.AuthorizationServer.Interfaces;
 using Thinktecture.IdentityModel.WSTrust;
 
 namespace Thinktecture.AuthorizationServer.OAuth2

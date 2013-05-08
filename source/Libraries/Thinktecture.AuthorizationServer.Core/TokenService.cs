@@ -12,7 +12,7 @@ using System.Linq;
 using System.Security.Claims;
 using Thinktecture.AuthorizationServer.Models;
 
-namespace Thinktecture.AuthorizationServer.Core
+namespace Thinktecture.AuthorizationServer
 {
     public class TokenService
     {

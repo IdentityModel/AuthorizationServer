@@ -53,6 +53,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Interfaces\IResourceOwnerCredentialValidation.cs" />
+    <Compile Include="Interfaces\ITokenHandleManager.cs" />
     <Compile Include="Models\Application.cs" />
     <Compile Include="Models\Client.cs" />
     <Compile Include="Models\Clients.cs" />

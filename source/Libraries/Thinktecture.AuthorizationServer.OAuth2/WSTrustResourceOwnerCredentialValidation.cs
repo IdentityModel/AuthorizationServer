@@ -31,11 +31,22 @@ namespace Thinktecture.AuthorizationServer.OAuth2
             credentials.UserName.UserName = userName;
             credentials.UserName.Password = password;
 
-            var token = WSTrustClient.Issue(
-                new EndpointAddress(_address),
-                new EndpointAddress(_realm),
-                binding,
-                credentials);
+            SecurityToken token;
+            try
+            {
+                token = WSTrustClient.Issue(
+                    new EndpointAddress(_address),
+                    new EndpointAddress(_realm),
+                    binding,
+                    credentials);
+            }
+            catch (Exception ex)
+            {
+                Tracing.Error("Error communicating with WS-Trust endoint: " + _address);
+                Tracing.Error(ex.ToString());
+
+                throw;
+            }
 
             var config = new SecurityTokenHandlerConfiguration();
             config.AudienceRestriction.AllowedAudienceUris.Add(new Uri(_realm));
@@ -49,7 +60,19 @@ namespace Thinktecture.AuthorizationServer.OAuth2
 
             var handler = SecurityTokenHandlerCollection.CreateDefaultSecurityTokenHandlerCollection(config);
 
-            var principal = new ClaimsPrincipal(handler.ValidateToken(token));
+            ClaimsPrincipal principal;
+            try
+            {
+                principal = new ClaimsPrincipal(handler.ValidateToken(token));
+            }
+            catch (Exception ex)
+            {
+                Tracing.Error("Error validating token.");
+                Tracing.Error(ex.ToString());
+
+                throw;
+            }
+
             return new IdentityConfiguration().ClaimsAuthenticationManager.Authenticate("ResourceOwnerPasswordValidation", principal);
         }
     }

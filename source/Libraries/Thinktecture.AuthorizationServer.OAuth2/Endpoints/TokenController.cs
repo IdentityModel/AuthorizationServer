@@ -16,18 +16,34 @@ namespace Thinktecture.AuthorizationServer.OAuth2
 {
     public class TokenController : ApiController
     {
-        IResourceOwnerCredentialValidation rocv;
+        IResourceOwnerCredentialValidation _rocv;
+
+        public TokenController(IResourceOwnerCredentialValidation rocv)
+        {
+            _rocv = rocv;
+        }
 
         public HttpResponseMessage Post(string appName, TokenRequest request)
         {
             Tracing.Start("OAuth2 Token Endpoint");
 
+            // make sure application is registered
+            var application = GetApplication(appName);
+            if (application == null)
+            {
+                return Request.CreateErrorResponse(HttpStatusCode.NotFound, "Not found");
+            }
+
+            // validate token request
             ValidatedRequest validatedRequest;
-            var error = ValidateAuthorizationRequest(appName, request, out validatedRequest);
-            if (error != null)
+            try
+            {
+                validatedRequest = new RequestValidator().ValidateTokenRequest(application, request);
+            }
+            catch (TokenRequestValidationException ex)
             {
                 Tracing.Error("Aborting OAuth2 token request");
-                return error;
+                return Request.CreateOAuthErrorResponse(ex.OAuthError);
             }
 
             // switch over the grant type
@@ -46,12 +62,12 @@ namespace Thinktecture.AuthorizationServer.OAuth2
             //}
 
             Tracing.Error("invalid grant type: " + request.Grant_Type);
-            return OAuthErrorResponseMessage(OAuthConstants.Errors.UnsupportedGrantType);
+            return Request.CreateOAuthErrorResponse(OAuthConstants.Errors.UnsupportedGrantType);
         }
 
         private HttpResponseMessage ProcessResourceOwnerCredentialRequest(ValidatedRequest validatedRequest)
         {
-            var principal = rocv.Validate(validatedRequest.UserName, validatedRequest.Password);
+            var principal = _rocv.Validate(validatedRequest.UserName, validatedRequest.Password);
             if (principal.Identity.IsAuthenticated)
             {
                 var sts = new TokenService();
@@ -61,22 +77,17 @@ namespace Thinktecture.AuthorizationServer.OAuth2
             }
             else
             {
-                return OAuthErrorResponseMessage(OAuthConstants.Errors.InvalidGrant);
+                return Request.CreateOAuthErrorResponse(OAuthConstants.Errors.InvalidGrant);
             }
         }
 
-        private HttpResponseMessage ValidateAuthorizationRequest(string appName, TokenRequest request, out ValidatedRequest validatedRequest)
+        private Application GetApplication(string appName)
         {
-            validatedRequest = new ValidatedRequest();
-
-            // validate request model binding
-            if (request == null || string.IsNullOrWhiteSpace(appName))
+            if (string.IsNullOrWhiteSpace(appName))
             {
-                Tracing.Error("Invalid request parameters.");
-                return OAuthErrorResponseMessage(OAuthConstants.Errors.InvalidRequest);
+                return null;
             }
 
-            // validate appName
             var application = (from a in AuthzConfiguration.Applications
                                where a.Namespace.Equals(appName)
                                select a)
@@ -85,149 +96,9 @@ namespace Thinktecture.AuthorizationServer.OAuth2
             if (application == null)
             {
                 Tracing.Error("Application not found: " + appName);
-                return Request.CreateErrorResponse(HttpStatusCode.NotFound, "Not found.");
             }
 
-            validatedRequest.Application = application;
-            Tracing.InformationFormat("OAuth2 application: {0} ({1})",
-                validatedRequest.Application.Name,
-                validatedRequest.Application.Namespace);
-
-            // grant type is required
-            if (string.IsNullOrWhiteSpace(request.Grant_Type))
-            {
-                return OAuthErrorResponseMessage(OAuthConstants.Errors.UnsupportedGrantType);
-            }
-
-            // check supported grant types
-            if (!request.Grant_Type.Equals(OAuthConstants.GrantTypes.AuthorizationCode) &&
-                !request.Grant_Type.Equals(OAuthConstants.GrantTypes.Password) &&
-                !request.Grant_Type.Equals(OAuthConstants.GrantTypes.RefreshToken) &&
-                !request.Grant_Type.Equals(OAuthConstants.GrantTypes.ClientCredentials))
-            {
-                return OAuthErrorResponseMessage(OAuthConstants.Errors.UnsupportedGrantType);
-            }
-
-            validatedRequest.GrantType = request.Grant_Type;
-
-            // validate client credentials
-            var client = ValidateClient(validatedRequest.Application);
-            if (client == null)
-            {
-                Tracing.Error("Invalid client: " + ClaimsPrincipal.Current.Identity.Name);
-                return OAuthErrorResponseMessage(OAuthConstants.Errors.InvalidClient);
-            }
-
-            validatedRequest.Client = client;
-            Tracing.InformationFormat("Client: {0} ({1})",
-                validatedRequest.Client.Name,
-                validatedRequest.Client.ClientId);
-
-            // resource owner password flow
-            if (request.Grant_Type.Equals(OAuthConstants.GrantTypes.Password))
-            {
-                // validate scope
-                if (string.IsNullOrWhiteSpace(request.Scope))
-                {
-                    Tracing.Error("Missing scope");
-                    return OAuthErrorResponseMessage(OAuthConstants.Errors.InvalidScope);
-                }
-
-                // make sure client is allowed to request all scope
-                var requestedScopes = request.Scope.Split(' ').ToList();
-                List<Scope> resultingScopes;
-
-                if (validatedRequest.Application.Scopes.TryValidateScopes(validatedRequest.Client.ClientId, requestedScopes, out resultingScopes))
-                {
-                    validatedRequest.Scopes = resultingScopes;
-                    Tracing.InformationFormat("Requested scopes: {0}", request.Scope);
-                }
-                else
-                {
-                    return OAuthErrorResponseMessage(OAuthConstants.Errors.InvalidScope);
-                }
-
-                // extract username and password
-                if (string.IsNullOrWhiteSpace(request.UserName) || string.IsNullOrWhiteSpace(request.Password))
-                {
-                    Tracing.Error("missing Username or password.");
-                    return OAuthErrorResponseMessage(OAuthConstants.Errors.InvalidGrant);
-                }
-                else
-                {
-                    validatedRequest.UserName = request.UserName;
-                    validatedRequest.Password = request.Password;
-                }
-            }
-
-            // validate grant types against client configuration
-            if (request.Grant_Type.Equals(OAuthConstants.GrantTypes.AuthorizationCode))
-            {
-                if (validatedRequest.Client.Flow != OAuthFlow.Code)
-                {
-                    Tracing.Error("Code flow not allowed for client");
-                    return OAuthErrorResponseMessage(OAuthConstants.Errors.UnsupportedGrantType);
-                }
-            }
-
-            if (request.Grant_Type.Equals(OAuthConstants.GrantTypes.Password))
-            {
-                if (validatedRequest.Client.Flow != OAuthFlow.ResourceOwner)
-                {
-                    Tracing.Error("Resource owner password flow not allowed for client");
-                    return OAuthErrorResponseMessage(OAuthConstants.Errors.UnsupportedGrantType);
-                }
-            }
-
-            if (request.Grant_Type.Equals(OAuthConstants.GrantTypes.ClientCredentials))
-            {
-                if (validatedRequest.Client.Flow != OAuthFlow.Client)
-                {
-                    Tracing.Error("Client flow not allowed for client");
-                    return OAuthErrorResponseMessage(OAuthConstants.Errors.UnsupportedGrantType);
-                }
-            }
-
-            if (request.Grant_Type.Equals(OAuthConstants.GrantTypes.RefreshToken))
-            {
-                if (!validatedRequest.Client.AllowRefreshToken)
-                {
-                    Tracing.Error("Refresh tokens not allowed for client");
-                    return OAuthErrorResponseMessage(OAuthConstants.Errors.UnsupportedGrantType);
-                }
-            }
-
-            return null;
-        }
-
-        private Client ValidateClient(Application application)
-        {
-            if (!ClaimsPrincipal.Current.Identity.IsAuthenticated)
-            {
-                Tracing.Error("Anonymous client.");
-                return null;
-            }
-
-            var passwordClaim = ClaimsPrincipal.Current.FindFirst("password");
-            if (passwordClaim == null)
-            {
-                Tracing.Error("No client secret provided.");
-                return null;
-            }
-
-            return application.Clients.ValidateClient(
-                ClaimsPrincipal.Current.Identity.Name,
-                passwordClaim.Value);
-        }
-
-
-
-        private HttpResponseMessage OAuthErrorResponseMessage(string error)
-        {
-            Tracing.Information("Sending error response: " + error);
-
-            return Request.CreateErrorResponse(HttpStatusCode.BadRequest,
-                string.Format("{{ \"{0}\": \"{1}\" }}", OAuthConstants.Errors.Error, error));
+            return application;
         }
     }
 }

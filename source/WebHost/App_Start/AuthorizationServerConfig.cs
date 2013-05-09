@@ -12,6 +12,16 @@ namespace Thinktecture.AuthorizationServer.WebHost
     {
         public static void Configure()
         {
+            var resourceOwnerClient = new Client
+            {
+                Name = "Resource Owner Flow Client",
+                ClientId = "roclient",
+                ClientSecret = "secret",
+                AuthenticationMethod = ClientAuthenticationMethod.SharedSecret,
+                Flow = OAuthFlow.ResourceOwner,
+                AllowRefreshToken = true
+            };
+
             var CodeClient = new Client
             {
                 Name = "Code Flow Client",
@@ -59,7 +69,7 @@ namespace Thinktecture.AuthorizationServer.WebHost
 
             var readScope = new Scope
             {
-                AllowedClients = new Clients { CodeClient, ImplicitClient },
+                AllowedClients = new Clients { CodeClient, ImplicitClient, resourceOwnerClient },
                 Name = "read",
                 Description = "Read data",
                 Emphasize = false
@@ -67,7 +77,7 @@ namespace Thinktecture.AuthorizationServer.WebHost
 
             var searchScope = new Scope
             {
-                AllowedClients = new Clients { CodeClient, ImplicitClient },
+                AllowedClients = new Clients { CodeClient, ImplicitClient, resourceOwnerClient },
                 Name = "search",
                 Description = "Search data",
                 Emphasize = false
@@ -75,7 +85,7 @@ namespace Thinktecture.AuthorizationServer.WebHost
 
             var writeScope = new Scope
             {
-                AllowedClients = new Clients { CodeClient },
+                AllowedClients = new Clients { CodeClient, resourceOwnerClient },
                 Name = "write",
                 Description = "write data",
                 Emphasize = true
@@ -86,7 +96,7 @@ namespace Thinktecture.AuthorizationServer.WebHost
                 Name = "User management",
                 Namespace = "users",
                 Scopes = new Scopes { readScope, searchScope, writeScope },
-                Clients = new Clients { CodeClient, ImplicitClient },
+                Clients = new Clients { CodeClient, ImplicitClient, resourceOwnerClient },
                 ShowConsent = true,
                 TokenLifetime = 60
             };

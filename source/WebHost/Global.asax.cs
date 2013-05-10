@@ -17,7 +17,6 @@ namespace Thinktecture.AuthorizationServer.WebHost
             BundleConfig.RegisterBundles(BundleTable.Bundles);
 
             AutofacConfig.Configure();
-            AuthorizationServerConfig.Configure();
         }
     }
 }

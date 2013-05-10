@@ -14,10 +14,12 @@ namespace Thinktecture.AuthorizationServer.OAuth2
     public class AuthorizeController : Controller
     {
         ITokenHandleManager _handleManager;
+        IAuthorizationServerConfiguration _config;
 
-        public AuthorizeController(ITokenHandleManager handleManager)
+        public AuthorizeController(ITokenHandleManager handleManager, IAuthorizationServerConfiguration config)
         {
             _handleManager = handleManager;
+            _config = config;
         }
 
         // GET /oauth/{appName}/authorize
@@ -26,10 +28,17 @@ namespace Thinktecture.AuthorizationServer.OAuth2
         {
             Tracing.Start("OAuth2 Authorize Endoint");
 
+            // make sure application is registered
+            var application = _config.FindApplication(appName);
+            if (application == null)
+            {
+                return HttpNotFound();
+            }
+
             ValidatedRequest validatedRequest;
             try
             {
-                validatedRequest = new RequestValidator().ValidateAuthorizeRequest(appName, request);
+                validatedRequest = new RequestValidator().ValidateAuthorizeRequest(application, request);
             }
             catch (AuthorizeRequestValidationException ex)
             {
@@ -56,6 +65,13 @@ namespace Thinktecture.AuthorizationServer.OAuth2
         {
             Tracing.Start("OAuth2 Authorize Endoint - Consent response");
 
+            // make sure application is registered
+            var application = _config.FindApplication(appName);
+            if (application == null)
+            {
+                return HttpNotFound();
+            }
+
             if (button == "no")
             {
                 Tracing.Information("User denies access token request.");
@@ -69,7 +85,7 @@ namespace Thinktecture.AuthorizationServer.OAuth2
                 ValidatedRequest validatedRequest;
                 try
                 {
-                    validatedRequest = new RequestValidator().ValidateAuthorizeRequest(appName, request);
+                    validatedRequest = new RequestValidator().ValidateAuthorizeRequest(application, request);
                 }
                 catch (AuthorizeRequestValidationException ex)
                 {

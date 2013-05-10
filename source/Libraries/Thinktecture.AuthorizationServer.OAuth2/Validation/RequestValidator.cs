@@ -15,7 +15,7 @@ namespace Thinktecture.AuthorizationServer.OAuth2
 {
     class RequestValidator
     {
-        public ValidatedRequest ValidateAuthorizeRequest(string appName, AuthorizeRequest request)
+        public ValidatedRequest ValidateAuthorizeRequest(Application application, AuthorizeRequest request)
         {
             // If the request fails due to a missing, invalid, or mismatching
             // redirection URI, or if the client identifier is missing or invalid,
@@ -26,21 +26,9 @@ namespace Thinktecture.AuthorizationServer.OAuth2
             var validatedRequest = new ValidatedRequest();
 
             // validate request model binding
-            if (request == null || string.IsNullOrWhiteSpace(appName))
+            if (request == null)
             {
                 throw new AuthorizeRequestResourceOwnerException("Invalid request parameters.");
-            }
-
-            // validate appName
-            var application = (from a in AuthzConfiguration.Applications
-                               where a.Namespace.Equals(appName)
-                               select a)
-                              .FirstOrDefault();
-
-            if (application == null)
-            {
-                Tracing.Error("Application not found: " + appName);
-                throw new AuthorizeRequestValidationException(new HttpNotFoundResult());
             }
 
             validatedRequest.Application = application;

@@ -3,6 +3,7 @@
  * see license.txt
  */
 
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
@@ -17,10 +18,12 @@ namespace Thinktecture.AuthorizationServer.OAuth2
     public class TokenController : ApiController
     {
         IResourceOwnerCredentialValidation _rocv;
+        IAuthorizationServerConfiguration _config;
 
-        public TokenController(IResourceOwnerCredentialValidation rocv)
+        public TokenController(IResourceOwnerCredentialValidation rocv, IAuthorizationServerConfiguration config)
         {
             _rocv = rocv;
+            _config = config;
         }
 
         public HttpResponseMessage Post(string appName, TokenRequest request)
@@ -28,7 +31,7 @@ namespace Thinktecture.AuthorizationServer.OAuth2
             Tracing.Start("OAuth2 Token Endpoint");
 
             // make sure application is registered
-            var application = GetApplication(appName);
+            var application = _config.FindApplication(appName);
             if (application == null)
             {
                 return Request.CreateErrorResponse(HttpStatusCode.NotFound, "Not found");
@@ -67,12 +70,23 @@ namespace Thinktecture.AuthorizationServer.OAuth2
 
         private HttpResponseMessage ProcessResourceOwnerCredentialRequest(ValidatedRequest validatedRequest)
         {
-            var principal = _rocv.Validate(validatedRequest.UserName, validatedRequest.Password);
-            if (principal.Identity.IsAuthenticated)
+            ClaimsPrincipal principal;
+            try
+            {
+                principal = _rocv.Validate(validatedRequest.UserName, validatedRequest.Password);
+            }
+            catch (Exception ex)
+            {
+                Tracing.Error("Resource owner credential validation failed: " + ex.ToString());
+                throw;
+            }
+
+            if (principal != null && principal.Identity.IsAuthenticated)
             {
                 var sts = new TokenService();
                 var response = sts.CreateToken(validatedRequest, principal);
 
+                Tracing.Information("Returning token response.");
                 return Request.CreateResponse<TokenResponse>(HttpStatusCode.OK, response);
             }
             else
@@ -81,24 +95,24 @@ namespace Thinktecture.AuthorizationServer.OAuth2
             }
         }
 
-        private Application GetApplication(string appName)
-        {
-            if (string.IsNullOrWhiteSpace(appName))
-            {
-                return null;
-            }
+        //private Application GetApplication(string appName)
+        //{
+        //    if (string.IsNullOrWhiteSpace(appName))
+        //    {
+        //        return null;
+        //    }
 
-            var application = (from a in AuthzConfiguration.Applications
-                               where a.Namespace.Equals(appName)
-                               select a)
-                              .FirstOrDefault();
+        //    var application = (from a in AuthzConfiguration.Applications
+        //                       where a.Namespace.Equals(appName)
+        //                       select a)
+        //                      .FirstOrDefault();
 
-            if (application == null)
-            {
-                Tracing.Error("Application not found: " + appName);
-            }
+        //    if (application == null)
+        //    {
+        //        Tracing.Error("Application not found: " + appName);
+        //    }
 
-            return application;
-        }
+        //    return application;
+        //}
     }
 }

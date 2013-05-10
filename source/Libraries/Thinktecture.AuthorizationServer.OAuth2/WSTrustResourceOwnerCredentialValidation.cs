@@ -8,6 +8,7 @@ using System.ServiceModel.Description;
 using System.ServiceModel.Security;
 using Thinktecture.AuthorizationServer.Interfaces;
 using Thinktecture.IdentityModel.WSTrust;
+using Thinktecture.IdentityModel.Extensions;
 
 namespace Thinktecture.AuthorizationServer.OAuth2
 {
@@ -31,22 +32,12 @@ namespace Thinktecture.AuthorizationServer.OAuth2
             credentials.UserName.UserName = userName;
             credentials.UserName.Password = password;
 
-            SecurityToken token;
-            try
-            {
-                token = WSTrustClient.Issue(
-                    new EndpointAddress(_address),
-                    new EndpointAddress(_realm),
-                    binding,
-                    credentials);
-            }
-            catch (Exception ex)
-            {
-                Tracing.Error("Error communicating with WS-Trust endoint: " + _address);
-                Tracing.Error(ex.ToString());
-
-                throw;
-            }
+            GenericXmlSecurityToken genericToken;
+            genericToken = WSTrustClient.Issue(
+                new EndpointAddress(_address),
+                new EndpointAddress(_realm),
+                binding,
+                credentials) as GenericXmlSecurityToken;
 
             var config = new SecurityTokenHandlerConfiguration();
             config.AudienceRestriction.AllowedAudienceUris.Add(new Uri(_realm));
@@ -61,18 +52,10 @@ namespace Thinktecture.AuthorizationServer.OAuth2
             var handler = SecurityTokenHandlerCollection.CreateDefaultSecurityTokenHandlerCollection(config);
 
             ClaimsPrincipal principal;
-            try
-            {
-                principal = new ClaimsPrincipal(handler.ValidateToken(token));
-            }
-            catch (Exception ex)
-            {
-                Tracing.Error("Error validating token.");
-                Tracing.Error(ex.ToString());
+            var token = genericToken.ToSecurityToken();
+            principal = new ClaimsPrincipal(handler.ValidateToken(token));
 
-                throw;
-            }
-
+            Tracing.Information("Successfully requested token for user via WS-Trust");
             return new IdentityConfiguration().ClaimsAuthenticationManager.Authenticate("ResourceOwnerPasswordValidation", principal);
         }
     }

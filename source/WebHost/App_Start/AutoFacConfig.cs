@@ -15,18 +15,16 @@ namespace Thinktecture.AuthorizationServer.WebHost
         {
             var builder = new ContainerBuilder();
 
-            //builder.RegisterType<WSTrustResourceOwnerCredentialValidation>().
-            //    As<IResourceOwnerCredentialValidation>();
-            
             builder.RegisterType<DummyTokenHandleManager>().
                 As<ITokenHandleManager>();
+            builder.RegisterType<TestAuthorizationServerConfiguration>().
+                As<IAuthorizationServerConfiguration>();
             builder.RegisterModule(new ConfigurationSettingsReader("autofac"));
 
 
             builder.RegisterControllers(typeof(AuthorizeController).Assembly);
             builder.RegisterControllers(typeof(AutofacConfig).Assembly);
             builder.RegisterApiControllers(typeof(TokenController).Assembly);
-
 
             var container = builder.Build(); 
             

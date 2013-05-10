@@ -1,16 +1,39 @@
-﻿/*
- * Copyright (c) Dominick Baier, Brock Allen.  All rights reserved.
- * see license.txt
- */
-
+﻿using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using Thinktecture.AuthorizationServer.Interfaces;
 using Thinktecture.AuthorizationServer.Models;
 
-namespace Thinktecture.AuthorizationServer.WebHost
+namespace Thinktecture.AuthorizationServer
 {
-    public static class AuthorizationServerConfig
+    public class TestAuthorizationServerConfiguration : IAuthorizationServerConfiguration
     {
-        public static void Configure()
+        List<Application> _applications = new List<Application>();
+
+        public TestAuthorizationServerConfiguration()
+        {
+            PopulateData();
+        }
+
+       
+        public Application FindApplication(string url)
+        {
+            if (string.IsNullOrWhiteSpace(url))
+            {
+                return null;
+            }
+
+            var application = (from a in _applications
+                               where a.Namespace.Equals(url)
+                               select a)
+                              .FirstOrDefault();
+
+            return application;
+        }
+
+        private void PopulateData()
         {
             var resourceOwnerClient = new Client
             {
@@ -101,10 +124,7 @@ namespace Thinktecture.AuthorizationServer.WebHost
                 TokenLifetime = 60
             };
 
-            AuthzConfiguration.Applications = new List<Application>
-            {
-                application
-            };
+            _applications.Add(application);
         }
     }
 }

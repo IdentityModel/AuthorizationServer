@@ -11,16 +11,7 @@ namespace Thinktecture.AuthorizationServer.OAuth2
     [Serializable]
     public class AuthorizeRequestValidationException : Exception
     {
-        public virtual ActionResult Result { get; set; }
-
-        public AuthorizeRequestValidationException()
-        {
-
-        }
-
-        public AuthorizeRequestValidationException(ActionResult result)
-        {
-            Result = result;
-        }
+        public AuthorizeRequestValidationException(string message) : base(message)
+        { }
     }
 }

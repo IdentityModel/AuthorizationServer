@@ -32,6 +32,7 @@ namespace Thinktecture.AuthorizationServer.OAuth2
             var application = _config.FindApplication(appName);
             if (application == null)
             {
+                Tracing.Error("Application not found: " + appName);
                 return HttpNotFound();
             }
 
@@ -43,7 +44,7 @@ namespace Thinktecture.AuthorizationServer.OAuth2
             catch (AuthorizeRequestValidationException ex)
             {
                 Tracing.Error("Aborting OAuth2 authorization request");
-                return ex.Result;
+                return this.AuthorizeValidationError(ex);
             }
 
             if (validatedRequest.Application.ShowConsent)
@@ -69,6 +70,7 @@ namespace Thinktecture.AuthorizationServer.OAuth2
             var application = _config.FindApplication(appName);
             if (application == null)
             {
+                Tracing.Error("Application not found: " + appName);
                 return HttpNotFound();
             }
 
@@ -90,7 +92,7 @@ namespace Thinktecture.AuthorizationServer.OAuth2
                 catch (AuthorizeRequestValidationException ex)
                 {
                     Tracing.Error("Aborting OAuth2 authorization request");
-                    return ex.Result;
+                    return this.AuthorizeValidationError(ex);
                 }
 
                 // todo: parse scopes form post and substitue scopes
@@ -99,7 +101,11 @@ namespace Thinktecture.AuthorizationServer.OAuth2
                 if (grantResult != null) return grantResult;
             }
 
-            return new ClientErrorResult(new Uri(request.redirect_uri), OAuthConstants.Errors.InvalidRequest, request.response_type, request.state);
+            return new ClientErrorResult(
+                new Uri(request.redirect_uri), 
+                OAuthConstants.Errors.InvalidRequest, 
+                request.response_type, 
+                request.state);
         }
 
         private ActionResult PerformGrant(ValidatedRequest validatedRequest)

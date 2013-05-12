@@ -1,5 +1,7 @@
-﻿using System.Net;
+﻿using System;
+using System.Net;
 using System.Net.Http;
+using System.Web.Mvc;
 
 namespace Thinktecture.AuthorizationServer.OAuth2
 {
@@ -11,6 +13,33 @@ namespace Thinktecture.AuthorizationServer.OAuth2
 
             return request.CreateErrorResponse(HttpStatusCode.BadRequest,
                 string.Format("{{ \"{0}\": \"{1}\" }}", OAuthConstants.Errors.Error, OAuthError));
+        }
+
+        public static ActionResult AuthorizeValidationError(this Controller controller, AuthorizeRequestValidationException exception)
+        {
+            var roException = exception as AuthorizeRequestResourceOwnerException;
+            if (roException != null)
+            {
+                Tracing.Error(roException.Message);
+
+                var result = new ViewResult
+                {
+                    ViewName = "ValidationError",
+                };
+
+                result.ViewBag.Message = roException.Message;
+
+                return result;
+            }
+
+            var clientException = exception as AuthorizeRequestClientException;
+            if (clientException != null)
+            {
+                Tracing.Error(clientException.Message);
+                return new ClientErrorResult(clientException.RedirectUri, clientException.Error, clientException.ResponseType, clientException.State);
+            }
+
+            throw new ArgumentException("Invalid exception type");
         }
     }
 }

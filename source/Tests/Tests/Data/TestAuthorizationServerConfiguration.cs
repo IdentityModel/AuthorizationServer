@@ -90,6 +90,17 @@ namespace Thinktecture.AuthorizationServer.Test
                     }
             };
 
+            var trustedClient = new Client
+            {
+                Name = "Trusted Client",
+                ClientId = "trustedclient",
+                ClientSecret = "secret",
+                AuthenticationMethod = ClientAuthenticationMethod.SharedSecret,
+
+                AllowRefreshToken = false,
+                Flow = OAuthFlow.ResourceOwner,
+            };
+
             var readScope = new Scope
             {
                 AllowedClients = new Clients { codeClient, implicitClient, resourceOwnerClient },
@@ -114,11 +125,19 @@ namespace Thinktecture.AuthorizationServer.Test
                 Emphasize = true
             };
 
+            var deleteScope = new Scope
+            {
+                AllowedClients = new Clients { trustedClient },
+                Name = "delete",
+                Description = "delete data",
+                Emphasize = true
+            };
+
             var application = new Application
             {
                 Name = "Test Application",
                 Namespace = "test",
-                Scopes = new Scopes { readScope, searchScope, writeScope },
+                Scopes = new Scopes { readScope, searchScope, writeScope, deleteScope },
                 Clients = new Clients { codeClient, implicitClient, resourceOwnerClient },
                 ShowConsent = true,
                 TokenLifetime = 60

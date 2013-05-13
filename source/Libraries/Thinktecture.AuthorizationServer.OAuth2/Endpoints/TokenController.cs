@@ -34,6 +34,7 @@ namespace Thinktecture.AuthorizationServer.OAuth2
             var application = _config.FindApplication(appName);
             if (application == null)
             {
+                Tracing.Error("Application not found: " + appName);
                 return Request.CreateErrorResponse(HttpStatusCode.NotFound, "Not found");
             }
 
@@ -41,7 +42,7 @@ namespace Thinktecture.AuthorizationServer.OAuth2
             ValidatedRequest validatedRequest;
             try
             {
-                validatedRequest = new RequestValidator().ValidateTokenRequest(application, request);
+                validatedRequest = new RequestValidator().ValidateTokenRequest(application, request, ClaimsPrincipal.Current);
             }
             catch (TokenRequestValidationException ex)
             {

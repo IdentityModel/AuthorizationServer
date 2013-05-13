@@ -187,7 +187,7 @@ namespace Thinktecture.AuthorizationServer.OAuth2
             return validatedRequest;
         }
 
-        public ValidatedRequest ValidateTokenRequest(Application application, TokenRequest request)
+        public ValidatedRequest ValidateTokenRequest(Application application, TokenRequest request, ClaimsPrincipal clientPrincipal)
         {
             var validatedRequest = new ValidatedRequest();
 
@@ -227,7 +227,7 @@ namespace Thinktecture.AuthorizationServer.OAuth2
             Tracing.Information("Grant type: " + validatedRequest.GrantType);
 
             // validate client credentials
-            var client = ValidateClient(ClaimsPrincipal.Current, validatedRequest.Application);
+            var client = ValidateClient(clientPrincipal, validatedRequest.Application);
             if (client == null)
             {
                 throw new TokenRequestValidationException(
@@ -330,7 +330,7 @@ namespace Thinktecture.AuthorizationServer.OAuth2
 
         private Client ValidateClient(ClaimsPrincipal clientPrincipal, Application application)
         {
-            if (!clientPrincipal.Identity.IsAuthenticated)
+            if (clientPrincipal == null || !clientPrincipal.Identity.IsAuthenticated)
             {
                 Tracing.Error("Anonymous client.");
                 return null;

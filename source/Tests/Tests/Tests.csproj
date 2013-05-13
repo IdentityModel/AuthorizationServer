@@ -66,10 +66,10 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
-    <Compile Include="AuthorizeRequestValidationTests.cs" />
+    <Compile Include="Request Validation\AuthorizeRequestValidationTests.cs" />
     <Compile Include="Data\TestAuthorizationServerConfiguration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="TokenRequestValidationTests.cs" />
+    <Compile Include="Request Validation\TokenRequestValidationTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\Libraries\Thinktecture.AuthorizationServer.Core\Thinktecture.AuthorizationServer.Core.csproj">

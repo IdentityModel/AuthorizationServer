@@ -1,17 +1,16 @@
-﻿using System;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Thinktecture.AuthorizationServer.Interfaces;
-using Thinktecture.AuthorizationServer.Test;
-using Thinktecture.AuthorizationServer.OAuth2;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Net;
 using System.Net.Http;
-using Thinktecture.IdentityModel;
 using System.Security.Claims;
+using Thinktecture.AuthorizationServer.Interfaces;
+using Thinktecture.AuthorizationServer.OAuth2;
+using Thinktecture.AuthorizationServer.Test;
+using Thinktecture.IdentityModel;
 
 namespace Tests
 {
     [TestClass]
-    public class TokenRequestValidationTests
+    public class TokenRequest_Validation
     {
         IAuthorizationServerConfiguration _testConfig = new TestAuthorizationServerConfiguration();
         

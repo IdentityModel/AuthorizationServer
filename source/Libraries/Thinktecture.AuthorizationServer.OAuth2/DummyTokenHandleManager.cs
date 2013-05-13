@@ -1,4 +1,9 @@
-﻿using Thinktecture.AuthorizationServer.Interfaces;
+﻿/*
+ * Copyright (c) Dominick Baier, Brock Allen.  All rights reserved.
+ * see license.txt
+ */
+
+using Thinktecture.AuthorizationServer.Interfaces;
 using Thinktecture.AuthorizationServer.Models;
 
 namespace Thinktecture.AuthorizationServer.OAuth2

@@ -6,7 +6,7 @@ using Thinktecture.AuthorizationServer.OAuth2;
 namespace Thinktecture.AuthorizationServer.Test
 {
     [TestClass]
-    public class AuthorizeRequestValidationTests
+    public class AuthorizeRequest_Validation
     {
         IAuthorizationServerConfiguration _testConfig = new TestAuthorizationServerConfiguration();
 

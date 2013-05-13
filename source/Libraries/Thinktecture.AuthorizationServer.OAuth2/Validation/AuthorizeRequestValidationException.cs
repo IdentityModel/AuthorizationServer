@@ -4,7 +4,6 @@
  */
 
 using System;
-using System.Web.Mvc;
 
 namespace Thinktecture.AuthorizationServer.OAuth2
 {

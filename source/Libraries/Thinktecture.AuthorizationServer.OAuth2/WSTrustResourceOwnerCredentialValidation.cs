@@ -1,4 +1,9 @@
-﻿using System;
+﻿/*
+ * Copyright (c) Dominick Baier, Brock Allen.  All rights reserved.
+ * see license.txt
+ */
+
+using System;
 using System.IdentityModel.Configuration;
 using System.IdentityModel.Selectors;
 using System.IdentityModel.Tokens;
@@ -7,8 +12,8 @@ using System.ServiceModel;
 using System.ServiceModel.Description;
 using System.ServiceModel.Security;
 using Thinktecture.AuthorizationServer.Interfaces;
-using Thinktecture.IdentityModel.WSTrust;
 using Thinktecture.IdentityModel.Extensions;
+using Thinktecture.IdentityModel.WSTrust;
 
 namespace Thinktecture.AuthorizationServer.OAuth2
 {

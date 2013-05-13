@@ -6,18 +6,18 @@ using System.Threading.Tasks;
 using Thinktecture.AuthorizationServer.Interfaces;
 using Thinktecture.AuthorizationServer.Models;
 
-namespace Thinktecture.AuthorizationServer
+namespace Thinktecture.AuthorizationServer.Test
 {
-    public class DummyAuthorizationServerConfiguration : IAuthorizationServerConfiguration
+    public class TestAuthorizationServerConfiguration : IAuthorizationServerConfiguration
     {
         List<Application> _applications = new List<Application>();
 
-        public DummyAuthorizationServerConfiguration()
+        public TestAuthorizationServerConfiguration()
         {
             PopulateData();
         }
 
-       
+
         public Application FindApplication(string url)
         {
             if (string.IsNullOrWhiteSpace(url))
@@ -45,7 +45,7 @@ namespace Thinktecture.AuthorizationServer
                 AllowRefreshToken = true
             };
 
-            var CodeClient = new Client
+            var codeClient = new Client
             {
                 Name = "Code Flow Client",
                 ClientId = "codeclient",
@@ -70,7 +70,7 @@ namespace Thinktecture.AuthorizationServer
                     }
             };
 
-            var ImplicitClient = new Client
+            var implicitClient = new Client
             {
                 Name = "Implicit Flow Client",
                 ClientId = "implicitclient",
@@ -92,7 +92,7 @@ namespace Thinktecture.AuthorizationServer
 
             var readScope = new Scope
             {
-                AllowedClients = new Clients { CodeClient, ImplicitClient, resourceOwnerClient },
+                AllowedClients = new Clients { codeClient, implicitClient, resourceOwnerClient },
                 Name = "read",
                 Description = "Read data",
                 Emphasize = false
@@ -100,7 +100,7 @@ namespace Thinktecture.AuthorizationServer
 
             var searchScope = new Scope
             {
-                AllowedClients = new Clients { CodeClient, resourceOwnerClient },
+                AllowedClients = new Clients { codeClient, resourceOwnerClient },
                 Name = "search",
                 Description = "Search data",
                 Emphasize = false
@@ -116,10 +116,10 @@ namespace Thinktecture.AuthorizationServer
 
             var application = new Application
             {
-                Name = "User management",
-                Namespace = "users",
+                Name = "Test Application",
+                Namespace = "test",
                 Scopes = new Scopes { readScope, searchScope, writeScope },
-                Clients = new Clients { CodeClient, ImplicitClient, resourceOwnerClient },
+                Clients = new Clients { codeClient, implicitClient, resourceOwnerClient },
                 ShowConsent = true,
                 TokenLifetime = 60
             };

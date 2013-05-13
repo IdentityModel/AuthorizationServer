@@ -6,18 +6,18 @@ using System.Threading.Tasks;
 using Thinktecture.AuthorizationServer.Interfaces;
 using Thinktecture.AuthorizationServer.Models;
 
-namespace Thinktecture.AuthorizationServer
+namespace Thinktecture.AuthorizationServer.Tests
 {
-    public class DummyAuthorizationServerConfiguration : IAuthorizationServerConfiguration
+    public class TestAuthorizationServerConfiguration : IAuthorizationServerConfiguration
     {
         List<Application> _applications = new List<Application>();
 
-        public DummyAuthorizationServerConfiguration()
+        public TestAuthorizationServerConfiguration()
         {
             PopulateData();
         }
 
-       
+
         public Application FindApplication(string url)
         {
             if (string.IsNullOrWhiteSpace(url))

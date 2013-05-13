@@ -13,7 +13,7 @@ using Thinktecture.AuthorizationServer.Models;
 
 namespace Thinktecture.AuthorizationServer.OAuth2
 {
-    class RequestValidator
+    public class RequestValidator
     {
         public ValidatedRequest ValidateAuthorizeRequest(Application application, AuthorizeRequest request)
         {

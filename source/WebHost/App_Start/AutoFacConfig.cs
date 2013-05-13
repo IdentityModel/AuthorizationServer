@@ -17,7 +17,7 @@ namespace Thinktecture.AuthorizationServer.WebHost
 
             builder.RegisterType<DummyTokenHandleManager>().
                 As<ITokenHandleManager>();
-            builder.RegisterType<TestAuthorizationServerConfiguration>().
+            builder.RegisterType<DummyAuthorizationServerConfiguration>().
                 As<IAuthorizationServerConfiguration>();
             builder.RegisterModule(new ConfigurationSettingsReader("autofac"));
 

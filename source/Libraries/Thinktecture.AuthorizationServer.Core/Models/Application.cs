@@ -21,7 +21,7 @@ namespace Thinktecture.AuthorizationServer.Models
         public string Audience { get; set; }
         public string TokenType { get; set; }
         public int TokenLifetime { get; set; }
-        public bool ShowConsent { get; set; }
+        public bool RequireConsent { get; set; }
         public bool RememberConsentDecision { get; set; }
 
         public List<Scope> Scopes { get; set; }

@@ -15,6 +15,7 @@ namespace Thinktecture.AuthorizationServer.Models
         public string Name { get; set; }
         public OAuthFlow Flow { get; set; }
         public bool AllowRefreshToken { get; set; }
+        public bool RequireConsent { get; set; }
 
         public List<RedirectUri> RedirectUris { get; set; }
     }

@@ -1,39 +1,34 @@
-﻿/*
- * Copyright (c) Dominick Baier, Brock Allen.  All rights reserved.
- * see license.txt
- */
-
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 
 namespace Thinktecture.AuthorizationServer.Models
 {
-    public class Scopes : List<Scope>
+    public static class ScopeExtensions
     {
-        public List<Scope> GetScopesForClient(string clientId)
+        public static List<Scope> GetScopesForClient(this IEnumerable<Scope> scopes, string clientId)
         {
-            var result = from s in this
+            var result = from s in scopes
                          where s.AllowedClients.Select(c => c.ClientId).Contains(clientId)
                          select s;
 
             return result.ToList();
         }
 
-        public List<string> GetScopeNamesForClient(string clientId)
+        public static List<string> GetScopeNamesForClient(this IEnumerable<Scope> scopes, string clientId)
         {
-            return GetScopesForClient(clientId).Select(s => s.Name).ToList();
+            return scopes.GetScopesForClient(clientId).Select(s => s.Name).ToList();
         }
 
-        public bool TryValidateScopes(string clientId, List<string> requestedScopes, out List<Scope> resultingScopes)
+        public static bool TryValidateScopes(this IEnumerable<Scope> scopes, string clientId, List<string> requestedScopes, out List<Scope> resultingScopes)
         {
-            var allowedScopeNames = GetScopeNamesForClient(clientId);
+            var allowedScopeNames = scopes.GetScopeNamesForClient(clientId);
 
             resultingScopes = new List<Scope>();
             foreach (var scope in requestedScopes)
             {
                 if (allowedScopeNames.Contains(scope))
                 {
-                    var allowedScope = from asc in this
+                    var allowedScope = from asc in scopes
                                        where asc.Name.Equals(scope)
                                        select asc;
 
@@ -44,8 +39,6 @@ namespace Thinktecture.AuthorizationServer.Models
                     Tracing.Error("Scope not allowed: " + scope);
                     return false;
                 }
-
-
             }
 
             return true;

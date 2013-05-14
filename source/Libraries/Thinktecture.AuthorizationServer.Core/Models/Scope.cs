@@ -3,6 +3,7 @@
  * see license.txt
  */
 
+using System.Collections.Generic;
 namespace Thinktecture.AuthorizationServer.Models
 {
     public class Scope
@@ -11,6 +12,6 @@ namespace Thinktecture.AuthorizationServer.Models
         public string Description { get; set; }
         public bool Emphasize { get; set; }
 
-        public Clients AllowedClients { get; set; }
+        public List<Client> AllowedClients { get; set; }
     }
 }

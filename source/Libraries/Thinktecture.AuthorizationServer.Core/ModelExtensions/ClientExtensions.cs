@@ -1,28 +1,23 @@
-﻿/*
- * Copyright (c) Dominick Baier, Brock Allen.  All rights reserved.
- * see license.txt
- */
-
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 
 namespace Thinktecture.AuthorizationServer.Models
 {
-    public class Clients : List<Client>
+    public static class ClientExtensions
     {
-        public Client Get(string clientId)
+        public static Client Get(this IEnumerable<Client> clients, string clientId)
         {
-            return (from c in this
+            return (from c in clients
                     where c.ClientId.Equals(clientId)
                     select c)
                    .FirstOrDefault();
         }
 
-        public Client ValidateClient(string clientId, string clientSecret)
+        public static Client ValidateClient(this IEnumerable<Client> clients, string clientId, string clientSecret)
         {
             // todo: hashing etc
 
-            var client = Get(clientId);
+            var client = clients.Get(clientId);
             if (client == null)
             {
                 return null;

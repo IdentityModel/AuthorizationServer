@@ -52,7 +52,7 @@ namespace Thinktecture.AuthorizationServer.Test
                 AllowRefreshToken = true,
                 Flow = OAuthFlow.Code,
 
-                RedirectUris = new RedirectUris 
+                RedirectUris = new List<RedirectUri>
                     {
                         new RedirectUri
                         {
@@ -77,7 +77,7 @@ namespace Thinktecture.AuthorizationServer.Test
                 AllowRefreshToken = false,
                 Flow = OAuthFlow.Implicit,
 
-                RedirectUris = new RedirectUris 
+                RedirectUris = new List<RedirectUri> 
                     {
                         new RedirectUri
                         {
@@ -100,7 +100,7 @@ namespace Thinktecture.AuthorizationServer.Test
 
             var readScope = new Scope
             {
-                AllowedClients = new Clients { codeClient, implicitClient, resourceOwnerClient },
+                AllowedClients = new List<Client> { codeClient, implicitClient, resourceOwnerClient },
                 Name = "read",
                 Description = "Read data",
                 Emphasize = false
@@ -108,7 +108,7 @@ namespace Thinktecture.AuthorizationServer.Test
 
             var searchScope = new Scope
             {
-                AllowedClients = new Clients { codeClient, resourceOwnerClient },
+                AllowedClients = new List<Client> { codeClient, resourceOwnerClient },
                 Name = "search",
                 Description = "Search data",
                 Emphasize = false
@@ -116,7 +116,7 @@ namespace Thinktecture.AuthorizationServer.Test
 
             var writeScope = new Scope
             {
-                AllowedClients = new Clients { resourceOwnerClient },
+                AllowedClients = new List<Client> { resourceOwnerClient },
                 Name = "write",
                 Description = "write data",
                 Emphasize = true
@@ -124,7 +124,7 @@ namespace Thinktecture.AuthorizationServer.Test
 
             var deleteScope = new Scope
             {
-                AllowedClients = new Clients { trustedClient },
+                AllowedClients = new List<Client> { trustedClient },
                 Name = "delete",
                 Description = "delete data",
                 Emphasize = true
@@ -134,8 +134,8 @@ namespace Thinktecture.AuthorizationServer.Test
             {
                 Name = "Test Application",
                 Namespace = "test",
-                Scopes = new Scopes { readScope, searchScope, writeScope, deleteScope },
-                Clients = new Clients { codeClient, implicitClient, resourceOwnerClient },
+                Scopes = new List<Scope> { readScope, searchScope, writeScope, deleteScope },
+                Clients = new List<Client> { codeClient, implicitClient, resourceOwnerClient },
                 ShowConsent = true,
                 TokenLifetime = 60
             };

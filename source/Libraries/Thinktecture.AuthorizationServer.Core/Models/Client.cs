@@ -3,6 +3,8 @@
  * see license.txt
  */
 
+using System.Collections.Generic;
+
 namespace Thinktecture.AuthorizationServer.Models
 {
     public class Client
@@ -14,6 +16,6 @@ namespace Thinktecture.AuthorizationServer.Models
         public OAuthFlow Flow { get; set; }
         public bool AllowRefreshToken { get; set; }
 
-        public RedirectUris RedirectUris { get; set; }
+        public List<RedirectUri> RedirectUris { get; set; }
     }
 }

@@ -52,7 +52,7 @@ namespace Thinktecture.AuthorizationServer
                 AllowRefreshToken = true,
                 Flow = OAuthFlow.Code,
 
-                RedirectUris = new RedirectUris 
+                RedirectUris = new List<RedirectUri> 
                     {
                         new RedirectUri
                         {
@@ -77,7 +77,7 @@ namespace Thinktecture.AuthorizationServer
                 AllowRefreshToken = false,
                 Flow = OAuthFlow.Implicit,
 
-                RedirectUris = new RedirectUris 
+                RedirectUris = new List<RedirectUri>
                     {
                         new RedirectUri
                         {
@@ -89,7 +89,7 @@ namespace Thinktecture.AuthorizationServer
 
             var readScope = new Scope
             {
-                AllowedClients = new Clients { CodeClient, ImplicitClient, resourceOwnerClient },
+                AllowedClients = new List<Client> { CodeClient, ImplicitClient, resourceOwnerClient },
                 Name = "read",
                 Description = "Read data",
                 Emphasize = false
@@ -97,7 +97,7 @@ namespace Thinktecture.AuthorizationServer
 
             var searchScope = new Scope
             {
-                AllowedClients = new Clients { CodeClient, resourceOwnerClient },
+                AllowedClients = new List<Client> { CodeClient, resourceOwnerClient },
                 Name = "search",
                 Description = "Search data",
                 Emphasize = false
@@ -105,7 +105,7 @@ namespace Thinktecture.AuthorizationServer
 
             var writeScope = new Scope
             {
-                AllowedClients = new Clients { resourceOwnerClient },
+                AllowedClients = new List<Client> { resourceOwnerClient },
                 Name = "write",
                 Description = "write data",
                 Emphasize = true
@@ -115,8 +115,8 @@ namespace Thinktecture.AuthorizationServer
             {
                 Name = "User management",
                 Namespace = "users",
-                Scopes = new Scopes { readScope, searchScope, writeScope },
-                Clients = new Clients { CodeClient, ImplicitClient, resourceOwnerClient },
+                Scopes = new List<Scope> { readScope, searchScope, writeScope },
+                Clients = new List<Client> { CodeClient, ImplicitClient, resourceOwnerClient },
                 ShowConsent = true,
                 TokenLifetime = 60
             };

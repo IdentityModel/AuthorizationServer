@@ -3,6 +3,7 @@
  * see license.txt
  */
 
+using System.Collections.Generic;
 using System.IdentityModel.Tokens;
 
 namespace Thinktecture.AuthorizationServer.Models
@@ -21,9 +22,10 @@ namespace Thinktecture.AuthorizationServer.Models
         public string TokenType { get; set; }
         public int TokenLifetime { get; set; }
         public bool ShowConsent { get; set; }
+        public bool RememberConsentDecision { get; set; }
 
-        public Scopes Scopes { get; set; }
-        public Clients Clients { get; set; }
+        public List<Scope> Scopes { get; set; }
+        public List<Client> Clients { get; set; }
         public SigningCredentials SigningCredentials { get; set; }
     }
 }

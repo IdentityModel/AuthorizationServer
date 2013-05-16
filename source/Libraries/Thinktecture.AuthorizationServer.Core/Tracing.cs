@@ -5,6 +5,7 @@
 
 using System;
 using System.Diagnostics;
+using System.Runtime.CompilerServices;
 
 namespace Thinktecture.AuthorizationServer
 {
@@ -52,6 +53,12 @@ namespace Thinktecture.AuthorizationServer
         public static void Error(string message)
         {
             TraceEvent(TraceEventType.Error, message);
+        }
+
+        [DebuggerStepThrough]
+        public static void ErrorVerbose(string message, [CallerMemberName] string memberName = "", [CallerFilePath] string filePath = "", [CallerLineNumber] int lineNumber = 0)
+        {
+            TraceEventFormat(TraceEventType.Error, "{0}\n\nMethod: {1}\nFilename: {2}\nLine number: {3}", message, memberName, filePath, lineNumber);
         }
 
         [DebuggerStepThrough]

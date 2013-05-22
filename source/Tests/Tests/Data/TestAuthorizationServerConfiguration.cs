@@ -135,7 +135,7 @@ namespace Thinktecture.AuthorizationServer.Test
                 Name = "Test Application",
                 Namespace = "test",
                 Scopes = new List<Scope> { readScope, searchScope, writeScope, deleteScope },
-                Clients = new List<Client> { codeClient, implicitClient, resourceOwnerClient },
+                //Clients = new List<Client> { codeClient, implicitClient, resourceOwnerClient },
                 RequireConsent = true,
                 TokenLifetime = 60
             };

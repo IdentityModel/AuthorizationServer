@@ -116,7 +116,7 @@ namespace Thinktecture.AuthorizationServer
                 Name = "User management",
                 Namespace = "users",
                 Scopes = new List<Scope> { readScope, searchScope, writeScope },
-                Clients = new List<Client> { CodeClient, ImplicitClient, resourceOwnerClient },
+                //Clients = new List<Client> { CodeClient, ImplicitClient, resourceOwnerClient },
                 RequireConsent = true,
                 TokenLifetime = 60
             };

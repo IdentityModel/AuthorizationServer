@@ -4,11 +4,13 @@
  */
 
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace Thinktecture.AuthorizationServer.Models
 {
     public class Client
     {
+        [Key]
         public string ClientId { get; set; }
         public string ClientSecret { get; set; }
         public ClientAuthenticationMethod AuthenticationMethod { get; set; }

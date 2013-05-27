@@ -14,7 +14,7 @@ namespace Thinktecture.AuthorizationServer.WebHost
         {
             config.Routes.MapHttpRoute(
                 name: "OAuth2 Token Endpoint",
-                routeTemplate: "oauth/{appName}/token",
+                routeTemplate: "{appName}/oauth/token",
                 defaults: new { Controller = "Token" },
                 constraints: null,
                 handler: new AuthenticationHandler(CreateClientAuthConfig(), config)

@@ -16,7 +16,7 @@ namespace Thinktecture.AuthorizationServer.WebHost
 
             routes.MapRoute(
                 name: "OAuth2 Authorize Endpoint",
-                url: "oauth/{appName}/authorize",
+                url: "{appName}/oauth/authorize",
                 defaults: new
                 {
                     controller = "Authorize",

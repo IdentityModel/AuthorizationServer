@@ -123,5 +123,10 @@ namespace Thinktecture.AuthorizationServer
 
             _applications.Add(application);
         }
+
+        public GlobalConfiguration GlobalConfiguration
+        {
+            get { throw new System.NotImplementedException(); }
+        }
     }
 }

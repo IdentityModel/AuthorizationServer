@@ -9,6 +9,7 @@ namespace Thinktecture.AuthorizationServer.Interfaces
 {
     public interface IAuthorizationServerConfiguration
     {
+        GlobalConfiguration GlobalConfiguration { get; }
         Application FindApplication(string url);
     }
 }

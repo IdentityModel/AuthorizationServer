@@ -16,6 +16,13 @@ namespace Thinktecture.AuthorizationServer
 {
     public class TokenService
     {
+        GlobalConfiguration globalConfiguration;
+
+        public TokenService(GlobalConfiguration globalConfiguration)
+        {
+            this.globalConfiguration = globalConfiguration;
+        }
+
         public TokenResponse CreateToken(ValidatedRequest request, ClaimsPrincipal resourceOwner)
         {
             try
@@ -53,7 +60,7 @@ namespace Thinktecture.AuthorizationServer
             {
                 AppliesToAddress = request.Application.Audience,
                 Lifetime = new Lifetime(DateTime.UtcNow, DateTime.UtcNow.AddMinutes(request.Application.TokenLifetime)),
-                TokenIssuerName = request.Application.IssuerName,
+                TokenIssuerName = globalConfiguration.Issuer,
                 Subject = subject,
                 SigningCredentials = request.Application.SigningCredentials
             };

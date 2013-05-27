@@ -142,5 +142,10 @@ namespace Thinktecture.AuthorizationServer.Test
 
             _applications.Add(application);
         }
+
+        public GlobalConfiguration GlobalConfiguration
+        {
+            get { return null; }
+        }
     }
 }

@@ -18,7 +18,9 @@ namespace Thinktecture.AuthorizationServer.OAuth2
         IResourceOwnerCredentialValidation _rocv;
         IAuthorizationServerConfiguration _config;
 
-        public TokenController(IResourceOwnerCredentialValidation rocv, IAuthorizationServerConfiguration config)
+        public TokenController(
+            IResourceOwnerCredentialValidation rocv, 
+            IAuthorizationServerConfiguration config)
         {
             _rocv = rocv;
             _config = config;
@@ -82,7 +84,7 @@ namespace Thinktecture.AuthorizationServer.OAuth2
 
             if (principal != null && principal.Identity.IsAuthenticated)
             {
-                var sts = new TokenService();
+                var sts = new TokenService(this._config.GlobalConfiguration);
                 var response = sts.CreateToken(validatedRequest, principal);
 
                 Tracing.Information("Returning token response.");

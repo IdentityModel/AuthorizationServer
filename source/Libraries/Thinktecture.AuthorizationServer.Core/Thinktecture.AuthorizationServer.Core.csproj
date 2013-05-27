@@ -63,6 +63,7 @@
     <Compile Include="Models\Client.cs" />
     <Compile Include="Models\ClientAuthenticationMethod.cs" />
     <Compile Include="ModelExtensions\ClientExtensions.cs" />
+    <Compile Include="Models\GlobalConfiguration.cs" />
     <Compile Include="Models\SigningKey.cs" />
     <Compile Include="Models\TokenHandle.cs" />
     <Compile Include="Models\OAuth2Flow.cs" />

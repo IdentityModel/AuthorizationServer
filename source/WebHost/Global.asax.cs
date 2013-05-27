@@ -18,5 +18,16 @@ namespace Thinktecture.AuthorizationServer.WebHost
 
             AutofacConfig.Configure();
         }
+
+        void Application_EndRequest()
+        {
+            //if (Response.StatusCode == 401 && 
+            //    !User.Identity.IsAuthenticated)
+            //{
+            //    var app = Request.RequestContext.RouteData.Values["application"];
+            //    var originalUrl = Request.Url.AbsoluteUri;
+            //    // logic here for a 302....
+            //}
+        }
     }
 }

@@ -20,15 +20,17 @@ namespace Thinktecture.AuthorizationServer.Models
         public string Description { get; set; }
         public string LogoUrl { get; set; }
 
+        // {appName}
+        // unique, URL friendly chars
         public string Namespace { get; set; }
-        public string Entropy { get; set; }
-
-        public string IssuerName { get; set; }
+        
         public string Audience { get; set; }
-        public string TokenType { get; set; }
+
         public int TokenLifetime { get; set; }
+        public bool AllowRefreshToken { get; set; }
         public bool RequireConsent { get; set; }
         public bool RememberConsentDecision { get; set; }
+        
         public SigningKey SigningKey { get; set; }
 
         public List<Scope> Scopes { get; set; }

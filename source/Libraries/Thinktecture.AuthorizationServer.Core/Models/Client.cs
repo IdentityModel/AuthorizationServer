@@ -8,7 +8,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Thinktecture.AuthorizationServer.Models
 {
-    public class Client
+    public class Client : IValidatableObject
     {
         [Key]
         public string ClientId { get; set; }
@@ -20,5 +20,13 @@ namespace Thinktecture.AuthorizationServer.Models
         public bool RequireConsent { get; set; }
 
         public List<RedirectUri> RedirectUris { get; set; }
+
+        public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
+        {
+            if (Flow != OAuthFlow.Code && AllowRefreshToken)
+            {
+                yield return new ValidationResult("Only CodeFlow can use Refresh Tokens", new[]{"Code", "AllowRefreshToken"});
+            }
+        }
     }
 }

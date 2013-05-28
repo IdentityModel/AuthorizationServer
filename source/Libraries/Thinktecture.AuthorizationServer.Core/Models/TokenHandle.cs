@@ -23,5 +23,6 @@ namespace Thinktecture.AuthorizationServer.Models
         public List<Scope> Scopes { get; set; }
         public TokenHandleType Type { get; set; }
         public DateTime TimeStamp { get; set; }
+        public DateTime Expiration { get; set; }
     }
 }

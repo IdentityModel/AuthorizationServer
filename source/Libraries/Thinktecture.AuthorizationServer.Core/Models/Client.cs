@@ -24,7 +24,7 @@ namespace Thinktecture.AuthorizationServer.Models
         // only relevant if Flow == Code or Implicit
         public bool RequireConsent { get; set; }
 
-        public List<RedirectUri> RedirectUris { get; set; }
+        public List<ClientRedirectUri> RedirectUris { get; set; }
 
         public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
         {

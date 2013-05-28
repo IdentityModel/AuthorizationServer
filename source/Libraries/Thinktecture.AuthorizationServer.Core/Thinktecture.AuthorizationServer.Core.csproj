@@ -59,6 +59,7 @@
     <Compile Include="Interfaces\ITokenHandleManager.cs" />
     <Compile Include="ModelExtensions\ScopeExtensions.cs" />
     <Compile Include="ModelExtensions\RedirectUriExtensions.cs" />
+    <Compile Include="ModelExtensions\TokenHandleExtensions.cs" />
     <Compile Include="Models\Application.cs" />
     <Compile Include="Models\Client.cs" />
     <Compile Include="Models\ClientAuthenticationMethod.cs" />
@@ -67,7 +68,7 @@
     <Compile Include="Models\SigningKey.cs" />
     <Compile Include="Models\TokenHandle.cs" />
     <Compile Include="Models\OAuth2Flow.cs" />
-    <Compile Include="Models\RedirectUri.cs" />
+    <Compile Include="Models\ClientRedirectUri.cs" />
     <Compile Include="Models\Scope.cs" />
     <Compile Include="Models\TokenHandleType.cs" />
     <Compile Include="Models\TokenResponse.cs" />

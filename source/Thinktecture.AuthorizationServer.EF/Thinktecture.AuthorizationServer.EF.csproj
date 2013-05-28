@@ -48,6 +48,7 @@
   <ItemGroup>
     <Compile Include="EFAuthorizationServerConfiguration.cs" />
     <Compile Include="AuthorizationServerContext.cs" />
+    <Compile Include="EFTokenHandleManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

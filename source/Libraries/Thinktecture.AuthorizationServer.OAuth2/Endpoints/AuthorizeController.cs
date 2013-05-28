@@ -128,13 +128,11 @@ namespace Thinktecture.AuthorizationServer.OAuth2
 
         private ActionResult PerformAuthorizationCodeGrant(ValidatedRequest validatedRequest)
         {
-            var handle = new TokenHandle
-            {
-                Type = TokenHandleType.AuthorizationCode,
-                ClientId = validatedRequest.Client.ClientId,
-                ResourceOwner = ClaimsPrincipal.Current.Claims.ToList(),
-                Scopes = validatedRequest.Scopes.Select(s => s.Name).ToList()
-            };
+            var handle = new TokenHandle(
+                validatedRequest.Client.ClientId, 
+                TokenHandleType.AuthorizationCode, 
+                ClaimsPrincipal.Current.Claims,
+                validatedRequest.Scopes);
 
             _handleManager.Add(handle);
             var tokenString = string.Format("code={0}", handle.HandleId);

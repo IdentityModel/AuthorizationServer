@@ -65,14 +65,14 @@ namespace Thinktecture.AuthorizationServer.WebHost
                             AllowRefreshToken = true,
                             Flow = OAuthFlow.Code,
 
-                            RedirectUris = new List<RedirectUri> 
+                            RedirectUris = new List<ClientRedirectUri> 
                         {
-                            new RedirectUri
+                            new ClientRedirectUri
                             {
                                 Uri = "https://prod.local",
                                 Description = "Production"
                             },
-                            new RedirectUri
+                            new ClientRedirectUri
                             {
                                 Uri = "https://test.local",
                                 Description = "Test"
@@ -94,9 +94,9 @@ namespace Thinktecture.AuthorizationServer.WebHost
                             AllowRefreshToken = false,
                             Flow = OAuthFlow.Implicit,
 
-                            RedirectUris = new List<RedirectUri>
+                            RedirectUris = new List<ClientRedirectUri>
                         {
-                            new RedirectUri
+                            new ClientRedirectUri
                             {
                                 Uri = "https://test2.local",
                                 Description = "Test"

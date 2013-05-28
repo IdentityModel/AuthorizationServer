@@ -6,7 +6,7 @@
 using System.ComponentModel.DataAnnotations;
 namespace Thinktecture.AuthorizationServer.Models
 {
-    public class RedirectUri
+    public class ClientRedirectUri
     {
         [Key]
         public int ID { get; set; }

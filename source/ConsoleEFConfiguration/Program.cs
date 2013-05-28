@@ -71,18 +71,18 @@ namespace ConsoleEFConfiguration
                     {
                         ClientId = "client1",
                         Name = "Test Client1",
-                        RedirectUris = new List<RedirectUri>()
+                        RedirectUris = new List<ClientRedirectUri>()
                         {
-                            new RedirectUri{ Description = "Test1", Uri = "http://test1"}
+                            new ClientRedirectUri{ Description = "Test1", Uri = "http://test1"}
                         }
                     };
                     var client2 = new Client
                     {
                         ClientId = "client2",
                         Name = "Test Client2",
-                        RedirectUris = new List<RedirectUri>()
+                        RedirectUris = new List<ClientRedirectUri>()
                         {
-                            new RedirectUri{ Description = "Test2", Uri = "http://test2"}
+                            new ClientRedirectUri{ Description = "Test2", Uri = "http://test2"}
                         }
                     };
                     db.Clients.Add(client1);

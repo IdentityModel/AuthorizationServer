@@ -18,17 +18,23 @@ namespace Thinktecture.AuthorizationServer.EF
 
         public void Add(Models.TokenHandle handle)
         {
-            throw new NotImplementedException();
+            db.TokenHandles.Add(handle);
+            db.SaveChanges();
         }
 
-        public bool TryGet(string handleIdentifier, out Models.TokenHandle handle)
+        public Models.TokenHandle Get(string handleIdentifier)
         {
-            throw new NotImplementedException();
+            return db.TokenHandles.Find(handleIdentifier);
         }
 
         public void Delete(string handleIdentifier)
         {
-            throw new NotImplementedException();
+            var item = db.TokenHandles.Find(handleIdentifier);
+            if (item != null)
+            {
+                db.TokenHandles.Remove(item);
+                db.SaveChanges();
+            }
         }
     }
 }

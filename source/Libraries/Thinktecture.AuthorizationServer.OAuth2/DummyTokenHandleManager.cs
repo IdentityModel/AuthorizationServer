@@ -15,14 +15,12 @@ namespace Thinktecture.AuthorizationServer.OAuth2
             
         }
 
-        public bool TryGet(string handleIdentifier, out TokenHandle handle)
+        public TokenHandle Get(string handleIdentifier)
         {
-            handle = new TokenHandle
+            return new TokenHandle
             {
                 HandleId = "123"
             };
-
-            return true;
         }
 
         public void Delete(string handleIdentifier)

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.IdentityModel.Tokens;
 using System.Linq;
 using System.Security.Cryptography.X509Certificates;
@@ -22,6 +23,7 @@ namespace Thinktecture.AuthorizationServer.Models
         public StoreLocation Location { get; set; }
         public StoreName StoreName { get; set; }
         public X509FindType FindType { get; set; }
+        [Required]
         public string FindValue { get; set; }
 
         public X509Certificate2 Certificate
@@ -46,6 +48,7 @@ namespace Thinktecture.AuthorizationServer.Models
 
     public class SymmetricKey : SigningKey
     {
+        [Required]
         public byte[] Value { get; set; }
 
         public override SigningCredentials GetSigningCredentials()

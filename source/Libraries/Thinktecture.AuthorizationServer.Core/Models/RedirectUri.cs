@@ -3,11 +3,14 @@
  * see license.txt
  */
 
+using System.ComponentModel.DataAnnotations;
 namespace Thinktecture.AuthorizationServer.Models
 {
     public class RedirectUri
     {
-        public int Id { get; set; }
+        [Key]
+        public int ID { get; set; }
+        [Required]
         public string Uri { get; set; }
         public string Description { get; set; }
     }

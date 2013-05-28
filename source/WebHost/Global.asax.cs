@@ -17,6 +17,8 @@ namespace Thinktecture.AuthorizationServer.WebHost
             BundleConfig.RegisterBundles(BundleTable.Bundles);
 
             AutofacConfig.Configure();
+
+            TestData.Populate();
         }
 
         void Application_EndRequest()

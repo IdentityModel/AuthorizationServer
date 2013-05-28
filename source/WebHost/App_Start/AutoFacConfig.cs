@@ -4,6 +4,7 @@ using Autofac.Integration.Mvc;
 using Autofac.Integration.WebApi;
 using System.Web.Http;
 using System.Web.Mvc;
+using Thinktecture.AuthorizationServer.EF;
 using Thinktecture.AuthorizationServer.Interfaces;
 using Thinktecture.AuthorizationServer.OAuth2;
 
@@ -15,12 +16,13 @@ namespace Thinktecture.AuthorizationServer.WebHost
         {
             var builder = new ContainerBuilder();
 
-            builder.RegisterType<DummyTokenHandleManager>().
-                As<ITokenHandleManager>();
-            builder.RegisterType<DummyAuthorizationServerConfiguration>().
-                As<IAuthorizationServerConfiguration>();
+            builder.RegisterType<DummyTokenHandleManager>().As<ITokenHandleManager>();
+            
+            //builder.RegisterType<DummyAuthorizationServerConfiguration>().As<IAuthorizationServerConfiguration>();
+            builder.RegisterType<EFAuthorizationServerConfiguration>().As<IAuthorizationServerConfiguration>();
+            builder.RegisterType<AuthorizationServerContext>();
+            
             builder.RegisterModule(new ConfigurationSettingsReader("autofac"));
-
 
             builder.RegisterControllers(typeof(AuthorizeController).Assembly);
             builder.RegisterControllers(typeof(AutofacConfig).Assembly);

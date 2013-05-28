@@ -6,6 +6,7 @@
 using System;
 using System.Security.Claims;
 using System.Web.Mvc;
+using System.Linq;
 using Thinktecture.AuthorizationServer.Interfaces;
 using Thinktecture.AuthorizationServer.Models;
 
@@ -131,8 +132,8 @@ namespace Thinktecture.AuthorizationServer.OAuth2
             {
                 Type = TokenHandleType.AuthorizationCode,
                 ClientId = validatedRequest.Client.ClientId,
-                ResourceOwner = ClaimsPrincipal.Current,
-                Scopes = validatedRequest.Scopes 
+                ResourceOwner = ClaimsPrincipal.Current.Claims.ToList(),
+                Scopes = validatedRequest.Scopes.Select(s => s.Name).ToList()
             };
 
             _handleManager.Add(handle);

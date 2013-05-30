@@ -19,7 +19,8 @@ namespace Thinktecture.AuthorizationServer.Models
         }
 
         public TokenHandle(
-            string clientID, 
+            string clientID,
+            string redirectUrl, 
             TokenHandleType type, 
             IEnumerable<Claim> claims, 
             IEnumerable<Scope> scopes,
@@ -31,6 +32,7 @@ namespace Thinktecture.AuthorizationServer.Models
             if (scopes == null) throw new ArgumentNullException("scopes");
 
             this.ClientId = clientID;
+            this.RedirectUrl = redirectUrl;
             this.Type = type;
             this.Created = DateTime.UtcNow;
             this.Expiration = expiration;
@@ -41,6 +43,7 @@ namespace Thinktecture.AuthorizationServer.Models
         [Key]
         public string HandleId { get; set; }
         public string ClientId { get; set; }
+        public string RedirectUrl { get; set; }
         public TokenHandleType Type { get; set; }
         public DateTime Created { get; set; }
         public DateTime? Expiration { get; set; }

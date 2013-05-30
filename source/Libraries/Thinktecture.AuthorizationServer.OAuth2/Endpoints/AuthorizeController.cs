@@ -130,6 +130,7 @@ namespace Thinktecture.AuthorizationServer.OAuth2
         {
             var handle = new TokenHandle(
                 validatedRequest.Client.ClientId, 
+                validatedRequest.RedirectUri.Uri,
                 TokenHandleType.AuthorizationCode, 
                 ClaimsPrincipal.Current.Claims,
                 validatedRequest.Scopes);

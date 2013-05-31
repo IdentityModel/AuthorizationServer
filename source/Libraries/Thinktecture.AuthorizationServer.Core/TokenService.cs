@@ -10,7 +10,9 @@ using System.IdentityModel.Protocols.WSTrust;
 using System.IdentityModel.Tokens;
 using System.Linq;
 using System.Security.Claims;
+using Thinktecture.AuthorizationServer.Interfaces;
 using Thinktecture.AuthorizationServer.Models;
+using Thinktecture.IdentityModel;
 
 namespace Thinktecture.AuthorizationServer
 {
@@ -21,6 +23,39 @@ namespace Thinktecture.AuthorizationServer
         public TokenService(GlobalConfiguration globalConfiguration)
         {
             this.globalConfiguration = globalConfiguration;
+        }
+
+        public TokenResponse CreateToken(TokenHandle handle, ITokenHandleManager handleManager)
+        {
+            handleManager.Delete(handle.HandleId);
+
+            var resourceOwner = Principal.Create(
+                "OAuth2",
+                handle.ResourceOwner.ToClaims().ToArray());
+
+            var validatedRequest = new ValidatedRequest
+            {
+                Client = handle.Client,
+                Application = handle.Application,
+                Scopes = handle.Scopes
+            };
+
+            var response = CreateToken(validatedRequest, resourceOwner);
+
+            if (handle.CreateRefreshToken)
+            {
+                var refreshTokenHandle = TokenHandle.CreateRefreshTokenHandle(
+                    handle.Client,
+                    handle.Application,
+                    resourceOwner.Claims,
+                    handle.Scopes,
+                    handle.RefreshTokenExpiration);
+
+                handleManager.Add(refreshTokenHandle);
+                response.RefreshToken = refreshTokenHandle.HandleId;
+            }
+
+            return response;
         }
 
         public TokenResponse CreateToken(ValidatedRequest request, ClaimsPrincipal resourceOwner)
@@ -35,8 +70,7 @@ namespace Thinktecture.AuthorizationServer
                 {
                     AccessToken = token,
                     ExpiresIn = request.Application.TokenLifetime,
-                    TokenType = "Bearer",
-                    RefreshToken = "todo"
+                    TokenType = "Bearer"
                 };
             }
             catch (Exception ex)

@@ -23,7 +23,7 @@ namespace Thinktecture.AuthorizationServer.OAuth2
             _config = config;
         }
 
-        // GET /oauth/{appName}/authorize
+        // GET /{appName}/oauth/authorize
         //
         public ActionResult Index(string appName, AuthorizeRequest request)
         {
@@ -128,12 +128,13 @@ namespace Thinktecture.AuthorizationServer.OAuth2
 
         private ActionResult PerformAuthorizationCodeGrant(ValidatedRequest validatedRequest)
         {
-            var handle = new TokenHandle(
-                validatedRequest.Client.ClientId, 
+            var handle = TokenHandle.CreateAuthorizationCode(
+                validatedRequest.Client,
+                validatedRequest.Application,
                 validatedRequest.RedirectUri.Uri,
-                TokenHandleType.AuthorizationCode, 
                 ClaimsPrincipal.Current.Claims,
-                validatedRequest.Scopes);
+                validatedRequest.Scopes,
+                validatedRequest.Client.AllowRefreshToken);
 
             _handleManager.Add(handle);
             var tokenString = string.Format("code={0}", handle.HandleId);

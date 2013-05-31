@@ -17,13 +17,16 @@ namespace Thinktecture.AuthorizationServer.OAuth2
     {
         IResourceOwnerCredentialValidation _rocv;
         IAuthorizationServerConfiguration _config;
+        ITokenHandleManager _handleManager;
 
         public TokenController(
             IResourceOwnerCredentialValidation rocv, 
-            IAuthorizationServerConfiguration config)
+            IAuthorizationServerConfiguration config,
+            ITokenHandleManager handleManager)
         {
             _rocv = rocv;
             _config = config;
+            _handleManager = handleManager;
         }
 
         public HttpResponseMessage Post(string appName, TokenRequest request)
@@ -55,22 +58,55 @@ namespace Thinktecture.AuthorizationServer.OAuth2
             {
                 return ProcessResourceOwnerCredentialRequest(validatedRequest);
             }
-
-            //else if (tokenRequest.Grant_Type.Equals(OAuth2Constants.GrantTypes.AuthorizationCode))
-            //{
-            //    return ProcessAuthorizationCodeRequest(client, tokenRequest.Code, tokenType);
-            //}
-            //else if (string.Equals(tokenRequest.Grant_Type, OAuth2Constants.GrantTypes.RefreshToken, System.StringComparison.Ordinal))
-            //{
-            //    return ProcessRefreshTokenRequest(client, tokenRequest.Refresh_Token, tokenType);
-            //}
+            else if (validatedRequest.GrantType.Equals(OAuthConstants.GrantTypes.AuthorizationCode))
+            {
+                return ProcessAuthorizationCodeRequest(validatedRequest);
+            }
+            else if (string.Equals(validatedRequest.GrantType, OAuthConstants.GrantTypes.RefreshToken))
+            {
+                return ProcessRefreshTokenRequest(validatedRequest);
+            }
 
             Tracing.Error("invalid grant type: " + request.Grant_Type);
             return Request.CreateOAuthErrorResponse(OAuthConstants.Errors.UnsupportedGrantType);
         }
 
+        private HttpResponseMessage ProcessRefreshTokenRequest(ValidatedRequest validatedRequest)
+        {
+            throw new NotImplementedException();
+        }
+
+        private HttpResponseMessage ProcessAuthorizationCodeRequest(ValidatedRequest validatedRequest)
+        {
+            Tracing.Information("Processing authorization code request");
+
+            // check for authorization code in datastore
+            var handle = _handleManager.Get(validatedRequest.AuthorizationCode);
+            if (handle == null)
+            {
+                Tracing.Error("Authorization code not found: " + validatedRequest.AuthorizationCode);
+                return Request.CreateOAuthErrorResponse(OAuthConstants.Errors.InvalidGrant);
+            }
+
+            if (!handle.RedirectUri.Equals(validatedRequest.RedirectUri))
+            {
+                Tracing.ErrorFormat("Redirect URI in token request ({0}), does not match redirect URI from authorize request ({1})",
+                    validatedRequest.RedirectUri,
+                    handle.RedirectUri);
+
+                return Request.CreateOAuthErrorResponse(OAuthConstants.Errors.InvalidRequest);
+            }
+
+            var tokenService = new TokenService(_config.GlobalConfiguration);
+            var response = tokenService.CreateToken(handle, _handleManager);
+
+            return Request.CreateTokenResponse(response);
+        }
+
         private HttpResponseMessage ProcessResourceOwnerCredentialRequest(ValidatedRequest validatedRequest)
         {
+            Tracing.Information("Processing resource owner credential request");
+
             ClaimsPrincipal principal;
             try
             {
@@ -87,33 +123,25 @@ namespace Thinktecture.AuthorizationServer.OAuth2
                 var sts = new TokenService(this._config.GlobalConfiguration);
                 var response = sts.CreateToken(validatedRequest, principal);
 
-                Tracing.Information("Returning token response.");
-                return Request.CreateResponse<TokenResponse>(HttpStatusCode.OK, response);
+                // check if refresh token is enabled for the client
+                if (validatedRequest.Client.AllowRefreshToken)
+                {
+                    var handle = TokenHandle.CreateRefreshTokenHandle(
+                        validatedRequest.Client,
+                        validatedRequest.Application,
+                        principal.Claims,
+                        validatedRequest.Scopes);
+
+                    _handleManager.Add(handle);
+                    response.RefreshToken = handle.HandleId;
+                }
+
+                return Request.CreateTokenResponse(response);
             }
             else
             {
                 return Request.CreateOAuthErrorResponse(OAuthConstants.Errors.InvalidGrant);
             }
         }
-
-        //private Application GetApplication(string appName)
-        //{
-        //    if (string.IsNullOrWhiteSpace(appName))
-        //    {
-        //        return null;
-        //    }
-
-        //    var application = (from a in AuthzConfiguration.Applications
-        //                       where a.Namespace.Equals(appName)
-        //                       select a)
-        //                      .FirstOrDefault();
-
-        //    if (application == null)
-        //    {
-        //        Tracing.Error("Application not found: " + appName);
-        //    }
-
-        //    return application;
-        //}
     }
 }

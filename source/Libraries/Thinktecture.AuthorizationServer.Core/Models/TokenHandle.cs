@@ -13,43 +13,77 @@ namespace Thinktecture.AuthorizationServer.Models
 {
     public class TokenHandle
     {
-        public TokenHandle()
-        {
-            HandleId = Guid.NewGuid().ToString("N");
-        }
-
-        public TokenHandle(
-            string clientID,
-            string redirectUrl, 
-            TokenHandleType type, 
-            IEnumerable<Claim> claims, 
-            IEnumerable<Scope> scopes,
-            DateTime? expiration = null)
-            : this()
-        {
-            if (String.IsNullOrWhiteSpace(clientID)) throw new ArgumentNullException("clientID");
-            if (clientID == null) throw new ArgumentNullException("claims");
-            if (scopes == null) throw new ArgumentNullException("scopes");
-
-            this.ClientId = clientID;
-            this.RedirectUrl = redirectUrl;
-            this.Type = type;
-            this.Created = DateTime.UtcNow;
-            this.Expiration = expiration;
-            this.ResourceOwner = claims.ToTokenHandleClaims().ToList();
-            this.Scopes = scopes.ToList();
-        }
-
         [Key]
         public string HandleId { get; set; }
-        public string ClientId { get; set; }
-        public string RedirectUrl { get; set; }
+        
+        public Client Client { get; set; }
+        public Application Application { get; set; }
+
+        public string RedirectUri { get; set; }
         public TokenHandleType Type { get; set; }
         public DateTime Created { get; set; }
         public DateTime? Expiration { get; set; }
         
+        public bool CreateRefreshToken { get; set; }
+        public DateTime? RefreshTokenExpiration { get; set; }
+
         public List<TokenHandleClaim> ResourceOwner { get; set; }
         public List<Scope> Scopes { get; set; }
+
+        public static TokenHandle CreateRefreshTokenHandle(Client client, Application application, IEnumerable<Claim> claims, IEnumerable<Scope> scopes, DateTime? expiration = null)
+        {
+            if (client == null) throw new ArgumentNullException("client");
+            if (application == null) throw new ArgumentNullException("application");
+            if (claims == null) throw new ArgumentNullException("claims");
+            if (scopes == null) throw new ArgumentNullException("scopes");
+
+            return new TokenHandle
+            {
+                Type = TokenHandleType.RefreshTokenIdentifier,
+                Client = client,
+                Application = application,
+                ResourceOwner = claims.ToTokenHandleClaims().ToList(),
+                Scopes = scopes.ToList(),
+                Created = DateTime.UtcNow,
+                Expiration = expiration
+            };
+        }
+
+        public static TokenHandle CreateAuthorizationCode(
+            Client client, 
+            Application application, 
+            string redirectUri, 
+            IEnumerable<Claim> claims, 
+            IEnumerable<Scope> scopes, 
+            bool createRefreshToken,
+            DateTime? refreshTokenExpiration = null,
+            DateTime? expiration = null)
+        {
+            if (client == null) throw new ArgumentNullException("client");
+            if (application == null) throw new ArgumentNullException("application");
+            if (claims == null) throw new ArgumentNullException("claims");
+            if (scopes == null) throw new ArgumentNullException("scopes");
+
+            return new TokenHandle
+            {
+                Type = TokenHandleType.AuthorizationCode,
+                Client = client,
+                Application = application,
+                RedirectUri = redirectUri,
+                ResourceOwner = claims.ToTokenHandleClaims().ToList(),
+                Scopes = scopes.ToList(),
+                Created = DateTime.UtcNow,
+                Expiration = expiration,
+                CreateRefreshToken = createRefreshToken,
+                RefreshTokenExpiration = refreshTokenExpiration
+            };
+        }
+
+
+        public TokenHandle()
+        {
+            HandleId = Guid.NewGuid().ToString("N");
+        }
     }
 
     public class TokenHandleClaim

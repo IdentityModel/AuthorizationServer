@@ -7,6 +7,7 @@ using System;
 using System.Net;
 using System.Net.Http;
 using System.Web.Mvc;
+using Thinktecture.AuthorizationServer.Models;
 
 namespace Thinktecture.AuthorizationServer.OAuth2
 {
@@ -20,6 +21,12 @@ namespace Thinktecture.AuthorizationServer.OAuth2
                 string.Format("{{ \"{0}\": \"{1}\" }}", OAuthConstants.Errors.Error, OAuthError));
         }
 
+        public static HttpResponseMessage CreateTokenResponse(this HttpRequestMessage request, TokenResponse response)
+        {
+            Tracing.Information("Returning token response.");
+            return request.CreateResponse<TokenResponse>(HttpStatusCode.OK, response);
+        }
+        
         public static ActionResult AuthorizeValidationError(this Controller controller, AuthorizeRequestValidationException exception)
         {
             var roException = exception as AuthorizeRequestResourceOwnerException;

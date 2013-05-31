@@ -26,7 +26,7 @@ namespace Tests
         [TestMethod]
         public void UnknownApplication()
         {
-            var controller = new TokenController(null, _testConfig)
+            var controller = new TokenController(null, _testConfig, null)
             {
                 Request = new HttpRequestMessage()
             };

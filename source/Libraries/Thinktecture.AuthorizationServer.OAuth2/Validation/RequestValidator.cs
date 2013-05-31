@@ -224,6 +224,20 @@ namespace Thinktecture.AuthorizationServer.OAuth2
             validatedRequest.GrantType = request.Grant_Type;
             Tracing.Information("Grant type: " + validatedRequest.GrantType);
 
+            // an authorization code request need an authorization code
+            if (validatedRequest.GrantType.Equals(OAuthConstants.GrantTypes.AuthorizationCode))
+            {
+                if (string.IsNullOrWhiteSpace(request.Code))
+                {
+                    throw new TokenRequestValidationException(
+                        "Missing authorization code",
+                        OAuthConstants.Errors.InvalidGrant);
+                }
+
+                validatedRequest.AuthorizationCode = request.Code;
+                Tracing.Information("Authorization code: " + validatedRequest.AuthorizationCode);
+            }
+
             // validate client credentials
             var client = ValidateClient(clientPrincipal, validatedRequest.Application);
             if (client == null)

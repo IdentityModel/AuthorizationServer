@@ -14,31 +14,31 @@ namespace Thinktecture.AuthorizationServer.Models
     public class Application
     {
         [Key]
-        public int ID { get; set; }
+        public virtual int ID { get; set; }
 
         [Required]
-        public string Name { get; set; }
-        public string Description { get; set; }
-        public string LogoUrl { get; set; }
+        public virtual string Name { get; set; }
+        public virtual string Description { get; set; }
+        public virtual string LogoUrl { get; set; }
 
         // {appName}
         // unique, URL friendly chars
         [Required]
-        public string Namespace { get; set; }
+        public virtual string Namespace { get; set; }
 
         [Required]
-        public string Audience { get; set; }
+        public virtual string Audience { get; set; }
 
         [Range(0, Int32.MaxValue)]
-        public int TokenLifetime { get; set; }
-        public bool AllowRefreshToken { get; set; }
-        public bool RequireConsent { get; set; }
-        public bool RememberConsentDecision { get; set; }
+        public virtual int TokenLifetime { get; set; }
+        public virtual bool AllowRefreshToken { get; set; }
+        public virtual bool RequireConsent { get; set; }
+        public virtual bool RememberConsentDecision { get; set; }
         
         [Required]
-        public SigningKey SigningKey { get; set; }
+        public virtual SigningKey SigningKey { get; set; }
 
-        public List<Scope> Scopes { get; set; }
+        public virtual List<Scope> Scopes { get; set; }
         
         public IEnumerable<Client> Clients
         {

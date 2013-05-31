@@ -19,6 +19,7 @@ namespace Thinktecture.AuthorizationServer.WebHost
             AutofacConfig.Configure();
 
             TestData.Populate();
+            TestData.Test();
         }
 
         void Application_EndRequest()

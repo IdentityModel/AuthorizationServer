@@ -12,19 +12,19 @@ namespace Thinktecture.AuthorizationServer.Models
     {
         [Key]
         [Required]
-        public string ClientId { get; set; }
+        public virtual string ClientId { get; set; }
         [Required]
-        public string ClientSecret { get; set; }
-        public ClientAuthenticationMethod AuthenticationMethod { get; set; }
+        public virtual string ClientSecret { get; set; }
+        public virtual ClientAuthenticationMethod AuthenticationMethod { get; set; }
         [Required]
-        public string Name { get; set; }
-        public OAuthFlow Flow { get; set; }
-        public bool AllowRefreshToken { get; set; }
+        public virtual string Name { get; set; }
+        public virtual OAuthFlow Flow { get; set; }
+        public virtual bool AllowRefreshToken { get; set; }
 
         // only relevant if Flow == Code or Implicit
-        public bool RequireConsent { get; set; }
+        public virtual bool RequireConsent { get; set; }
 
-        public List<ClientRedirectUri> RedirectUris { get; set; }
+        public virtual List<ClientRedirectUri> RedirectUris { get; set; }
 
         public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
         {

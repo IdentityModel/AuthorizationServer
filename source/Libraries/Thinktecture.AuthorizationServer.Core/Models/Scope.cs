@@ -11,12 +11,12 @@ namespace Thinktecture.AuthorizationServer.Models
     public class Scope
     {
         [Key]
-        public int ID { get; set; }
+        public virtual int ID { get; set; }
         [Required]
-        public string Name { get; set; }
-        public string Description { get; set; }
-        public bool Emphasize { get; set; }
+        public virtual string Name { get; set; }
+        public virtual string Description { get; set; }
+        public virtual bool Emphasize { get; set; }
 
-        public List<Client> AllowedClients { get; set; }
+        public virtual List<Client> AllowedClients { get; set; }
     }
 }

@@ -11,14 +11,14 @@ namespace Thinktecture.AuthorizationServer.Models
     public class GlobalConfiguration
     {
         [Key]
-        public int ID { get; set; }
+        public virtual int ID { get; set; }
         [Required]
-        public string AuthorizationServerName { get; set; }
-        public string AuthorizationServerLogoUrl { get; set; }
+        public virtual string AuthorizationServerName { get; set; }
+        public virtual string AuthorizationServerLogoUrl { get; set; }
         [Required]
-        public string Issuer { get; set; }
+        public virtual string Issuer { get; set; }
 
-        public List<AuthorizationServerAdministrator> Administrators { get; set; }
+        public virtual List<AuthorizationServerAdministrator> Administrators { get; set; }
     }
 
     public class AuthorizationServerAdministrator

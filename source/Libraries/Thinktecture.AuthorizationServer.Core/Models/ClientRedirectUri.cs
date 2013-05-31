@@ -9,9 +9,9 @@ namespace Thinktecture.AuthorizationServer.Models
     public class ClientRedirectUri
     {
         [Key]
-        public int ID { get; set; }
+        public virtual int ID { get; set; }
         [Required]
-        public string Uri { get; set; }
-        public string Description { get; set; }
+        public virtual string Uri { get; set; }
+        public virtual string Description { get; set; }
     }
 }

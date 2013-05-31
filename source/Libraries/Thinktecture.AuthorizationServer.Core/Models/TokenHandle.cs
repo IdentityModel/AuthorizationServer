@@ -14,21 +14,21 @@ namespace Thinktecture.AuthorizationServer.Models
     public class TokenHandle
     {
         [Key]
-        public string HandleId { get; set; }
-        
-        public Client Client { get; set; }
-        public Application Application { get; set; }
+        public virtual string HandleId { get; set; }
 
-        public string RedirectUri { get; set; }
-        public TokenHandleType Type { get; set; }
-        public DateTime Created { get; set; }
-        public DateTime? Expiration { get; set; }
-        
-        public bool CreateRefreshToken { get; set; }
-        public DateTime? RefreshTokenExpiration { get; set; }
+        public virtual Client Client { get; set; }
+        public virtual Application Application { get; set; }
 
-        public List<TokenHandleClaim> ResourceOwner { get; set; }
-        public List<Scope> Scopes { get; set; }
+        public virtual string RedirectUri { get; set; }
+        public virtual TokenHandleType Type { get; set; }
+        public virtual DateTime Created { get; set; }
+        public virtual DateTime? Expiration { get; set; }
+
+        public virtual bool CreateRefreshToken { get; set; }
+        public virtual DateTime? RefreshTokenExpiration { get; set; }
+
+        public virtual List<TokenHandleClaim> ResourceOwner { get; set; }
+        public virtual List<Scope> Scopes { get; set; }
 
         public static TokenHandle CreateRefreshTokenHandle(Client client, Application application, IEnumerable<Claim> claims, IEnumerable<Scope> scopes, DateTime? expiration = null)
         {
@@ -88,8 +88,8 @@ namespace Thinktecture.AuthorizationServer.Models
 
     public class TokenHandleClaim
     {
-        public int ID { get; set; }
-        public string Type { get; set; }
-        public string Value { get; set; }
+        public virtual int ID { get; set; }
+        public virtual string Type { get; set; }
+        public virtual string Value { get; set; }
     }
 }

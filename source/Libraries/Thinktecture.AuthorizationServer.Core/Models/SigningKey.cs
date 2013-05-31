@@ -13,18 +13,18 @@ namespace Thinktecture.AuthorizationServer.Models
 {
     public abstract class SigningKey
     {
-        public int ID { get; set; }
+        public virtual int ID { get; set; }
         
         public abstract SigningCredentials GetSigningCredentials();
     }
     
     public class X509CertificateReference : SigningKey
     {
-        public StoreLocation Location { get; set; }
-        public StoreName StoreName { get; set; }
-        public X509FindType FindType { get; set; }
+        public virtual StoreLocation Location { get; set; }
+        public virtual StoreName StoreName { get; set; }
+        public virtual X509FindType FindType { get; set; }
         [Required]
-        public string FindValue { get; set; }
+        public virtual string FindValue { get; set; }
 
         public X509Certificate2 Certificate
         {
@@ -49,7 +49,7 @@ namespace Thinktecture.AuthorizationServer.Models
     public class SymmetricKey : SigningKey
     {
         [Required]
-        public byte[] Value { get; set; }
+        public virtual byte[] Value { get; set; }
 
         public override SigningCredentials GetSigningCredentials()
         {

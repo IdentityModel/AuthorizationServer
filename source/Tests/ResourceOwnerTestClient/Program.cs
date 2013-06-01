@@ -8,7 +8,7 @@ namespace ResourceOwnerTestClient
         static void Main(string[] args)
         {
             var client = new OAuth2Client(
-                new Uri("https://roadie/authz/oauth/users/token"),
+                new Uri("https://roadie/authz/users/oauth/token"),
                 "roclient",
                 "secret");
 

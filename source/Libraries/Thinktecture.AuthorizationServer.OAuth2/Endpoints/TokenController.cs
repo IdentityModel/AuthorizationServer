@@ -98,7 +98,7 @@ namespace Thinktecture.AuthorizationServer.OAuth2
             }
 
             var tokenService = new TokenService(_config.GlobalConfiguration);
-            var response = tokenService.CreateToken(handle, _handleManager);
+            var response = tokenService.CreateTokenResponse(handle, _handleManager);
 
             return Request.CreateTokenResponse(response);
         }
@@ -121,7 +121,7 @@ namespace Thinktecture.AuthorizationServer.OAuth2
             if (principal != null && principal.Identity.IsAuthenticated)
             {
                 var sts = new TokenService(this._config.GlobalConfiguration);
-                var response = sts.CreateToken(validatedRequest, principal);
+                var response = sts.CreateTokenResponse(validatedRequest, principal);
 
                 // check if refresh token is enabled for the client
                 if (validatedRequest.Client.AllowRefreshToken)

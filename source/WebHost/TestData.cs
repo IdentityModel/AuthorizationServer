@@ -6,6 +6,7 @@ using System.Web;
 using System.Web.Mvc;
 using Thinktecture.AuthorizationServer.EF;
 using Thinktecture.AuthorizationServer.Models;
+using Thinktecture.IdentityModel;
 
 namespace Thinktecture.AuthorizationServer.WebHost
 {
@@ -136,11 +137,11 @@ namespace Thinktecture.AuthorizationServer.WebHost
                     {
                         Name = "User management",
                         Namespace = "users",
-                        Audience = "rp",
+                        Audience = "urn:users",
                         Scopes = new List<Scope> { readScope, searchScope, writeScope },
                         RequireConsent = true,
                         TokenLifetime = 60,
-                        SigningKey = new SymmetricKey { Value = new byte[] { 1, 2, 3, 4, 5, 6 } }
+                        SigningKey = new SymmetricKey { Value = CryptoRandom.CreateRandomKey(32) }
                     };
                     db.Applications.Add(application);
                     db.SaveChanges();

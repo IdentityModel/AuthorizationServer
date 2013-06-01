@@ -156,7 +156,7 @@ namespace Thinktecture.AuthorizationServer.OAuth2
             Tracing.Information("Performing implict grant");
 
             var sts = new TokenService(this._config.GlobalConfiguration);
-            var response = sts.CreateToken(validatedRequest, ClaimsPrincipal.Current);
+            var response = sts.CreateTokenResponse(validatedRequest, ClaimsPrincipal.Current);
 
             var tokenString = string.Format("access_token={0}&token_type={1}&expires_in={2}",
                     response.AccessToken,

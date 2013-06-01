@@ -25,7 +25,7 @@ namespace Thinktecture.AuthorizationServer
             this.globalConfiguration = globalConfiguration;
         }
 
-        public TokenResponse CreateToken(TokenHandle handle, ITokenHandleManager handleManager)
+        public virtual TokenResponse CreateTokenResponse(TokenHandle handle, ITokenHandleManager handleManager)
         {
             handleManager.Delete(handle.HandleId);
 
@@ -40,7 +40,7 @@ namespace Thinktecture.AuthorizationServer
                 Scopes = handle.Scopes
             };
 
-            var response = CreateToken(validatedRequest, resourceOwner);
+            var response = CreateTokenResponse(validatedRequest, resourceOwner);
 
             if (handle.CreateRefreshToken)
             {
@@ -58,7 +58,7 @@ namespace Thinktecture.AuthorizationServer
             return response;
         }
 
-        public TokenResponse CreateToken(ValidatedRequest request, ClaimsPrincipal resourceOwner)
+        public virtual TokenResponse CreateTokenResponse(ValidatedRequest request, ClaimsPrincipal resourceOwner)
         {
             try
             {
@@ -69,7 +69,7 @@ namespace Thinktecture.AuthorizationServer
                 return new TokenResponse
                 {
                     AccessToken = token,
-                    ExpiresIn = request.Application.TokenLifetime,
+                    ExpiresIn = request.Application.TokenLifetime * 60,
                     TokenType = "Bearer"
                 };
             }

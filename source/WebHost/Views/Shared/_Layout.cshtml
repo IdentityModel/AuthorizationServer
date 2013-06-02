@@ -2,13 +2,18 @@
 <html>
 <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewBag.Title</title>
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
 </head>
 <body>
-    @RenderBody()
+
+    <div class="container" id="container-top">
+        @Html.Action("Banner", "Home", new { area="" })
+        @RenderBody()
+        @Html.Action("Footer", "Home", new { area="" })
+    </div>
 
     @Scripts.Render("~/bundles/js")
     @RenderSection("scripts", required: false)

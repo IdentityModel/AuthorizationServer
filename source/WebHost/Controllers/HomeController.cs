@@ -1,7 +1,7 @@
 ﻿using System.Web.Mvc;
 using Thinktecture.AuthorizationServer.Interfaces;
 
-namespace WebHost.Controllers
+namespace Thinktecture.AuthorizationServer.WebHost.Controllers
 {
     public class HomeController : Controller
     {
@@ -14,6 +14,17 @@ namespace WebHost.Controllers
         public ActionResult Index()
         {
             return View();
+        }
+
+        public ActionResult Banner()
+        {
+            ViewData["ServerName"] = config.GlobalConfiguration.AuthorizationServerName;
+            return PartialView("Banner");
+        }
+
+        public ActionResult Footer()
+        {
+            return PartialView("Footer");
         }
 
     }

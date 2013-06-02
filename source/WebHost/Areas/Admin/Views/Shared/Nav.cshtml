@@ -1,0 +1,18 @@
+﻿@helper SetActiveClass(string controller)
+{
+    if (controller.Equals(ViewContext.RequestContext.RouteData.Values["controller"]))
+    {
+        @: class='active'
+    }
+}
+
+<nav class="span2">
+    <ul class="nav nav-pills nav-stacked">
+        <li>@Html.ActionLink("Home", "Index", "Home", new { area="" }, null)</li>
+        <li @SetActiveClass("Global")>@Html.ActionLink("Global", "Index", "Home")</li>
+        <li @SetActiveClass("Application")>@Html.ActionLink("Applications", "Index", "Application")</li>
+        <li @SetActiveClass("Client")>@Html.ActionLink("Clients", "Index", "Client")</li>
+        <li @SetActiveClass("Key")>@Html.ActionLink("Keys", "Index", "Key")</li>
+        <li @SetActiveClass("Tokens")>@Html.ActionLink("Tokens", "Index", "Token")</li>
+    </ul>
+</nav>

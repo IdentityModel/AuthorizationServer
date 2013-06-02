@@ -1,0 +1,10 @@
+﻿@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<section class="row">
+    @Html.Partial("Nav")
+    <section class="span9 offset1">
+        @RenderBody()
+    </section>
+</section>

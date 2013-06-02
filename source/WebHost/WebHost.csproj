@@ -164,6 +164,11 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Areas\Admin\AdminAreaRegistration.cs" />
+    <Compile Include="Areas\Admin\Controllers\ClientController.cs" />
+    <Compile Include="Areas\Admin\Controllers\ApplicationController.cs" />
+    <Compile Include="Areas\Admin\Controllers\KeyController.cs" />
+    <Compile Include="Areas\Admin\Controllers\TokenController.cs" />
+    <Compile Include="Areas\Admin\Controllers\GlobalController.cs" />
     <Compile Include="Areas\Admin\Controllers\HomeController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Global.asax.cs">
@@ -250,6 +255,15 @@
     <Content Include="Content\themes\base\minified\jquery.ui.theme.min.css" />
     <Content Include="Content\themes\base\minified\jquery.ui.tooltip.min.css" />
     <Content Include="Global.asax" />
+    <Content Include="Areas\Admin\Views\Home\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\_ViewStart.cshtml" />
+    <Content Include="Areas\Admin\Views\Shared\_Layout.cshtml" />
+    <Content Include="Areas\Admin\Views\Global\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\Shared\Nav.cshtml" />
+    <Content Include="Areas\Admin\Views\Key\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\Token\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\Client\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\Application\Index.cshtml" />
     <None Include="Content\Site.less" />
     <Content Include="Configuration\identityModel.config" />
     <Content Include="Configuration\identityModel.services.config" />
@@ -266,6 +280,7 @@
     <Content Include="Scripts\jquery-2.0.1.min.map" />
     <Content Include="Views\Home\Banner.cshtml" />
     <Content Include="Views\Home\Footer.cshtml" />
+    <Content Include="Views\Shared\_LayoutWithMenu.cshtml" />
     <None Include="_bin_deployableAssemblies\x86\sqlcese40.dll" />
     <None Include="_bin_deployableAssemblies\x86\sqlceqp40.dll" />
     <None Include="_bin_deployableAssemblies\x86\sqlceme40.dll" />
@@ -321,7 +336,6 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Areas\Admin\Models\" />
-    <Folder Include="Areas\Admin\Views\Shared\" />
     <Folder Include="Models\" />
   </ItemGroup>
   <ItemGroup>

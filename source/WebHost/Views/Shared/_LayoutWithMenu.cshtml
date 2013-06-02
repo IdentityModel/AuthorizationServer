@@ -1,0 +1,15 @@
+﻿@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<section class="row">
+    <nav class="span2">
+        <ul class="nav nav-pills nav-stacked">
+            <li>@Html.ActionLink("Home", "Index", "Home")</li>
+            <li>@Html.ActionLink("Admin", "Index", "Home", new { area="Admin" }, null)</li>
+        </ul>
+    </nav>
+    <section class="span9 offset1">
+        @RenderBody()
+    </section>
+</section>

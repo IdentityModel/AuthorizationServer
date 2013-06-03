@@ -36,6 +36,11 @@ namespace Thinktecture.AuthorizationServer.WebHost.Areas.Admin.Api
             var item = this.config.Keys.All.SingleOrDefault(x => x.ID == id);
             if (item != null)
             {
+                if (item.Applications.Count > 0)
+                {
+                    return Request.CreateResponse(HttpStatusCode.Conflict);
+                }
+
                 this.config.Keys.Remove(item);
                 this.config.SaveChanges();
             }

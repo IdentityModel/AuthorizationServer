@@ -36,9 +36,12 @@ namespace Thinktecture.AuthorizationServer.WebHost.Areas.Admin.Api
             if (!ModelState.IsValid) return Request.CreateErrorResponse(HttpStatusCode.BadRequest, ModelState);
             
             var config = this.config.GlobalConfiguration;
-            return Request.CreateResponse(HttpStatusCode.OK);
-        }
+            this.config.GlobalConfiguration.AuthorizationServerName = model.Name;
+            this.config.GlobalConfiguration.AuthorizationServerLogoUrl = model.Logo;
+            this.config.GlobalConfiguration.Issuer = model.Issuer;
+            this.config.SaveChanges();
 
-        
+            return Request.CreateResponse(HttpStatusCode.NoContent);
+        }
     }
 }

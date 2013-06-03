@@ -25,5 +25,10 @@ namespace Thinktecture.AuthorizationServer.EF
         {
             return db.Applications.SingleOrDefault(x => x.Namespace == url);
         }
+
+        public void SaveChanges()
+        {
+            db.SaveChanges();
+        }
     }
 }

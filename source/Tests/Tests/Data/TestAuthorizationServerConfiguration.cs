@@ -147,5 +147,11 @@ namespace Thinktecture.AuthorizationServer.Test
         {
             get { return null; }
         }
+
+
+        public void SaveChanges()
+        {
+            throw new System.NotImplementedException();
+        }
     }
 }

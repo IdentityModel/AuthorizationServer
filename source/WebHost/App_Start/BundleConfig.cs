@@ -21,8 +21,13 @@ namespace Thinktecture.AuthorizationServer.WebHost
                 "~/Scripts/jquery-{version}.js",
                 "~/Scripts/knockout-{version}.js",
                 "~/Scripts/knockout.mapping-latest.js",
-                "~/Scripts/knockout-es5.js",
+                //"~/Scripts/knockout-es5.js",
                 "~/Scripts/bootstrap.js"));
+
+            bundles.Add(new ScriptBundle("~/bundles/admin").Include(
+                "~/Areas/Admin/Scripts/Admin.js"));
+            bundles.Add(new ScriptBundle("~/bundles/admin-global").Include(
+                "~/Areas/Admin/Scripts/Global.js"));
             
             bundles.Add(new StyleBundle("~/Content/css").Include(
                 "~/Content/bootstrap.cosmo.css",

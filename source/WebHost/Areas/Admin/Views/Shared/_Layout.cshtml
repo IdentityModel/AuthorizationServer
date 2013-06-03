@@ -8,3 +8,9 @@
         @RenderBody()
     </section>
 </section>
+
+@section scripts{
+    @Scripts.Render("~/bundles/admin")
+    @RenderSection("scripts", required: false)
+    <script src='@Url.Action("Urls", "Home")'></script>
+}

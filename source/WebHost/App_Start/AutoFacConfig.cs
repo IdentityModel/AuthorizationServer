@@ -28,6 +28,7 @@ namespace Thinktecture.AuthorizationServer.WebHost
             builder.RegisterControllers(typeof(AuthorizeController).Assembly);
             builder.RegisterControllers(typeof(AutofacConfig).Assembly);
             builder.RegisterApiControllers(typeof(TokenController).Assembly);
+            builder.RegisterApiControllers(typeof(AutofacConfig).Assembly);
 
             var container = builder.Build(); 
             

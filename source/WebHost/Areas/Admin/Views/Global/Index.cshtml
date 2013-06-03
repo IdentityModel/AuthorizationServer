@@ -2,4 +2,27 @@
     ViewBag.Title = "Index";
 }
 
-<h2>Index</h2>
+<h2>Global Configuration</h2>
+<fieldset id="global">
+    <legend></legend>
+    <div>
+        <label for="name">Name</label>
+        <input id="name" data-bind="value:name" class="input-xxlarge" />
+        <label class="text-error" data-bind="text:nameError"></label>
+    </div>
+    <div>
+        <label for="logo">Logo</label>
+        <input id="logo" data-bind="value:logo" class="input-xxlarge" />
+    </div>
+    <div>
+        <label for="issuer">Issuer</label>
+        <input id="issuer" data-bind="value:issuer" class="input-xxlarge" />
+        <label class="text-error" data-bind="text: issuerError"></label>
+    </div>
+    <div><button class="btn btn-primary" data-bind="click: save, disable: anyErrors, css: {disabled:anyErrors}">Save</button></div>
+</fieldset>
+
+@section scripts
+{
+    @Scripts.Render("~/bundles/admin-global")
+}

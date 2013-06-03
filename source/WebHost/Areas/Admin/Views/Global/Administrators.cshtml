@@ -11,7 +11,7 @@
         <button class="btn btn-primary" data-bind="click:addAdmin">Add</button>
     </div>
 </fieldset>
-<table class="table table-striped">
+<table class="table table-striped hide" data-bind="css: { hide: !administrators().length }">
     <thead>
         <tr>
             <th></th>
@@ -25,6 +25,9 @@
         </tr>
     </tbody>
 </table>
+<p data-bind="css: { hide: administrators().length }" class="alert alert-warning hide">
+    No Administrators Found
+</p>
 
 @section scripts
 {

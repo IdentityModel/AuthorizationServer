@@ -11,6 +11,5 @@ namespace Thinktecture.AuthorizationServer.Interfaces
     {
         GlobalConfiguration GlobalConfiguration { get; }
         Application FindApplication(string url);
-        void SaveChanges();
     }
 }

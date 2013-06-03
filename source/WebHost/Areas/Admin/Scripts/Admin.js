@@ -36,11 +36,13 @@ var authz = (function () {
     }
     Service.prototype.get = function (id) {
         id = id || "";
-        var request = $.ajax({
+        return $.ajax({
             url: authz.baseUrl + this.path + id,
             type: 'GET'
+        }).fail(function (xhr, status, error) {
+            showErrorMessage("Error Loading")
+            return xhr;
         });
-        return request;
     };
     Service.prototype.put = function (data, id) {
         id = id || "";

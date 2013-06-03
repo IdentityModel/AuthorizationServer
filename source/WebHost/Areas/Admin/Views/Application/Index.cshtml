@@ -1,5 +1,32 @@
 ﻿@{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Applications";
 }
 
-<h2>Index</h2>
+<h2>Applications</h2>
+@*<ul class="nav nav-pills">
+    <li>@Html.ActionLink("New Application", "New")</li>
+</ul>*@
+<table class="table table-striped hide" data-bind="css:{hide:!applications().length}">
+    <thead>
+        <tr>
+            <th></th>
+            <th>Namespace</th>
+            <th>Name</th>
+        </tr>
+    </thead>
+    <tbody data-bind="foreach:applications">
+        <tr>
+            <td><button class="btn" data-bind="click: function (data, evt) { $parent.deleteApp(data) }">Delete</button></td>
+            <td data-bind="text:namespace"></td>
+            <td data-bind="text:name"></td>
+            <td><img data-bind="attr: { src:logoUrl, alt:name }, visible:logoUrl" /></td>
+        </tr>
+    </tbody>
+</table>
+<p data-bind="css:{hide:applications().length}" class="hide alert alert-warning">
+    No Applications Found
+</p>
+
+@section scripts{
+    <script src="~/Areas/Admin/Scripts/Applications.js"></script>
+}

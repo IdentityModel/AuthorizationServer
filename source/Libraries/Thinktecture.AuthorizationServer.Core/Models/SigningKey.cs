@@ -14,8 +14,11 @@ namespace Thinktecture.AuthorizationServer.Models
     public abstract class SigningKey
     {
         public virtual int ID { get; set; }
-        
+        [Required]
+        public virtual string Name { get; set; }
         public abstract SigningCredentials GetSigningCredentials();
+
+        public virtual ICollection<Application> Applications { get; set; }
     }
     
     public class X509CertificateReference : SigningKey

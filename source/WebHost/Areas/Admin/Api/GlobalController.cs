@@ -11,9 +11,9 @@ namespace Thinktecture.AuthorizationServer.WebHost.Areas.Admin.Api
 {
     public class GlobalController : ApiController
     {
-        IAuthorizationServerConfiguration config;
+        IAuthorizationServerAdministration config;
 
-        public GlobalController(IAuthorizationServerConfiguration config)
+        public GlobalController(IAuthorizationServerAdministration config)
         {
             this.config = config;
         }

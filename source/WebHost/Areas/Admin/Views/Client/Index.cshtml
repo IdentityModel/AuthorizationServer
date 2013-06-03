@@ -1,5 +1,33 @@
 ﻿@{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Clients";
 }
 
-<h2>Index</h2>
+<h2>Clients</h2>
+@*<ul class="nav nav-pills">
+    <li>@Html.ActionLink("New Client", "New")</li>
+</ul>*@
+<table class="table table-striped hide" data-bind="css: { hide: !clients().length }">
+    <thead>
+        <tr>
+            <th></th>
+            <th>Client ID</th>
+            <th>Name</th>
+            <th>Flow</th>
+        </tr>
+    </thead>
+    <tbody data-bind="foreach: clients">
+        <tr>
+            <td><button class="btn" data-bind="click: function (data, evt) { $parent.deleteClient(data) }">Delete</button></td>
+            <td data-bind="text:clientId"></td>
+            <td data-bind="text:name"></td>
+            <td data-bind="text: flow"></td>
+        </tr>
+    </tbody>
+</table>
+<p data-bind="css: { hide: clients().length }" class="alert alert-warning hide">
+    No Clients Found
+</p>
+
+@section scripts{
+    <script src="~/Areas/Admin/Scripts/Clients.js"></script>
+}

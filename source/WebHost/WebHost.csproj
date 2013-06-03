@@ -164,6 +164,9 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Areas\Admin\AdminAreaRegistration.cs" />
+    <Compile Include="Areas\Admin\Api\ApplicationsController.cs" />
+    <Compile Include="Areas\Admin\Api\ClientsController.cs" />
+    <Compile Include="Areas\Admin\Api\KeysController.cs" />
     <Compile Include="Areas\Admin\Api\GlobalAdministratorsController.cs" />
     <Compile Include="Areas\Admin\Api\GlobalController.cs" />
     <Compile Include="Areas\Admin\Controllers\ClientController.cs" />
@@ -188,6 +191,9 @@
     <Content Include="Areas\Admin\Content\Admin.min.css">
       <DependentUpon>Admin.less</DependentUpon>
     </Content>
+    <Content Include="Areas\Admin\Scripts\Applications.js" />
+    <Content Include="Areas\Admin\Scripts\Clients.js" />
+    <Content Include="Areas\Admin\Scripts\Keys.js" />
     <Content Include="Areas\Admin\Scripts\Global-Administrators.js" />
     <Content Include="Areas\Admin\Scripts\Global.js" />
     <Content Include="Content\bootstrap-responsive.css" />

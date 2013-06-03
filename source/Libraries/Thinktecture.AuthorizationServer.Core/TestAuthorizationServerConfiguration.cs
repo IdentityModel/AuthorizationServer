@@ -128,11 +128,5 @@ namespace Thinktecture.AuthorizationServer
         {
             get { throw new System.NotImplementedException(); }
         }
-
-
-        public void SaveChanges()
-        {
-            throw new System.NotImplementedException();
-        }
     }
 }

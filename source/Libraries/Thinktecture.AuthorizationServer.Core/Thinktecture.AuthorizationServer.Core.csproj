@@ -56,6 +56,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Interfaces\IAuthorizationServerAdministration.cs" />
     <Compile Include="Interfaces\IAuthorizationServerConfiguration.cs" />
     <Compile Include="Interfaces\IResourceOwnerCredentialValidation.cs" />
     <Compile Include="Interfaces\ITokenHandleManager.cs" />

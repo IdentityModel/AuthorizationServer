@@ -141,7 +141,7 @@ namespace Thinktecture.AuthorizationServer.WebHost
                         Scopes = new List<Scope> { readScope, searchScope, writeScope },
                         RequireConsent = true,
                         TokenLifetime = 60,
-                        SigningKey = new SymmetricKey { Value = CryptoRandom.CreateRandomKey(32) }
+                        SigningKey = new SymmetricKey { Name="main signing key", Value = CryptoRandom.CreateRandomKey(32) }
                     };
                     db.Applications.Add(application);
                     db.SaveChanges();

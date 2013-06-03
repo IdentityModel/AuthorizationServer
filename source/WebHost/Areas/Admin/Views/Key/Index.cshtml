@@ -1,5 +1,33 @@
 ﻿@{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Keys";
 }
 
-<h2>Index</h2>
+<h2>Keys</h2>
+@*<ul class="nav nav-pills">
+    <li>@Html.ActionLink("New Client", "New")</li>
+</ul>*@
+<table class="table table-striped hide" data-bind="css: { hide: !keys().length }">
+    <thead>
+        <tr>
+            <th></th>
+            <th>Name</th>
+            <th>Type</th>
+            <th>Applications</th>
+        </tr>
+    </thead>
+    <tbody data-bind="foreach: keys">
+        <tr>
+            <td><button class="btn" data-bind="click: function (data, evt) { $parent.deleteKey(data) }, enable: applicationCount() == 0">Delete</button></td>
+            <td data-bind="text:name"></td>
+            <td data-bind="text:type"></td>
+            <td data-bind="text: applicationCount"></td>
+        </tr>
+    </tbody>
+</table>
+<p data-bind="css: { hide: keys().length }" class="alert alert-warning hide">
+    No Keys Found
+</p>
+
+@section scripts{
+    <script src="~/Areas/Admin/Scripts/Keys.js"></script>
+}

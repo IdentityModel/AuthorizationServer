@@ -46,6 +46,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="EFAuthorizationServerAdministration.cs" />
     <Compile Include="EFAuthorizationServerConfiguration.cs" />
     <Compile Include="AuthorizationServerContext.cs" />
     <Compile Include="EFTokenHandleManager.cs" />

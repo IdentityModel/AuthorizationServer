@@ -28,11 +28,14 @@ namespace Thinktecture.AuthorizationServer.WebHost
                 "~/Areas/Admin/Scripts/Admin.js"));
             bundles.Add(new ScriptBundle("~/bundles/admin-global").Include(
                 "~/Areas/Admin/Scripts/Global.js"));
-            
+
             bundles.Add(new StyleBundle("~/Content/css").Include(
                 "~/Content/bootstrap.cosmo.css",
                 //"~/Content/bootstrap-responsive.css",
                 "~/Content/site.css"));
+            
+            bundles.Add(new StyleBundle("~/Content/admin").Include(
+                "~/Areas/Admin/Content/Admin.css"));
         }
     }
 }

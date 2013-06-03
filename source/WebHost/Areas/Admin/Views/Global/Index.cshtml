@@ -2,7 +2,14 @@
     ViewBag.Title = "Index";
 }
 
-<h2>Global Configuration</h2>
+    <h2>
+        Global Configuration
+    </h2>
+<div>
+    <ul class="nav nav-pills">
+        <li><a href="#">Administrators</a></li>
+    </ul>
+</div>
 <fieldset id="global">
     <legend></legend>
     <div>
@@ -19,7 +26,9 @@
         <input id="issuer" data-bind="value:issuer" class="input-xxlarge" />
         <label class="text-error" data-bind="text: issuerError"></label>
     </div>
-    <div><button class="btn btn-primary" data-bind="click: save, disable: anyErrors, css: {disabled:anyErrors}">Save</button></div>
+    <div>
+        <button class="btn btn-primary" data-bind="click: save, disable: anyErrors, css: {disabled:anyErrors}">Save</button>
+    </div>
 </fieldset>
 
 @section scripts

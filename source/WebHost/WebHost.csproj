@@ -180,6 +180,13 @@
     <Compile Include="TestData.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Areas\Admin\Content\Admin.less" />
+    <Content Include="Areas\Admin\Content\Admin.css">
+      <DependentUpon>Admin.less</DependentUpon>
+    </Content>
+    <Content Include="Areas\Admin\Content\Admin.min.css">
+      <DependentUpon>Admin.less</DependentUpon>
+    </Content>
     <Content Include="Areas\Admin\Scripts\Global.js" />
     <Content Include="Content\bootstrap-responsive.css" />
     <Content Include="Content\bootstrap-responsive.min.css" />

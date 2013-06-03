@@ -33,7 +33,10 @@ namespace Thinktecture.AuthorizationServer.WebHost.Areas.Admin.Api
 
         public HttpResponseMessage Put(GlobalViewModel model)
         {
-            if (!ModelState.IsValid) return Request.CreateErrorResponse(HttpStatusCode.BadRequest, ModelState);
+            if (!ModelState.IsValid)
+            {
+                return Request.CreateErrorResponse(HttpStatusCode.BadRequest, ModelState);
+            }
             
             var config = this.config.GlobalConfiguration;
             this.config.GlobalConfiguration.AuthorizationServerName = model.Name;

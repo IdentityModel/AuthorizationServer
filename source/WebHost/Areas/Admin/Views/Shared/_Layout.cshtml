@@ -2,9 +2,14 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
+@section css{
+    @Styles.Render("~/Content/admin")
+}
+
 <section class="row">
     @Html.Partial("Nav")
     <section class="span9 offset1">
+        <span class="pull-right alert" id="message"></span>
         @RenderBody()
     </section>
 </section>

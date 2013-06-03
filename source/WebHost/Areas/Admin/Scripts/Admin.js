@@ -26,7 +26,6 @@ var authz = (function () {
             models.Global.prototype.anyErrors = ko.computed(function () {
                 for (var prop in item) {
                     if (prop.indexOf("InError") >= 0) {
-                        console.log("found", prop);
                         if (item[prop]()) {
                             return true;
                         }
@@ -37,18 +36,44 @@ var authz = (function () {
         }
     };
     models.Global.prototype.save = function () {
-        console.log(this, JSON.stringify(this));
         authz.services.global.put(ko.mapping.toJS(this));
     };
 
-    function Service(path) {
+    function showMessage(msg, css) {
+        var elem = $("#message");
+        if (elem.is(":visible")) {
+            elem.clearQueue().fadeOut(function () {
+                showMessage(msg, css);
+            });
+        }
+        else {
+            elem
+                .addClass(css)
+                .text(msg)
+                .fadeIn()
+                .delay(2000)
+                .fadeOut(function () {
+                    $(this).text("").removeClass(css);
+                });
+        }
+    }
+    function showSuccessMessage(msg) {
+        showMessage(msg, "alert-success");
+    }
+    function showErrorMessage(msg) {
+        showMessage(msg, "alert-error");
+    }
+
+    function Service(path, settings) {
         this.path = path;
+        this.settings = settings || {};
     }
     Service.prototype.get = function () {
-        return $.ajax({
+        var request =  $.ajax({
             url: authz.baseUrl + this.path,
             type: 'GET'
         });
+        return request;
     };
     Service.prototype.put = function (data) {
         return $.ajax({
@@ -56,12 +81,28 @@ var authz = (function () {
             type: 'PUT',
             contentType: 'application/json',
             data: JSON.stringify(data)
+        }).then(
+        function(data, status, xhr){
+            showSuccessMessage("Update Successful");
+            return xhr;
+        },
+        function(xhr, status, error){
+            showErrorMessage("Error Updating");
+            return xhr;
         });
     };
     Service.prototype.delete = function () {
         return $.ajax({
             url: authz.baseUrl + this.path,
             type: 'DELETE'
+        }).then(
+        function(data, status, xhr){
+            showSuccessMessage("Delete Successful");
+            return xhr;
+        },
+        function(xhr, status, error){
+            showErrorMessage("Error Deleting");
+            return xhr;
         });
     };
     Service.prototype.post = function (data) {
@@ -70,6 +111,14 @@ var authz = (function () {
             type: 'POST',
             contentType: 'application/json',
             data: JSON.stringify(data)
+        }).then(
+        function (data, status, xhr) {
+            showSuccessMessage("Create Successful");
+            return xhr;
+        },
+        function (xhr, status, error) {
+            showErrorMessage("Error Creating");
+            return xhr;
         });
     };
 

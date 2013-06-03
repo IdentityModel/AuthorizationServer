@@ -1,0 +1,32 @@
+﻿@{
+    ViewBag.Title = "Server Administrators";
+}
+
+<h2>Server Administrators</h2>
+<fieldset>
+    <legend></legend>
+    <div>
+        <label for="name">Add Administrator Name ID</label>
+        <input id="name" data-bind="value:nameToAdd" />
+        <button class="btn btn-primary" data-bind="click:addAdmin">Add</button>
+    </div>
+</fieldset>
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th></th>
+            <th>Administrator Name ID</th>
+        </tr>
+    </thead>
+    <tbody data-bind="foreach:administrators">
+        <tr>
+            <td><button class="btn" data-bind="click: function (data, evt) { $parent.deleteAdmin(data) }">Delete</button></td>
+            <td data-bind="text:nameID"></td>
+        </tr>
+    </tbody>
+</table>
+
+@section scripts
+{
+    <script src="~/Areas/Admin/Scripts/Global-Administrators.js"></script>
+}

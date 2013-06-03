@@ -164,6 +164,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Areas\Admin\AdminAreaRegistration.cs" />
+    <Compile Include="Areas\Admin\Api\GlobalAdministratorsController.cs" />
     <Compile Include="Areas\Admin\Api\GlobalController.cs" />
     <Compile Include="Areas\Admin\Controllers\ClientController.cs" />
     <Compile Include="Areas\Admin\Controllers\ApplicationController.cs" />
@@ -187,6 +188,7 @@
     <Content Include="Areas\Admin\Content\Admin.min.css">
       <DependentUpon>Admin.less</DependentUpon>
     </Content>
+    <Content Include="Areas\Admin\Scripts\Global-Administrators.js" />
     <Content Include="Areas\Admin\Scripts\Global.js" />
     <Content Include="Content\bootstrap-responsive.css" />
     <Content Include="Content\bootstrap-responsive.min.css" />
@@ -274,6 +276,7 @@
     <Content Include="Areas\Admin\Views\Token\Index.cshtml" />
     <Content Include="Areas\Admin\Views\Client\Index.cshtml" />
     <Content Include="Areas\Admin\Views\Application\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\Global\Administrators.cshtml" />
     <None Include="Content\Site.less" />
     <Content Include="Configuration\identityModel.config" />
     <Content Include="Configuration\identityModel.services.config" />

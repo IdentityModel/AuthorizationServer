@@ -7,7 +7,7 @@
     </h2>
 <div>
     <ul class="nav nav-pills">
-        <li><a href="#">Administrators</a></li>
+        <li>@Html.ActionLink("Administrators", "Administrators")</li>
     </ul>
 </div>
 <fieldset id="global">
@@ -33,5 +33,5 @@
 
 @section scripts
 {
-    @Scripts.Render("~/bundles/admin-global")
+    <script src="~/Areas/Admin/Scripts/Global.js"></script>
 }

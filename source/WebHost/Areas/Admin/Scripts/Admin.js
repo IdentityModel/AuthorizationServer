@@ -2,43 +2,6 @@
 var authz = (function () {
     "use strict";
 
-    var models = {
-        Global: function (data) {
-            ko.mapping.fromJS(data, null, this);
-
-            var item = this;
-            models.Global.prototype.nameInError = ko.computed(function () {
-                return !item.name();
-            });
-            models.Global.prototype.nameError = ko.computed(function () {
-                if (!item.name()) {
-                    return "Name is required.";
-                }
-            });
-            models.Global.prototype.issuerInError = ko.computed(function () {
-                return !item.issuer();
-            });
-            models.Global.prototype.issuerError = ko.computed(function () {
-                if (!item.issuer()) {
-                    return "Issuer is required.";
-                }
-            });
-            models.Global.prototype.anyErrors = ko.computed(function () {
-                for (var prop in item) {
-                    if (prop.indexOf("InError") >= 0) {
-                        if (item[prop]()) {
-                            return true;
-                        }
-                    }
-                }
-                return false;
-            });
-        }
-    };
-    models.Global.prototype.save = function () {
-        authz.services.global.put(ko.mapping.toJS(this));
-    };
-
     function showMessage(msg, css) {
         var elem = $("#message");
         if (elem.is(":visible")) {
@@ -66,18 +29,23 @@ var authz = (function () {
 
     function Service(path, settings) {
         this.path = path;
+        if (this.path.charAt(this.path.length-1) !== '/') {
+            this.path += "/";
+        }
         this.settings = settings || {};
     }
-    Service.prototype.get = function () {
-        var request =  $.ajax({
-            url: authz.baseUrl + this.path,
+    Service.prototype.get = function (id) {
+        id = id || "";
+        var request = $.ajax({
+            url: authz.baseUrl + this.path + id,
             type: 'GET'
         });
         return request;
     };
-    Service.prototype.put = function (data) {
+    Service.prototype.put = function (data, id) {
+        id = id || "";
         return $.ajax({
-            url: authz.baseUrl + this.path,
+            url: authz.baseUrl + this.path + id,
             type: 'PUT',
             contentType: 'application/json',
             data: JSON.stringify(data)
@@ -91,9 +59,10 @@ var authz = (function () {
             return xhr;
         });
     };
-    Service.prototype.delete = function () {
+    Service.prototype.delete = function (id) {
+        id = id || "";
         return $.ajax({
-            url: authz.baseUrl + this.path,
+            url: authz.baseUrl + this.path + id,
             type: 'DELETE'
         }).then(
         function(data, status, xhr){
@@ -105,9 +74,10 @@ var authz = (function () {
             return xhr;
         });
     };
-    Service.prototype.post = function (data) {
+    Service.prototype.post = function (data, id) {
+        id = id || "";
         return $.ajax({
-            url: authz.baseUrl + this.path,
+            url: authz.baseUrl + this.path + id,
             type: 'POST',
             contentType: 'application/json',
             data: JSON.stringify(data)
@@ -123,9 +93,6 @@ var authz = (function () {
     };
 
     return {
-        services: {
-            global : new Service("admin/global")
-        },
-        models : models
+        Service: Service
     };
 })();

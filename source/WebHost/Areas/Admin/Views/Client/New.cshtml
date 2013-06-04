@@ -7,17 +7,17 @@
     <legend></legend>
     <div>
         <label for="clientID">Client ID</label>
-        <input id="clientID" data-bind="value: clientID" />
+        <input id="clientID" data-bind="value: clientID, valueUpdate:'keyup'" />
         <label class="text-error" data-bind="text: clientIDError"></label>
     </div>
     <div>
         <label for="clientSecret">Client Secret</label>
-        <input id="clientSecret" data-bind="value: clientSecret" type="password" />
+        <input id="clientSecret" data-bind="value: clientSecret, valueUpdate: 'keyup'" type="password" />
         <label class="text-error" data-bind="text: clientSecretError"></label>
     </div>
     <div>
         <label for="name">Name</label>
-        <input id="name" data-bind="value: name" />
+        <input id="name" data-bind="value: name, valueUpdate: 'keyup'" />
         <label class="text-error" data-bind="text: nameError"></label>
     </div>
     <div>
@@ -28,6 +28,18 @@
             <option value="ResourceOwner">Resource Owner</option>
             <option value="Client">Client</option>
         </select>
+    </div>
+    <div>
+        <label for="refreshTokens" class="checkbox">
+            <input id="refreshTokens" data-bind="value: allowRefreshTokens, enable: allowRefreshTokensEnabled" type="checkbox" />
+            Allow Refresh Tokens
+        </label>
+    </div>
+    <div>
+        <label for="consent" class="checkbox">
+            <input id="consent" data-bind="value: requireConsent" type="checkbox" />
+            Require Consent
+        </label>
     </div>
     <div><button class="btn btn-primary" data-bind="click:save, disable:anyErrors">Save</button></div>
 </fieldset>

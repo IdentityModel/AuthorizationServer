@@ -54,6 +54,8 @@ namespace Thinktecture.AuthorizationServer.WebHost.Areas.Admin.Api
             item.ClientSecret = model.ClientSecret;
             item.Name = model.Name;
             item.Flow = model.Flow;
+            item.AllowRefreshToken = model.AllowRefreshToken;
+            item.RequireConsent = model.RequireConsent;
             
             this.config.Clients.Add(item);
             this.config.SaveChanges();

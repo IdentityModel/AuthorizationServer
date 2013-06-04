@@ -8,7 +8,8 @@ $(function () {
             clientSecret: "",
             name: "",
             flow: "Code",
-            allowRefreshTokens:false
+            allowRefreshTokens: false,
+            requireConsent:true
         }, null, this);
 
         authz.util.addRequired(this, "clientID", "Client ID");
@@ -17,6 +18,9 @@ $(function () {
         authz.util.addAnyErrors(this);
 
         var vm = this;
+        vm.flow.subscribe(function (val) {
+            vm.allowRefreshTokens(val === "Code" || val === "ResourceOwner");
+        });
         vm.allowRefreshTokensEnabled = ko.computed(function () {
             return vm.flow() === "Code" || vm.flow() === "ResourceOwner";
         });

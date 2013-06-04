@@ -47,63 +47,25 @@ namespace Thinktecture.AuthorizationServer.WebHost.Areas.Admin.Api
             return Request.CreateResponse(HttpStatusCode.NoContent);
         }
 
-        //public HttpResponseMessage Post(string id, ClientRedirectModel model)
-        //{
-        //    if (String.IsNullOrEmpty(model.ClientSecret))
-        //    {
-        //        ModelState.AddModelError("model.ClientSecret", "ClientSecret is required");
-        //    }
+        public HttpResponseMessage Post(string id, ClientRedirectModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return Request.CreateErrorResponse(HttpStatusCode.BadRequest, ModelState);
+            }
 
-        //    if (!ModelState.IsValid)
-        //    {
-        //        return Request.CreateErrorResponse(HttpStatusCode.BadRequest, ModelState);
-        //    }
+            var client = this.config.Clients.All.SingleOrDefault(x => x.ClientId == id);
+            if (client == null)
+            {
+                return Request.CreateResponse(HttpStatusCode.NotFound);
+            }
 
-        //    var item = new Client();
-        //    item.ClientId = model.ClientId;
-        //    item.ClientSecret = model.ClientSecret;
-        //    item.Name = model.Name;
-        //    item.Flow = model.Flow;
-        //    item.AllowRefreshToken = model.AllowRefreshToken;
-        //    item.RequireConsent = model.RequireConsent;
+            var item = new ClientRedirectUri { Uri = model.Uri, Description = model.Description };
+            client.RedirectUris.Add(item);
+            this.config.SaveChanges();
 
-        //    this.config.Clients.Add(item);
-        //    this.config.SaveChanges();
-
-        //    var response = Request.CreateResponse(HttpStatusCode.OK, item);
-        //    var url = Url.Link("Admin-Endpoints", new { controller = "Clients", id = item.ClientId });
-        //    response.Headers.Location = new Uri(url);
-        //    return response;
-        //}
-        
-
-        //public HttpResponseMessage Put(ClientModel model)
-        //{
-        //    if (!ModelState.IsValid)
-        //    {
-        //        return Request.CreateErrorResponse(HttpStatusCode.BadRequest, ModelState);
-        //    }
-
-        //    var item = this.config.Clients.All.SingleOrDefault(X => X.ClientId == model.ClientId);
-        //    if (item == null)
-        //    {
-        //        return Request.CreateResponse(HttpStatusCode.NotFound);
-        //    }
-
-        //    if (!String.IsNullOrEmpty(model.ClientSecret))
-        //    {
-        //        item.ClientSecret = model.ClientSecret;
-        //    }
-        //    item.Name = model.Name;
-        //    item.Flow = model.Flow;
-        //    item.AllowRefreshToken = model.AllowRefreshToken;
-        //    item.RequireConsent = model.RequireConsent;
-
-        //    this.config.SaveChanges();
-
-        //    return Request.CreateResponse(HttpStatusCode.NoContent);
-        //}
-
-        
+            var response = Request.CreateResponse(HttpStatusCode.OK, item);
+            return response;
+        }
     }
 }

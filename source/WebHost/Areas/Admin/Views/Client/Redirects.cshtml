@@ -3,14 +3,16 @@
 }
 
 <h2>@ViewBag.Title</h2>
-@*<fieldset>
+<fieldset data-bind="with:newUri" class="form-inline">
     <legend></legend>
     <div>
-        <label for="name">Add Redirect</label>
-        <input id="name" data-bind="value: nameToAdd, valueUpdate: 'keyup'" />
-        <button class="btn btn-primary" data-bind="click:addAdmin, disable:anyErrors">Add</button>
+        <label for="uri">Add Uri</label>
+        <input id="uri" data-bind="value: uri, valueUpdate: 'keyup'" />
+        <label for="description">Description</label>
+        <input id="description" data-bind="value: description, valueUpdate: 'keyup'" />
+        <button class="btn btn-primary" data-bind="click: function (data, e) { $parent.addUri(data) }, disable: anyErrors">Add</button>
     </div>
-</fieldset>*@
+</fieldset>
 <table class="table table-striped hide" data-bind="css: { hide: !uris().length }">
     <thead>
         <tr>

@@ -9,7 +9,6 @@ namespace Thinktecture.AuthorizationServer.WebHost.Areas.Admin.Models
 {
     public class ClientRedirectModel
     {
-        public int ID { get; set; }
         [Required]
         public string Description { get; set; }
         [Required]

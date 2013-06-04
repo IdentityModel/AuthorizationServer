@@ -4,15 +4,18 @@ $(function () {
 
     function Client(data) {
         var isNew = !data;
+        if (data && !data.clientSecret) {
+            data.clientSecret = "";
+        }
         data = data || {
             clientId: "",
+            clientSecret:"",
             name: "",
             flow: "Code",
             allowRefreshToken: false,
             requireConsent: true
         };
         ko.mapping.fromJS(data, null, this);
-        this.clientSecret = ko.observable("");
 
         var vm = this;
 

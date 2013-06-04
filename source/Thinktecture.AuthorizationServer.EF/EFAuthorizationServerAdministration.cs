@@ -52,6 +52,11 @@ namespace Thinktecture.AuthorizationServer.EF
         {
             get { return new Repository<Models.Application>(db.Applications); }
         }
+        
+        public IRepository<Models.Scope> Scopes
+        {
+            get { return new Repository<Models.Scope>(db.Scopes); }
+        }
 
         public IRepository<Models.Client> Clients
         {

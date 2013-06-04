@@ -17,6 +17,7 @@ namespace Thinktecture.AuthorizationServer.EF
 
         public DbSet<GlobalConfiguration> GlobalConfiguration { get; set; }
         public DbSet<Application> Applications { get; set; }
+        public DbSet<Scope> Scopes { get; set; }
         public DbSet<Client> Clients { get; set; }
         public DbSet<ClientRedirectUri> ClientRedirectUris { get; set; }
         public DbSet<SigningKey> SigningKeys { get; set; }

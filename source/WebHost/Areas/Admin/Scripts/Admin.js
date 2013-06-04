@@ -1,5 +1,4 @@
-﻿
-var authz = (function () {
+﻿var authz = (function () {
     "use strict";
 
     function showMessage(msg, css) {

@@ -3,3 +3,30 @@
 }
 
 <h2>Scopes</h2>
+<table class="table table-striped hide" data-bind="css: { hide: !scopes().length }">
+    <thead>
+        <tr>
+            <th></th>
+            <th>Name</th>
+            <th>Description</th>
+        </tr>
+    </thead>
+    <tbody data-bind="foreach: scopes">
+        <tr>
+            <td>
+                <button class="btn" data-bind="click: function (data, evt) { $parent.deleteScope(data) }">Delete</button>
+            </td>
+            <td data-bind="text:name"></td>
+            <td data-bind="text:description"></td>
+        </tr>
+    </tbody>
+</table>
+<p data-bind="css: { hide: scopes().length }" class="alert alert-warning hide">
+    No Scopes Found
+</p>
+
+
+@section scripts
+{
+    <script src="~/Areas/Admin/Scripts/Scopes.js"></script>
+}

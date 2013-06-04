@@ -3,6 +3,13 @@
 }
 
 <h2>@ViewBag.Title</h2>
+<ul class="nav nav-pills" data-bind="visible: redirectsEnabled">
+    <li>
+        <a data-href="@Url.Action("Redirects")" 
+            data-bind="attr: { href: $element.dataset.href + '#' + $data.clientId() }">Redirect Uris</a>
+    </li>
+</ul>
+
 <fieldset>
     <legend></legend>
     <div>

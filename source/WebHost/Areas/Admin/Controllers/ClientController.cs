@@ -18,5 +18,10 @@ namespace Thinktecture.AuthorizationServer.WebHost.Areas.Admin.Controllers
         {
             return View();
         }
+
+        public ActionResult Redirects()
+        {
+            return View();
+        }
     }
 }

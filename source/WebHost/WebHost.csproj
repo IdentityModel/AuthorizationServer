@@ -166,6 +166,7 @@
     <Compile Include="Areas\Admin\AdminAreaRegistration.cs" />
     <Compile Include="Areas\Admin\Api\ApplicationsController.cs" />
     <Compile Include="Areas\Admin\Api\ClientsController.cs" />
+    <Compile Include="Areas\Admin\Api\ClientRedirectsController.cs" />
     <Compile Include="Areas\Admin\Api\KeysController.cs" />
     <Compile Include="Areas\Admin\Api\GlobalAdministratorsController.cs" />
     <Compile Include="Areas\Admin\Api\GlobalController.cs" />
@@ -176,6 +177,7 @@
     <Compile Include="Areas\Admin\Controllers\GlobalController.cs" />
     <Compile Include="Areas\Admin\Controllers\HomeController.cs" />
     <Compile Include="Areas\Admin\Models\ClientModel.cs" />
+    <Compile Include="Areas\Admin\Models\ClientRedirectModel.cs" />
     <Compile Include="Areas\Admin\Models\GlobalViewModel.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Global.asax.cs">
@@ -195,6 +197,7 @@
     <Content Include="Areas\Admin\Scripts\Applications.js" />
     <Content Include="Areas\Admin\Scripts\Clients.js" />
     <Content Include="Areas\Admin\Scripts\Client.js" />
+    <Content Include="Areas\Admin\Scripts\ClientRedirects.js" />
     <Content Include="Areas\Admin\Scripts\Keys.js" />
     <Content Include="Areas\Admin\Scripts\Global-Administrators.js" />
     <Content Include="Areas\Admin\Scripts\Global.js" />
@@ -286,6 +289,7 @@
     <Content Include="Areas\Admin\Views\Application\Index.cshtml" />
     <Content Include="Areas\Admin\Views\Global\Administrators.cshtml" />
     <Content Include="Areas\Admin\Views\Client\Manage.cshtml" />
+    <Content Include="Areas\Admin\Views\Client\Redirects.cshtml" />
     <None Include="Content\Site.less" />
     <Content Include="Configuration\identityModel.config" />
     <Content Include="Configuration\identityModel.services.config" />

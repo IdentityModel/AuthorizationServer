@@ -1,0 +1,38 @@
+﻿@{
+    ViewBag.Title = "Client Redirect Uris";
+}
+
+<h2>@ViewBag.Title</h2>
+@*<fieldset>
+    <legend></legend>
+    <div>
+        <label for="name">Add Redirect</label>
+        <input id="name" data-bind="value: nameToAdd, valueUpdate: 'keyup'" />
+        <button class="btn btn-primary" data-bind="click:addAdmin, disable:anyErrors">Add</button>
+    </div>
+</fieldset>*@
+<table class="table table-striped hide" data-bind="css: { hide: !uris().length }">
+    <thead>
+        <tr>
+            <th></th>
+            <th>Uri</th>
+            <th>Description</th>
+        </tr>
+    </thead>
+    <tbody data-bind="foreach: uris">
+        <tr>
+            <td><button class="btn" data-bind="click: function (data, evt) { $parent.deleteUri(data) }">Delete</button></td>
+            <td data-bind="text: uri"></td>
+            <td data-bind="text: description"></td>
+        </tr>
+    </tbody>
+</table>
+<p data-bind="css: { hide: uris().length }" class="alert alert-warning hide">
+    No Redirects Found
+</p>
+
+
+@section scripts
+{
+    <script src="~/Areas/Admin/Scripts/ClientRedirects.js"></script>
+}

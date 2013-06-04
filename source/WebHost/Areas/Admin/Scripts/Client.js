@@ -33,6 +33,9 @@ $(function () {
         vm.clientIdEnabled = ko.computed(function () {
             return isNew;
         });
+        vm.redirectsEnabled = ko.computed(function () {
+            return !isNew;
+        });
         vm.save = function () {
             if (isNew) {
                 svc.post(ko.mapping.toJS(vm)).then(function (data, status, xhr) {

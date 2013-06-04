@@ -20,6 +20,7 @@ namespace Thinktecture.AuthorizationServer.Interfaces
         GlobalConfiguration GlobalConfiguration { get; }
         IRepository<Application> Applications { get; }
         IRepository<Client> Clients { get; }
+        IRepository<ClientRedirectUri> ClientRedirects { get; }
         IRepository<SigningKey> Keys { get; }
 
         void SaveChanges();

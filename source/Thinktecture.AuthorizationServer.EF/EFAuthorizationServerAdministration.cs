@@ -58,6 +58,11 @@ namespace Thinktecture.AuthorizationServer.EF
             get { return new Repository<Models.Client>(db.Clients); }
         }
 
+        public IRepository<Models.ClientRedirectUri> ClientRedirects
+        {
+            get { return new Repository<Models.ClientRedirectUri>(db.ClientRedirectUris); }
+        }
+
         public IRepository<Models.SigningKey> Keys
         {
             get { return new Repository<Models.SigningKey>(db.SigningKeys); }
@@ -65,7 +70,14 @@ namespace Thinktecture.AuthorizationServer.EF
 
         public void SaveChanges()
         {
-            db.SaveChanges();
+            try
+            {
+                db.SaveChanges();
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
         }
     }
 }

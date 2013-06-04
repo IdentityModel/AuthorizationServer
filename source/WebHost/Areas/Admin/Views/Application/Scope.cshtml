@@ -1,0 +1,36 @@
+﻿@{
+    ViewBag.Title = "Scope";
+}
+
+<h2><span data-bind="text: editDescription"></span> Scope</h2>
+<ul class="nav nav-pills hide" data-bind="css: { hide: !menusEnabled() }">
+    <li>
+        <a data-href="@Url.Action("ScopeClients")" 
+            data-bind="attr: { href: $element.dataset.href + '#' + $data.id() }">Clients</a>
+    </li>
+</ul>
+<fieldset>
+    <legend></legend>
+    <div>
+        <label for="name">Name</label>
+        <input id="name" data-bind="value: name, valueUpdate: 'keyup'" />
+        <label class="text-error" data-bind="text: nameError"></label>
+    </div>
+    <div>
+        <label for="description">Description</label>
+        <input id="description" data-bind="value: description, valueUpdate: 'keyup'" />
+        <label class="text-error" data-bind="text: descriptionError"></label>
+    </div>
+    <div>
+        <label for="emphasize" class="checkbox">
+            <input id="emphasize" data-bind="checked: emphasize" type="checkbox" />
+            Emphasize
+        </label>
+    </div>
+    <div><button class="btn btn-primary" data-bind="click:save, disable: anyErrors">Add</button></div>
+</fieldset>
+
+@section scripts
+{
+    <script src="~/Areas/Admin/Scripts/Scope.js"></script>
+}

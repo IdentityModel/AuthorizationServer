@@ -1,6 +1,7 @@
 ﻿
 $(function () {
-    var svc = new authz.Service("admin/Scopes");
+    var svc = new authz.Service("admin/ApplicationScopes");
+    var scopesSvc = new authz.Service("admin/Scopes");
 
     var appID = window.location.hash.substring(1);
     svc.get(appID).then(function (data) {
@@ -9,6 +10,7 @@ $(function () {
     });
     
     function Scopes(list) {
+        this.appID = ko.observable(appID);
         this.scopes = ko.mapping.fromJS(list);
         this.newScope = ko.mapping.fromJS({
             name:"", description:"", emphasize:false
@@ -29,7 +31,7 @@ $(function () {
 
     Scopes.prototype.deleteScope = function (item) {
         var vm = this;
-        svc.delete(item.id()).then(function () {
+        scopesSvc.delete(item.id()).then(function () {
             vm.scopes.remove(item);
         });
     }

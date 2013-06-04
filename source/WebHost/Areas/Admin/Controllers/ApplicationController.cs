@@ -18,8 +18,13 @@ namespace Thinktecture.AuthorizationServer.WebHost.Areas.Admin.Controllers
         {
             return View();
         }
-        
+
         public ActionResult Scopes()
+        {
+            return View();
+        }
+        
+        public ActionResult Scope()
         {
             return View();
         }

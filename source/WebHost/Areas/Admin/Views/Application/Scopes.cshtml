@@ -3,27 +3,12 @@
 }
 
 <h2>Scopes</h2>
-<fieldset data-bind="with: newScope">
-    <legend></legend>
-    <div>
-        <label for="name">New Scope Name</label>
-        <input id="name" data-bind="value: name, valueUpdate: 'keyup'" />
-    </div>
-    <div>
-        <label for="description">Description</label>
-        <input id="description" data-bind="value: description, valueUpdate: 'keyup'" />
-    </div>
-    <div>
-        <label for="emphasize" class="checkbox">
-            <input id="emphasize" data-bind="checked: emphasize" type="checkbox" />
-            Emphasize
-        </label>
-    </div>
-    <div>
-        <button class="btn btn-primary" data-bind="click: function (data, e) { $parent.addScope(data) }, disable: anyErrors">Add</button>
-    </div>
-</fieldset>
-
+<ul class="nav nav-pills">
+    <li>
+        <a data-href="@Url.Action("Scope")" 
+            data-bind="attr: { href: $element.dataset.href + '#a' + $data.appID() }">New Scope</a>
+    </li>
+</ul>
 <table class="table table-striped hide" data-bind="css: { hide: !scopes().length }">
     <thead>
         <tr>
@@ -36,7 +21,7 @@
     <tbody data-bind="foreach: scopes">
         <tr>
             <td>
-                <a class="btn btn-primary" data-href="@Url.Action("ScopeClients")" data-bind="attr: { href: $element.dataset.href + '#' + $data.id() }">Clients</a>
+                <a class="btn btn-primary" data-href="@Url.Action("Scope")" data-bind="attr: { href: $element.dataset.href + '#' + $data.id() }">Manage</a>
                 <button class="btn" data-bind="click: function (data, evt) { $parent.deleteScope(data) }">Delete</button>
             </td>
             <td data-bind="text:name"></td>

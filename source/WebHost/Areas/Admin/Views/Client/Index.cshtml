@@ -4,7 +4,7 @@
 
 <h2>Clients</h2>
 <ul class="nav nav-pills">
-    <li>@Html.ActionLink("New Client", "New")</li>
+    <li>@Html.ActionLink("New Client", "Manage")</li>
 </ul>
 <table class="table table-striped hide" data-bind="css: { hide: !clients().length }">
     <thead>
@@ -17,7 +17,10 @@
     </thead>
     <tbody data-bind="foreach: clients">
         <tr>
-            <td><button class="btn" data-bind="click: function (data, evt) { $parent.deleteClient(data) }">Delete</button></td>
+            <td>
+                <a class="btn btn-primary" data-href="@Url.Action("Manage")" data-bind="attr: {href:$element.dataset.href + '#' + $data.clientId()}">Manage</a>
+                <button class="btn" data-bind="click: function (data, evt) { $parent.deleteClient(data) }">Delete</button>
+            </td>
             <td data-bind="text:clientId"></td>
             <td data-bind="text:name"></td>
             <td data-bind="text: flow"></td>

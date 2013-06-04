@@ -97,7 +97,7 @@ var authz = (function () {
     return {
         Service: Service,
         util: {
-            addValidation: function (vm, propName, displayName, valFunc) {
+            addValidation: function (vm, propName, message, valFunc) {
                 var dirty = ko.observable(false);
                 vm[propName].subscribe(function () {
                     dirty(true);
@@ -107,12 +107,12 @@ var authz = (function () {
                 });
                 vm[propName + "Error"] = ko.computed(function () {
                     if (dirty() && !valFunc()) {
-                        return displayName + " is required.";
+                        return message;
                     }
                 });
             },
             addRequired: function (vm, propName, displayName) {
-                authz.util.addValidation(vm, propName, displayName, ko.computed(function() {
+                authz.util.addValidation(vm, propName, displayName + " is required", ko.computed(function() {
                     return !!vm[propName]();
                 }));
             },

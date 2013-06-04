@@ -194,7 +194,7 @@
     </Content>
     <Content Include="Areas\Admin\Scripts\Applications.js" />
     <Content Include="Areas\Admin\Scripts\Clients.js" />
-    <Content Include="Areas\Admin\Scripts\NewClient.js" />
+    <Content Include="Areas\Admin\Scripts\Client.js" />
     <Content Include="Areas\Admin\Scripts\Keys.js" />
     <Content Include="Areas\Admin\Scripts\Global-Administrators.js" />
     <Content Include="Areas\Admin\Scripts\Global.js" />
@@ -285,7 +285,6 @@
     <Content Include="Areas\Admin\Views\Client\Index.cshtml" />
     <Content Include="Areas\Admin\Views\Application\Index.cshtml" />
     <Content Include="Areas\Admin\Views\Global\Administrators.cshtml" />
-    <Content Include="Areas\Admin\Views\Client\New.cshtml" />
     <Content Include="Areas\Admin\Views\Client\Manage.cshtml" />
     <None Include="Content\Site.less" />
     <Content Include="Configuration\identityModel.config" />

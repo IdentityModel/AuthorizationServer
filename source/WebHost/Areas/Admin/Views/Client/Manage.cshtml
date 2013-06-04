@@ -5,4 +5,45 @@
 <h2>@ViewBag.Title</h2>
 <fieldset>
     <legend></legend>
+    <div>
+        <label for="clientID">Client ID</label>
+        <input id="clientID" data-bind="value: clientId, valueUpdate: 'keyup', enable: clientIdEnabled" />
+        <label class="text-error" data-bind="text: clientIdError"></label>
+    </div>
+    <div>
+        <label for="clientSecret">Client Secret</label>
+        <input id="clientSecret" data-bind="value: clientSecret, valueUpdate: 'keyup'" type="password" />
+        <label class="text-error" data-bind="text: clientSecretError"></label>
+    </div>
+    <div>
+        <label for="name">Name</label>
+        <input id="name" data-bind="value: name, valueUpdate: 'keyup'" />
+        <label class="text-error" data-bind="text: nameError"></label>
+    </div>
+    <div>
+        <label for="flow">Flow</label>
+        <select id="flow" data-bind="value: flow">
+            <option value="Code">Code</option>
+            <option value="Implicit">Implicit</option>
+            <option value="ResourceOwner">Resource Owner</option>
+            <option value="Client">Client</option>
+        </select>
+    </div>
+    <div>
+        <label for="refreshTokens" class="checkbox">
+            <input id="refreshTokens" data-bind="value: allowRefreshToken, enable: allowRefreshTokenEnabled" type="checkbox" />
+            Allow Refresh Tokens
+        </label>
+    </div>
+    <div>
+        <label for="consent" class="checkbox">
+            <input id="consent" data-bind="value: requireConsent" type="checkbox" />
+            Require Consent
+        </label>
+    </div>
+    <div><button class="btn btn-primary" data-bind="click: save, disable: anyErrors">Save</button></div>
 </fieldset>
+
+@section scripts{
+    <script src="~/Areas/Admin/Scripts/Client.js"></script>
+}

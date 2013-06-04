@@ -10,8 +10,7 @@ namespace Thinktecture.AuthorizationServer.WebHost.Areas.Admin.Models
     public class ClientModel
     {
         [Required]
-        public string ClientID { get; set; }
-        [Required]
+        public string ClientId { get; set; }
         public string ClientSecret { get; set; }
         [Required]
         public string Name { get; set; }

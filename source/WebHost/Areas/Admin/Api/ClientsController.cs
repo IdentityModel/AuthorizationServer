@@ -23,7 +23,12 @@ namespace Thinktecture.AuthorizationServer.WebHost.Areas.Admin.Api
         {
             var query =
                 from item in config.Clients.All.ToArray()
-                select new { item.ClientId, item.Name, flow = Enum.GetName(typeof(OAuthFlow), item.Flow) };
+                select new { 
+                    item.ClientId, 
+                    item.Name, 
+                    flow = Enum.GetName(typeof(OAuthFlow), 
+                    item.Flow) 
+                };
             return Request.CreateResponse(HttpStatusCode.OK, query.ToArray());
         }
         
@@ -32,7 +37,13 @@ namespace Thinktecture.AuthorizationServer.WebHost.Areas.Admin.Api
             var item = config.Clients.All.SingleOrDefault(x=>x.ClientId==id);
             if (item == null) return Request.CreateResponse(HttpStatusCode.NotFound);
             
-            var data = new { item.ClientId, item.Name, flow = Enum.GetName(typeof(OAuthFlow), item.Flow) };
+            var data = new { 
+                item.ClientId, 
+                item.Name, 
+                flow = Enum.GetName(typeof(OAuthFlow), item.Flow),
+                item.AllowRefreshToken, 
+                item.RequireConsent 
+            };
             return Request.CreateResponse(HttpStatusCode.OK, data);
         }
         
@@ -47,10 +58,47 @@ namespace Thinktecture.AuthorizationServer.WebHost.Areas.Admin.Api
             return Request.CreateResponse(HttpStatusCode.NoContent);
         }
 
+        public HttpResponseMessage Put(ClientModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return Request.CreateErrorResponse(HttpStatusCode.BadRequest, ModelState);
+            }
+
+            var item = this.config.Clients.All.SingleOrDefault(X => X.ClientId == model.ClientId);
+            if (item == null)
+            {
+                return Request.CreateResponse(HttpStatusCode.NotFound);
+            }
+
+            if (!String.IsNullOrEmpty(model.ClientSecret))
+            {
+                item.ClientSecret = model.ClientSecret;
+            }
+            item.Name = model.Name;
+            item.Flow = model.Flow;
+            item.AllowRefreshToken = model.AllowRefreshToken;
+            item.RequireConsent = model.RequireConsent;
+
+            this.config.SaveChanges();
+
+            return Request.CreateResponse(HttpStatusCode.NoContent);
+        }
+
         public HttpResponseMessage Post(ClientModel model)
         {
+            if (String.IsNullOrEmpty(model.ClientSecret))
+            {
+                ModelState.AddModelError("model.ClientSecret", "ClientSecret is required");
+            }
+
+            if (!ModelState.IsValid)
+            {
+                return Request.CreateErrorResponse(HttpStatusCode.BadRequest, ModelState);
+            }
+
             var item = new Client();
-            item.ClientId = model.ClientID;
+            item.ClientId = model.ClientId;
             item.ClientSecret = model.ClientSecret;
             item.Name = model.Name;
             item.Flow = model.Flow;

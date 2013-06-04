@@ -1,5 +1,41 @@
 ﻿@{
-    ViewBag.Title = "ScopeClients";
+    ViewBag.Title = "Scope Clients";
 }
 
-<h2>ScopeClients</h2>
+<h2>Scope Clients</h2>
+<table class="table table-striped hide" data-bind="css: { hide: !(otherClients().length || allowedClients().length) }">
+    <thead>
+        <tr>
+            <th></th>
+            <th>Client ID</th>
+            <th>Name</th>
+        </tr>
+    </thead>
+    <tbody data-bind="foreach: allowedClients">
+        <tr>
+            <td>
+                <button class="btn" data-bind="click: function (data, evt) { $parent.deleteClient(data) }">Remove</button>
+            </td>
+            <td data-bind="text: clientId"></td>
+            <td data-bind="text: name"></td>
+        </tr>
+    </tbody>
+    <tbody data-bind="foreach: otherClients">
+        <tr>
+            <td>
+                <button class="btn" data-bind="click: function (data, evt) { $parent.addClient(data) }">Add</button>
+            </td>
+            <td data-bind="text: clientId"></td>
+            <td data-bind="text: name"></td>
+        </tr>
+    </tbody>
+</table>
+<p data-bind="css: { hide: otherClients().length || allowedClients().length }" class="alert alert-warning hide">
+    No Clients Found
+</p>
+
+
+@section scripts
+{
+    <script src="~/Areas/Admin/Scripts/ScopeClients.js"></script>
+}

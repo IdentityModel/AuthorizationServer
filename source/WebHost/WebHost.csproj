@@ -167,6 +167,7 @@
     <Compile Include="Areas\Admin\Api\ApplicationsController.cs" />
     <Compile Include="Areas\Admin\Api\ClientsController.cs" />
     <Compile Include="Areas\Admin\Api\ClientRedirectsController.cs" />
+    <Compile Include="Areas\Admin\Api\ScopeClientsController.cs" />
     <Compile Include="Areas\Admin\Api\ScopesController.cs" />
     <Compile Include="Areas\Admin\Api\KeysController.cs" />
     <Compile Include="Areas\Admin\Api\GlobalAdministratorsController.cs" />
@@ -202,6 +203,7 @@
     <Content Include="Areas\Admin\Scripts\Client.js" />
     <Content Include="Areas\Admin\Scripts\ClientRedirects.js" />
     <Content Include="Areas\Admin\Scripts\Application.js" />
+    <Content Include="Areas\Admin\Scripts\ScopeClients.js" />
     <Content Include="Areas\Admin\Scripts\Scopes.js" />
     <Content Include="Areas\Admin\Scripts\Keys.js" />
     <Content Include="Areas\Admin\Scripts\Global-Administrators.js" />

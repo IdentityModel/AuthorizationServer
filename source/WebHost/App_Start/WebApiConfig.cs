@@ -22,9 +22,14 @@ namespace Thinktecture.AuthorizationServer.WebHost
             );
 
             config.Routes.MapHttpRoute(
+                name: "Admin-Endpoints-ScopeClient",
+                routeTemplate: "api/admin/ScopeClients/{scopeID}/{clientID}",
+                defaults: new { controller = "ScopeClients", clientID = RouteParameter.Optional }
+            );
+            config.Routes.MapHttpRoute(
                 name: "Admin-Endpoints",
                 routeTemplate: "api/admin/{controller}/{id}",
-                defaults: new { id=RouteParameter.Optional }
+                defaults: new { id = RouteParameter.Optional }
             );
 
             config.Formatters.JsonFormatter.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();

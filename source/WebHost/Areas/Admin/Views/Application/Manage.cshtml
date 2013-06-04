@@ -1,0 +1,68 @@
+﻿@{
+    ViewBag.Title = "Application";
+}
+
+<h2><span data-bind="text:editDescription"></span> Application</h2>
+<ul class="nav nav-pills hide" data-bind="css: { hide: !menusEnabled() }">
+    <li>
+        <a data-href="@Url.Action("Scopes")" 
+            data-bind="attr: { href: $element.dataset.href + '#' + $data.id() }">Scopes</a>
+    </li>
+</ul>
+<fieldset>
+    <legend></legend>
+    <div>
+        <label for="name">Name</label>
+        <input id="name" data-bind="value: name, valueUpdate: 'keyup'" class="input-xxlarge"/>
+        <label class="text-error" data-bind="text: nameError"></label>
+    </div>
+    <div>
+        <label for="description">Description</label>
+        <input id="description" data-bind="value: description, valueUpdate: 'keyup'" class="input-xxlarge"/>
+    </div>
+    <div>
+        <label for="logoUrl">Logo URL</label>
+        <input id="logoUrl" data-bind="value: logoUrl, valueUpdate: 'keyup'" class="input-xxlarge"/>
+    </div>
+    <div>
+        <label for="namespace">Namespace</label>
+        <input id="namespace" data-bind="value: namespace, valueUpdate: 'keyup'" class="input-xxlarge"/>
+        <label class="text-error" data-bind="text: namespaceError"></label>
+    </div>
+    <div>
+        <label for="audience">Audience</label>
+        <input id="audience" data-bind="value: audience, valueUpdate: 'keyup'" class="input-xxlarge"/>
+        <label class="text-error" data-bind="text: audienceError"></label>
+    </div>
+    <div>
+        <label for="signingKeyId">Signing Key</label>
+        <select id="signingKeyId" data-bind="value: signingKeyId, options: signingKeys, optionsText: function (item) { return item.name() + ' (' + item.type() + ')'; }, optionsValue: 'id'" class="input-xxlarge"></select>
+    </div>
+    <div>
+        <label for="tokenLifetime">Token Lifetime</label>
+        <input id="tokenLifetime" data-bind="value: tokenLifetime, valueUpdate: 'keyup'" type="number" min="0" />
+    </div>
+    <div>
+        <label for="allowRefreshToken" class="checkbox">
+            <input id="allowRefreshToken" data-bind="checked: allowRefreshToken" type="checkbox" />
+            Allow Refresh Tokens
+        </label>
+    </div>
+    <div>
+        <label for="requireConsent" class="checkbox">
+            <input id="requireConsent" data-bind="checked: requireConsent" type="checkbox" />
+            Require Consent
+        </label>
+    </div>
+    <div>
+        <label for="rememberConsentDecision" class="checkbox">
+            <input id="rememberConsentDecision" data-bind="checked: rememberConsentDecision" type="checkbox" />
+            Remember Consent Decision
+        </label>
+    </div>
+    <div><button class="btn btn-primary" data-bind="click: save, disable: anyErrors">Save</button></div>
+</fieldset>
+
+@section scripts{
+    <script src="~/Areas/Admin/Scripts/Application.js"></script>
+}

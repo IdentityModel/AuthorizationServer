@@ -176,6 +176,7 @@
     <Compile Include="Areas\Admin\Controllers\TokenController.cs" />
     <Compile Include="Areas\Admin\Controllers\GlobalController.cs" />
     <Compile Include="Areas\Admin\Controllers\HomeController.cs" />
+    <Compile Include="Areas\Admin\Models\ApplicationModel.cs" />
     <Compile Include="Areas\Admin\Models\ClientModel.cs" />
     <Compile Include="Areas\Admin\Models\ClientRedirectModel.cs" />
     <Compile Include="Areas\Admin\Models\GlobalViewModel.cs" />
@@ -198,6 +199,7 @@
     <Content Include="Areas\Admin\Scripts\Clients.js" />
     <Content Include="Areas\Admin\Scripts\Client.js" />
     <Content Include="Areas\Admin\Scripts\ClientRedirects.js" />
+    <Content Include="Areas\Admin\Scripts\Application.js" />
     <Content Include="Areas\Admin\Scripts\Keys.js" />
     <Content Include="Areas\Admin\Scripts\Global-Administrators.js" />
     <Content Include="Areas\Admin\Scripts\Global.js" />
@@ -290,6 +292,8 @@
     <Content Include="Areas\Admin\Views\Global\Administrators.cshtml" />
     <Content Include="Areas\Admin\Views\Client\Manage.cshtml" />
     <Content Include="Areas\Admin\Views\Client\Redirects.cshtml" />
+    <Content Include="Areas\Admin\Views\Application\Manage.cshtml" />
+    <Content Include="Areas\Admin\Views\Application\Scopes.cshtml" />
     <None Include="Content\Site.less" />
     <Content Include="Configuration\identityModel.config" />
     <Content Include="Configuration\identityModel.services.config" />

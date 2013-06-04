@@ -36,6 +36,9 @@ $(function () {
         vm.redirectsEnabled = ko.computed(function () {
             return !isNew;
         });
+        vm.editDescription = ko.computed(function () {
+            return isNew ? "New" : "Edit";
+        });
         vm.save = function () {
             if (isNew) {
                 svc.post(ko.mapping.toJS(vm)).then(function (data, status, xhr) {

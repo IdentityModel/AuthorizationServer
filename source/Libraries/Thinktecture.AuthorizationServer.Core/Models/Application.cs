@@ -8,6 +8,7 @@ using System.Linq;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.IdentityModel.Tokens;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Thinktecture.AuthorizationServer.Models
 {
@@ -34,7 +35,7 @@ namespace Thinktecture.AuthorizationServer.Models
         public virtual bool AllowRefreshToken { get; set; }
         public virtual bool RequireConsent { get; set; }
         public virtual bool RememberConsentDecision { get; set; }
-        
+
         [Required]
         public virtual SigningKey SigningKey { get; set; }
 

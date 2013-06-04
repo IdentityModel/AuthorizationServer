@@ -1,9 +1,9 @@
 ﻿@{
-    ViewBag.Title = "Manage Client";
+    ViewBag.Title = "Client";
 }
 
-<h2>@ViewBag.Title</h2>
-<ul class="nav nav-pills" data-bind="visible: redirectsEnabled">
+<h2><span data-bind="text: editDescription"></span> Client</h2>
+<ul class="nav nav-pills hide" data-bind="css: { hide: !redirectsEnabled() }">
     <li>
         <a data-href="@Url.Action("Redirects")" 
             data-bind="attr: { href: $element.dataset.href + '#' + $data.clientId() }">Redirect Uris</a>
@@ -38,13 +38,13 @@
     </div>
     <div>
         <label for="refreshTokens" class="checkbox">
-            <input id="refreshTokens" data-bind="value: allowRefreshToken, enable: allowRefreshTokenEnabled" type="checkbox" />
+            <input id="refreshTokens" data-bind="checked: allowRefreshToken, enable: allowRefreshTokenEnabled" type="checkbox" />
             Allow Refresh Tokens
         </label>
     </div>
     <div>
         <label for="consent" class="checkbox">
-            <input id="consent" data-bind="value: requireConsent" type="checkbox" />
+            <input id="consent" data-bind="checked: requireConsent" type="checkbox" />
             Require Consent
         </label>
     </div>

@@ -3,9 +3,9 @@
 }
 
 <h2>Applications</h2>
-@*<ul class="nav nav-pills">
-    <li>@Html.ActionLink("New Application", "New")</li>
-</ul>*@
+<ul class="nav nav-pills">
+    <li>@Html.ActionLink("New Application", "Manage")</li>
+</ul>
 <table class="table table-striped hide" data-bind="css:{hide:!applications().length}">
     <thead>
         <tr>
@@ -16,7 +16,10 @@
     </thead>
     <tbody data-bind="foreach:applications">
         <tr>
-            <td><button class="btn" data-bind="click: function (data, evt) { $parent.deleteApp(data) }">Delete</button></td>
+            <td>
+                <a class="btn btn-primary" data-href="@Url.Action("Manage")" data-bind="attr: { href: $element.dataset.href + '#' + $data.id() }">Manage</a>
+                <button class="btn" data-bind="click: function (data, evt) { $parent.deleteApp(data) }">Delete</button>
+            </td>
             <td data-bind="text:namespace"></td>
             <td data-bind="text:name"></td>
             <td><img data-bind="attr: { src:logoUrl, alt:name }, visible:logoUrl" /></td>

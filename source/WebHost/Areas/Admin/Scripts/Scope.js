@@ -31,7 +31,7 @@ $(function () {
             return isNew;
         });
         vm.editDescription = ko.computed(function () {
-            return isNew ? "New" : "Edit";
+            return isNew ? "New" : "Manage";
         });
         vm.menusEnabled = ko.computed(function () {
             return !isNew;

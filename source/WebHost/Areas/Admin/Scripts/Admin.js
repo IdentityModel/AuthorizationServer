@@ -95,6 +95,39 @@ var authz = (function () {
     };
 
     return {
-        Service: Service
+        Service: Service,
+        util: {
+            addValidation: function (vm, propName, displayName, valFunc) {
+                var dirty = ko.observable(false);
+                vm[propName].subscribe(function () {
+                    dirty(true);
+                });
+                vm[propName + "InError"] = ko.computed(function () {
+                    return !valFunc();
+                });
+                vm[propName + "Error"] = ko.computed(function () {
+                    if (dirty() && !valFunc()) {
+                        return displayName + " is required.";
+                    }
+                });
+            },
+            addRequired: function (vm, propName, displayName) {
+                authz.util.addValidation(vm, propName, displayName, ko.computed(function() {
+                    return !!vm[propName]();
+                }));
+            },
+            addAnyErrors: function (vm) {
+                vm.anyErrors = ko.computed(function () {
+                    for (var prop in vm) {
+                        if (prop.indexOf("InError") >= 0) {
+                            if (vm[prop]()) {
+                                return true;
+                            }
+                        }
+                    }
+                    return false;
+                });
+            }
+        }
     };
 })();

@@ -1,0 +1,37 @@
+﻿@{
+    ViewBag.Title = "New Client";
+}
+
+<h2>@ViewBag.Title</h2>
+<fieldset>
+    <legend></legend>
+    <div>
+        <label for="clientID">Client ID</label>
+        <input id="clientID" data-bind="value: clientID" />
+        <label class="text-error" data-bind="text: clientIDError"></label>
+    </div>
+    <div>
+        <label for="clientSecret">Client Secret</label>
+        <input id="clientSecret" data-bind="value: clientSecret" type="password" />
+        <label class="text-error" data-bind="text: clientSecretError"></label>
+    </div>
+    <div>
+        <label for="name">Name</label>
+        <input id="name" data-bind="value: name" />
+        <label class="text-error" data-bind="text: nameError"></label>
+    </div>
+    <div>
+        <label for="flow">Flow</label>
+        <select id="flow" data-bind="value:flow">
+            <option value="Code">Code</option>
+            <option value="Implicit">Implicit</option>
+            <option value="ResourceOwner">Resource Owner</option>
+            <option value="Client">Client</option>
+        </select>
+    </div>
+    <div><button class="btn btn-primary" data-bind="click:save, disable:anyErrors">Save</button></div>
+</fieldset>
+
+@section scripts{
+    <script src="~/Areas/Admin/Scripts/NewClient.js"></script>
+}

@@ -14,5 +14,14 @@ namespace Thinktecture.AuthorizationServer.WebHost.Areas.Admin.Controllers
             return View();
         }
 
+        public ActionResult Manage()
+        {
+            return View();
+        }
+
+        public ActionResult New()
+        {
+            return View();
+        }
     }
 }

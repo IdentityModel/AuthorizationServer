@@ -6,6 +6,8 @@ $(function () {
     function GlobalAdministrators(list) {
         this.administrators = ko.mapping.fromJS(list);
         this.nameToAdd = ko.observable("");
+        authz.util.addRequired(this, "nameToAdd", "Name To Add");
+        authz.util.addAnyErrors(this);
     }
     
     GlobalAdministrators.prototype.addAdmin = function(){

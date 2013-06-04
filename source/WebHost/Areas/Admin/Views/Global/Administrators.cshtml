@@ -7,8 +7,8 @@
     <legend></legend>
     <div>
         <label for="name">Add Administrator Name ID</label>
-        <input id="name" data-bind="value:nameToAdd" />
-        <button class="btn btn-primary" data-bind="click:addAdmin">Add</button>
+        <input id="name" data-bind="value: nameToAdd, valueUpdate: 'keyup'" />
+        <button class="btn btn-primary" data-bind="click:addAdmin, disable:anyErrors">Add</button>
     </div>
 </fieldset>
 <table class="table table-striped hide" data-bind="css: { hide: !administrators().length }">

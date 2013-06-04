@@ -1,0 +1,20 @@
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.Linq;
+using System.Web;
+using Thinktecture.AuthorizationServer.Models;
+
+namespace Thinktecture.AuthorizationServer.WebHost.Areas.Admin.Models
+{
+    public class ClientModel
+    {
+        [Required]
+        public string ClientID { get; set; }
+        [Required]
+        public string ClientSecret { get; set; }
+        [Required]
+        public string Name { get; set; }
+        public OAuthFlow Flow { get; set; }
+    }
+}

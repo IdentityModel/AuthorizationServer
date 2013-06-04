@@ -22,7 +22,7 @@ namespace Thinktecture.AuthorizationServer.WebHost
             );
 
             config.Routes.MapHttpRoute(
-                name: "Admin Endpoints",
+                name: "Admin-Endpoints",
                 routeTemplate: "api/admin/{controller}/{id}",
                 defaults: new { id=RouteParameter.Optional }
             );

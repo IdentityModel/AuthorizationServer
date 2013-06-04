@@ -23,8 +23,17 @@ namespace Thinktecture.AuthorizationServer.WebHost.Areas.Admin.Api
         {
             var query =
                 from item in config.Clients.All.ToArray()
-                select new { item.ClientId, item.Name, flow=Enum.GetName(typeof(OAuthFlow), item.Flow) };
+                select new { item.ClientId, item.Name, flow = Enum.GetName(typeof(OAuthFlow), item.Flow) };
             return Request.CreateResponse(HttpStatusCode.OK, query.ToArray());
+        }
+        
+        public HttpResponseMessage Get(string id)
+        {
+            var item = config.Clients.All.SingleOrDefault(x=>x.ClientId==id);
+            if (item == null) return Request.CreateResponse(HttpStatusCode.NotFound);
+            
+            var data = new { item.ClientId, item.Name, flow = Enum.GetName(typeof(OAuthFlow), item.Flow) };
+            return Request.CreateResponse(HttpStatusCode.OK, data);
         }
         
         public HttpResponseMessage Delete(string id)
@@ -38,6 +47,21 @@ namespace Thinktecture.AuthorizationServer.WebHost.Areas.Admin.Api
             return Request.CreateResponse(HttpStatusCode.NoContent);
         }
 
-       
+        public HttpResponseMessage Post(ClientModel model)
+        {
+            var item = new Client();
+            item.ClientId = model.ClientID;
+            item.ClientSecret = model.ClientSecret;
+            item.Name = model.Name;
+            item.Flow = model.Flow;
+            
+            this.config.Clients.Add(item);
+            this.config.SaveChanges();
+
+            var response = Request.CreateResponse(HttpStatusCode.OK, item);
+            var url = Url.Link("Admin-Endpoints", new { controller = "Clients", id = item.ClientId });
+            response.Headers.Location = new Uri(url);
+            return response;
+        }
     }
 }

@@ -3,21 +3,45 @@
 }
 
 <h2>Scopes</h2>
+<fieldset data-bind="with: newScope">
+    <legend></legend>
+    <div>
+        <label for="name">New Scope Name</label>
+        <input id="name" data-bind="value: name, valueUpdate: 'keyup'" />
+    </div>
+    <div>
+        <label for="description">Description</label>
+        <input id="description" data-bind="value: description, valueUpdate: 'keyup'" />
+    </div>
+    <div>
+        <label for="emphasize" class="checkbox">
+            <input id="emphasize" data-bind="checked: emphasize" type="checkbox" />
+            Emphasize
+        </label>
+    </div>
+    <div>
+        <button class="btn btn-primary" data-bind="click: function (data, e) { $parent.addScope(data) }, disable: anyErrors">Add</button>
+    </div>
+</fieldset>
+
 <table class="table table-striped hide" data-bind="css: { hide: !scopes().length }">
     <thead>
         <tr>
             <th></th>
             <th>Name</th>
             <th>Description</th>
+            <th>Emphasize</th>
         </tr>
     </thead>
     <tbody data-bind="foreach: scopes">
         <tr>
             <td>
+                <a class="btn btn-primary" data-href="@Url.Action("ScopeClients")" data-bind="attr: { href: $element.dataset.href + '#' + $data.id() }">Clients</a>
                 <button class="btn" data-bind="click: function (data, evt) { $parent.deleteScope(data) }">Delete</button>
             </td>
             <td data-bind="text:name"></td>
-            <td data-bind="text:description"></td>
+            <td data-bind="text: description"></td>
+            <td><input type="checkbox" disabled data-bind="checked: emphasize" /></td>
         </tr>
     </tbody>
 </table>

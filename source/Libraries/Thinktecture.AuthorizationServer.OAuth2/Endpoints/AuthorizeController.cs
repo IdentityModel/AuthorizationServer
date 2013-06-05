@@ -63,7 +63,7 @@ namespace Thinktecture.AuthorizationServer.OAuth2
         [ActionName("Index")]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult HandleConsentResponse(string appName, string button, AuthorizeRequest request)
+        public ActionResult HandleConsentResponse(string appName, string button, string[] scopes, AuthorizeRequest request)
         {
             Tracing.Start("OAuth2 Authorize Endoint - Consent response");
 
@@ -97,7 +97,7 @@ namespace Thinktecture.AuthorizationServer.OAuth2
                 }
 
                 // todo: parse scopes form post and substitue scopes
-
+                validatedRequest.Scopes.RemoveAll(x => !scopes.Contains(x.Name));
                 var grantResult = PerformGrant(validatedRequest);
                 if (grantResult != null) return grantResult;
             }

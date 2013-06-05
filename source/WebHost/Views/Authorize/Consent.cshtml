@@ -1,34 +1,51 @@
 ﻿@model Thinktecture.AuthorizationServer.Models.ValidatedRequest
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Authorize";
 }
 
-<h2>Consent</h2>
+<div class="row">
+    <div class="span6 offset1">
+        <p class="lead">
+            <strong>@Model.Client.Name</strong> want to access <strong>@Model.Application.Name</strong> on your behalf.
+        </p>
+        <p>Choose from the following list the the permissions you want to grant:</p>
+                
+        @using (Html.BeginForm())
+        {
+             @Html.AntiForgeryToken()
+            <dl>
+                @foreach (var scope in @Model.Scopes)
+                {
+                    <dt class="checkbox">
+                        <label>
+                            <input type="checkbox" checked name="scopes" value="@scope.Name" />
+                            <strong>@scope.Name</strong>
+                        @if (scope.Emphasize)
+                        {
+                            <i class="icon-exclamation-sign"></i>
+                        }
+                        </label>
+                    </dt>
+                    <dd>@scope.Description</dd>
+                }
+            </dl>
 
-<p>
-    <strong>@Model.Client.Name</strong> want to access <strong>@Model.Application.Name</strong> on your behalf.
-</p>
-
-<ul>
-    @foreach (var scope in @Model.Scopes)
-    {
-        <li>
-            @if (scope.Emphasize)
+            <div>           
+                <button class="btn btn-primary" name="button" value="yes">Allow</button>
+                <button class="btn" name="button" value="no">Deny</button>
+            </div>
+        }
+    </div>
+    <div class="span4 offset1">
+        <div class="hero-unit">
+            <h3>@Model.Application.Name</h3>
+            <p>@Model.Application.Description</p>
+            @if(!String.IsNullOrWhiteSpace(Model.Application.LogoUrl))
             {
-                <strong>@scope.Description</strong>
+                <p class="span2"><img src="@Model.Application.LogoUrl" /></p>
             }
-            else
-            { 
-                @scope.Description
-            }
-        </li> 
-    }
-</ul>
-
-@using (Html.BeginForm())
-{
-    @Html.AntiForgeryToken()
-    <button name="button" value="yes">Allow</button>
-    <button name="button" value="no">Deny</button>
-}
+            <div class="clearfix"></div>
+        </div>
+    </div>
+</div>

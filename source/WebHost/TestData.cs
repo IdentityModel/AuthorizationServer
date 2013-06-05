@@ -151,6 +151,8 @@ namespace Thinktecture.AuthorizationServer.WebHost
                         Name = "User management",
                         Namespace = "users",
                         Audience = "urn:users",
+                        Description = "This app manages your users",
+                        LogoUrl = "http://en.opensuse.org/images/0/0b/Icon-user.png",
                         Scopes = new List<Scope> { readScope, searchScope, writeScope },
                         RequireConsent = true,
                         TokenLifetime = 60,

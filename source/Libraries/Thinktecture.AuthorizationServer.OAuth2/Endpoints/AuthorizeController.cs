@@ -96,6 +96,12 @@ namespace Thinktecture.AuthorizationServer.OAuth2
                     return this.AuthorizeValidationError(ex);
                 }
 
+                if (scopes == null || scopes.Length == 0)
+                {
+                    ModelState.AddModelError("", "Please choose at least one permission.");
+                    return View("Consent", validatedRequest);
+                }
+
                 // todo: parse scopes form post and substitue scopes
                 validatedRequest.Scopes.RemoveAll(x => !scopes.Contains(x.Name));
                 var grantResult = PerformGrant(validatedRequest);

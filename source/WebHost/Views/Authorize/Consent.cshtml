@@ -10,7 +10,23 @@
             <strong>@Model.Client.Name</strong> want to access <strong>@Model.Application.Name</strong> on your behalf.
         </p>
         <p>Choose from the following list the the permissions you want to grant:</p>
-                
+        
+        @if (!this.ViewData.ModelState.IsValid)
+        {
+            var errors =
+                from item in this.ViewData.ModelState.Values
+                from e in item.Errors
+                select e.ErrorMessage;
+            <div class="alert alert-warning">
+                <ul class="unstyled">
+                    @foreach (var err in errors)
+                    {
+                        <li>@err</li>
+                    }
+                </ul>
+            </div>
+        }        
+
         @using (Html.BeginForm())
         {
              @Html.AntiForgeryToken()

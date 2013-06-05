@@ -3,8 +3,12 @@
 }
 
 <h2><span data-bind="text:editDescription"></span> Application</h2>
-<ul class="nav nav-pills hide" data-bind="css: { hide: !menusEnabled() }">
+<ul class="nav nav-pills">
     <li>
+        <a href="@Url.Action("Index")">
+            <i class="icon-arrow-left"></i> Back to Applications</a>
+    </li>
+    <li class="hide" data-bind="css: { hide: !menusEnabled() }">
         <a data-href="@Url.Action("Scopes")" 
             data-bind="attr: { href: $element.dataset.href + '#' + $data.id() }">Scopes</a>
     </li>

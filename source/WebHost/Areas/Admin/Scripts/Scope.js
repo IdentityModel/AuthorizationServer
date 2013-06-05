@@ -1,19 +1,21 @@
 ﻿
 $(function () {
+    var hash = window.location.hash.substring(1);
+    var scopeID = parseInt(hash);
+    var idx = hash.indexOf("a");
+    var appID = hash.substring(idx+1);
 
-    var scopeID = window.location.hash.substring(1);
-    if (scopeID.charAt(0) === "a") {
-        var appID = scopeID.substring(1);
-        var svc = new authz.Service("admin/ApplicationScopes/" + appID);
-        var vm = new Scope();
-        ko.applyBindings(vm);
-    }
-    else {
+    if (scopeID) {
         var svc = new authz.Service("admin/Scopes/" + scopeID);
         svc.get().then(function (data) {
             var vm = new Scope(data);
             ko.applyBindings(vm);
         });
+    }
+    else {
+        var svc = new authz.Service("admin/ApplicationScopes/" + appID);
+        var vm = new Scope();
+        ko.applyBindings(vm);
     }
 
     function Scope(data) {
@@ -27,6 +29,9 @@ $(function () {
         ko.mapping.fromJS(data, null, this);
 
         var vm = this;
+        vm.appID = ko.computed(function () {
+            return appID;
+        });
         vm.nameEnabled = ko.computed(function () {
             return isNew;
         });

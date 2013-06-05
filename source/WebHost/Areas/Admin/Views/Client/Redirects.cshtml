@@ -3,6 +3,13 @@
 }
 
 <h2>@ViewBag.Title</h2>
+<ul class="nav nav-pills">
+    <li>
+        <a data-href="@Url.Action("Manage")"
+            data-bind="attr: { href: $element.dataset.href + '#' + $data.backId() }">
+            <i class="icon-arrow-left"></i> Back to Client</a>
+    </li>
+</ul>
 <fieldset data-bind="with:newUri" class="form-inline">
     <legend></legend>
     <div>

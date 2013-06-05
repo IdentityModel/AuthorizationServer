@@ -3,6 +3,13 @@
 }
 
 <h2>Scope Clients</h2>
+<ul class="nav nav-pills">
+    <li>
+        <a data-href="@Url.Action("Scope")"
+            data-bind="attr: { href: $element.dataset.href + '#' + scopeID() + 'a' + appID() }">
+            <i class="icon-arrow-left"></i> Back to Scope</a>
+    </li>
+</ul>
 <table class="table table-striped hide" data-bind="css: { hide: !(otherClients().length || allowedClients().length) }">
     <thead>
         <tr>

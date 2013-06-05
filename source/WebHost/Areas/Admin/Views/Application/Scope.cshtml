@@ -3,10 +3,16 @@
 }
 
 <h2><span data-bind="text: editDescription"></span> Scope</h2>
-<ul class="nav nav-pills hide" data-bind="css: { hide: !menusEnabled() }">
+
+<ul class="nav nav-pills">
     <li>
+        <a data-href="@Url.Action("Scopes")"
+            data-bind="attr: { href: $element.dataset.href + '#' + $data.appID() }">
+            <i class="icon-arrow-left"></i> Back to Scopes</a>
+    </li>
+    <li class="hide"  data-bind="css: { hide: !menusEnabled() }">
         <a data-href="@Url.Action("ScopeClients")" 
-            data-bind="attr: { href: $element.dataset.href + '#' + $data.id() }">Clients</a>
+            data-bind="attr: { href: $element.dataset.href + '#' + $data.id() + 'a' + $data.appID() }">Clients</a>
     </li>
 </ul>
 <fieldset>

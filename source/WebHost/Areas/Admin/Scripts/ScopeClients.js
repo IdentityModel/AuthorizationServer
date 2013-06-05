@@ -1,6 +1,10 @@
 ﻿
 $(function () {
-    var scopeID = window.location.hash.substring(1);
+    var hash = window.location.hash.substring(1);
+    var scopeID = parseInt(hash);
+    var idx = hash.indexOf("a");
+    var appID = hash.substring(idx + 1);
+
     var svc = new authz.Service("admin/ScopeClients/" + scopeID);
     svc.get().then(function (data) {
         var vm = new ScopeClients(data);
@@ -9,6 +13,12 @@ $(function () {
 
     function ScopeClients(list) {
         ko.mapping.fromJS(list, null, this);
+        this.appID = ko.computed(function () {
+            return appID;
+        });
+        this.scopeID = ko.computed(function () {
+            return scopeID;
+        });
     }
 
     ScopeClients.prototype.addClient = function (item) {

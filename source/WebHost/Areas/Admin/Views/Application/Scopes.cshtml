@@ -3,7 +3,13 @@
 }
 
 <h2>Scopes</h2>
+
 <ul class="nav nav-pills">
+    <li>
+        <a data-href="@Url.Action("Manage")"
+            data-bind="attr: { href: $element.dataset.href + '#' + $data.appID() }">
+            <i class="icon-arrow-left"></i> Back to Application</a>
+    </li>
     <li>
         <a data-href="@Url.Action("Scope")" 
             data-bind="attr: { href: $element.dataset.href + '#a' + $data.appID() }">New Scope</a>
@@ -21,7 +27,7 @@
     <tbody data-bind="foreach: scopes">
         <tr>
             <td>
-                <a class="btn btn-primary" data-href="@Url.Action("Scope")" data-bind="attr: { href: $element.dataset.href + '#' + $data.id() }">Manage</a>
+                <a class="btn btn-primary" data-href="@Url.Action("Scope")" data-bind="attr: { href: $element.dataset.href + '#' + $data.id() + 'a' + $parent.appID() }">Manage</a>
                 <button class="btn" data-bind="click: function (data, evt) { $parent.deleteScope(data) }">Delete</button>
             </td>
             <td data-bind="text:name"></td>

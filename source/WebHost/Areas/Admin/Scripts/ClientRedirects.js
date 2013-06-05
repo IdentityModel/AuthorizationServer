@@ -14,6 +14,9 @@ $(function () {
             uri : ko.observable(""),
             description : ko.observable("")
         };
+        this.backId = ko.computed(function () {
+            return clientId;
+        });
         authz.util.addRequired(this.newUri, "uri", "Uri");
         authz.util.addAnyErrors(this.newUri);
     }

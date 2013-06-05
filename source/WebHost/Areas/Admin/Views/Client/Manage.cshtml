@@ -3,13 +3,16 @@
 }
 
 <h2><span data-bind="text: editDescription"></span> Client</h2>
-<ul class="nav nav-pills hide" data-bind="css: { hide: !redirectsEnabled() }">
+<ul class="nav nav-pills">
     <li>
+        <a href="@Url.Action("Index")">
+            <i class="icon-arrow-left"></i> Back to Clients</a>
+    </li>
+    <li class="hide" data-bind="css: { hide: !redirectsEnabled() }">
         <a data-href="@Url.Action("Redirects")" 
             data-bind="attr: { href: $element.dataset.href + '#' + $data.clientId() }">Redirect Uris</a>
     </li>
 </ul>
-
 <fieldset>
     <legend></legend>
     <div>

@@ -44,7 +44,8 @@
                 <th>Name</th>
             </tr>
         </thead>
-        <tbody data-bind="foreach: allowedClients">
+        <tbody>
+        <!-- ko foreach: allowedClients -->
             <tr>
                 <td>
                     <button class="btn" data-bind="click: function (data, evt) { $parent.deleteClient(data) }">Remove</button>
@@ -52,8 +53,8 @@
                 <td data-bind="text: clientId"></td>
                 <td data-bind="text: name"></td>
             </tr>
-        </tbody>
-        <tbody data-bind="foreach: otherClients">
+        <!-- /ko -->
+        <!-- ko foreach: otherClients -->
             <tr>
                 <td>
                     <button class="btn" data-bind="click: function (data, evt) { $parent.addClient(data) }">Add</button>
@@ -61,6 +62,7 @@
                 <td data-bind="text: clientId"></td>
                 <td data-bind="text: name"></td>
             </tr>
+        <!-- /ko -->
         </tbody>
     </table>
     <p data-bind="css: { hide: otherClients().length || allowedClients().length }" class="alert alert-warning hide">

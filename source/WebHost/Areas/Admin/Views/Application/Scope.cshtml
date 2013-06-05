@@ -1,41 +1,72 @@
 ﻿@{
     ViewBag.Title = "Scope";
 }
+<div id="scopes">
+    <h2><span data-bind="text: editDescription"></span> Scope</h2>
 
-<h2><span data-bind="text: editDescription"></span> Scope</h2>
-
-<ul class="nav nav-pills">
-    <li>
-        <a data-href="@Url.Action("Scopes")"
-            data-bind="attr: { href: $element.dataset.href + '#' + $data.appID() }">
-            <i class="icon-arrow-left"></i> Back to Scopes</a>
-    </li>
-    <li class="hide"  data-bind="css: { hide: !menusEnabled() }">
-        <a data-href="@Url.Action("ScopeClients")" 
-            data-bind="attr: { href: $element.dataset.href + '#' + $data.id() + 'a' + $data.appID() }">Clients</a>
-    </li>
-</ul>
-<fieldset>
-    <legend></legend>
-    <div>
-        <label for="name">Name</label>
-        <input id="name" data-bind="value: name, valueUpdate: 'keyup'" />
-        <label class="text-error" data-bind="text: nameError"></label>
-    </div>
-    <div>
-        <label for="description">Description</label>
-        <input id="description" data-bind="value: description, valueUpdate: 'keyup'" />
-        <label class="text-error" data-bind="text: descriptionError"></label>
-    </div>
-    <div>
-        <label for="emphasize" class="checkbox">
-            <input id="emphasize" data-bind="checked: emphasize" type="checkbox" />
-            Emphasize
-        </label>
-    </div>
-    <div><button class="btn btn-primary" data-bind="click:save, disable: anyErrors">Save</button></div>
-</fieldset>
-
+    <ul class="nav nav-pills">
+        <li>
+            <a data-href="@Url.Action("Scopes")"
+                data-bind="attr: { href: $element.dataset.href + '#' + $data.appID() }">
+                <i class="icon-arrow-left"></i>Back to Scopes</a>
+        </li>
+    </ul>
+    <fieldset>
+        <legend></legend>
+        <div>
+            <label for="name">Name</label>
+            <input id="name" data-bind="value: name, valueUpdate: 'keyup'" />
+            <label class="text-error" data-bind="text: nameError"></label>
+        </div>
+        <div>
+            <label for="description">Description</label>
+            <input id="description" data-bind="value: description, valueUpdate: 'keyup'" />
+            <label class="text-error" data-bind="text: descriptionError"></label>
+        </div>
+        <div>
+            <label for="emphasize" class="checkbox">
+                <input id="emphasize" data-bind="checked: emphasize" type="checkbox" />
+                Emphasize
+            </label>
+        </div>
+        <div>
+            <button class="btn btn-primary" data-bind="click: save, disable: anyErrors">Save</button></div>
+    </fieldset>
+</div>
+<div id="scopeClients" class="hide" data-bind="css: { hide: !$data }">
+    <hr />
+    <h3>Clients</h3>
+    <table class="table table-striped hide" data-bind="css: { hide: !(otherClients().length || allowedClients().length) }">
+        <thead>
+            <tr>
+                <th></th>
+                <th>Client ID</th>
+                <th>Name</th>
+            </tr>
+        </thead>
+        <tbody data-bind="foreach: allowedClients">
+            <tr>
+                <td>
+                    <button class="btn" data-bind="click: function (data, evt) { $parent.deleteClient(data) }">Remove</button>
+                </td>
+                <td data-bind="text: clientId"></td>
+                <td data-bind="text: name"></td>
+            </tr>
+        </tbody>
+        <tbody data-bind="foreach: otherClients">
+            <tr>
+                <td>
+                    <button class="btn" data-bind="click: function (data, evt) { $parent.addClient(data) }">Add</button>
+                </td>
+                <td data-bind="text: clientId"></td>
+                <td data-bind="text: name"></td>
+            </tr>
+        </tbody>
+    </table>
+    <p data-bind="css: { hide: otherClients().length || allowedClients().length }" class="alert alert-warning hide">
+        No Clients Found
+    </p>
+</div>
 @section scripts
 {
     <script src="~/Areas/Admin/Scripts/Scope.js"></script>

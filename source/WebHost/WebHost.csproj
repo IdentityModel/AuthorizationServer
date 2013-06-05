@@ -205,7 +205,6 @@
     <Content Include="Areas\Admin\Scripts\ClientRedirects.js" />
     <Content Include="Areas\Admin\Scripts\Application.js" />
     <Content Include="Areas\Admin\Scripts\Scope.js" />
-    <Content Include="Areas\Admin\Scripts\ScopeClients.js" />
     <Content Include="Areas\Admin\Scripts\Scopes.js" />
     <Content Include="Areas\Admin\Scripts\Keys.js" />
     <Content Include="Areas\Admin\Scripts\Global-Administrators.js" />
@@ -301,7 +300,6 @@
     <Content Include="Areas\Admin\Views\Client\Redirects.cshtml" />
     <Content Include="Areas\Admin\Views\Application\Manage.cshtml" />
     <Content Include="Areas\Admin\Views\Application\Scopes.cshtml" />
-    <Content Include="Areas\Admin\Views\Application\ScopeClients.cshtml" />
     <Content Include="Areas\Admin\Views\Application\Scope.cshtml" />
     <None Include="Content\Site.less" />
     <Content Include="Configuration\identityModel.config" />

@@ -20,8 +20,8 @@
         <tr>
             <th></th>
             <th>Name</th>
-            <th>Description</th>
             <th>Emphasize</th>
+            <th>Client Count</th>
         </tr>
     </thead>
     <tbody data-bind="foreach: scopes">
@@ -31,8 +31,8 @@
                 <button class="btn" data-bind="click: function (data, evt) { $parent.deleteScope(data) }">Delete</button>
             </td>
             <td data-bind="text:name"></td>
-            <td data-bind="text: description"></td>
             <td><input type="checkbox" disabled data-bind="checked: emphasize" /></td>
+            <td data-bind="text: clientCount"></td>
         </tr>
     </tbody>
 </table>

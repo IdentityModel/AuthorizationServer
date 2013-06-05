@@ -31,7 +31,7 @@ namespace Thinktecture.AuthorizationServer.WebHost.Areas.Admin.Api
                 from s in app.Scopes
                 select new
                 {
-                    s.ID,s.Name,s.Description,s.Emphasize
+                    s.ID,s.Name,s.Description,s.Emphasize,clientCount=s.AllowedClients.Count
                 };
             return Request.CreateResponse(HttpStatusCode.OK, data.ToArray());
         }

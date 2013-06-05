@@ -15,7 +15,6 @@ $(function () {
             description : ko.observable("")
         };
         authz.util.addRequired(this.newUri, "uri", "Uri");
-        authz.util.addRequired(this.newUri, "description", "Description");
         authz.util.addAnyErrors(this.newUri);
     }
     ClientRedirects.prototype.addUri = function () {

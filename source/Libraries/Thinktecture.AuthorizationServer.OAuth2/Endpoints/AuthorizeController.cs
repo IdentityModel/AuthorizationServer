@@ -12,6 +12,7 @@ using Thinktecture.AuthorizationServer.Models;
 
 namespace Thinktecture.AuthorizationServer.OAuth2
 {
+    [Authorize]
     public class AuthorizeController : Controller
     {
         ITokenHandleManager _handleManager;
@@ -138,7 +139,7 @@ namespace Thinktecture.AuthorizationServer.OAuth2
                 validatedRequest.Client,
                 validatedRequest.Application,
                 validatedRequest.RedirectUri.Uri,
-                ClaimsPrincipal.Current.Claims,
+                ClaimsPrincipal.Current.FindAll(claim => claim.Issuer != Constants.InternalIssuer),
                 validatedRequest.Scopes,
                 validatedRequest.Client.AllowRefreshToken);
 

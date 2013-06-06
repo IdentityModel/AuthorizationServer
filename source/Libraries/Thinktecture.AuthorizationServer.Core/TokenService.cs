@@ -27,7 +27,7 @@ namespace Thinktecture.AuthorizationServer
 
         public virtual TokenResponse CreateTokenResponse(TokenHandle handle, ITokenHandleManager handleManager)
         {
-            handleManager.Delete(handle.HandleId);
+            //handleManager.Delete(handle.HandleId);
 
             var resourceOwner = Principal.Create(
                 "OAuth2",
@@ -62,13 +62,12 @@ namespace Thinktecture.AuthorizationServer
         {
             try
             {
-                var subject = CreateSubject(request, resourceOwner);
-                var descriptor = CreateDescriptor(request, subject);
-                var token = CreateToken(descriptor);
+                var claims = CreateClaims(request, resourceOwner);
+                var token = CreateToken(request, claims);
 
                 return new TokenResponse
                 {
-                    AccessToken = token,
+                    AccessToken = WriteToken(token),
                     ExpiresIn = request.Application.TokenLifetime * 60,
                     TokenType = "Bearer"
                 };
@@ -80,37 +79,32 @@ namespace Thinktecture.AuthorizationServer
             }
         }
 
-        protected virtual string CreateToken(SecurityTokenDescriptor descriptor)
+        protected virtual string WriteToken(JWTSecurityToken token)
         {
-            var handler = new JWTSecurityTokenHandler();
-
-            var token = handler.CreateToken(descriptor);
-            return handler.WriteToken(token);
+            return new JWTSecurityTokenHandler().WriteToken(token);
         }
 
-        protected virtual SecurityTokenDescriptor CreateDescriptor(ValidatedRequest request, ClaimsIdentity subject)
+        protected virtual JWTSecurityToken CreateToken(ValidatedRequest request, IEnumerable<Claim> claims)
         {
-            var descriptor = new SecurityTokenDescriptor
-            {
-                AppliesToAddress = request.Application.Audience,
-                Lifetime = new Lifetime(DateTime.UtcNow, DateTime.UtcNow.AddMinutes(request.Application.TokenLifetime)),
-                TokenIssuerName = globalConfiguration.Issuer,
-                Subject = subject,
-                SigningCredentials = request.Application.SigningCredentials
-            };
+            var token = new JWTSecurityToken(
+                issuer: globalConfiguration.Issuer,
+                audience: request.Application.Audience,
+                claims: claims,
+                signingCredentials: request.Application.SigningCredentials,
+                validFrom: DateTime.UtcNow,
+                validTo: DateTime.UtcNow.AddMinutes(request.Application.TokenLifetime));
 
-            return descriptor;
+            return token;
         }
 
-        protected virtual ClaimsIdentity CreateSubject(ValidatedRequest request, ClaimsPrincipal resourceOwner)
+        protected virtual IEnumerable<Claim> CreateClaims(ValidatedRequest request, ClaimsPrincipal resourceOwner)
         {
             var claims = new List<Claim>();
 
             claims.AddRange(CreateRequestClaims(request));
             claims.AddRange(CreateResourceOwnerClaims(resourceOwner));
 
-            var subject = new ClaimsIdentity(claims, "tt.authz");
-            return subject;
+            return claims;
         }
 
         protected virtual List<Claim> CreateResourceOwnerClaims(ClaimsPrincipal resourceOwner)

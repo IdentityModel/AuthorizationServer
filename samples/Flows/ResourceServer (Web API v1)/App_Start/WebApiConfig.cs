@@ -1,5 +1,7 @@
 ﻿using System.Web.Http;
+using Thinktecture.IdentityModel;
 using Thinktecture.IdentityModel.Tokens.Http;
+using System.Linq;
 
 namespace Thinktecture.Samples
 {
@@ -25,10 +27,10 @@ namespace Thinktecture.Samples
                 RequireSsl = false,
             };
 
-            //authentication.AddMsftJsonWebToken(
-            //    issuer: Constants.IdSrv.IssuerUri,
-            //    audience: Constants.Audience,
-            //    signingKey: Constants.IdSrv.SigningKey);
+            authentication.AddMsftJsonWebToken(
+                issuer: Constants.AuthzSrv.IssuerName,
+                audience: Constants.Audience,
+                signingCertificate: X509.LocalMachine.My.SubjectDistinguishedName.Find(Constants.AuthzSrv.SigningCertName).First());
 
             return authentication;
         }

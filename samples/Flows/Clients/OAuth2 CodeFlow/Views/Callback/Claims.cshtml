@@ -1,0 +1,17 @@
+﻿@model Thinktecture.Samples.ViewClaims
+
+@{
+    ViewBag.Title = "Claims";
+}
+
+<h2>Claims</h2>
+<br />
+
+@foreach (var claim in Model)
+{
+    <p>
+        @claim.Type
+        <br />
+        <strong>@claim.Value</strong>
+    </p>
+}

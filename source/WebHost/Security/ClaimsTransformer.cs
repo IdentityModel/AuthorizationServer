@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
+using System.Web.Helpers;
 using Thinktecture.AuthorizationServer.Interfaces;
 using Thinktecture.IdentityModel;
 
@@ -34,6 +35,7 @@ namespace Thinktecture.AuthorizationServer.WebHost
                 throw new InvalidOperationException("No nameidentifier claim");
             }
 
+            AntiForgeryConfig.UniqueClaimTypeIdentifier = Constants.ClaimTypes.Subject;
             return new Claim[] { new Claim(Constants.ClaimTypes.Subject, nameId.Value) };
         }
 

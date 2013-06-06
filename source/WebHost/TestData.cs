@@ -175,9 +175,32 @@ namespace Thinktecture.AuthorizationServer.WebHost
 
         internal static void Test()
         {
-            //var db = DependencyResolver.Current.GetService<Thinktecture.AuthorizationServer.EF.AuthorizationServerContext>();
-            //var app = db.Applications.First();
-            //var scopes = app.Scopes.ToArray();
+            //using (var db = new Thinktecture.AuthorizationServer.EF.AuthorizationServerContext())
+            //{
+            //    if (!db.TokenHandles.Any())
+            //    {
+            //        var th = new TokenHandle()
+            //        {
+            //            Created = DateTime.Now
+
+            //        };
+            //        th.Application = db.Applications.First();
+            //        th.Client = db.Clients.First();
+            //        th.ResourceOwner = new List<TokenHandleClaim>()
+            //        {
+            //            new TokenHandleClaim{Type = "foo", Value="bar"}
+            //        };
+            //        db.TokenHandles.Add(th);
+            //        db.SaveChanges();
+            //    }
+            //}
+
+            //using (var db = new Thinktecture.AuthorizationServer.EF.AuthorizationServerContext())
+            //{
+            //    var th = db.TokenHandles.First();
+            //    db.TokenHandles.Remove(th);
+            //    db.SaveChanges();
+            //}
         }
     }
 }

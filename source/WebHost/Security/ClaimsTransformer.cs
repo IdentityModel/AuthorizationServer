@@ -21,12 +21,23 @@ namespace Thinktecture.AuthorizationServer.WebHost
             var claims = new List<Claim>();
 
             claims.AddRange(FilterClaims(incomingPrincipal));
-            claims.AddRange(GetInternalClaims(incomingPrincipal));
+            claims.AddRange(AddInternalClaims(incomingPrincipal));
 
             return Principal.Create("AuthorizationServer", claims.ToArray());
         }
 
-        private IEnumerable<Claim> GetInternalClaims(ClaimsPrincipal incomingPrincipal)
+        private IEnumerable<Claim> FilterClaims(ClaimsPrincipal incomingPrincipal)
+        {
+            var nameId = incomingPrincipal.FindFirst(ClaimTypes.NameIdentifier);
+            if (nameId == null)
+            {
+                throw new InvalidOperationException("No nameidentifier claim");
+            }
+
+            return new Claim[] { new Claim(Constants.ClaimTypes.Subject, nameId.Value) };
+        }
+
+        private IEnumerable<Claim> AddInternalClaims(ClaimsPrincipal incomingPrincipal)
         {
             var result = new List<Claim>();
             var nameId = incomingPrincipal.FindFirst(ClaimTypes.NameIdentifier);
@@ -42,17 +53,6 @@ namespace Thinktecture.AuthorizationServer.WebHost
             }
 
             return result;
-        }
-
-        private IEnumerable<Claim> FilterClaims(ClaimsPrincipal incomingPrincipal)
-        {
-            var nameId = incomingPrincipal.FindFirst(ClaimTypes.NameIdentifier);
-            if (nameId == null)
-            {
-                throw new InvalidOperationException("No nameidentifier claim");
-            }
-
-            return new Claim[] { new Claim(Constants.ClaimTypes.Subject, nameId.Value) };
         }
     }
 }

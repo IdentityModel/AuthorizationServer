@@ -115,7 +115,7 @@ namespace Thinktecture.AuthorizationServer
 
         protected virtual List<Claim> CreateResourceOwnerClaims(ClaimsPrincipal resourceOwner)
         {
-            return resourceOwner.Claims.ToList();
+            return resourceOwner.FindAll(c => c.Issuer != Constants.InternalIssuer).ToList();
         }
 
         protected virtual List<Claim> CreateRequestClaims(ValidatedRequest request)

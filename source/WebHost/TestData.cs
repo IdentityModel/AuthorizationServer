@@ -27,7 +27,7 @@ namespace Thinktecture.AuthorizationServer.WebHost
                         Issuer = "ThinktectureAuthorizationServer",
                         Administrators = new List<AuthorizationServerAdministrator>
                             {
-                                new AuthorizationServerAdministrator{NameID="dbaier"},
+                                new AuthorizationServerAdministrator{NameID="dominick"},
                                 new AuthorizationServerAdministrator{NameID="ballen"},
                             }
                     };

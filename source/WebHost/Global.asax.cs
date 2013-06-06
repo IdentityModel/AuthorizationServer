@@ -29,7 +29,9 @@ namespace Thinktecture.AuthorizationServer.WebHost
         void FederatedAuthentication_FederationConfigurationCreated(object sender, System.IdentityModel.Services.Configuration.FederationConfigurationCreatedEventArgs e)
         {
             var svc = DependencyResolver.Current.GetService<IAuthorizationServerAdministratorsService>();
-            e.FederationConfiguration.IdentityConfiguration.ClaimsAuthenticationManager = new AuthorizationServerClaimsTransformer(svc);
+
+            e.FederationConfiguration.IdentityConfiguration.ClaimsAuthenticationManager = new ClaimsTransformer(svc);
+            e.FederationConfiguration.IdentityConfiguration.ClaimsAuthorizationManager = new AuthorizationManager();
         }
 
         void Application_EndRequest()

@@ -15,10 +15,14 @@
 </ul>
 <fieldset>
     <legend></legend>
-    <div>
+    <div data-bind="visible: isNew">
         <label for="clientID">Client ID</label>
         <input id="clientID" data-bind="value: clientId, valueUpdate: 'keyup', enable: clientIdEnabled" />
         <label class="text-error" data-bind="text: clientIdError"></label>
+    </div>
+    <div data-bind="visible: !isNew()">
+        <label for="clientID2">Client ID</label>
+        <span id="clientID2" data-bind="text: clientId" />
     </div>
     <div>
         <label for="clientSecret">Client Secret</label>

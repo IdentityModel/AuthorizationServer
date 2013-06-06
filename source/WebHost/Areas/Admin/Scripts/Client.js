@@ -3,7 +3,9 @@ $(function () {
     var svc = new authz.Service("admin/Clients");
 
     function Client(data) {
-        var isNew = !data;
+        var vm = this;
+        vm.isNew = ko.observable(!data);
+
         if (data && !data.clientSecret) {
             data.clientSecret = "";
         }
@@ -17,11 +19,9 @@ $(function () {
         };
         ko.mapping.fromJS(data, null, this);
 
-        var vm = this;
-
         authz.util.addRequired(this, "clientId", "Client ID");
         authz.util.addValidation(this, "clientSecret", "Client Secret is required", ko.computed(function () {
-            if (!isNew) return true;
+            if (!vm.isNew()) return true;
             return !!vm.clientSecret();
         }));
         authz.util.addRequired(this, "name", "Name");
@@ -34,18 +34,19 @@ $(function () {
             return vm.flow() === "Code" || vm.flow() === "ResourceOwner";
         });
         vm.clientIdEnabled = ko.computed(function () {
-            return isNew;
+            return vm.isNew();
         });
         vm.redirectsEnabled = ko.computed(function () {
-            return !isNew;
+            return !vm.isNew();
         });
         vm.editDescription = ko.computed(function () {
-            return isNew ? "New" : "Manage";
+            return vm.isNew() ? "New" : "Manage";
         });
         vm.save = function () {
-            if (isNew) {
+            if (vm.isNew()) {
                 svc.post(ko.mapping.toJS(vm)).then(function (data, status, xhr) {
                     window.location = window.location + '#' + vm.clientId();
+                    vm.isNew(false);
                 });
             }
             else {

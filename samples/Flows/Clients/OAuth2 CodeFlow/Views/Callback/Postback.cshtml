@@ -1,0 +1,45 @@
+﻿@model Thinktecture.IdentityModel.Clients.AccessTokenResponse
+
+@{
+    ViewBag.Title = "Postback";
+}
+
+<h2>Access Token</h2>
+<br />
+
+<p>
+    <strong>Token:</strong>
+    <br />
+    @Model.AccessToken
+</p>
+
+<p>
+    <strong>Token type:</strong>
+    <br />
+    @Model.TokenType
+</p>
+
+<p>
+    <strong>Expires:</strong>
+    <br />
+    @(DateTime.Now.AddSeconds(Model.ExpiresIn).ToString())
+</p>
+
+<p>
+    <strong>Refresh token:</strong>
+    <br />
+    @Model.RefreshToken
+</p>
+
+@using (Html.BeginForm("CallService", "Callback"))
+{ 
+    @Html.Hidden("token", @Model.AccessToken)
+
+    <input type="submit" value="Call service" />
+}
+
+@using (Html.BeginForm("RenewToken", "Callback"))
+{ 
+    <input type="hidden" name="refreshToken" value="@Model.RefreshToken" />
+    <input type="submit" value="Renew Token" />
+}

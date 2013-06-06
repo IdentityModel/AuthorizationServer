@@ -88,14 +88,15 @@ namespace Thinktecture.AuthorizationServer.OAuth2
                 return Request.CreateOAuthErrorResponse(OAuthConstants.Errors.InvalidGrant);
             }
 
-            if (!handle.RedirectUri.Equals(validatedRequest.RedirectUri))
-            {
-                Tracing.ErrorFormat("Redirect URI in token request ({0}), does not match redirect URI from authorize request ({1})",
-                    validatedRequest.RedirectUri,
-                    handle.RedirectUri);
+            // todo
+            //if (!handle.RedirectUri.Equals(validatedRequest.RedirectUri))
+            //{
+            //    Tracing.ErrorFormat("Redirect URI in token request ({0}), does not match redirect URI from authorize request ({1})",
+            //        validatedRequest.RedirectUri,
+            //        handle.RedirectUri);
 
-                return Request.CreateOAuthErrorResponse(OAuthConstants.Errors.InvalidRequest);
-            }
+            //    return Request.CreateOAuthErrorResponse(OAuthConstants.Errors.InvalidRequest);
+            //}
 
             var tokenService = new TokenService(_config.GlobalConfiguration);
             var response = tokenService.CreateTokenResponse(handle, _handleManager);

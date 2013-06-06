@@ -76,6 +76,11 @@ namespace Thinktecture.AuthorizationServer.WebHost
                             {
                                 Uri = "https://test.local",
                                 Description = "Test"
+                            },
+                            new ClientRedirectUri
+                            {
+                                Uri = "https://localhost:44303/callback",
+                                Description = "Local Test"
                             }
                         }
                     };

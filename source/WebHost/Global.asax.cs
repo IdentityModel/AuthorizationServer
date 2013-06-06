@@ -1,7 +1,9 @@
-﻿using System.Web.Http;
+﻿using System.IdentityModel.Services;
+using System.Web.Http;
 using System.Web.Mvc;
 using System.Web.Optimization;
 using System.Web.Routing;
+using Thinktecture.AuthorizationServer.Interfaces;
 
 namespace Thinktecture.AuthorizationServer.WebHost
 {
@@ -20,6 +22,14 @@ namespace Thinktecture.AuthorizationServer.WebHost
 
             TestData.Populate();
             TestData.Test();
+
+            FederatedAuthentication.FederationConfigurationCreated += FederatedAuthentication_FederationConfigurationCreated;
+        }
+
+        void FederatedAuthentication_FederationConfigurationCreated(object sender, System.IdentityModel.Services.Configuration.FederationConfigurationCreatedEventArgs e)
+        {
+            var svc = DependencyResolver.Current.GetService<IAuthorizationServerAdministratorsService>();
+            e.FederationConfiguration.IdentityConfiguration.ClaimsAuthenticationManager = new AuthorizationServerClaimsTransformer(svc);
         }
 
         void Application_EndRequest()

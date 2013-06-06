@@ -184,6 +184,7 @@
     <Compile Include="Areas\Admin\Models\ClientRedirectModel.cs" />
     <Compile Include="Areas\Admin\Models\GlobalViewModel.cs" />
     <Compile Include="Areas\Admin\Models\ScopeModel.cs" />
+    <Compile Include="AuthorizationServerClaimsTransformer.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>

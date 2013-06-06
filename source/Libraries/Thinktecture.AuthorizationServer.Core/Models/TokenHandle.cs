@@ -16,7 +16,9 @@ namespace Thinktecture.AuthorizationServer.Models
         [Key]
         public virtual string HandleId { get; set; }
 
+        [Required]
         public virtual Client Client { get; set; }
+        [Required]
         public virtual Application Application { get; set; }
 
         public virtual string RedirectUri { get; set; }

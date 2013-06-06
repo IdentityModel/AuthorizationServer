@@ -139,7 +139,7 @@ namespace Thinktecture.AuthorizationServer.OAuth2
                 validatedRequest.Client,
                 validatedRequest.Application,
                 validatedRequest.RedirectUri.Uri,
-                ClaimsPrincipal.Current.FindAll(claim => claim.Issuer != Constants.InternalIssuer),
+                ClaimsPrincipal.Current.FilterInternalClaims(),
                 validatedRequest.Scopes,
                 validatedRequest.Client.AllowRefreshToken);
 

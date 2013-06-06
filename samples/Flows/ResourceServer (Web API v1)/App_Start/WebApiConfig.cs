@@ -30,7 +30,7 @@ namespace Thinktecture.Samples
             authentication.AddMsftJsonWebToken(
                 issuer: Constants.AuthzSrv.IssuerName,
                 audience: Constants.Audience,
-                signingCertificate: X509.LocalMachine.My.SubjectDistinguishedName.Find(Constants.AuthzSrv.SigningCertName).First());
+                signingKey: Constants.AuthzSrv.SigningKey);
 
             return authentication;
         }

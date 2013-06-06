@@ -155,13 +155,13 @@ namespace Thinktecture.AuthorizationServer.WebHost
                     {
                         Name = "User management",
                         Namespace = "users",
-                        Audience = "urn:users",
+                        Audience = "users",
                         Description = "This app manages your users",
                         LogoUrl = "http://en.opensuse.org/images/0/0b/Icon-user.png",
                         Scopes = new List<Scope> { readScope, searchScope, writeScope },
                         RequireConsent = true,
                         TokenLifetime = 60,
-                        SigningKey = new SymmetricKey { Name="main signing key", Value = CryptoRandom.CreateRandomKey(32) }
+                        SigningKey = new SymmetricKey { Name="main signing key", Value = Convert.FromBase64String("1fTiS2clmPTUlNcpwYzd5i4AEFJ2DEsd8TcUsllmaKQ=") }
                     };
                     db.Applications.Add(application);
                     db.SaveChanges();

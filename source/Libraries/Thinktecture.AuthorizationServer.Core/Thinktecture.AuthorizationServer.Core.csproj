@@ -57,18 +57,19 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Constants.cs" />
+    <Compile Include="Extensions\ClaimsPrincipalExtensions.cs" />
     <Compile Include="Interfaces\IAuthorizationServerAdministration.cs" />
     <Compile Include="Interfaces\IAuthorizationServerAdministratorsService.cs" />
     <Compile Include="Interfaces\IAuthorizationServerConfiguration.cs" />
     <Compile Include="Interfaces\IResourceOwnerCredentialValidation.cs" />
     <Compile Include="Interfaces\ITokenHandleManager.cs" />
-    <Compile Include="ModelExtensions\ScopeExtensions.cs" />
-    <Compile Include="ModelExtensions\RedirectUriExtensions.cs" />
-    <Compile Include="ModelExtensions\TokenHandleExtensions.cs" />
+    <Compile Include="Extensions\ScopeExtensions.cs" />
+    <Compile Include="Extensions\RedirectUriExtensions.cs" />
+    <Compile Include="Extensions\TokenHandleExtensions.cs" />
     <Compile Include="Models\Application.cs" />
     <Compile Include="Models\Client.cs" />
     <Compile Include="Models\ClientAuthenticationMethod.cs" />
-    <Compile Include="ModelExtensions\ClientExtensions.cs" />
+    <Compile Include="Extensions\ClientExtensions.cs" />
     <Compile Include="Models\GlobalConfiguration.cs" />
     <Compile Include="Models\SigningKey.cs" />
     <Compile Include="Models\TokenHandle.cs" />

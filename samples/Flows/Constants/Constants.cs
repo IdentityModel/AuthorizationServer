@@ -23,6 +23,9 @@ namespace Thinktecture.Samples
             public const string CodeClient = "codeclient";
             public const string CodeClientSecret = "secret";
             public const string CodeClientRedirectUrl = "https://localhost:44303/callback";
+
+            public const string ResourceOwnerClient = "roclient";
+            public const string ResourceOwnerClientSecret = "secret";
         }
 
         public static class AuthzSrv

@@ -24,16 +24,10 @@ namespace Thinktecture.AuthorizationServer.WebHost
                 //"~/Scripts/knockout-es5.js",
                 "~/Scripts/bootstrap.js"));
 
-            bundles.Add(new ScriptBundle("~/bundles/admin").Include(
-                "~/Areas/Admin/Scripts/Admin.js"));
-
             bundles.Add(new StyleBundle("~/Content/css").Include(
                 "~/Content/bootstrap.cosmo.css",
                 //"~/Content/bootstrap-responsive.css",
                 "~/Content/site.css"));
-            
-            bundles.Add(new StyleBundle("~/Content/admin").Include(
-                "~/Areas/Admin/Content/Admin.css"));
         }
     }
 }

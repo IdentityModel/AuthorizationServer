@@ -29,6 +29,7 @@ namespace Thinktecture.AuthorizationServer.EF
             modelBuilder.Entity<Application>().HasMany(x => x.Scopes).WithRequired();
             modelBuilder.Entity<Scope>().HasMany(x => x.AllowedClients).WithMany();
             modelBuilder.Entity<TokenHandle>().HasMany(x => x.Scopes).WithMany();
+            modelBuilder.Entity<TokenHandle>().HasMany(x => x.ResourceOwner).WithRequired();
         }
     }
 }

@@ -6,7 +6,7 @@ namespace UrlTestClient
 {
     class Program
     {
-        static string baseAddress = "https://roadie/authz/oauth/users/";
+        static string baseAddress = "https://roadie/authz/ndc/oauth/";
 
         static HttpClientHandler clientHandler = new HttpClientHandler
         {
@@ -27,7 +27,7 @@ namespace UrlTestClient
 
         private static void TestCodeClientValid()
         {
-            var request = "authorize?client_id=implicitclient&redirect_uri=https://test2.local&scope=read search&response_type=token";
+            var request = "authorize?client_id=ndc&redirect_uri=https://ndcoslo.com&scope=read delete&response_type=code";
             
             //Run(request);
             Start(request);

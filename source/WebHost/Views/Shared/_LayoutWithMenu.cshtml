@@ -1,15 +1,38 @@
 ﻿@{
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-
+@functions {
+    bool IsHome(){
+        return Request.RequestContext.RouteData.Values["Controller"] == "Home"
+            && Request.RequestContext.RouteData.DataTokens["area"] == null;
+    }
+}
 <section class="row">
     <nav class="span2">
         <ul class="nav nav-pills nav-stacked">
-            <li class="active">@Html.ActionLink("Home", "Index", "Home")</li>
-            <li>@Html.ActionLink("Configure", "Index", "Home", new { area="Admin" }, null)</li>
+            <li class="@(IsHome()?"active":null)">@Html.ActionLink("Home", "Index", "Home", new { area="" }, null)</li>
+            @if (IsSectionDefined("Nav"))
+            {
+                @RenderSection("Nav")
+            }
+            else
+            {
+                <li>@Html.ActionLink("Configure", "Index", "Home", new { area="Admin" }, null)</li>
+            }
+            @if (User.Identity.IsAuthenticated)
+            {
+                <li>@Html.ActionLink("Sign Out", "SignOut", "Account", new { area="" }, null)</li>
+            }
         </ul>
     </nav>
     <section class="span9 offset1">
         @RenderBody()
     </section>
 </section>
+
+@section css{
+    @RenderSection("css", false)
+}
+@section scripts{
+    @RenderSection("scripts", false)
+}

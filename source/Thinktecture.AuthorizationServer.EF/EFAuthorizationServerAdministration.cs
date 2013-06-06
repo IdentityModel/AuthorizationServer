@@ -73,6 +73,11 @@ namespace Thinktecture.AuthorizationServer.EF
             get { return new Repository<Models.SigningKey>(db.SigningKeys); }
         }
 
+        public IRepository<Models.TokenHandle> Tokens
+        {
+            get { return new Repository<Models.TokenHandle>(db.TokenHandles); }
+        }
+
         public void SaveChanges()
         {
             try

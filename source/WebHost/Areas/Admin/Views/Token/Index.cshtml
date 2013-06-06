@@ -1,6 +1,30 @@
-﻿
-@{
-    ViewBag.Title = "Index";
+﻿@{
+    ViewBag.Title = "Tokens";
 }
 
-<h2>Tokens</h2>
+<h2>@ViewBag.Title</h2>
+<table class="table table-striped hide" data-bind="css: { hide: !tokens().length }">
+    <thead>
+        <tr>
+            <th></th>
+            <th>Subject</th>
+            <th>Client</th>
+            <th>Created</th>
+        </tr>
+    </thead>
+    <tbody data-bind="foreach: tokens">
+        <tr>
+            <td><button class="btn" data-bind="click: function (data, evt) { $parent.deleteToken(data) }">Delete</button></td>
+            <td data-bind="text:subject"></td>
+            <td data-bind="text:client"></td>
+            <td data-bind="text: created"></td>
+        </tr>
+    </tbody>
+</table>
+<p data-bind="css: { hide: tokens().length }" class="alert alert-warning hide">
+    No Tokens Found
+</p>
+
+@section scripts{
+    <script src="~/Areas/Admin/Scripts/Tokens.js"></script>
+}

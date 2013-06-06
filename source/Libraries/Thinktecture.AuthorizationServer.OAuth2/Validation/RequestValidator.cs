@@ -238,6 +238,20 @@ namespace Thinktecture.AuthorizationServer.OAuth2
                 Tracing.Information("Authorization code: " + validatedRequest.AuthorizationCode);
             }
 
+            // ...and a refresh token request need a refresh token
+            if (validatedRequest.GrantType.Equals(OAuthConstants.GrantTypes.RefreshToken))
+            {
+                if (string.IsNullOrWhiteSpace(request.Refresh_Token))
+                {
+                    throw new TokenRequestValidationException(
+                        "Missing refresh token",
+                        OAuthConstants.Errors.InvalidGrant);
+                }
+
+                validatedRequest.RefreshToken = request.Refresh_Token;
+                Tracing.Information("Refresh token: " + validatedRequest.RefreshToken);
+            }
+
             // validate client credentials
             var client = ValidateClient(clientPrincipal, validatedRequest.Application);
             if (client == null)

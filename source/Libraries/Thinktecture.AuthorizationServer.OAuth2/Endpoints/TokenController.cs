@@ -73,7 +73,27 @@ namespace Thinktecture.AuthorizationServer.OAuth2
 
         private HttpResponseMessage ProcessRefreshTokenRequest(ValidatedRequest validatedRequest)
         {
-            throw new NotImplementedException();
+            Tracing.Information("Processing refresh token request");
+
+            // check for refresh token in datastore
+            var handle = _handleManager.Get(validatedRequest.RefreshToken);
+            if (handle == null)
+            {
+                Tracing.Error("Refresh token not found: " + validatedRequest.RefreshToken);
+                return Request.CreateOAuthErrorResponse(OAuthConstants.Errors.InvalidGrant);
+            }
+
+            // check the client
+            if (handle.Client.ClientId != validatedRequest.Client.ClientId)
+            {
+                Tracing.ErrorFormat("Client {0} is trying to refresh token from {1}.", validatedRequest.Client.ClientId, handle.Client.ClientId);
+                return Request.CreateOAuthErrorResponse(OAuthConstants.Errors.InvalidGrant);
+            }
+
+            var tokenService = new TokenService(_config.GlobalConfiguration);
+            var response = tokenService.CreateTokenResponseFromRefreshToken(handle, _handleManager);
+
+            return Request.CreateTokenResponse(response);
         }
 
         private HttpResponseMessage ProcessAuthorizationCodeRequest(ValidatedRequest validatedRequest)
@@ -88,6 +108,13 @@ namespace Thinktecture.AuthorizationServer.OAuth2
                 return Request.CreateOAuthErrorResponse(OAuthConstants.Errors.InvalidGrant);
             }
 
+            // check the client
+            if (handle.Client.ClientId != validatedRequest.Client.ClientId)
+            {
+                Tracing.ErrorFormat("Client {0} is trying to request token using an authorization code from {1}.", validatedRequest.Client.ClientId, handle.Client.ClientId);
+                return Request.CreateOAuthErrorResponse(OAuthConstants.Errors.InvalidGrant);
+            }
+
             // todo
             //if (!handle.RedirectUri.Equals(validatedRequest.RedirectUri))
             //{
@@ -99,7 +126,7 @@ namespace Thinktecture.AuthorizationServer.OAuth2
             //}
 
             var tokenService = new TokenService(_config.GlobalConfiguration);
-            var response = tokenService.CreateTokenResponse(handle, _handleManager);
+            var response = tokenService.CreateTokenResponseFromAuthorizationCode(handle, _handleManager);
 
             return Request.CreateTokenResponse(response);
         }

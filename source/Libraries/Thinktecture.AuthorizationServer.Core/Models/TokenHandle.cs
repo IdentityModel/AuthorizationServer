@@ -16,6 +16,7 @@ namespace Thinktecture.AuthorizationServer.Models
         [Key]
         public virtual string HandleId { get; set; }
 
+        public string Subject { get; set; }
         public virtual Client Client { get; set; }
         public virtual Application Application { get; set; }
 
@@ -30,7 +31,7 @@ namespace Thinktecture.AuthorizationServer.Models
         public virtual List<TokenHandleClaim> ResourceOwner { get; set; }
         public virtual List<Scope> Scopes { get; set; }
 
-        public static TokenHandle CreateRefreshTokenHandle(Client client, Application application, IEnumerable<Claim> claims, IEnumerable<Scope> scopes, DateTime? expiration = null)
+        public static TokenHandle CreateRefreshTokenHandle(string subject, Client client, Application application, IEnumerable<Claim> claims, IEnumerable<Scope> scopes, DateTime? expiration = null)
         {
             if (client == null) throw new ArgumentNullException("client");
             if (application == null) throw new ArgumentNullException("application");
@@ -40,6 +41,7 @@ namespace Thinktecture.AuthorizationServer.Models
             return new TokenHandle
             {
                 Type = TokenHandleType.RefreshTokenIdentifier,
+                Subject = subject,
                 Client = client,
                 Application = application,
                 ResourceOwner = claims.ToTokenHandleClaims().ToList(),

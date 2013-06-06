@@ -128,6 +128,7 @@ namespace Thinktecture.AuthorizationServer.OAuth2
                 if (validatedRequest.Client.AllowRefreshToken)
                 {
                     var handle = TokenHandle.CreateRefreshTokenHandle(
+                        principal.GetSubject(),
                         validatedRequest.Client,
                         validatedRequest.Application,
                         principal.Claims,

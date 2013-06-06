@@ -27,8 +27,6 @@ namespace Thinktecture.AuthorizationServer
 
         public virtual TokenResponse CreateTokenResponse(TokenHandle handle, ITokenHandleManager handleManager)
         {
-            //handleManager.Delete(handle.HandleId);
-
             var resourceOwner = Principal.Create(
                 "OAuth2",
                 handle.ResourceOwner.ToClaims().ToArray());
@@ -45,6 +43,7 @@ namespace Thinktecture.AuthorizationServer
             if (handle.CreateRefreshToken)
             {
                 var refreshTokenHandle = TokenHandle.CreateRefreshTokenHandle(
+                    resourceOwner.GetSubject(),
                     handle.Client,
                     handle.Application,
                     resourceOwner.Claims,
@@ -55,6 +54,7 @@ namespace Thinktecture.AuthorizationServer
                 response.RefreshToken = refreshTokenHandle.HandleId;
             }
 
+            handleManager.Delete(handle.HandleId);
             return response;
         }
 

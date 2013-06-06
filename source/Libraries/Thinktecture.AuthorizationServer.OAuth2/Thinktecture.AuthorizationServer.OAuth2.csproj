@@ -92,7 +92,6 @@
   <ItemGroup>
     <Compile Include="Validation\AuthorizeRequestResourceOwnerException.cs" />
     <Compile Include="Validation\AuthorizeRequestValidationException.cs" />
-    <Compile Include="DummyTokenHandleManager.cs" />
     <Compile Include="Endpoints\AuthorizeController.cs" />
     <Compile Include="Endpoints\TokenController.cs" />
     <Compile Include="Models\AuthorizeRequest.cs" />

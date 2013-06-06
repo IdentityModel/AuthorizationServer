@@ -80,7 +80,6 @@
     <Compile Include="Models\TokenResponse.cs" />
     <Compile Include="Models\ValidatedRequest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="TestAuthorizationServerConfiguration.cs" />
     <Compile Include="TokenService.cs" />
     <Compile Include="Tracing.cs" />
     <Compile Include="TracingScope.cs" />

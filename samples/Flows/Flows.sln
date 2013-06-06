@@ -14,7 +14,9 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Constants", "Constants\Cons
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Clients", "Clients", "{103816A7-D9C4-4707-96C9-68F9A384B10C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OAuth2 Code Flow", "Clients\OAuth2 CodeFlow\OAuth2 Code Flow.csproj", "{A3D6AE27-9630-4482-AD4A-5A14ADE69D8C}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Code Flow", "Clients\OAuth2 CodeFlow\Code Flow.csproj", "{A3D6AE27-9630-4482-AD4A-5A14ADE69D8C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Resource Owner Password Flow", "Clients\OAuth2 ResourceOwnerPasswordFlow\Resource Owner Password Flow.csproj", "{ED29CA6E-9F3C-4F52-BDB9-71CF6897BEC9}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -34,11 +36,16 @@ Global
 		{A3D6AE27-9630-4482-AD4A-5A14ADE69D8C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A3D6AE27-9630-4482-AD4A-5A14ADE69D8C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A3D6AE27-9630-4482-AD4A-5A14ADE69D8C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{ED29CA6E-9F3C-4F52-BDB9-71CF6897BEC9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{ED29CA6E-9F3C-4F52-BDB9-71CF6897BEC9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{ED29CA6E-9F3C-4F52-BDB9-71CF6897BEC9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{ED29CA6E-9F3C-4F52-BDB9-71CF6897BEC9}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{A3D6AE27-9630-4482-AD4A-5A14ADE69D8C} = {103816A7-D9C4-4707-96C9-68F9A384B10C}
+		{ED29CA6E-9F3C-4F52-BDB9-71CF6897BEC9} = {103816A7-D9C4-4707-96C9-68F9A384B10C}
 	EndGlobalSection
 EndGlobal

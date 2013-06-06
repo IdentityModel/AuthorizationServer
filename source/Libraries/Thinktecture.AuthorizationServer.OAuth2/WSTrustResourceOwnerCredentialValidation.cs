@@ -6,6 +6,7 @@
 using System;
 using System.IdentityModel.Configuration;
 using System.IdentityModel.Selectors;
+using System.IdentityModel.Services;
 using System.IdentityModel.Tokens;
 using System.Security.Claims;
 using System.ServiceModel;
@@ -61,7 +62,7 @@ namespace Thinktecture.AuthorizationServer.OAuth2
             principal = new ClaimsPrincipal(handler.ValidateToken(token));
 
             Tracing.Information("Successfully requested token for user via WS-Trust");
-            return new IdentityConfiguration().ClaimsAuthenticationManager.Authenticate("ResourceOwnerPasswordValidation", principal);
+            return FederatedAuthentication.FederationConfiguration.IdentityConfiguration.ClaimsAuthenticationManager.Authenticate("ResourceOwnerPasswordValidation", principal);
         }
     }
 }

@@ -19,32 +19,35 @@ namespace Thinktecture.AuthorizationServer.WebHost
 
         public override ClaimsPrincipal Authenticate(string resourceName, ClaimsPrincipal incomingPrincipal)
         {
-            var claims = new List<Claim>();
+            var subject = GetSubject(incomingPrincipal);
+            var claims = new List<Claim> { subject };
 
-            claims.AddRange(FilterClaims(incomingPrincipal));
-            claims.AddRange(AddInternalClaims(incomingPrincipal));
+            claims.AddRange(AddInternalClaims(subject));
 
             return Principal.Create("AuthorizationServer", claims.ToArray());
         }
 
-        private IEnumerable<Claim> FilterClaims(ClaimsPrincipal incomingPrincipal)
+        private Claim GetSubject(ClaimsPrincipal principal)
         {
-            var nameId = incomingPrincipal.FindFirst(ClaimTypes.NameIdentifier);
+            var nameId = principal.FindFirst(ClaimTypes.NameIdentifier);
             if (nameId == null)
             {
-                throw new InvalidOperationException("No nameidentifier claim");
+                nameId = principal.FindFirst(ClaimTypes.Name);
+                if (nameId == null)
+                {
+                    throw new InvalidOperationException("No nameidentifier claim");
+                }
             }
 
-            return new Claim[] { new Claim(Constants.ClaimTypes.Subject, nameId.Value) };
+            return new Claim(Constants.ClaimTypes.Subject, nameId.Value);
         }
 
-        private IEnumerable<Claim> AddInternalClaims(ClaimsPrincipal incomingPrincipal)
+        private IEnumerable<Claim> AddInternalClaims(Claim subject)
         {
-            var result = new List<Claim>();
-            var nameId = incomingPrincipal.FindFirst(ClaimTypes.NameIdentifier);
             var adminNameIDs = this.service.GetAdministratorNameIDs();
+            var result = new List<Claim>();
 
-            if (adminNameIDs.Contains(nameId.Value))
+            if (adminNameIDs.Contains(subject.Value))
             {
                 result.Add(new Claim(
                     ClaimTypes.Role, 

@@ -31,7 +31,7 @@
         {
              @Html.AntiForgeryToken()
             <dl>
-                @foreach (var scope in @Model.Scopes)
+                @foreach (var scope in @Model.Scopes.OrderByDescending(x=>x.Emphasize))
                 {
                     <dt class="checkbox">
                         <label>

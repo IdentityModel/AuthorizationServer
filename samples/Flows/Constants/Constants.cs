@@ -32,6 +32,7 @@ namespace Thinktecture.Samples
 
             public const string IssuerName = "ThinktectureAuthorizationServer";
             public const string SigningCertName = "CN=idsrv.local";
+            public const string SigningKey = "1fTiS2clmPTUlNcpwYzd5i4AEFJ2DEsd8TcUsllmaKQ=";
         }
     }
 }

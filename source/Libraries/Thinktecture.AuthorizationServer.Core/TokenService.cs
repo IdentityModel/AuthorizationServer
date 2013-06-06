@@ -107,9 +107,9 @@ namespace Thinktecture.AuthorizationServer
             return claims;
         }
 
-        protected virtual List<Claim> CreateResourceOwnerClaims(ClaimsPrincipal resourceOwner)
+        protected virtual IEnumerable<Claim> CreateResourceOwnerClaims(ClaimsPrincipal resourceOwner)
         {
-            return resourceOwner.FindAll(c => c.Issuer != Constants.InternalIssuer).ToList();
+            return resourceOwner.FilterInternalClaims();
         }
 
         protected virtual List<Claim> CreateRequestClaims(ValidatedRequest request)

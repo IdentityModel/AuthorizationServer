@@ -11,8 +11,11 @@ namespace Thinktecture.AuthorizationServer.WebHost.Controllers
     {
         public ActionResult SignOut()
         {
-            FederatedAuthentication.WSFederationAuthenticationModule.SignOut();
-            return Redirect("~");
+            if (User.Identity.IsAuthenticated)
+            {
+                FederatedAuthentication.WSFederationAuthenticationModule.SignOut();
+            }
+            return View();
         }
 
     }

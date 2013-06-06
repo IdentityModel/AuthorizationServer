@@ -1,16 +1,10 @@
 ﻿@{
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-@functions {
-    bool IsHome(){
-        return Request.RequestContext.RouteData.Values["Controller"] == "Home"
-            && Request.RequestContext.RouteData.DataTokens["area"] == null;
-    }
-}
 <section class="row">
     <nav class="span2">
         <ul class="nav nav-pills nav-stacked">
-            <li class="@(IsHome()?"active":null)">@Html.ActionLink("Home", "Index", "Home", new { area="" }, null)</li>
+            <li class="@GetActive("Home")">@Html.ActionLink("Home", "Index", "Home", new { area="" }, null)</li>
             @if (IsSectionDefined("Nav"))
             {
                 @RenderSection("Nav")
@@ -19,9 +13,9 @@
             {
                 <li>@Html.ActionLink("Configure", "Index", "Home", new { area="Admin" }, null)</li>
             }
-            @if (User.Identity.IsAuthenticated)
+            @if (User.Identity.IsAuthenticated || IsController("Account"))
             {
-                <li>@Html.ActionLink("Sign Out", "SignOut", "Account", new { area="" }, null)</li>
+                <li class="@GetActive("Account")">@Html.ActionLink("Sign Out", "SignOut", "Account", new { area="" }, null)</li>
             }
         </ul>
     </nav>
@@ -35,4 +29,22 @@
 }
 @section scripts{
     @RenderSection("scripts", false)
+}
+
+@functions {
+    bool IsController(string controller)
+    {
+        return Request.RequestContext.RouteData.Values["Controller"].Equals(controller)
+            && Request.RequestContext.RouteData.DataTokens["area"] == null;
+    }
+    string GetActive(string controller){
+        if (IsController(controller))
+        {
+            return "active";
+        }
+        else
+        {
+            return null;
+        }
+    }
 }

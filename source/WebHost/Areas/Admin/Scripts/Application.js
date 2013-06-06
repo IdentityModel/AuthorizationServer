@@ -3,7 +3,8 @@ $(function () {
     var svc = new authz.Service("admin/Applications");
 
     function Application(keys, data) {
-        var isNew = !data;
+        var vm = this;
+        vm.isNew = ko.observable(!data);
         data = data || {
             id:0,
             name: "",
@@ -20,8 +21,6 @@ $(function () {
         ko.mapping.fromJS(data, null, this);
         this.signingKeys = ko.mapping.fromJS(keys);
 
-        var vm = this;
-
         authz.util.addRequired(this, "name", "Name");
         authz.util.addRequired(this, "namespace", "Namespace");
         authz.util.addRequired(this, "audience", "Audience");
@@ -29,17 +28,19 @@ $(function () {
         authz.util.addAnyErrors(this);
 
         vm.menusEnabled = ko.computed(function () {
-            return !isNew;
+            return !vm.isNew();
         });
 
         vm.editDescription = ko.computed(function () {
-            return isNew ? "New" : "Manage";
+            return vm.isNew() ? "New" : "Manage";
         });
 
         vm.save = function () {
-            if (isNew) {
+            if (vm.isNew()) {
                 svc.post(ko.mapping.toJS(vm)).then(function (data, status, xhr) {
                     window.location = window.location + '#' + data.id;
+                    vm.isNew(false);
+                    vm.id(data.id);
                 });
             }
             else {

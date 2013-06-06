@@ -35,7 +35,6 @@ namespace Thinktecture.AuthorizationServer.WebHost
                 throw new InvalidOperationException("No nameidentifier claim");
             }
 
-            AntiForgeryConfig.UniqueClaimTypeIdentifier = Constants.ClaimTypes.Subject;
             return new Claim[] { new Claim(Constants.ClaimTypes.Subject, nameId.Value) };
         }
 

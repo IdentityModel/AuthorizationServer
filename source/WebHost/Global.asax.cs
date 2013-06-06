@@ -1,4 +1,5 @@
 ﻿using System.IdentityModel.Services;
+using System.Web.Helpers;
 using System.Web.Http;
 using System.Web.Mvc;
 using System.Web.Optimization;
@@ -23,6 +24,7 @@ namespace Thinktecture.AuthorizationServer.WebHost
             TestData.Populate();
             TestData.Test();
 
+            AntiForgeryConfig.UniqueClaimTypeIdentifier = Constants.ClaimTypes.Subject;
             FederatedAuthentication.FederationConfigurationCreated += FederatedAuthentication_FederationConfigurationCreated;
         }
 

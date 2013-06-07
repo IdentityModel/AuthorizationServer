@@ -5,13 +5,16 @@
     <nav class="span2">
         <ul class="nav nav-pills nav-stacked">
             <li class="@GetActive("Home")">@Html.ActionLink("Home", "Index", "Home", new { area="" }, null)</li>
-            @if (IsSectionDefined("Nav"))
+            @if(Thinktecture.AuthorizationServer.WebHost.Settings.EnableAdmin)
             {
-                @RenderSection("Nav")
-            }
-            else
-            {
-                <li>@Html.ActionLink("Configure", "Index", "Home", new { area="Admin" }, null)</li>
+                if (IsSectionDefined("Nav"))
+                {
+                    @RenderSection("Nav")
+                }
+                else
+                {
+                    <li>@Html.ActionLink("Configure", "Index", "Home", new { area="Admin" }, null)</li>
+                }
             }
             @if (User.Identity.IsAuthenticated || IsController("Account"))
             {

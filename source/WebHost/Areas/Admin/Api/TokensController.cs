@@ -24,7 +24,8 @@ namespace Thinktecture.AuthorizationServer.WebHost.Areas.Admin.Api
         public HttpResponseMessage Get()
         {
             var query =
-                from item in config.Tokens.All.ToArray()
+                from item in config.Tokens.All
+                where item.Type == TokenHandleType.RefreshTokenIdentifier
                 select new { 
                     id = item.HandleId, 
                     subject = item.Subject,

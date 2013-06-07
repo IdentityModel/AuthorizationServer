@@ -20,6 +20,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Resource Owner Password Flo
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Implicit Flow (Windows8)", "Clients\ImplicitFlow (Windows8)\Implicit Flow (Windows8).csproj", "{4ED6CBBA-01A7-4D1C-9D4B-271EDAFB8AED}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ClientCredentials Flow", "Clients\ClientCredentials Flow\ClientCredentials Flow.csproj", "{0452120D-787B-4837-BB1F-8C2B9FAFAB33}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -96,6 +98,16 @@ Global
 		{4ED6CBBA-01A7-4D1C-9D4B-271EDAFB8AED}.Release|x86.ActiveCfg = Release|x86
 		{4ED6CBBA-01A7-4D1C-9D4B-271EDAFB8AED}.Release|x86.Build.0 = Release|x86
 		{4ED6CBBA-01A7-4D1C-9D4B-271EDAFB8AED}.Release|x86.Deploy.0 = Release|x86
+		{0452120D-787B-4837-BB1F-8C2B9FAFAB33}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0452120D-787B-4837-BB1F-8C2B9FAFAB33}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0452120D-787B-4837-BB1F-8C2B9FAFAB33}.Debug|ARM.ActiveCfg = Debug|Any CPU
+		{0452120D-787B-4837-BB1F-8C2B9FAFAB33}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{0452120D-787B-4837-BB1F-8C2B9FAFAB33}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{0452120D-787B-4837-BB1F-8C2B9FAFAB33}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0452120D-787B-4837-BB1F-8C2B9FAFAB33}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0452120D-787B-4837-BB1F-8C2B9FAFAB33}.Release|ARM.ActiveCfg = Release|Any CPU
+		{0452120D-787B-4837-BB1F-8C2B9FAFAB33}.Release|x64.ActiveCfg = Release|Any CPU
+		{0452120D-787B-4837-BB1F-8C2B9FAFAB33}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -104,5 +116,6 @@ Global
 		{A3D6AE27-9630-4482-AD4A-5A14ADE69D8C} = {103816A7-D9C4-4707-96C9-68F9A384B10C}
 		{ED29CA6E-9F3C-4F52-BDB9-71CF6897BEC9} = {103816A7-D9C4-4707-96C9-68F9A384B10C}
 		{4ED6CBBA-01A7-4D1C-9D4B-271EDAFB8AED} = {103816A7-D9C4-4707-96C9-68F9A384B10C}
+		{0452120D-787B-4837-BB1F-8C2B9FAFAB33} = {103816A7-D9C4-4707-96C9-68F9A384B10C}
 	EndGlobalSection
 EndGlobal

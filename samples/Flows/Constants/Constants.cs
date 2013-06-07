@@ -28,6 +28,9 @@ namespace Thinktecture.Samples
             public const string ResourceOwnerClientSecret = "secret";
 
             public const string ImplicitClient = "implicitclient";
+
+            public const string Client = "client";
+            public const string ClientSecret = "secret";
         }
 
         public static class AuthzSrv

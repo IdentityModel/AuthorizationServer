@@ -141,7 +141,7 @@ namespace Thinktecture.AuthorizationServer.OAuth2
                 validatedRequest.RedirectUri.Uri,
                 ClaimsPrincipal.Current.FilterInternalClaims(),
                 validatedRequest.Scopes,
-                validatedRequest.Client.AllowRefreshToken);
+                validatedRequest.RequestingRefreshToken);
 
             _handleManager.Add(handle);
             var tokenString = string.Format("code={0}", handle.HandleId);

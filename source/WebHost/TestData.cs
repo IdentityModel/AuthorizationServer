@@ -180,6 +180,7 @@ namespace Thinktecture.AuthorizationServer.WebHost
                         Scopes = new List<Scope> { readScope, searchScope, writeScope },
                         RequireConsent = true,
                         TokenLifetime = 60,
+                        AllowRefreshToken = true,
                         SigningKey = new SymmetricKey { Name="main signing key", Value = Convert.FromBase64String("1fTiS2clmPTUlNcpwYzd5i4AEFJ2DEsd8TcUsllmaKQ=") }
                     };
                     db.Applications.Add(application);

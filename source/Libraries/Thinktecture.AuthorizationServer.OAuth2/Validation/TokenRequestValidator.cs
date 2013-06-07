@@ -227,7 +227,8 @@ namespace Thinktecture.AuthorizationServer.OAuth2
             }
 
             validatedRequest.AuthorizationCode = request.Code;
-
+            Tracing.Information("Authorization code: " + validatedRequest.AuthorizationCode);
+            
             // check for authorization code in datastore
             var handle = _handleManager.Get(validatedRequest.AuthorizationCode);
             if (handle == null)
@@ -257,9 +258,6 @@ namespace Thinktecture.AuthorizationServer.OAuth2
 
             //    return Request.CreateOAuthErrorResponse(OAuthConstants.Errors.InvalidRequest);
             //}
-
-            validatedRequest.AuthorizationCode = request.Code;
-            Tracing.Information("Authorization code: " + validatedRequest.AuthorizationCode);
         }
 
         private Client ValidateClient(ClaimsPrincipal clientPrincipal, Application application)

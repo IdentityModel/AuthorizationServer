@@ -1,4 +1,5 @@
-﻿using System.Web.Mvc;
+﻿using System.Web.Http;
+using System.Web.Mvc;
 using System.Web.Optimization;
 
 namespace Thinktecture.AuthorizationServer.WebHost.Areas.Admin
@@ -24,7 +25,22 @@ namespace Thinktecture.AuthorizationServer.WebHost.Areas.Admin
                 );
 
                 RegisterAdminBundles(BundleTable.Bundles);
+                RegisterWebApiRoutes(GlobalConfiguration.Configuration);
             }
+        }
+
+        private void RegisterWebApiRoutes(HttpConfiguration config)
+        {
+            config.Routes.MapHttpRoute(
+                name: "Admin-Endpoints-ScopeClient",
+                routeTemplate: "api/admin/ScopeClients/{scopeID}/{clientID}",
+                defaults: new { controller = "ScopeClients", clientID = RouteParameter.Optional }
+            );
+            config.Routes.MapHttpRoute(
+                name: "Admin-Endpoints",
+                routeTemplate: "api/admin/{controller}/{id}",
+                defaults: new { id = RouteParameter.Optional }
+            );
         }
 
         private void RegisterAdminBundles(BundleCollection bundles)

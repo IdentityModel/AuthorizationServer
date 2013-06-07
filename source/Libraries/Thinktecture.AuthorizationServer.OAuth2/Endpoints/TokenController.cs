@@ -66,9 +66,22 @@ namespace Thinktecture.AuthorizationServer.OAuth2
             {
                 return ProcessRefreshTokenRequest(validatedRequest);
             }
+            else if (string.Equals(validatedRequest.GrantType, OAuthConstants.GrantTypes.ClientCredentials))
+            {
+                return ProcessClientCredentialsRequest(validatedRequest);
+            }
 
             Tracing.Error("invalid grant type: " + request.Grant_Type);
             return Request.CreateOAuthErrorResponse(OAuthConstants.Errors.UnsupportedGrantType);
+        }
+
+        private HttpResponseMessage ProcessClientCredentialsRequest(ValidatedRequest validatedRequest)
+        {
+            Tracing.Information("Processing refresh token request");
+
+            var sts = new TokenService(_config.GlobalConfiguration);
+            var response = sts.CreateTokenResponse(validatedRequest);
+            return Request.CreateTokenResponse(response);
         }
 
         private HttpResponseMessage ProcessRefreshTokenRequest(ValidatedRequest validatedRequest)

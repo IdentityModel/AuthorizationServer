@@ -87,6 +87,8 @@ namespace Thinktecture.AuthorizationServer.OAuth2
                     "Client flow not allowed for client",
                     OAuthConstants.Errors.UnsupportedGrantType);
             }
+
+            ValidateScopes(validatedRequest, request);
         }
 
         private void ValidateRefreshTokenGrant(ValidatedRequest validatedRequest, TokenRequest request)
@@ -122,6 +124,26 @@ namespace Thinktecture.AuthorizationServer.OAuth2
                     OAuthConstants.Errors.UnsupportedGrantType);
             }
 
+            ValidateScopes(validatedRequest, request);
+
+            // extract username and password
+            if (string.IsNullOrWhiteSpace(request.UserName) || string.IsNullOrWhiteSpace(request.Password))
+            {
+                throw new TokenRequestValidationException(
+                    "Missing Username or password.",
+                    OAuthConstants.Errors.InvalidGrant);
+            }
+            else
+            {
+                validatedRequest.UserName = request.UserName;
+                validatedRequest.Password = request.Password;
+
+                Tracing.Information("Resource owner: " + request.UserName);
+            }
+        }
+
+        private static void ValidateScopes(ValidatedRequest validatedRequest, TokenRequest request)
+        {
             // validate scope
             if (string.IsNullOrWhiteSpace(request.Scope))
             {
@@ -144,21 +166,6 @@ namespace Thinktecture.AuthorizationServer.OAuth2
                 throw new TokenRequestValidationException(
                     "Invalid scope",
                     OAuthConstants.Errors.InvalidScope);
-            }
-
-            // extract username and password
-            if (string.IsNullOrWhiteSpace(request.UserName) || string.IsNullOrWhiteSpace(request.Password))
-            {
-                throw new TokenRequestValidationException(
-                    "Missing Username or password.",
-                    OAuthConstants.Errors.InvalidGrant);
-            }
-            else
-            {
-                validatedRequest.UserName = request.UserName;
-                validatedRequest.Password = request.Password;
-
-                Tracing.Information("Resource owner: " + request.UserName);
             }
         }
 

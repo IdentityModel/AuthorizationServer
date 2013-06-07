@@ -78,7 +78,7 @@ namespace Thinktecture.AuthorizationServer
             return response;
         }
 
-        public virtual TokenResponse CreateTokenResponse(ValidatedRequest request, ClaimsPrincipal resourceOwner)
+        public virtual TokenResponse CreateTokenResponse(ValidatedRequest request, ClaimsPrincipal resourceOwner = null)
         {
             try
             {
@@ -117,12 +117,16 @@ namespace Thinktecture.AuthorizationServer
             return token;
         }
 
-        protected virtual IEnumerable<Claim> CreateClaims(ValidatedRequest request, ClaimsPrincipal resourceOwner)
+        protected virtual IEnumerable<Claim> CreateClaims(ValidatedRequest request, ClaimsPrincipal resourceOwner = null)
         {
             var claims = new List<Claim>();
 
             claims.AddRange(CreateRequestClaims(request));
-            claims.AddRange(CreateResourceOwnerClaims(resourceOwner));
+
+            if (resourceOwner != null)
+            {
+                claims.AddRange(CreateResourceOwnerClaims(resourceOwner));
+            }
 
             return claims;
         }

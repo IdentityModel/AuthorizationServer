@@ -25,6 +25,20 @@ namespace Thinktecture.AuthorizationServer
             this.globalConfiguration = globalConfiguration;
         }
 
+        public virtual TokenResponse CreateTokenResponse(TokenHandle handle, ITokenHandleManager handleManager)
+        {
+            if (handle.Type == TokenHandleType.AuthorizationCode)
+            {
+                return CreateTokenResponseFromAuthorizationCode(handle, handleManager);
+            }
+            if (handle.Type == TokenHandleType.RefreshTokenIdentifier)
+            {
+                return CreateTokenResponseFromRefreshToken(handle, handleManager);
+            }
+
+            throw new ArgumentException("handle.Type");
+        }
+
         public virtual TokenResponse CreateTokenResponseFromAuthorizationCode(TokenHandle handle, ITokenHandleManager handleManager)
         {
             var resourceOwner = Principal.Create(

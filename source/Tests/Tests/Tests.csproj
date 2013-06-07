@@ -67,6 +67,7 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
+    <Compile Include="Data\TestTokenHandleManager.cs" />
     <Compile Include="Request Validation\AuthorizeRequestValidationTests.cs" />
     <Compile Include="Data\TestAuthorizationServerConfiguration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

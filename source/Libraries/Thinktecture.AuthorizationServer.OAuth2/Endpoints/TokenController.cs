@@ -45,7 +45,7 @@ namespace Thinktecture.AuthorizationServer.OAuth2
             ValidatedRequest validatedRequest;
             try
             {
-                validatedRequest = new TokenRequestValidator().Validate(application, request, ClaimsPrincipal.Current);
+                validatedRequest = new TokenRequestValidator(_handleManager).Validate(application, request, ClaimsPrincipal.Current);
             }
             catch (TokenRequestValidationException ex)
             {
@@ -88,23 +88,8 @@ namespace Thinktecture.AuthorizationServer.OAuth2
         {
             Tracing.Information("Processing refresh token request");
 
-            // check for refresh token in datastore
-            var handle = _handleManager.Get(validatedRequest.RefreshToken);
-            if (handle == null)
-            {
-                Tracing.Error("Refresh token not found: " + validatedRequest.RefreshToken);
-                return Request.CreateOAuthErrorResponse(OAuthConstants.Errors.InvalidGrant);
-            }
-
-            // check the client
-            if (handle.Client.ClientId != validatedRequest.Client.ClientId)
-            {
-                Tracing.ErrorFormat("Client {0} is trying to refresh token from {1}.", validatedRequest.Client.ClientId, handle.Client.ClientId);
-                return Request.CreateOAuthErrorResponse(OAuthConstants.Errors.InvalidGrant);
-            }
-
             var tokenService = new TokenService(_config.GlobalConfiguration);
-            var response = tokenService.CreateTokenResponseFromRefreshToken(handle, _handleManager);
+            var response = tokenService.CreateTokenResponse(validatedRequest.TokenHandle, _handleManager);
 
             return Request.CreateTokenResponse(response);
         }
@@ -113,33 +98,8 @@ namespace Thinktecture.AuthorizationServer.OAuth2
         {
             Tracing.Information("Processing authorization code request");
 
-            // check for authorization code in datastore
-            var handle = _handleManager.Get(validatedRequest.AuthorizationCode);
-            if (handle == null)
-            {
-                Tracing.Error("Authorization code not found: " + validatedRequest.AuthorizationCode);
-                return Request.CreateOAuthErrorResponse(OAuthConstants.Errors.InvalidGrant);
-            }
-
-            // check the client
-            if (handle.Client.ClientId != validatedRequest.Client.ClientId)
-            {
-                Tracing.ErrorFormat("Client {0} is trying to request token using an authorization code from {1}.", validatedRequest.Client.ClientId, handle.Client.ClientId);
-                return Request.CreateOAuthErrorResponse(OAuthConstants.Errors.InvalidGrant);
-            }
-
-            // todo
-            //if (!handle.RedirectUri.Equals(validatedRequest.RedirectUri))
-            //{
-            //    Tracing.ErrorFormat("Redirect URI in token request ({0}), does not match redirect URI from authorize request ({1})",
-            //        validatedRequest.RedirectUri,
-            //        handle.RedirectUri);
-
-            //    return Request.CreateOAuthErrorResponse(OAuthConstants.Errors.InvalidRequest);
-            //}
-
             var tokenService = new TokenService(_config.GlobalConfiguration);
-            var response = tokenService.CreateTokenResponseFromAuthorizationCode(handle, _handleManager);
+            var response = tokenService.CreateTokenResponse(validatedRequest.TokenHandle, _handleManager);
 
             return Request.CreateTokenResponse(response);
         }

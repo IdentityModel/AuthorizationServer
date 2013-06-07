@@ -40,26 +40,26 @@ namespace Tests
         [ExpectedException(typeof(TokenRequestValidationException))]
         public void NoParameters()
         {
-            var validator = new RequestValidator();
+            var validator = new TokenRequestValidator();
             var app = _testConfig.FindApplication("test");
 
-            var result = validator.ValidateTokenRequest(app, null, null);
+            var result = validator.Validate(app, null, null);
         }
 
         [TestMethod]
         [ExpectedException(typeof(TokenRequestValidationException))]
         public void EmptyParameters()
         {
-            var validator = new RequestValidator();
+            var validator = new TokenRequestValidator();
             var app = _testConfig.FindApplication("test");
 
-            var result = validator.ValidateTokenRequest(app, new TokenRequest(), _codeClient);
+            var result = validator.Validate(app, new TokenRequest(), _codeClient);
         }
 
         [TestMethod]
         public void ValidCodeGrant()
         {
-            var validator = new RequestValidator();
+            var validator = new TokenRequestValidator();
             var app = _testConfig.FindApplication("test");
             var request = new TokenRequest
             {
@@ -67,13 +67,13 @@ namespace Tests
                 Code = "abc"
             };
 
-            var result = validator.ValidateTokenRequest(app, request, _codeClient);
+            var result = validator.Validate(app, request, _codeClient);
         }
 
         [TestMethod]
         public void ValidPasswordGrant()
         {
-            var validator = new RequestValidator();
+            var validator = new TokenRequestValidator();
             var app = _testConfig.FindApplication("test");
             var request = new TokenRequest
             {
@@ -83,14 +83,14 @@ namespace Tests
                 Scope = "read"
             };
 
-            var result = validator.ValidateTokenRequest(app, request, _resourceOwnerClient);
+            var result = validator.Validate(app, request, _resourceOwnerClient);
         }
 
         [TestMethod]
         [ExpectedException(typeof(TokenRequestValidationException))]
         public void AnonymousCodeGrant()
         {
-            var validator = new RequestValidator();
+            var validator = new TokenRequestValidator();
             var app = _testConfig.FindApplication("test");
             var request = new TokenRequest
             {
@@ -98,42 +98,42 @@ namespace Tests
                 Code = "abc"
             };
 
-            var result = validator.ValidateTokenRequest(app, request, Principal.Anonymous);
+            var result = validator.Validate(app, request, Principal.Anonymous);
         }
 
         [TestMethod]
         [ExpectedException(typeof(TokenRequestValidationException))]
         public void MissingGrantTypeWithCode()
         {
-            var validator = new RequestValidator();
+            var validator = new TokenRequestValidator();
             var app = _testConfig.FindApplication("test");
             var request = new TokenRequest
             {
                 Code = "abc"
             };
 
-            var result = validator.ValidateTokenRequest(app, request, _codeClient);
+            var result = validator.Validate(app, request, _codeClient);
         }
 
         [TestMethod]
         [ExpectedException(typeof(TokenRequestValidationException))]
         public void MissingCode()
         {
-            var validator = new RequestValidator();
+            var validator = new TokenRequestValidator();
             var app = _testConfig.FindApplication("test");
             var request = new TokenRequest
             {
                 Code = OAuthConstants.GrantTypes.AuthorizationCode
             };
 
-            var result = validator.ValidateTokenRequest(app, request, _codeClient);
+            var result = validator.Validate(app, request, _codeClient);
         }
 
         [TestMethod]
         [ExpectedException(typeof(TokenRequestValidationException))]
         public void MissingGrantTypeWithPassword()
         {
-            var validator = new RequestValidator();
+            var validator = new TokenRequestValidator();
             var app = _testConfig.FindApplication("test");
             var request = new TokenRequest
             {
@@ -142,28 +142,28 @@ namespace Tests
                 Scope = "read"
             };
 
-            var result = validator.ValidateTokenRequest(app, request, _resourceOwnerClient);
+            var result = validator.Validate(app, request, _resourceOwnerClient);
         }
 
         [TestMethod]
         [ExpectedException(typeof(TokenRequestValidationException))]
         public void UnknownGrantType()
         {
-            var validator = new RequestValidator();
+            var validator = new TokenRequestValidator();
             var app = _testConfig.FindApplication("test");
             var request = new TokenRequest
             {
                 Grant_Type = "unknown"
             };
 
-            var result = validator.ValidateTokenRequest(app, request, _resourceOwnerClient);
+            var result = validator.Validate(app, request, _resourceOwnerClient);
         }
 
         [TestMethod]
         [ExpectedException(typeof(TokenRequestValidationException))]
         public void UnauthorizedCodeGrant()
         {
-            var validator = new RequestValidator();
+            var validator = new TokenRequestValidator();
             var app = _testConfig.FindApplication("test");
             var request = new TokenRequest
             {
@@ -171,14 +171,14 @@ namespace Tests
                 Code = "abc"
             };
 
-            var result = validator.ValidateTokenRequest(app, request, _resourceOwnerClient);
+            var result = validator.Validate(app, request, _resourceOwnerClient);
         }
 
         [TestMethod]
         [ExpectedException(typeof(TokenRequestValidationException))]
         public void UnauthorizedPasswordGrant()
         {
-            var validator = new RequestValidator();
+            var validator = new TokenRequestValidator();
             var app = _testConfig.FindApplication("test");
             var request = new TokenRequest
             {
@@ -188,14 +188,14 @@ namespace Tests
                 Scope = "read"
             };
 
-            var result = validator.ValidateTokenRequest(app, request, _codeClient);
+            var result = validator.Validate(app, request, _codeClient);
         }
 
         [TestMethod]
         [ExpectedException(typeof(TokenRequestValidationException))]
         public void MissingScope()
         {
-            var validator = new RequestValidator();
+            var validator = new TokenRequestValidator();
             var app = _testConfig.FindApplication("test");
             var request = new TokenRequest
             {
@@ -204,14 +204,14 @@ namespace Tests
                 Password = "password",
             };
 
-            var result = validator.ValidateTokenRequest(app, request, _resourceOwnerClient);
+            var result = validator.Validate(app, request, _resourceOwnerClient);
         }
 
         [TestMethod]
         [ExpectedException(typeof(TokenRequestValidationException))]
         public void UnknownScope()
         {
-            var validator = new RequestValidator();
+            var validator = new TokenRequestValidator();
             var app = _testConfig.FindApplication("test");
             var request = new TokenRequest
             {
@@ -221,14 +221,14 @@ namespace Tests
                 Scope = "unknown"
             };
 
-            var result = validator.ValidateTokenRequest(app, request, _resourceOwnerClient);
+            var result = validator.Validate(app, request, _resourceOwnerClient);
         }
 
         [TestMethod]
         [ExpectedException(typeof(TokenRequestValidationException))]
         public void UnauthorizedScopeSingle()
         {
-            var validator = new RequestValidator();
+            var validator = new TokenRequestValidator();
             var app = _testConfig.FindApplication("test");
             var request = new TokenRequest
             {
@@ -238,14 +238,14 @@ namespace Tests
                 Scope = "delete"
             };
 
-            var result = validator.ValidateTokenRequest(app, request, _resourceOwnerClient);
+            var result = validator.Validate(app, request, _resourceOwnerClient);
         }
 
         [TestMethod]
         [ExpectedException(typeof(TokenRequestValidationException))]
         public void UnauthorizedScopeMultiple()
         {
-            var validator = new RequestValidator();
+            var validator = new TokenRequestValidator();
             var app = _testConfig.FindApplication("test");
             var request = new TokenRequest
             {
@@ -255,7 +255,7 @@ namespace Tests
                 Scope = "read delete"
             };
 
-            var result = validator.ValidateTokenRequest(app, request, _resourceOwnerClient);
+            var result = validator.Validate(app, request, _resourceOwnerClient);
         }
     }
 }

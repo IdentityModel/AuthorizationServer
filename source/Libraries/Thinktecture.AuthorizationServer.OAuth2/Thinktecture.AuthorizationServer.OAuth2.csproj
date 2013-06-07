@@ -101,6 +101,7 @@
     <Compile Include="Validation\AuthorizeRequestClientException.cs" />
     <Compile Include="Validation\ClientErrorResult.cs" />
     <Compile Include="Validation\AuthorizeRequestValidator.cs" />
+    <Compile Include="Validation\TokenRequestValidator.cs" />
     <Compile Include="Validation\Extensions.cs" />
     <Compile Include="Validation\RequestValidator.cs" />
     <Compile Include="Validation\TokenRequestValidationException.cs" />

@@ -45,7 +45,7 @@ namespace Thinktecture.AuthorizationServer.OAuth2
             ValidatedRequest validatedRequest;
             try
             {
-                validatedRequest = new RequestValidator().ValidateTokenRequest(application, request, ClaimsPrincipal.Current);
+                validatedRequest = new TokenRequestValidator().Validate(application, request, ClaimsPrincipal.Current);
             }
             catch (TokenRequestValidationException ex)
             {

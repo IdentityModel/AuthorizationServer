@@ -59,7 +59,7 @@ namespace Tests
         [TestMethod]
         public void ValidCodeGrant()
         {
-            var validator = new TokenRequestValidator();
+            var validator = new TokenRequestValidator(new TestTokenHandleManager("codeclient", "https://todo"));
             var app = _testConfig.FindApplication("test");
             var request = new TokenRequest
             {
@@ -163,7 +163,7 @@ namespace Tests
         [ExpectedException(typeof(TokenRequestValidationException))]
         public void UnauthorizedCodeGrant()
         {
-            var validator = new TokenRequestValidator();
+            var validator = new TokenRequestValidator(new TestTokenHandleManager(null, null));
             var app = _testConfig.FindApplication("test");
             var request = new TokenRequest
             {

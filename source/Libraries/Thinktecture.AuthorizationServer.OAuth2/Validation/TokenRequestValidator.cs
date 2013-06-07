@@ -7,12 +7,25 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
+using Thinktecture.AuthorizationServer.Interfaces;
 using Thinktecture.AuthorizationServer.Models;
 
 namespace Thinktecture.AuthorizationServer.OAuth2
 {
     public class TokenRequestValidator
     {
+        ITokenHandleManager _handleManager;
+
+        public TokenRequestValidator()
+        {
+
+        }
+
+        public TokenRequestValidator(ITokenHandleManager handleManager)
+        {
+            _handleManager = handleManager;
+        }
+
         public ValidatedRequest Validate(Application application, TokenRequest request, ClaimsPrincipal clientPrincipal)
         {
             var validatedRequest = new ValidatedRequest();
@@ -58,9 +71,9 @@ namespace Thinktecture.AuthorizationServer.OAuth2
             switch (request.Grant_Type)
             {
                 case OAuthConstants.GrantTypes.AuthorizationCode:
-                     ValidateCodeGrant(validatedRequest, request);
-                     break;
-                case OAuthConstants.GrantTypes.Password :
+                    ValidateCodeGrant(validatedRequest, request);
+                    break;
+                case OAuthConstants.GrantTypes.Password:
                     ValidatePasswordGrant(validatedRequest, request);
                     break;
                 case OAuthConstants.GrantTypes.RefreshToken:
@@ -93,6 +106,11 @@ namespace Thinktecture.AuthorizationServer.OAuth2
 
         private void ValidateRefreshTokenGrant(ValidatedRequest validatedRequest, TokenRequest request)
         {
+            if (_handleManager == null)
+            {
+                throw new ArgumentNullException("HandleManager");
+            }
+
             if (!validatedRequest.Client.AllowRefreshToken)
             {
                 throw new TokenRequestValidationException(
@@ -100,18 +118,35 @@ namespace Thinktecture.AuthorizationServer.OAuth2
                     OAuthConstants.Errors.UnsupportedGrantType);
             }
 
-            // ...and a refresh token request need a refresh token
-            if (validatedRequest.GrantType.Equals(OAuthConstants.GrantTypes.RefreshToken))
+            // check for refresh token
+            if (string.IsNullOrWhiteSpace(request.Refresh_Token))
             {
-                if (string.IsNullOrWhiteSpace(request.Refresh_Token))
-                {
-                    throw new TokenRequestValidationException(
-                        "Missing refresh token",
-                        OAuthConstants.Errors.InvalidGrant);
-                }
+                throw new TokenRequestValidationException(
+                    "Missing refresh token",
+                    OAuthConstants.Errors.InvalidGrant);
+            }
 
-                validatedRequest.RefreshToken = request.Refresh_Token;
-                Tracing.Information("Refresh token: " + validatedRequest.RefreshToken);
+            validatedRequest.RefreshToken = request.Refresh_Token;
+            Tracing.Information("Refresh token: " + validatedRequest.RefreshToken);
+
+            // check for refresh token in datastore
+            var handle = _handleManager.Get(validatedRequest.RefreshToken);
+            if (handle == null)
+            {
+                throw new TokenRequestValidationException(
+                    "Refresh token not found: " + validatedRequest.RefreshToken,
+                    OAuthConstants.Errors.InvalidGrant);
+            }
+
+            validatedRequest.TokenHandle = handle;
+            Tracing.Information("Token handle found: " + handle.HandleId);
+
+            // check the client binding
+            if (handle.Client.ClientId != validatedRequest.Client.ClientId)
+            {
+                throw new TokenRequestValidationException(
+                    string.Format("Client {0} is trying to refresh token from {1}.", validatedRequest.Client.ClientId, handle.Client.ClientId),
+                    OAuthConstants.Errors.InvalidGrant);
             }
         }
 
@@ -171,13 +206,18 @@ namespace Thinktecture.AuthorizationServer.OAuth2
 
         private void ValidateCodeGrant(ValidatedRequest validatedRequest, TokenRequest request)
         {
+            if (_handleManager == null)
+            {
+                throw new ArgumentNullException("HandleManager");
+            }
+
             if (validatedRequest.Client.Flow != OAuthFlow.Code)
             {
                 throw new TokenRequestValidationException(
                     "Code flow not allowed for client",
                     OAuthConstants.Errors.UnsupportedGrantType);
             }
-            
+
             // code needs to be present
             if (string.IsNullOrWhiteSpace(request.Code))
             {
@@ -185,6 +225,38 @@ namespace Thinktecture.AuthorizationServer.OAuth2
                     "Missing authorization code",
                     OAuthConstants.Errors.InvalidGrant);
             }
+
+            validatedRequest.AuthorizationCode = request.Code;
+
+            // check for authorization code in datastore
+            var handle = _handleManager.Get(validatedRequest.AuthorizationCode);
+            if (handle == null)
+            {
+                throw new TokenRequestValidationException(
+                    "Authorization code not found: " + validatedRequest.AuthorizationCode,
+                    OAuthConstants.Errors.InvalidGrant);
+            }
+
+            validatedRequest.TokenHandle = handle;
+            Tracing.Information("Token handle found: " + handle.HandleId);
+
+            // check the client binding
+            if (handle.Client.ClientId != validatedRequest.Client.ClientId)
+            {
+                throw new TokenRequestValidationException(
+                    string.Format("Client {0} is trying to request token using an authorization code from {1}.", validatedRequest.Client.ClientId, handle.Client.ClientId),
+                    OAuthConstants.Errors.InvalidGrant);
+            }
+
+            // check if redirect URI from authorize and token request match
+            //if (!handle.RedirectUri.Equals(validatedRequest.RedirectUri))
+            //{
+            //    Tracing.ErrorFormat("Redirect URI in token request ({0}), does not match redirect URI from authorize request ({1})",
+            //        validatedRequest.RedirectUri,
+            //        handle.RedirectUri);
+
+            //    return Request.CreateOAuthErrorResponse(OAuthConstants.Errors.InvalidRequest);
+            //}
 
             validatedRequest.AuthorizationCode = request.Code;
             Tracing.Information("Authorization code: " + validatedRequest.AuthorizationCode);

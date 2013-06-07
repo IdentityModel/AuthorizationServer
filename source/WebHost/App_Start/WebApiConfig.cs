@@ -4,6 +4,7 @@
  */
 
 using Newtonsoft.Json.Serialization;
+using System.Net.Http.Formatting;
 using System.Web.Http;
 using Thinktecture.IdentityModel.Tokens.Http;
 
@@ -21,19 +22,9 @@ namespace Thinktecture.AuthorizationServer.WebHost
                 handler: new AuthenticationHandler(CreateClientAuthConfig(), config)
             );
 
-            config.Routes.MapHttpRoute(
-                name: "Admin-Endpoints-ScopeClient",
-                routeTemplate: "api/admin/ScopeClients/{scopeID}/{clientID}",
-                defaults: new { controller = "ScopeClients", clientID = RouteParameter.Optional }
-            );
-            config.Routes.MapHttpRoute(
-                name: "Admin-Endpoints",
-                routeTemplate: "api/admin/{controller}/{id}",
-                defaults: new { id = RouteParameter.Optional }
-            );
-
+            config.Formatters.Clear();
+            config.Formatters.Add(new JsonMediaTypeFormatter()); 
             config.Formatters.JsonFormatter.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
-            //config.Formatters.JsonFormatter.SerializerSettings.NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore;
         }
 
         public static AuthenticationConfiguration CreateClientAuthConfig()

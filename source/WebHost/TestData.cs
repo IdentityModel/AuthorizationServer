@@ -38,6 +38,20 @@ namespace Thinktecture.AuthorizationServer.WebHost
                 var resourceOwnerClient = db.Clients.Find("roclient");
                 var CodeClient = db.Clients.Find("codeclient");
                 var ImplicitClient = db.Clients.Find("implicitclient");
+                var client = db.Clients.Find("client");
+
+                if (client == null)
+                {
+                    client = new Client
+                    {
+                        Name = "Client",
+                        ClientId = "client",
+                        ClientSecret = "secret",
+                        Flow = OAuthFlow.Client
+                    };
+                    db.Clients.Add(client);
+                    db.SaveChanges();
+                }
 
                 if (resourceOwnerClient == null)
                 {
@@ -134,7 +148,7 @@ namespace Thinktecture.AuthorizationServer.WebHost
                 {
                     var readScope = new Scope
                     {
-                        AllowedClients = new List<Client> { CodeClient, ImplicitClient, resourceOwnerClient },
+                        AllowedClients = new List<Client> { CodeClient, ImplicitClient, resourceOwnerClient, client },
                         Name = "read",
                         Description = "Read data",
                         Emphasize = false

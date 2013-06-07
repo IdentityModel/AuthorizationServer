@@ -41,7 +41,7 @@ namespace Thinktecture.AuthorizationServer.OAuth2
             ValidatedRequest validatedRequest;
             try
             {
-                validatedRequest = new RequestValidator().ValidateAuthorizeRequest(application, request);
+                validatedRequest = new AuthorizeRequestValidator().Validate(application, request);
             }
             catch (AuthorizeRequestValidationException ex)
             {
@@ -89,7 +89,7 @@ namespace Thinktecture.AuthorizationServer.OAuth2
                 ValidatedRequest validatedRequest;
                 try
                 {
-                    validatedRequest = new RequestValidator().ValidateAuthorizeRequest(application, request);
+                    validatedRequest = new AuthorizeRequestValidator().Validate(application, request);
                 }
                 catch (AuthorizeRequestValidationException ex)
                 {

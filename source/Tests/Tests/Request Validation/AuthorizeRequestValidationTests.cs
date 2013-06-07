@@ -23,16 +23,16 @@ namespace Thinktecture.AuthorizationServer.Test
         [ExpectedException(typeof(AuthorizeRequestResourceOwnerException))]
         public void NoParameters()
         {
-            var validator = new RequestValidator();
+            var validator = new AuthorizeRequestValidator();
             var app = _testConfig.FindApplication("test");
 
-            var result = validator.ValidateAuthorizeRequest(app, null);
+            var result = validator.Validate(app, null);
         }
 
         [TestMethod]
         public void ValidRequestSingleScope()
         {
-            var validator = new RequestValidator();
+            var validator = new AuthorizeRequestValidator();
             var app = _testConfig.FindApplication("test");
             var request = new AuthorizeRequest
             {
@@ -42,13 +42,13 @@ namespace Thinktecture.AuthorizationServer.Test
                 redirect_uri = "https://prod.local"
             };
 
-            var result = validator.ValidateAuthorizeRequest(app, request);
+            var result = validator.Validate(app, request);
         }
 
         [TestMethod]
         public void ValidRequestMultipleScope()
         {
-            var validator = new RequestValidator();
+            var validator = new AuthorizeRequestValidator();
             var app = _testConfig.FindApplication("test");
             var request = new AuthorizeRequest
             {
@@ -58,14 +58,14 @@ namespace Thinktecture.AuthorizationServer.Test
                 redirect_uri = "https://prod.local"
             };
 
-            var result = validator.ValidateAuthorizeRequest(app, request);
+            var result = validator.Validate(app, request);
         }
 
         [TestMethod]
         [ExpectedException(typeof(AuthorizeRequestResourceOwnerException))]
         public void MissingRedirectUri()
         {
-            var validator = new RequestValidator();
+            var validator = new AuthorizeRequestValidator();
             var app = _testConfig.FindApplication("test");
             var request = new AuthorizeRequest
             {
@@ -74,14 +74,14 @@ namespace Thinktecture.AuthorizationServer.Test
                 scope = "read"
             };
 
-            var result = validator.ValidateAuthorizeRequest(app, request);
+            var result = validator.Validate(app, request);
         }
 
         [TestMethod]
         [ExpectedException(typeof(AuthorizeRequestResourceOwnerException))]
         public void MalformedRedirectUri1()
         {
-            var validator = new RequestValidator();
+            var validator = new AuthorizeRequestValidator();
             var app = _testConfig.FindApplication("test");
             var request = new AuthorizeRequest
             {
@@ -91,14 +91,14 @@ namespace Thinktecture.AuthorizationServer.Test
                 redirect_uri = "https:/prod.local"
             };
 
-            var result = validator.ValidateAuthorizeRequest(app, request);
+            var result = validator.Validate(app, request);
         }
 
         [TestMethod]
         [ExpectedException(typeof(AuthorizeRequestResourceOwnerException))]
         public void MalformedRedirectUri2()
         {
-            var validator = new RequestValidator();
+            var validator = new AuthorizeRequestValidator();
             var app = _testConfig.FindApplication("test");
             var request = new AuthorizeRequest
             {
@@ -108,14 +108,14 @@ namespace Thinktecture.AuthorizationServer.Test
                 redirect_uri = "malformed"
             };
 
-            var result = validator.ValidateAuthorizeRequest(app, request);
+            var result = validator.Validate(app, request);
         }
 
         [TestMethod]
         [ExpectedException(typeof(AuthorizeRequestResourceOwnerException))]
         public void InvalidRedirectUri()
         {
-            var validator = new RequestValidator();
+            var validator = new AuthorizeRequestValidator();
             var app = _testConfig.FindApplication("test");
             var request = new AuthorizeRequest
             {
@@ -125,14 +125,14 @@ namespace Thinktecture.AuthorizationServer.Test
                 redirect_uri = "https://invalid.com"
             };
 
-            var result = validator.ValidateAuthorizeRequest(app, request);
+            var result = validator.Validate(app, request);
         }
 
         [TestMethod]
         [ExpectedException(typeof(AuthorizeRequestClientException))]
         public void NonSslRedirectUri()
         {
-            var validator = new RequestValidator();
+            var validator = new AuthorizeRequestValidator();
             var app = _testConfig.FindApplication("test");
             var request = new AuthorizeRequest
             {
@@ -142,14 +142,14 @@ namespace Thinktecture.AuthorizationServer.Test
                 redirect_uri = "http://prod.local"
             };
 
-            var result = validator.ValidateAuthorizeRequest(app, request);
+            var result = validator.Validate(app, request);
         }
 
         [TestMethod]
         [ExpectedException(typeof(AuthorizeRequestResourceOwnerException))]
         public void MissingClientId()
         {
-            var validator = new RequestValidator();
+            var validator = new AuthorizeRequestValidator();
             var app = _testConfig.FindApplication("test");
             var request = new AuthorizeRequest
             {
@@ -158,14 +158,14 @@ namespace Thinktecture.AuthorizationServer.Test
                 redirect_uri = "https://prod.local"
             };
 
-            var result = validator.ValidateAuthorizeRequest(app, request);
+            var result = validator.Validate(app, request);
         }
 
         [TestMethod]
         [ExpectedException(typeof(AuthorizeRequestResourceOwnerException))]
         public void UnknownClientId()
         {
-            var validator = new RequestValidator();
+            var validator = new AuthorizeRequestValidator();
             var app = _testConfig.FindApplication("test");
             var request = new AuthorizeRequest
             {
@@ -175,14 +175,14 @@ namespace Thinktecture.AuthorizationServer.Test
                 redirect_uri = "https://prod.local"
             };
 
-            var result = validator.ValidateAuthorizeRequest(app, request);
+            var result = validator.Validate(app, request);
         }
 
         [TestMethod]
         [ExpectedException(typeof(AuthorizeRequestClientException))]
         public void MissingResponseType()
         {
-            var validator = new RequestValidator();
+            var validator = new AuthorizeRequestValidator();
             var app = _testConfig.FindApplication("test");
             var request = new AuthorizeRequest
             {
@@ -191,14 +191,14 @@ namespace Thinktecture.AuthorizationServer.Test
                 redirect_uri = "https://prod.local"
             };
 
-            var result = validator.ValidateAuthorizeRequest(app, request);
+            var result = validator.Validate(app, request);
         }
 
         [TestMethod]
         [ExpectedException(typeof(AuthorizeRequestClientException))]
         public void UnsupportedResponseType()
         {
-            var validator = new RequestValidator();
+            var validator = new AuthorizeRequestValidator();
             var app = _testConfig.FindApplication("test");
             var request = new AuthorizeRequest
             {
@@ -208,14 +208,14 @@ namespace Thinktecture.AuthorizationServer.Test
                 redirect_uri = "https://prod.local"
             };
 
-            var result = validator.ValidateAuthorizeRequest(app, request);
+            var result = validator.Validate(app, request);
         }
 
         [TestMethod]
         [ExpectedException(typeof(AuthorizeRequestClientException))]
         public void UnauthorizedResponseType()
         {
-            var validator = new RequestValidator();
+            var validator = new AuthorizeRequestValidator();
             var app = _testConfig.FindApplication("test");
             var request = new AuthorizeRequest
             {
@@ -225,14 +225,14 @@ namespace Thinktecture.AuthorizationServer.Test
                 redirect_uri = "https://prod.local"
             };
 
-            var result = validator.ValidateAuthorizeRequest(app, request);
+            var result = validator.Validate(app, request);
         }
 
         [TestMethod]
         [ExpectedException(typeof(AuthorizeRequestClientException))]
         public void MissingScope()
         {
-            var validator = new RequestValidator();
+            var validator = new AuthorizeRequestValidator();
             var app = _testConfig.FindApplication("test");
             var request = new AuthorizeRequest
             {
@@ -241,14 +241,14 @@ namespace Thinktecture.AuthorizationServer.Test
                 redirect_uri = "https://prod.local"
             };
 
-            var result = validator.ValidateAuthorizeRequest(app, request);
+            var result = validator.Validate(app, request);
         }
 
         [TestMethod]
         [ExpectedException(typeof(AuthorizeRequestClientException))]
         public void UnauthorizedScopeSingle()
         {
-            var validator = new RequestValidator();
+            var validator = new AuthorizeRequestValidator();
             var app = _testConfig.FindApplication("test");
             var request = new AuthorizeRequest
             {
@@ -258,14 +258,14 @@ namespace Thinktecture.AuthorizationServer.Test
                 redirect_uri = "https://prod.local"
             };
 
-            var result = validator.ValidateAuthorizeRequest(app, request);
+            var result = validator.Validate(app, request);
         }
 
         [TestMethod]
         [ExpectedException(typeof(AuthorizeRequestClientException))]
         public void UnauthorizedScopeMultiple()
         {
-            var validator = new RequestValidator();
+            var validator = new AuthorizeRequestValidator();
             var app = _testConfig.FindApplication("test");
             var request = new AuthorizeRequest
             {
@@ -275,7 +275,7 @@ namespace Thinktecture.AuthorizationServer.Test
                 redirect_uri = "https://prod.local"
             };
 
-            var result = validator.ValidateAuthorizeRequest(app, request);
+            var result = validator.Validate(app, request);
         }
     }
 }

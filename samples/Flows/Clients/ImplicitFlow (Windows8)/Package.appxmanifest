@@ -1,0 +1,28 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Package xmlns="http://schemas.microsoft.com/appx/2010/manifest">
+  <Identity Name="4aa9830d-ee2e-4d49-af24-06620bc3f0bf" Publisher="CN=dominick" Version="1.0.0.0" />
+  <Properties>
+    <DisplayName>Implicit Flow (Windows8)</DisplayName>
+    <PublisherDisplayName>dominick</PublisherDisplayName>
+    <Logo>Assets\StoreLogo.png</Logo>
+  </Properties>
+  <Prerequisites>
+    <OSMinVersion>6.2.1</OSMinVersion>
+    <OSMaxVersionTested>6.2.1</OSMaxVersionTested>
+  </Prerequisites>
+  <Resources>
+    <Resource Language="x-generate" />
+  </Resources>
+  <Applications>
+    <Application Id="App" Executable="$targetnametoken$.exe" EntryPoint="ImplicitClientWindows8.App">
+      <VisualElements DisplayName="ImplicitClientWindows8" Logo="Assets\Logo.png" SmallLogo="Assets\SmallLogo.png" Description="ImplicitClientWindows8" ForegroundText="light" BackgroundColor="#464646">
+        <DefaultTile ShowName="allLogos" />
+        <SplashScreen Image="Assets\SplashScreen.png" />
+      </VisualElements>
+    </Application>
+  </Applications>
+  <Capabilities>
+    <Capability Name="privateNetworkClientServer" />
+    <Capability Name="internetClient" />
+  </Capabilities>
+</Package>

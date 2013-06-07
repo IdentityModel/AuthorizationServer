@@ -105,6 +105,11 @@ namespace Thinktecture.AuthorizationServer.WebHost
                             {
                                 Uri = "https://test2.local",
                                 Description = "Test"
+                            },
+                            new ClientRedirectUri
+                            {
+                                Uri = "ms-app://s-1-15-2-4224567138-2162094511-1976135278-3909242924-69295690-1380993013-1329561029/",
+                                Description = "Win Store App"
                             }
                         }
                     };

@@ -46,6 +46,16 @@
                     <dd>@scope.Description</dd>
                 }
             </dl>
+            <div>
+                @if (Model.RequestingRefreshToken)
+                {
+                    <div>
+                        <strong>Offline Use</strong>
+                        <i class="icon-exclamation-sign"></i>
+                    </div>
+                    <p>These permissions will be allowed while you are offline.</p>
+                }
+            </div>
 
             <div>           
                 <button class="btn btn-primary" name="button" value="yes">Allow</button>

@@ -21,5 +21,6 @@ namespace Thinktecture.AuthorizationServer.Models
         public string AuthorizationCode { get; set; }
         public string RefreshToken { get; set; }
         public TokenHandle TokenHandle { get; set; }
+        public bool RequestingRefreshToken { get; set; }
     }
 }

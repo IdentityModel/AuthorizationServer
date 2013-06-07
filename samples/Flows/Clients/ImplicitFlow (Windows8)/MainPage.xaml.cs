@@ -81,7 +81,8 @@ namespace ImplicitClientWindows8
         private async void ButtonAccessResource_Click(object sender, RoutedEventArgs e)
         {
             var client = new HttpClient { 
-                BaseAddress = _baseAddress };
+                BaseAddress = _baseAddress 
+            };
 
             if (_credential != null)
             {
@@ -131,6 +132,7 @@ namespace ImplicitClientWindows8
         {
             ClearVault();
             TextToken.Text = "";
+            TextExpiration.Text = "-";
         }
     }
 

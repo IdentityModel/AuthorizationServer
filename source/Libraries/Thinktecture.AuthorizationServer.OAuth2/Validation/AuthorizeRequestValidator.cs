@@ -179,6 +179,12 @@ namespace Thinktecture.AuthorizationServer.OAuth2
                    request.response_type,
                    validatedRequest.State);
             }
+
+            if (validatedRequest.Client.AllowRefreshToken && validatedRequest.Application.AllowRefreshToken)
+            {
+                Tracing.Information("The request allows arefresh token.");
+                validatedRequest.RequestingRefreshToken = true;
+            }
         }
 
         private static void ValidateScopes(AuthorizeRequest request, ValidatedRequest validatedRequest)

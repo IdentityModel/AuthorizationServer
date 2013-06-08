@@ -125,7 +125,7 @@ namespace Thinktecture.AuthorizationServer.OAuth2
                 var response = sts.CreateTokenResponse(validatedRequest, principal);
 
                 // check if refresh token is enabled for the client
-                if (validatedRequest.Client.AllowRefreshToken)
+                if (validatedRequest.Client.AllowRefreshToken && validatedRequest.Application.AllowRefreshToken)
                 {
                     var handle = TokenHandle.CreateRefreshTokenHandle(
                         principal.GetSubject(),

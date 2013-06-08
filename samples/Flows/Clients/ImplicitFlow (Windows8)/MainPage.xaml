@@ -11,7 +11,7 @@
         <TextBlock HorizontalAlignment="Left" Margin="31,25,0,0" TextWrapping="Wrap" Text="Implicit Flow" VerticalAlignment="Top" FontFamily="Global User Interface" FontSize="48" FontWeight="Bold"/>
         <Button x:Name="ButtonRequestToken" Content="Request Token" HorizontalAlignment="Left" Margin="31,107,0,0" VerticalAlignment="Top" FontSize="18" Click="ButtonRequestToken_Click"/>
         <Button x:Name="ButtonAccessResource" Content="Access Resource" HorizontalAlignment="Left" Margin="198,107,0,0" VerticalAlignment="Top" FontSize="18" Click="ButtonAccessResource_Click"/>
-        <TextBox x:Name="TextToken" HorizontalAlignment="Left" Margin="198,182,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Height="96" Width="655"/>
+        <TextBox x:Name="TextToken" HorizontalAlignment="Left" Margin="198,182,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="96" Width="655"/>
         <TextBlock HorizontalAlignment="Left" Margin="31,182,0,0" TextWrapping="Wrap" Text="Access Token:" VerticalAlignment="Top" FontFamily="Global User Interface" FontSize="16"/>
         <TextBlock HorizontalAlignment="Left" Margin="31,302,0,0" TextWrapping="Wrap" Text="Expiration:" VerticalAlignment="Top" FontFamily="Global User Interface" FontSize="16"/>
         <TextBlock x:Name="TextExpiration" HorizontalAlignment="Left" Margin="198,302,0,0" TextWrapping="Wrap" Text="-" VerticalAlignment="Top" FontFamily="Global User Interface" FontSize="16"/>

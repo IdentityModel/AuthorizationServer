@@ -2,9 +2,10 @@
 
 @{
     ViewBag.Title = "Authorize";
+    ViewBag.PageClass = "page-authorize page-authorize-consent";
 }
 
-<div class="row">
+<div class="row" id="consent">
     <div class="span6 offset1">
         <p class="lead">
             <strong>@Model.Client.Name</strong> want to access <strong>@Model.Application.Name</strong> on your behalf.
@@ -63,7 +64,7 @@
             </div>
         }
     </div>
-    <div class="span4 offset1">
+    <div class="span4 offset1" id="appInfo">
         <div class="hero-unit">
             <h3>@Model.Application.Name</h3>
             <p>@Model.Application.Description</p>

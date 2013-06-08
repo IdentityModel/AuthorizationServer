@@ -10,7 +10,7 @@
 </head>
 <body>
 
-    <div class="container" id="container-top">
+    <div class="container @ViewBag.PageClass" id="container-top">
         @Html.Action("Banner", "Home", new { area="" })
         @RenderBody()
         @Html.Action("Footer", "Home", new { area="" })

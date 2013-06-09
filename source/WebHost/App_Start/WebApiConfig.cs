@@ -22,8 +22,6 @@ namespace Thinktecture.AuthorizationServer.WebHost
                 handler: new AuthenticationHandler(CreateClientAuthConfig(), config)
             );
 
-            config.Formatters.Clear();
-            config.Formatters.Add(new JsonMediaTypeFormatter()); 
             config.Formatters.JsonFormatter.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
         }
 

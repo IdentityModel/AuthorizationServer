@@ -24,7 +24,7 @@ An access token will contain JWT standard claims like iss (issuer), aud (audienc
 
 ### Architecture
 
-AS deliberately doesn't do authentication. It solely focuses on authorization. The default configuration assumes AS is a relying party to some WS-Federation identity provider (e.g. IdentityServer). You can of course customize that in any way you want, e.g. add a local login page.
+AS deliberately doesn't do authentication. It solely focuses on authorization. The default configuration assumes AS is a relying party to some WS-Federation identity provider (e.g. IdentityServer, ADFS, Windows Azure Active Directory or Azure Access Control Service). You can of course customize that in any way you want, e.g. add a local login page.
 
 AS has only a single requirement when it comes to identity of the resource owner: the current principal must contain a claim of type "sub" (subject). You can adapt to your own claims structure using the ClaimsTransformer class in the web host project.
 

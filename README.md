@@ -8,10 +8,10 @@ As a first step, we provide an implementation of the OAuth2 framework.
 
 ### Concepts
 
-We support the following primitives
+We support the following primitives:
 
 **Applications**
-Applications are containers for settings (token lifetime, key material, audience…) and scopes. Every application gets its own entry point in the URL structure, e.g. /as/**app**/oauth.
+Applications are containers for settings (token lifetime, key material, audience…) and scopes. Every application gets its own entry point in the URL structure, e.g. /as/app/oauth.
 
 **Scopes**
 Scopes represent permissions a client can ask for. They will be shown on consent screens, so the resource owner can grant (or deny) access. A scope defines also which client can request it.

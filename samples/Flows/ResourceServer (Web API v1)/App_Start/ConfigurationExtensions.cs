@@ -1,5 +1,4 @@
-﻿using Microsoft.IdentityModel.Tokens.JWT;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.IdentityModel.Tokens;
 using System.Security.Claims;
@@ -19,7 +18,6 @@ namespace Thinktecture.Samples
                 AllowedAudience = audience,
                 SigningToken = new BinarySecretSecurityToken(Convert.FromBase64String(signingKey)),
                 ValidIssuer = issuer,
-                ValidateExpiration = true
             };
 
             var handler = new JWTSecurityTokenHandlerWrapper(validationParameters);
@@ -39,7 +37,6 @@ namespace Thinktecture.Samples
                 AllowedAudience = audience,
                 SigningToken = new X509SecurityToken(signingCertificate),
                 ValidIssuer = issuer,
-                ValidateExpiration = true
             };
 
             var handler = new JWTSecurityTokenHandlerWrapper(validationParameters);
@@ -53,7 +50,7 @@ namespace Thinktecture.Samples
         }
     }
 
-    class JWTSecurityTokenHandlerWrapper : JWTSecurityTokenHandler
+    class JWTSecurityTokenHandlerWrapper : JwtSecurityTokenHandler
     {
         TokenValidationParameters validationParams;
         public JWTSecurityTokenHandlerWrapper(TokenValidationParameters validationParams)
@@ -63,7 +60,7 @@ namespace Thinktecture.Samples
 
         public override System.Collections.ObjectModel.ReadOnlyCollection<System.Security.Claims.ClaimsIdentity> ValidateToken(SecurityToken token)
         {
-            var jwt = token as JWTSecurityToken;
+            var jwt = token as JwtSecurityToken;
             var list = new List<ClaimsIdentity>(this.ValidateToken(jwt, validationParams).Identities);
             return list.AsReadOnly();
         }

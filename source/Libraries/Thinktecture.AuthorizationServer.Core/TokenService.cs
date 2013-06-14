@@ -3,7 +3,6 @@
  * see license.txt
  */
 
-using Microsoft.IdentityModel.Tokens.JWT;
 using System;
 using System.Collections.Generic;
 using System.IdentityModel.Protocols.WSTrust;
@@ -113,20 +112,19 @@ namespace Thinktecture.AuthorizationServer
             }
         }
 
-        protected virtual string WriteToken(JWTSecurityToken token)
+        protected virtual string WriteToken(JwtSecurityToken token)
         {
-            return new JWTSecurityTokenHandler().WriteToken(token);
+            return new JwtSecurityTokenHandler().WriteToken(token);
         }
 
-        protected virtual JWTSecurityToken CreateToken(ValidatedRequest request, IEnumerable<Claim> claims)
+        protected virtual JwtSecurityToken CreateToken(ValidatedRequest request, IEnumerable<Claim> claims)
         {
-            var token = new JWTSecurityToken(
+            var token = new JwtSecurityToken(
                 issuer: globalConfiguration.Issuer,
                 audience: request.Application.Audience,
                 claims: claims,
-                signingCredentials: request.Application.SigningCredentials,
-                validFrom: DateTime.UtcNow,
-                validTo: DateTime.UtcNow.AddMinutes(request.Application.TokenLifetime));
+                lifetime: new Lifetime(DateTime.UtcNow, DateTime.UtcNow.AddMinutes(request.Application.TokenLifetime)),
+                signingCredentials: request.Application.SigningCredentials);
 
             return token;
         }

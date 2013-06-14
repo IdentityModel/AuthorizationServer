@@ -56,6 +56,7 @@ namespace Thinktecture.Samples
         public JWTSecurityTokenHandlerWrapper(TokenValidationParameters validationParams)
         {
             this.validationParams = validationParams;
+            InboundClaimTypeMap = new Dictionary<string, string>();
         }
 
         public override System.Collections.ObjectModel.ReadOnlyCollection<System.Security.Claims.ClaimsIdentity> ValidateToken(SecurityToken token)

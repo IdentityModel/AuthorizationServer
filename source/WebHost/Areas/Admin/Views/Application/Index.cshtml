@@ -10,6 +10,7 @@
     <thead>
         <tr>
             <th></th>
+            <th>Enabled</th>
             <th>Namespace</th>
             <th>Name</th>
         </tr>
@@ -20,7 +21,8 @@
                 <a class="btn btn-primary" data-href="@Url.Action("Manage")" data-bind="attr: { href: $element.dataset.href + '#' + $data.id() }">Manage</a>
                 <button class="btn" data-bind="click: function (data, evt) { $parent.deleteApp(data) }">Delete</button>
             </td>
-            <td data-bind="text:namespace"></td>
+            <td data-bind="text: enabled"></td>
+            <td data-bind="text: namespace"></td>
             <td data-bind="text:name"></td>
         </tr>
     </tbody>

@@ -10,6 +10,7 @@
     <thead>
         <tr>
             <th></th>
+            <th>Enabled</th>
             <th>Client ID</th>
             <th>Name</th>
             <th>Flow</th>
@@ -21,7 +22,8 @@
                 <a class="btn btn-primary" data-href="@Url.Action("Manage")" data-bind="attr: {href:$element.dataset.href + '#' + $data.clientId()}">Manage</a>
                 <button class="btn" data-bind="click: function (data, evt) { $parent.deleteClient(data) }">Delete</button>
             </td>
-            <td data-bind="text:clientId"></td>
+            <td data-bind="text: enabled"></td>
+            <td data-bind="text: clientId"></td>
             <td data-bind="text:name"></td>
             <td data-bind="text: flow"></td>
         </tr>

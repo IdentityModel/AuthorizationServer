@@ -17,5 +17,6 @@ namespace Thinktecture.AuthorizationServer.WebHost.Areas.Admin.Models
         public OAuthFlow Flow { get; set; }
         public bool AllowRefreshToken { get; set; }
         public bool RequireConsent { get; set; }
+        public bool Enabled { get; set; }
     }
 }

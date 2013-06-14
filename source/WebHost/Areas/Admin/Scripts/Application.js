@@ -16,7 +16,8 @@ $(function () {
             allowRefreshToken: false,
             requireConsent: false,
             rememberConsentDecision: false,
-            signingKeyId: null
+            signingKeyId: null,
+            enabled:true
         };
         ko.mapping.fromJS(data, null, this);
         this.signingKeys = ko.mapping.fromJS(keys);

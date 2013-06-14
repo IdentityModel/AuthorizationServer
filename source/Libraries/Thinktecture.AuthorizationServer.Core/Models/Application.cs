@@ -36,6 +36,8 @@ namespace Thinktecture.AuthorizationServer.Models
         public virtual bool RequireConsent { get; set; }
         public virtual bool RememberConsentDecision { get; set; }
 
+        public virtual bool Enabled { get; set; }
+
         [Required]
         public virtual SigningKey SigningKey { get; set; }
 

@@ -21,6 +21,8 @@ namespace Thinktecture.AuthorizationServer.Models
         public virtual OAuthFlow Flow { get; set; }
         public virtual bool AllowRefreshToken { get; set; }
 
+        public virtual bool Enabled { get; set; }
+
         // only relevant if Flow == Code or Implicit
         public virtual bool RequireConsent { get; set; }
 

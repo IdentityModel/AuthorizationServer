@@ -15,7 +15,8 @@ $(function () {
             name: "",
             flow: "Code",
             allowRefreshToken: false,
-            requireConsent: true
+            requireConsent: true,
+            enabled:true
         };
         ko.mapping.fromJS(data, null, this);
 

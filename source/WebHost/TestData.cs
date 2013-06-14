@@ -28,7 +28,7 @@ namespace Thinktecture.AuthorizationServer.WebHost
                         Administrators = new List<AuthorizationServerAdministrator>
                             {
                                 new AuthorizationServerAdministrator{NameID="dominick"},
-                                new AuthorizationServerAdministrator{NameID="ballen"},
+                                new AuthorizationServerAdministrator{NameID="brock"},
                             }
                     };
                     db.GlobalConfiguration.Add(config);
@@ -44,6 +44,7 @@ namespace Thinktecture.AuthorizationServer.WebHost
                 {
                     client = new Client
                     {
+                        Enabled = true,
                         Name = "Client",
                         ClientId = "client",
                         ClientSecret = "secret",
@@ -57,6 +58,7 @@ namespace Thinktecture.AuthorizationServer.WebHost
                 {
                     resourceOwnerClient = new Client
                     {
+                        Enabled = true,
                         Name = "Resource Owner Flow Client",
                         ClientId = "roclient",
                         ClientSecret = "secret",
@@ -71,6 +73,7 @@ namespace Thinktecture.AuthorizationServer.WebHost
                 {
                     CodeClient = new Client
                     {
+                        Enabled = true,
                         Name = "Code Flow Client",
                         ClientId = "codeclient",
                         ClientSecret = "secret",
@@ -105,6 +108,7 @@ namespace Thinktecture.AuthorizationServer.WebHost
                 {
                     ImplicitClient = new Client
                     {
+                        Enabled = true,
                         Name = "Implicit Flow Client",
                         ClientId = "implicitclient",
                         ClientSecret = "secret",
@@ -172,6 +176,7 @@ namespace Thinktecture.AuthorizationServer.WebHost
 
                     var application = new Application
                     {
+                        Enabled = true,
                         Name = "User management",
                         Namespace = "users",
                         Audience = "users",

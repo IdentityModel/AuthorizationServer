@@ -22,5 +22,6 @@ namespace Thinktecture.AuthorizationServer.WebHost.Areas.Admin.Models
         public bool RequireConsent { get; set; }
         public bool RememberConsentDecision { get; set; }
         public int SigningKeyID { get; set; }
+        public bool Enabled { get; set; }
     }
 }

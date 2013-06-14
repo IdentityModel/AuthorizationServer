@@ -25,7 +25,7 @@ namespace Thinktecture.AuthorizationServer.WebHost.Areas.Admin.Api
         {
             var query =
                 from a in config.Applications.All
-                select new { a.ID, a.Namespace, a.Name, a.LogoUrl };
+                select new { a.ID, a.Namespace, a.Name, a.LogoUrl, a.Enabled };
             return Request.CreateResponse(HttpStatusCode.OK, query.ToArray());
         }
         
@@ -47,7 +47,8 @@ namespace Thinktecture.AuthorizationServer.WebHost.Areas.Admin.Api
                 app.AllowRefreshToken,
                 app.RequireConsent,
                 app.RememberConsentDecision,
-                signingKeyId = app.SigningKey.ID
+                signingKeyId = app.SigningKey.ID,
+                enabled = app.Enabled
             };
             return Request.CreateResponse(HttpStatusCode.OK, data);
         }
@@ -75,6 +76,7 @@ namespace Thinktecture.AuthorizationServer.WebHost.Areas.Admin.Api
             app.RequireConsent = model.RequireConsent;
             app.RememberConsentDecision = model.RememberConsentDecision;
             app.SigningKey = config.Keys.All.Single(x => x.ID == model.SigningKeyID);
+            app.Enabled = model.Enabled; ;
 
             config.SaveChanges();
 
@@ -99,6 +101,7 @@ namespace Thinktecture.AuthorizationServer.WebHost.Areas.Admin.Api
             app.RequireConsent = model.RequireConsent;
             app.RememberConsentDecision = model.RememberConsentDecision;
             app.SigningKey = config.Keys.All.Single(x => x.ID == model.SigningKeyID);
+            app.Enabled = model.Enabled;
 
             config.Applications.Add(app);
             config.SaveChanges();

@@ -28,8 +28,8 @@ namespace Thinktecture.AuthorizationServer.WebHost.Areas.Admin.Api
                 select new { 
                     item.ClientId, 
                     item.Name, 
-                    flow = Enum.GetName(typeof(OAuthFlow), 
-                    item.Flow) 
+                    flow = Enum.GetName(typeof(OAuthFlow), item.Flow),
+                    item.Enabled
                 };
             return Request.CreateResponse(HttpStatusCode.OK, query.ToArray());
         }
@@ -44,7 +44,8 @@ namespace Thinktecture.AuthorizationServer.WebHost.Areas.Admin.Api
                 item.Name, 
                 flow = Enum.GetName(typeof(OAuthFlow), item.Flow),
                 item.AllowRefreshToken, 
-                item.RequireConsent 
+                item.RequireConsent,
+                item.Enabled
             };
             return Request.CreateResponse(HttpStatusCode.OK, data);
         }
@@ -81,6 +82,7 @@ namespace Thinktecture.AuthorizationServer.WebHost.Areas.Admin.Api
             item.Flow = model.Flow;
             item.AllowRefreshToken = model.AllowRefreshToken;
             item.RequireConsent = model.RequireConsent;
+            item.Enabled = model.Enabled;
 
             this.config.SaveChanges();
 
@@ -106,6 +108,7 @@ namespace Thinktecture.AuthorizationServer.WebHost.Areas.Admin.Api
             item.Flow = model.Flow;
             item.AllowRefreshToken = model.AllowRefreshToken;
             item.RequireConsent = model.RequireConsent;
+            item.Enabled = model.Enabled;
             
             this.config.Clients.Add(item);
             this.config.SaveChanges();

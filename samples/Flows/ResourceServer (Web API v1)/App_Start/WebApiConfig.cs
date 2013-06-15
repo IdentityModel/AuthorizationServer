@@ -2,6 +2,7 @@
 using Thinktecture.IdentityModel;
 using Thinktecture.IdentityModel.Tokens.Http;
 using System.Linq;
+using Thinktecture.IdentityModel.Tokens;
 
 namespace Thinktecture.Samples
 {
@@ -27,10 +28,11 @@ namespace Thinktecture.Samples
                 RequireSsl = false,
             };
 
-            authentication.AddMsftJsonWebToken(
+            authentication.AddJsonWebToken(
                 issuer: Constants.AuthzSrv.IssuerName,
                 audience: Constants.Audience,
-                signingKey: Constants.AuthzSrv.SigningKey);
+                signingKey: Constants.AuthzSrv.SigningKey,
+                claimMappings: ClaimMappings.None);
 
             return authentication;
         }

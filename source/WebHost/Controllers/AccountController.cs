@@ -1,8 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
+﻿/*
+ * Copyright (c) Dominick Baier, Brock Allen.  All rights reserved.
+ * see license.txt
+ */
+
 using System.IdentityModel.Services;
-using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 
 namespace Thinktecture.AuthorizationServer.WebHost.Controllers

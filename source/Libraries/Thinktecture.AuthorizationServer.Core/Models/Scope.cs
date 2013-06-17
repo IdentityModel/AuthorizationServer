@@ -3,7 +3,6 @@
  * see license.txt
  */
 
-using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 namespace Thinktecture.AuthorizationServer.Models

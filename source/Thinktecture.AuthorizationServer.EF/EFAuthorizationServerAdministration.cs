@@ -1,9 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
+﻿/*
+ * Copyright (c) Dominick Baier, Brock Allen.  All rights reserved.
+ * see license.txt
+ */
+
+using System;
 using System.Data.Entity;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Thinktecture.AuthorizationServer.Interfaces;
 
 namespace Thinktecture.AuthorizationServer.EF

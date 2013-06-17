@@ -82,7 +82,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TokenService.cs" />
     <Compile Include="Tracing.cs" />
-    <Compile Include="TracingScope.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

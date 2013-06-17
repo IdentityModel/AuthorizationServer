@@ -4,11 +4,10 @@
  */
 
 using System;
-using System.Linq;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.IdentityModel.Tokens;
-using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
 
 namespace Thinktecture.AuthorizationServer.Models
 {

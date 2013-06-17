@@ -1,4 +1,9 @@
-﻿using System.Web.Mvc;
+﻿/*
+ * Copyright (c) Dominick Baier, Brock Allen.  All rights reserved.
+ * see license.txt
+ */
+
+using System.Web.Mvc;
 using Thinktecture.AuthorizationServer.Interfaces;
 
 namespace Thinktecture.AuthorizationServer.WebHost.Controllers

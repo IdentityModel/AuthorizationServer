@@ -4,7 +4,6 @@
  */
 
 using System;
-using System.IdentityModel.Configuration;
 using System.IdentityModel.Selectors;
 using System.IdentityModel.Services;
 using System.IdentityModel.Tokens;

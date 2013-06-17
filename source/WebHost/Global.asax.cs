@@ -1,4 +1,9 @@
-﻿using System.IdentityModel.Services;
+﻿/*
+ * Copyright (c) Dominick Baier, Brock Allen.  All rights reserved.
+ * see license.txt
+ */
+
+using System.IdentityModel.Services;
 using System.Web.Helpers;
 using System.Web.Http;
 using System.Web.Mvc;

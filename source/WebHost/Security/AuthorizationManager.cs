@@ -1,8 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
+﻿/*
+ * Copyright (c) Dominick Baier, Brock Allen.  All rights reserved.
+ * see license.txt
+ */
+
 using System.Linq;
 using System.Security.Claims;
-using System.Web;
 
 namespace Thinktecture.AuthorizationServer.WebHost
 {

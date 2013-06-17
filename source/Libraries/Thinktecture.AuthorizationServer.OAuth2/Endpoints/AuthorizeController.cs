@@ -4,9 +4,9 @@
  */
 
 using System;
+using System.Linq;
 using System.Security.Claims;
 using System.Web.Mvc;
-using System.Linq;
 using Thinktecture.AuthorizationServer.Interfaces;
 using Thinktecture.AuthorizationServer.Models;
 

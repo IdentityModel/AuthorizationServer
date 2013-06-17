@@ -3,8 +3,6 @@ using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Thinktecture.AuthorizationServer.Models;
 //using Thinktecture.AuthorizationServer.Interfaces;
 //using Thinktecture.AuthorizationServer.Models;

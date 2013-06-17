@@ -4,9 +4,9 @@
  */
 
 using System;
-using System.Linq;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Linq;
 using System.Security.Claims;
 
 namespace Thinktecture.AuthorizationServer.Models

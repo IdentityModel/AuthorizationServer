@@ -49,7 +49,7 @@ namespace Thinktecture.AuthorizationServer.OAuth2
                 return this.AuthorizeValidationError(ex);
             }
 
-            if (validatedRequest.Application.RequireConsent)
+            if (validatedRequest.ShowConsent)
             {
                 // show consent screen
                 Tracing.Verbose("Showing consent screen");

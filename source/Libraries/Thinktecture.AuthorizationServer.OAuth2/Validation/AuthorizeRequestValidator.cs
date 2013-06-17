@@ -184,6 +184,12 @@ namespace Thinktecture.AuthorizationServer.OAuth2
                 Tracing.Information("The request allows arefresh token.");
                 validatedRequest.RequestingRefreshToken = true;
             }
+
+            if (validatedRequest.Client.RequireConsent || validatedRequest.Application.RequireConsent)
+            {
+                Tracing.Information("Consent is required.");
+                validatedRequest.ShowConsent = true;
+            }
         }
 
         private static void ValidateScopes(AuthorizeRequest request, ValidatedRequest validatedRequest)

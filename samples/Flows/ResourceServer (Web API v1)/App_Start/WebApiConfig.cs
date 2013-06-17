@@ -24,7 +24,6 @@ namespace Thinktecture.Samples
         {
             var authentication = new AuthenticationConfiguration
             {
-                //ClaimsAuthenticationManager = new ClaimsTransformer(),
                 RequireSsl = false,
             };
 

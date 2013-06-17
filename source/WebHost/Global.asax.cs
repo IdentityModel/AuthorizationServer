@@ -32,7 +32,7 @@ namespace Thinktecture.AuthorizationServer.WebHost
         {
             var svc = DependencyResolver.Current.GetService<IAuthorizationServerAdministratorsService>();
 
-            e.FederationConfiguration.IdentityConfiguration.ClaimsAuthenticationManager = new ClaimsTransformer(svc);
+            e.FederationConfiguration.IdentityConfiguration.ClaimsAuthenticationManager = new NameIdToSubjectClaimsTransformer(svc);
             e.FederationConfiguration.IdentityConfiguration.ClaimsAuthorizationManager = new AuthorizationManager();
         }
 

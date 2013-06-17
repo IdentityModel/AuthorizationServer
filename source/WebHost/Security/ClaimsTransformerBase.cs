@@ -8,11 +8,12 @@ using Thinktecture.IdentityModel;
 
 namespace Thinktecture.AuthorizationServer.WebHost
 {
-    public class ClaimsTransformer : ClaimsAuthenticationManager
+    public abstract class ClaimsTransformerBase : ClaimsAuthenticationManager
     {
-        IAuthorizationServerAdministratorsService service;
-
-        public ClaimsTransformer(IAuthorizationServerAdministratorsService svc)
+        protected IAuthorizationServerAdministratorsService service;
+        protected abstract Claim GetSubject(ClaimsPrincipal principal);
+       
+        public ClaimsTransformerBase(IAuthorizationServerAdministratorsService svc)
         {
             this.service = svc;
         }
@@ -27,22 +28,7 @@ namespace Thinktecture.AuthorizationServer.WebHost
             return Principal.Create("AuthorizationServer", claims.ToArray());
         }
 
-        private Claim GetSubject(ClaimsPrincipal principal)
-        {
-            var nameId = principal.FindFirst(ClaimTypes.NameIdentifier);
-            if (nameId == null)
-            {
-                nameId = principal.FindFirst(ClaimTypes.Name);
-                if (nameId == null)
-                {
-                    throw new InvalidOperationException("No nameidentifier claim");
-                }
-            }
-
-            return new Claim(Constants.ClaimTypes.Subject, nameId.Value);
-        }
-
-        private IEnumerable<Claim> AddInternalClaims(Claim subject)
+        protected virtual IEnumerable<Claim> AddInternalClaims(Claim subject)
         {
             var adminNameIDs = this.service.GetAdministratorNameIDs();
             var result = new List<Claim>();

@@ -15,7 +15,7 @@ namespace Thinktecture.AuthorizationServer.WebHost
             : base(svc)
         { }
 
-        protected override Claim GetSubject(ClaimsPrincipal principal)
+        protected override string GetSubject(ClaimsPrincipal principal)
         {
             var nameId = principal.FindFirst(ClaimTypes.NameIdentifier);
             if (nameId == null)
@@ -27,7 +27,7 @@ namespace Thinktecture.AuthorizationServer.WebHost
                 }
             }
 
-            return new Claim(Constants.ClaimTypes.Subject, nameId.Value);
+            return nameId.Value;
         }
     }
 }

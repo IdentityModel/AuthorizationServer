@@ -14,7 +14,7 @@ namespace Thinktecture.AuthorizationServer.WebHost
     public abstract class ClaimsTransformerBase : ClaimsAuthenticationManager
     {
         protected IAuthorizationServerAdministratorsService service;
-        protected abstract Claim GetSubject(ClaimsPrincipal principal);
+        protected abstract string GetSubject(ClaimsPrincipal principal);
        
         public ClaimsTransformerBase(IAuthorizationServerAdministratorsService svc)
         {
@@ -24,19 +24,19 @@ namespace Thinktecture.AuthorizationServer.WebHost
         public override ClaimsPrincipal Authenticate(string resourceName, ClaimsPrincipal incomingPrincipal)
         {
             var subject = GetSubject(incomingPrincipal);
-            var claims = new List<Claim> { subject };
+            var claims = new List<Claim> { new Claim(Constants.ClaimTypes.Subject, subject) };
 
             claims.AddRange(AddInternalClaims(subject));
 
             return Principal.Create("AuthorizationServer", claims.ToArray());
         }
 
-        protected virtual IEnumerable<Claim> AddInternalClaims(Claim subject)
+        protected virtual IEnumerable<Claim> AddInternalClaims(string subject)
         {
             var adminNameIDs = this.service.GetAdministratorNameIDs();
             var result = new List<Claim>();
 
-            if (adminNameIDs.Contains(subject.Value))
+            if (adminNameIDs.Contains(subject))
             {
                 result.Add(new Claim(
                     ClaimTypes.Role, 

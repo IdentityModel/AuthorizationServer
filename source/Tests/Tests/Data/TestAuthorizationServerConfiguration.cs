@@ -106,6 +106,14 @@ namespace Thinktecture.AuthorizationServer.Test
                 Emphasize = false
             };
 
+            var browseScope = new Scope
+            {
+                AllowedClients = new List<Client> { codeClient, implicitClient, resourceOwnerClient },
+                Name = "browse",
+                Description = "Browse data",
+                Emphasize = false
+            };
+
             var searchScope = new Scope
             {
                 AllowedClients = new List<Client> { codeClient, resourceOwnerClient },
@@ -134,12 +142,11 @@ namespace Thinktecture.AuthorizationServer.Test
             {
                 Name = "Test Application",
                 Namespace = "test",
-                Scopes = new List<Scope> { readScope, searchScope, writeScope, deleteScope },
-                //Clients = new List<Client> { codeClient, implicitClient, resourceOwnerClient },
+                Scopes = new List<Scope> { readScope, browseScope, searchScope, writeScope, deleteScope },
                 RequireConsent = true,
                 TokenLifetime = 60
             };
-
+            
             _applications.Add(application);
         }
 

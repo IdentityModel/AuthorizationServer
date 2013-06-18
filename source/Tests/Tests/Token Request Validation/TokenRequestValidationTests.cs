@@ -64,7 +64,8 @@ namespace Tests
             var request = new TokenRequest
             {
                 Grant_Type = OAuthConstants.GrantTypes.AuthorizationCode,
-                Code = "abc"
+                Code = "abc",
+                Redirect_Uri = "https://todo"
             };
 
             var result = validator.Validate(app, request, _codeClient);

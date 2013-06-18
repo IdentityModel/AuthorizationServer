@@ -1,0 +1,272 @@
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System.Web.Mvc;
+using Thinktecture.AuthorizationServer.Interfaces;
+using Thinktecture.AuthorizationServer.OAuth2;
+
+namespace Thinktecture.AuthorizationServer.Test
+{
+    [TestClass]
+    public class Authorize_Request_Validation_General
+    {
+        IAuthorizationServerConfiguration _testConfig = new TestAuthorizationServerConfiguration();
+
+        [TestMethod]
+        public void UnknownApplication()
+        {
+            var controller = new AuthorizeController(null, _testConfig);
+            var result = controller.Index("unknown", null);
+
+            Assert.IsTrue(result is HttpNotFoundResult);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(AuthorizeRequestResourceOwnerException))]
+        public void NoParameters()
+        {
+            var validator = new AuthorizeRequestValidator();
+            var app = _testConfig.FindApplication("test");
+
+            try
+            {
+                var result = validator.Validate(app, null);
+            }
+            catch (AuthorizeRequestClientException ex)
+            {
+                Assert.IsTrue(ex.Error == OAuthConstants.Errors.InvalidRequest);
+                return;
+            }
+
+            Assert.Fail("No exception thrown.");
+        }
+
+        [TestMethod]
+        public void MissingRedirectUri()
+        {
+            var validator = new AuthorizeRequestValidator();
+            var app = _testConfig.FindApplication("test");
+            var request = new AuthorizeRequest
+            {
+                client_id = "codeclient",
+                response_type = "code",
+                scope = "read"
+            };
+
+            try
+            {
+                var result = validator.Validate(app, request);
+            }
+            catch (AuthorizeRequestResourceOwnerException ex)
+            {
+                // todo: check error code
+                return;
+            }
+
+            Assert.Fail("No exception thrown.");
+        }
+
+        [TestMethod]
+        public void MalformedRedirectUri1()
+        {
+            var validator = new AuthorizeRequestValidator();
+            var app = _testConfig.FindApplication("test");
+            var request = new AuthorizeRequest
+            {
+                client_id = "codeclient",
+                response_type = "code",
+                scope = "read",
+                redirect_uri = "https:/prod.local"
+            };
+
+            try
+            {
+                var result = validator.Validate(app, request);
+            }
+            catch (AuthorizeRequestResourceOwnerException ex)
+            {
+                // todo: check error code
+                return;
+            }
+
+            Assert.Fail("No exception thrown.");
+        }
+
+        [TestMethod]
+        public void MalformedRedirectUri2()
+        {
+            var validator = new AuthorizeRequestValidator();
+            var app = _testConfig.FindApplication("test");
+            var request = new AuthorizeRequest
+            {
+                client_id = "codeclient",
+                response_type = "code",
+                scope = "read",
+                redirect_uri = "malformed"
+            };
+
+            try
+            {
+                var result = validator.Validate(app, request);
+            }
+            catch (AuthorizeRequestResourceOwnerException ex)
+            {
+                // todo: check error code
+                return;
+            }
+
+            Assert.Fail("No exception thrown.");
+        }
+
+        [TestMethod]
+        public void MissingResponseType()
+        {
+            var validator = new AuthorizeRequestValidator();
+            var app = _testConfig.FindApplication("test");
+            var request = new AuthorizeRequest
+            {
+                client_id = "codeclient",
+                scope = "read",
+                redirect_uri = "https://prod.local"
+            };
+
+            try
+            {
+                var result = validator.Validate(app, request);
+            }
+            catch (AuthorizeRequestClientException ex)
+            {
+                Assert.IsTrue(ex.Error == OAuthConstants.Errors.InvalidRequest);
+                return;
+            }
+
+            Assert.Fail("No exception thrown.");
+        }
+
+        [TestMethod]
+        public void UnsupportedResponseType()
+        {
+            var validator = new AuthorizeRequestValidator();
+            var app = _testConfig.FindApplication("test");
+            var request = new AuthorizeRequest
+            {
+                client_id = "codeclient",
+                response_type = "unsupported",
+                scope = "read",
+                redirect_uri = "https://prod.local"
+            };
+
+            try
+            {
+                var result = validator.Validate(app, request);
+            }
+            catch (AuthorizeRequestClientException ex)
+            {
+                Assert.IsTrue(ex.Error == OAuthConstants.Errors.UnsupportedResponseType);
+                return;
+            }
+
+            Assert.Fail("No exception thrown.");
+        }
+
+        [TestMethod]
+        public void MissingClientId()
+        {
+            var validator = new AuthorizeRequestValidator();
+            var app = _testConfig.FindApplication("test");
+            var request = new AuthorizeRequest
+            {
+                response_type = "code",
+                scope = "read",
+                redirect_uri = "https://prod.local"
+            };
+
+            try
+            {
+                var result = validator.Validate(app, request);
+            }
+            catch (AuthorizeRequestResourceOwnerException ex)
+            {
+                // todo: check error code
+                return;
+            }
+
+            Assert.Fail("No exception thrown.");
+        }
+
+        [TestMethod]
+        public void UnknownClientId()
+        {
+            var validator = new AuthorizeRequestValidator();
+            var app = _testConfig.FindApplication("test");
+            var request = new AuthorizeRequest
+            {
+                client_id = "unknown",
+                response_type = "code",
+                scope = "read",
+                redirect_uri = "https://prod.local"
+            };
+
+            try
+            {
+                var result = validator.Validate(app, request);
+            }
+            catch (AuthorizeRequestResourceOwnerException ex)
+            {
+                // todo: check error code
+                return;
+            }
+
+            Assert.Fail("No exception thrown.");
+        }
+
+        [TestMethod]
+        public void MissingScope()
+        {
+            var validator = new AuthorizeRequestValidator();
+            var app = _testConfig.FindApplication("test");
+            var request = new AuthorizeRequest
+            {
+                client_id = "codeclient",
+                response_type = "code",
+                redirect_uri = "https://prod.local"
+            };
+
+            try
+            {
+                var result = validator.Validate(app, request);
+            }
+            catch (AuthorizeRequestClientException ex)
+            {
+                Assert.IsTrue(ex.Error == OAuthConstants.Errors.InvalidScope);
+                return;
+            }
+
+            Assert.Fail("No exception thrown.");
+        }
+
+        [TestMethod]
+        public void NonSslRedirectUri()
+        {
+            var validator = new AuthorizeRequestValidator();
+            var app = _testConfig.FindApplication("test");
+            var request = new AuthorizeRequest
+            {
+                client_id = "codeclient",
+                response_type = "code",
+                scope = "read",
+                redirect_uri = "http://prod.local"
+            };
+
+            try
+            {
+                var result = validator.Validate(app, request);
+            }
+            catch (AuthorizeRequestClientException ex)
+            {
+                Assert.IsTrue(ex.Error == OAuthConstants.Errors.InvalidRequest);
+                return;
+            }
+
+            Assert.Fail("No exception thrown.");
+        }
+    }
+}

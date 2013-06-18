@@ -249,15 +249,21 @@ namespace Thinktecture.AuthorizationServer.OAuth2
                     OAuthConstants.Errors.InvalidGrant);
             }
 
-            // check if redirect URI from authorize and token request match
-            //if (!handle.RedirectUri.Equals(validatedRequest.RedirectUri))
-            //{
-            //    Tracing.ErrorFormat("Redirect URI in token request ({0}), does not match redirect URI from authorize request ({1})",
-            //        validatedRequest.RedirectUri,
-            //        handle.RedirectUri);
+            // redirect URI is required
+            if (string.IsNullOrWhiteSpace(request.Redirect_Uri))
+            {
+                throw new TokenRequestValidationException(
+                    string.Format("Redirect URI is missing"),
+                    OAuthConstants.Errors.InvalidRequest);
+            }
 
-            //    return Request.CreateOAuthErrorResponse(OAuthConstants.Errors.InvalidRequest);
-            //}
+            // check if redirect URI from authorize and token request match
+            if (!handle.RedirectUri.Equals(request.Redirect_Uri))
+            {
+                throw new TokenRequestValidationException(
+                    string.Format("Redirect URI in token request ({0}), does not match redirect URI from authorize request ({1})", validatedRequest.RedirectUri, handle.RedirectUri),
+                    OAuthConstants.Errors.InvalidRequest);
+            }
         }
 
         private Client ValidateClient(ClaimsPrincipal clientPrincipal, Application application)

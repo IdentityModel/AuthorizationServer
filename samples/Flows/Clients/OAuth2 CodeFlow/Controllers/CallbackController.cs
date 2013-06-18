@@ -31,7 +31,9 @@ namespace OAuth2CodeFlow.Controllers
 
             var code = Request.QueryString["code"];
 
-            var response = client.RequestAccessTokenCode(code);
+            var response = client.RequestAccessTokenCode(
+                code,
+                new Uri(Constants.Clients.CodeClientRedirectUrl));
 
             return View("Postback", response);
         }

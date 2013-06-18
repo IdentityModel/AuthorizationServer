@@ -57,7 +57,7 @@ namespace Thinktecture.AuthorizationServer.OAuth2
                 return View("Consent", validatedRequest);
             }
 
-            Tracing.Verbose("No consent configured for application");
+            Tracing.Verbose("No consent configured for application/client");
             return PerformGrant(validatedRequest);
         }
 

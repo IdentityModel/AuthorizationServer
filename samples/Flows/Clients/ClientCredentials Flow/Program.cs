@@ -25,28 +25,18 @@ namespace Thinktecture.Samples
         {
             "Requesting token.".ConsoleYellow();
 
-            var parameters = new Dictionary<string, string>
-            {
-                { OAuth2Constants.GrantType, OAuth2Constants.GrantTypes.ClientCredentials },
-                { OAuth2Constants.Scope, "read" }
-            };
+            var client = new OAuth2Client(
+                new Uri(Constants.AuthzSrv.OAuth2TokenEndpoint),
+                Constants.Clients.Client,
+                Constants.Clients.ClientSecret);
 
-            var client = new HttpClient {
-                BaseAddress = new Uri(Constants.AuthzSrv.OAuth2TokenEndpoint)
-            };
-
-            client.SetBasicAuthentication(Constants.Clients.Client, Constants.Clients.ClientSecret);
-
-            var response = client.PostAsync("", new FormUrlEncodedContent(parameters)).Result;
-            response.EnsureSuccessStatusCode();
-
-            var tokenResponse = response.Content.ReadAsAsync<TokenResponse>().Result;
+            var response = client.RequestAccessTokenClientCredentials("read");
 
             Console.WriteLine(" access token");
-            tokenResponse.AccessToken.ConsoleGreen();
+            response.AccessToken.ConsoleGreen();
             
             Console.WriteLine();
-            return tokenResponse.AccessToken;
+            return response.AccessToken;
         }
 
         private static void CallService(string token)

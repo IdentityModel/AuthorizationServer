@@ -10,54 +10,26 @@ using Thinktecture.IdentityModel;
 namespace Tests
 {
     [TestClass]
-    public class TokenRequest_Validation_Password
+    public class TokenRequest_Validation_Client
     {
         IAuthorizationServerConfiguration _testConfig = new TestAuthorizationServerConfiguration();
 
-        ClaimsPrincipal _resourceOwnerClient = Principal.Create("Test",
-                                        new Claim(ClaimTypes.Name, "roclient"),
+        ClaimsPrincipal _client = Principal.Create("Test",
+                                        new Claim(ClaimTypes.Name, "client"),
                                         new Claim("password", "secret"));
 
         [TestMethod]
-        public void ValidPasswordGrant()
+        public void ValidRequest()
         {
             var validator = new TokenRequestValidator();
             var app = _testConfig.FindApplication("test");
             var request = new TokenRequest
             {
-                Grant_Type = OAuthConstants.GrantTypes.Password,
-                UserName = "username",
-                Password = "password",
+                Grant_Type = OAuthConstants.GrantTypes.ClientCredentials,
                 Scope = "read"
             };
 
-            var result = validator.Validate(app, request, _resourceOwnerClient);
-        }
-
-        [TestMethod]
-        public void NoClientClaims()
-        {
-            var validator = new TokenRequestValidator();
-            var app = _testConfig.FindApplication("test");
-            var request = new TokenRequest
-            {
-                Grant_Type = OAuthConstants.GrantTypes.Password,
-                UserName = "username",
-                Password = "password",
-                Scope = "read"
-            };
-
-            try
-            {
-                var result = validator.Validate(app, request, null);
-            }
-            catch (TokenRequestValidationException ex)
-            {
-                Assert.IsTrue(ex.OAuthError == OAuthConstants.Errors.InvalidClient);
-                return;
-            }
-
-            Assert.Fail("No exception thrown.");
+            var result = validator.Validate(app, request, _client);
         }
 
         [TestMethod]
@@ -67,14 +39,12 @@ namespace Tests
             var app = _testConfig.FindApplication("test");
             var request = new TokenRequest
             {
-                Grant_Type = OAuthConstants.GrantTypes.Password,
-                UserName = "username",
-                Password = "password",
+                Grant_Type = OAuthConstants.GrantTypes.ClientCredentials,
             };
 
             try
             {
-                var result = validator.Validate(app, request, _resourceOwnerClient);
+                var result = validator.Validate(app, request, _client);
             }
             catch (TokenRequestValidationException ex)
             {
@@ -92,15 +62,13 @@ namespace Tests
             var app = _testConfig.FindApplication("test");
             var request = new TokenRequest
             {
-                Grant_Type = OAuthConstants.GrantTypes.Password,
-                UserName = "username",
-                Password = "password",
+                Grant_Type = OAuthConstants.GrantTypes.ClientCredentials,
                 Scope = "unknown"
             };
 
             try
             {
-                var result = validator.Validate(app, request, _resourceOwnerClient);
+                var result = validator.Validate(app, request, _client);
             }
             catch (TokenRequestValidationException ex)
             {
@@ -118,15 +86,13 @@ namespace Tests
             var app = _testConfig.FindApplication("test");
             var request = new TokenRequest
             {
-                Grant_Type = OAuthConstants.GrantTypes.Password,
-                UserName = "username",
-                Password = "password",
+                Grant_Type = OAuthConstants.GrantTypes.ClientCredentials,
                 Scope = "delete"
             };
 
             try
             {
-                var result = validator.Validate(app, request, _resourceOwnerClient);
+                var result = validator.Validate(app, request, _client);
             }
             catch (TokenRequestValidationException ex)
             {
@@ -144,15 +110,13 @@ namespace Tests
             var app = _testConfig.FindApplication("test");
             var request = new TokenRequest
             {
-                Grant_Type = OAuthConstants.GrantTypes.Password,
-                UserName = "username",
-                Password = "password",
+                Grant_Type = OAuthConstants.GrantTypes.ClientCredentials,
                 Scope = "read delete"
             };
 
             try
             {
-                var result = validator.Validate(app, request, _resourceOwnerClient);
+                var result = validator.Validate(app, request, _client);
             }
             catch (TokenRequestValidationException ex)
             {
@@ -164,61 +128,11 @@ namespace Tests
         }
 
         [TestMethod]
-        public void MissingResourceOwnerUserName()
-        {
-            var validator = new TokenRequestValidator();
-            var app = _testConfig.FindApplication("test");
-            var request = new TokenRequest
-            {
-                Grant_Type = OAuthConstants.GrantTypes.Password,
-                UserName = "username",
-                Scope = "read"
-            };
-
-            try
-            {
-                var result = validator.Validate(app, request, _resourceOwnerClient);
-            }
-            catch (TokenRequestValidationException ex)
-            {
-                Assert.IsTrue(ex.OAuthError == OAuthConstants.Errors.InvalidGrant);
-                return;
-            }
-
-            Assert.Fail("No exception thrown.");
-        }
-
-        [TestMethod]
-        public void MissingResourceOwnerPassword()
-        {
-            var validator = new TokenRequestValidator();
-            var app = _testConfig.FindApplication("test");
-            var request = new TokenRequest
-            {
-                Grant_Type = OAuthConstants.GrantTypes.Password,
-                UserName = "username",
-                Scope = "read"
-            };
-
-            try
-            {
-                var result = validator.Validate(app, request, _resourceOwnerClient);
-            }
-            catch (TokenRequestValidationException ex)
-            {
-                Assert.IsTrue(ex.OAuthError == OAuthConstants.Errors.InvalidGrant);
-                return;
-            }
-
-            Assert.Fail("No exception thrown.");
-        }
-
-        [TestMethod]
         public void UnauthorizedCodeGrant()
         {
             TestTokenHandleManager handleManager =
                 new TestTokenHandleManager("abc", "codeclient", "https://validredirect");
-            
+
             var validator = new TokenRequestValidator(handleManager);
             var app = _testConfig.FindApplication("test");
             var request = new TokenRequest
@@ -228,7 +142,7 @@ namespace Tests
 
             try
             {
-                var result = validator.Validate(app, request, _resourceOwnerClient);
+                var result = validator.Validate(app, request, _client);
             }
             catch (TokenRequestValidationException ex)
             {
@@ -240,7 +154,7 @@ namespace Tests
         }
 
         [TestMethod]
-        public void UnauthorizedClientCredentialsGrant()
+        public void UnauthorizedPasswordGrant()
         {
             TestTokenHandleManager handleManager =
                 new TestTokenHandleManager("abc", "codeclient", "https://validredirect");
@@ -249,12 +163,12 @@ namespace Tests
             var app = _testConfig.FindApplication("test");
             var request = new TokenRequest
             {
-                Grant_Type = OAuthConstants.GrantTypes.ClientCredentials,
+                Grant_Type = OAuthConstants.GrantTypes.Password,
             };
 
             try
             {
-                var result = validator.Validate(app, request, _resourceOwnerClient);
+                var result = validator.Validate(app, request, _client);
             }
             catch (TokenRequestValidationException ex)
             {
@@ -280,7 +194,7 @@ namespace Tests
 
             try
             {
-                var result = validator.Validate(app, request, _resourceOwnerClient);
+                var result = validator.Validate(app, request, _client);
             }
             catch (TokenRequestValidationException ex)
             {
@@ -290,7 +204,5 @@ namespace Tests
 
             Assert.Fail("No exception thrown.");
         }
-
-        // try grants: code, password, client creds, refresh token
     }
 }

@@ -77,11 +77,11 @@
     <Compile Include="Authorize Request Validation\Authorize_Request_Validation_General.cs" />
     <Compile Include="Data\TestAuthorizationServerConfiguration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Token Request Validation\Token_Request_Validation_Client.cs" />
-    <Compile Include="Token Request Validation\Token_Request_Validation_RefreshToken.cs" />
-    <Compile Include="Token Request Validation\Token_Request_Validation_Password.cs" />
-    <Compile Include="Token Request Validation\Token_Request_Validation_Code.cs" />
-    <Compile Include="Token Request Validation\Token_Request_Validation_General.cs" />
+    <Compile Include="TokenRequest Validation\TokenRequest_Validation_Client.cs" />
+    <Compile Include="TokenRequest Validation\TokenRequest_Validation_RefreshToken.cs" />
+    <Compile Include="TokenRequest Validation\TokenRequest_Validation_Password.cs" />
+    <Compile Include="TokenRequest Validation\TokenRequest_Validation_Code.cs" />
+    <Compile Include="TokenRequest Validation\TokenRequest_Validation_General.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\Libraries\Thinktecture.AuthorizationServer.Core\Thinktecture.AuthorizationServer.Core.csproj">

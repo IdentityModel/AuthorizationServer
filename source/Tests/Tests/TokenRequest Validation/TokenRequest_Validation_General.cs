@@ -10,7 +10,7 @@ using Thinktecture.IdentityModel;
 namespace Tests
 {
     [TestClass]
-    public class Token_Request_Validation_General
+    public class TokenRequest_Validation_General
     {
         IAuthorizationServerConfiguration _testConfig = new TestAuthorizationServerConfiguration();
 
@@ -75,6 +75,32 @@ namespace Tests
                                 new Claim("password", "secret"));
 
                 var result = validator.Validate(app, request, client);
+            }
+            catch (TokenRequestValidationException ex)
+            {
+                Assert.IsTrue(ex.OAuthError == OAuthConstants.Errors.InvalidClient);
+                return;
+            }
+
+            Assert.Fail("No exception thrown.");
+        }
+
+        [TestMethod]
+        public void NoClientClaims()
+        {
+            var validator = new TokenRequestValidator();
+            var app = _testConfig.FindApplication("test");
+            var request = new TokenRequest
+            {
+                Grant_Type = OAuthConstants.GrantTypes.Password,
+                UserName = "username",
+                Password = "password",
+                Scope = "read"
+            };
+
+            try
+            {
+                var result = validator.Validate(app, request, null);
             }
             catch (TokenRequestValidationException ex)
             {

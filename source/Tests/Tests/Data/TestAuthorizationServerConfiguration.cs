@@ -99,9 +99,20 @@ namespace Thinktecture.AuthorizationServer.Test
                 Flow = OAuthFlow.ResourceOwner,
             };
 
+            var serviceClient = new Client
+            {
+                Name = "Service Client",
+                ClientId = "client",
+                ClientSecret = "secret",
+                AuthenticationMethod = ClientAuthenticationMethod.SharedSecret,
+
+                AllowRefreshToken = false,
+                Flow = OAuthFlow.Client,
+            };
+
             var readScope = new Scope
             {
-                AllowedClients = new List<Client> { codeClient, implicitClient, resourceOwnerClient },
+                AllowedClients = new List<Client> { codeClient, implicitClient, resourceOwnerClient, serviceClient },
                 Name = "read",
                 Description = "Read data",
                 Emphasize = false

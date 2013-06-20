@@ -14,7 +14,7 @@ namespace Tests
     {
         IAuthorizationServerConfiguration _testConfig = new TestAuthorizationServerConfiguration();
 
-        ClaimsPrincipal _codeClient = Principal.Create("Test",
+        ClaimsPrincipal _client = Principal.Create("Test",
                                         new Claim(ClaimTypes.Name, "codeclient"),
                                         new Claim("password", "secret"));
 
@@ -33,7 +33,7 @@ namespace Tests
                 Redirect_Uri = "https://validredirect"
             };
 
-            var result = validator.Validate(app, request, _codeClient);
+            var result = validator.Validate(app, request, _client);
         }
 
         [TestMethod]
@@ -49,7 +49,7 @@ namespace Tests
 
             try
             {
-                var result = validator.Validate(app, request, _codeClient);
+                var result = validator.Validate(app, request, _client);
             }
             catch (TokenRequestValidationException ex)
             {
@@ -74,7 +74,7 @@ namespace Tests
 
             try
             {
-                var result = validator.Validate(app, request, _codeClient);
+                var result = validator.Validate(app, request, _client);
             }
             catch (TokenRequestValidationException ex)
             {
@@ -102,7 +102,7 @@ namespace Tests
 
             try
             {
-                var result = validator.Validate(app, request, _codeClient);
+                var result = validator.Validate(app, request, _client);
             }
             catch (TokenRequestValidationException ex)
             {
@@ -126,7 +126,7 @@ namespace Tests
 
             try
             {
-                var result = validator.Validate(app, request, _codeClient);
+                var result = validator.Validate(app, request, _client);
             }
             catch (TokenRequestValidationException ex)
             {
@@ -176,7 +176,7 @@ namespace Tests
 
             try
             {
-                var result = validator.Validate(app, request, _codeClient);
+                var result = validator.Validate(app, request, _client);
             }
             catch (TokenRequestValidationException ex)
             {
@@ -199,7 +199,7 @@ namespace Tests
 
             try
             {
-                var result = validator.Validate(app, request, _codeClient);
+                var result = validator.Validate(app, request, _client);
             }
             catch (TokenRequestValidationException ex)
             {
@@ -222,7 +222,7 @@ namespace Tests
 
             try
             {
-                var result = validator.Validate(app, request, _codeClient);
+                var result = validator.Validate(app, request, _client);
             }
             catch (TokenRequestValidationException ex)
             {

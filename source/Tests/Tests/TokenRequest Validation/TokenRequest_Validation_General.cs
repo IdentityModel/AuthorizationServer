@@ -4,10 +4,9 @@ using System.Net.Http;
 using System.Security.Claims;
 using Thinktecture.AuthorizationServer.Interfaces;
 using Thinktecture.AuthorizationServer.OAuth2;
-using Thinktecture.AuthorizationServer.Test;
 using Thinktecture.IdentityModel;
 
-namespace Tests
+namespace Thinktecture.AuthorizationServer.Test
 {
     [TestClass]
     public class TokenRequest_Validation_General

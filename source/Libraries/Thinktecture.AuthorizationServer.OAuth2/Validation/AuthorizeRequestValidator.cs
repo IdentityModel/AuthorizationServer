@@ -223,6 +223,5 @@ namespace Thinktecture.AuthorizationServer.OAuth2
                     validatedRequest.State);
             }
         }
-
     }
 }

@@ -1,13 +1,10 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System.Net;
-using System.Net.Http;
 using System.Security.Claims;
 using Thinktecture.AuthorizationServer.Interfaces;
 using Thinktecture.AuthorizationServer.OAuth2;
-using Thinktecture.AuthorizationServer.Test;
 using Thinktecture.IdentityModel;
 
-namespace Tests
+namespace Thinktecture.AuthorizationServer.Test
 {
     [TestClass]
     public class TokenRequest_Validation_RefreshToken
@@ -66,7 +63,7 @@ namespace Tests
             var request = new TokenRequest
             {
                 Grant_Type = OAuthConstants.GrantTypes.RefreshToken,
-                Code = "xyz",
+                Refresh_Token = "xyz",
             };
 
             try
@@ -93,7 +90,7 @@ namespace Tests
             var request = new TokenRequest
             {
                 Grant_Type = OAuthConstants.GrantTypes.RefreshToken,
-                Code = "abc",
+                Refresh_Token = "abc",
             };
 
             try

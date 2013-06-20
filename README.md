@@ -28,4 +28,4 @@ AS deliberately doesn't do authentication. It solely focuses on authorization. T
 
 AS has only a single requirement when it comes to identity of the resource owner: the current principal must contain a claim of type "sub" (subject). You can adapt to your own claims structure using the ClaimsTransformer class in the web host project.
 
-See the [https://github.com/thinktecture/Thinktecture.AuthorizationServer/wiki] (wiki) for more information.
+See the [wiki] (https://github.com/thinktecture/Thinktecture.AuthorizationServer/wiki) for more information.

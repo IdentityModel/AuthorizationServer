@@ -1,0 +1,172 @@
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System.Net;
+using System.Net.Http;
+using System.Security.Claims;
+using Thinktecture.AuthorizationServer.Interfaces;
+using Thinktecture.AuthorizationServer.OAuth2;
+using Thinktecture.AuthorizationServer.Test;
+using Thinktecture.IdentityModel;
+
+namespace Tests
+{
+    [TestClass]
+    public class Token_Request_Validation_General
+    {
+        IAuthorizationServerConfiguration _testConfig = new TestAuthorizationServerConfiguration();
+
+        [TestMethod]
+        public void UnknownApplication()
+        {
+            var controller = new TokenController(null, _testConfig, null)
+            {
+                Request = new HttpRequestMessage()
+            };
+
+            var result = controller.Post("unknown", null);
+
+            Assert.IsTrue(result.StatusCode == HttpStatusCode.NotFound);
+        }
+
+        [TestMethod]
+        public void MissingClientPassword()
+        {
+            var validator = new TokenRequestValidator();
+            var app = _testConfig.FindApplication("test");
+            var request = new TokenRequest
+            {
+                Grant_Type = OAuthConstants.GrantTypes.Password,
+                UserName = "username",
+                Password = "password",
+                Scope = "read"
+            };
+
+            try
+            {
+                var client = Principal.Create("Test",
+                                new Claim(ClaimTypes.Name, "codeclient"));
+
+                var result = validator.Validate(app, request, client);
+            }
+            catch (TokenRequestValidationException ex)
+            {
+                Assert.IsTrue(ex.OAuthError == OAuthConstants.Errors.InvalidClient);
+                return;
+            }
+
+            Assert.Fail("No exception thrown.");
+        }
+
+        [TestMethod]
+        public void MissingClientId()
+        {
+            var validator = new TokenRequestValidator();
+            var app = _testConfig.FindApplication("test");
+            var request = new TokenRequest
+            {
+                Grant_Type = OAuthConstants.GrantTypes.Password,
+                UserName = "username",
+                Password = "password",
+                Scope = "read"
+            };
+
+            try
+            {
+                var client = Principal.Create("Test",
+                                new Claim("password", "secret"));
+
+                var result = validator.Validate(app, request, client);
+            }
+            catch (TokenRequestValidationException ex)
+            {
+                Assert.IsTrue(ex.OAuthError == OAuthConstants.Errors.InvalidClient);
+                return;
+            }
+
+            Assert.Fail("No exception thrown.");
+        }
+
+        [TestMethod]
+        public void NoParameters()
+        {
+            var validator = new TokenRequestValidator();
+            var app = _testConfig.FindApplication("test");
+
+            try
+            {
+                var result = validator.Validate(app, null, null);
+            }
+            catch (TokenRequestValidationException ex)
+            {
+                Assert.IsTrue(ex.OAuthError == OAuthConstants.Errors.InvalidRequest);
+                return;
+            }
+
+            Assert.Fail("No exception thrown.");
+        }
+
+        [TestMethod]
+        public void EmptyParameters()
+        {
+            var validator = new TokenRequestValidator();
+            var app = _testConfig.FindApplication("test");
+
+            try
+            {
+                var result = validator.Validate(app, new TokenRequest(), null);
+            }
+            catch (TokenRequestValidationException ex)
+            {
+                Assert.IsTrue(ex.OAuthError == OAuthConstants.Errors.UnsupportedGrantType);
+                return;
+            }
+
+            Assert.Fail("No exception thrown.");
+        }
+
+        [TestMethod]
+        public void MissingGrantType()
+        {
+            var validator = new TokenRequestValidator();
+            var app = _testConfig.FindApplication("test");
+            var request = new TokenRequest
+            {
+                Code = "abc"
+            };
+
+            try
+            {
+                var result = validator.Validate(app, request, null);
+            }
+            catch (TokenRequestValidationException ex)
+            {
+                Assert.IsTrue(ex.OAuthError == OAuthConstants.Errors.UnsupportedGrantType);
+                return;
+            }
+
+            Assert.Fail("No exception thrown.");
+        }
+
+        [TestMethod]
+        public void UnknownGrantType()
+        {
+            var validator = new TokenRequestValidator();
+            var app = _testConfig.FindApplication("test");
+            var request = new TokenRequest
+            {
+                Grant_Type = "unknown"
+            };
+
+            try
+            {
+                var result = validator.Validate(app, request, null);
+            }
+            catch (TokenRequestValidationException ex)
+            {
+                Assert.IsTrue(ex.OAuthError == OAuthConstants.Errors.UnsupportedGrantType);
+                return;
+            }
+
+            Assert.Fail("No exception thrown.");
+        }
+    }
+}

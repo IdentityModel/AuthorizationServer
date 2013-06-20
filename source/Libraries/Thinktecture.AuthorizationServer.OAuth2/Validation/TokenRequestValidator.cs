@@ -51,8 +51,21 @@ namespace Thinktecture.AuthorizationServer.OAuth2
                     OAuthConstants.Errors.UnsupportedGrantType);
             }
 
-            validatedRequest.GrantType = request.Grant_Type;
-            Tracing.Information("Grant type: " + validatedRequest.GrantType);
+            // check supported grant types
+            if (request.Grant_Type == OAuthConstants.GrantTypes.AuthorizationCode ||
+                request.Grant_Type == OAuthConstants.GrantTypes.ClientCredentials ||
+                request.Grant_Type == OAuthConstants.GrantTypes.RefreshToken ||
+                request.Grant_Type == OAuthConstants.GrantTypes.Password)
+            {
+                validatedRequest.GrantType = request.Grant_Type;
+                Tracing.Information("Grant type: " + validatedRequest.GrantType);
+            }
+            else
+            {
+                throw new TokenRequestValidationException(
+                    "Invalid grant_type: " + request.Grant_Type,
+                    OAuthConstants.Errors.UnsupportedGrantType);
+            }
 
             // validate client credentials
             var client = ValidateClient(clientPrincipal, validatedRequest.Application);
@@ -98,7 +111,7 @@ namespace Thinktecture.AuthorizationServer.OAuth2
             {
                 throw new TokenRequestValidationException(
                     "Client flow not allowed for client",
-                    OAuthConstants.Errors.UnsupportedGrantType);
+                    OAuthConstants.Errors.UnauthorizedClient);
             }
 
             ValidateScopes(validatedRequest, request);
@@ -115,7 +128,7 @@ namespace Thinktecture.AuthorizationServer.OAuth2
             {
                 throw new TokenRequestValidationException(
                     "Refresh tokens not allowed for client",
-                    OAuthConstants.Errors.UnsupportedGrantType);
+                    OAuthConstants.Errors.UnauthorizedClient);
             }
 
             // check for refresh token
@@ -156,7 +169,7 @@ namespace Thinktecture.AuthorizationServer.OAuth2
             {
                 throw new TokenRequestValidationException(
                     "Resource owner password flow not allowed for client",
-                    OAuthConstants.Errors.UnsupportedGrantType);
+                    OAuthConstants.Errors.UnauthorizedClient);
             }
 
             ValidateScopes(validatedRequest, request);
@@ -215,7 +228,7 @@ namespace Thinktecture.AuthorizationServer.OAuth2
             {
                 throw new TokenRequestValidationException(
                     "Code flow not allowed for client",
-                    OAuthConstants.Errors.UnsupportedGrantType);
+                    OAuthConstants.Errors.UnauthorizedClient);
             }
 
             // code needs to be present

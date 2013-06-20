@@ -7,11 +7,13 @@ namespace Thinktecture.AuthorizationServer.Test
     {
         string _clientId;
         string _redirectUri;
+        string _id;
 
-        public TestTokenHandleManager(string clientId, string redirectUri)
+        public TestTokenHandleManager(string id, string clientId, string redirectUri)
         {
             _clientId = clientId;
             _redirectUri = redirectUri;
+            _id = id;
         }
 
         public void Add(Models.TokenHandle handle)
@@ -21,17 +23,22 @@ namespace Thinktecture.AuthorizationServer.Test
 
         public Models.TokenHandle Get(string handleIdentifier)
         {
-            var handle = new TokenHandle
+            if (handleIdentifier == _id)
             {
-                Client = new Client
+                var handle = new TokenHandle
                 {
-                    ClientId = _clientId
-                },
+                    Client = new Client
+                    {
+                        ClientId = _clientId
+                    },
 
-                RedirectUri = _redirectUri
-            };
-            
-            return handle;
+                    RedirectUri = _redirectUri
+                };
+
+                return handle;
+            }
+
+            return null;
         }
 
         public void Delete(string handleIdentifier)

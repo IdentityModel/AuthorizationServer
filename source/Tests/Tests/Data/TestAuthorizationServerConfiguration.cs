@@ -38,8 +38,9 @@ namespace Thinktecture.AuthorizationServer.Test
                 ClientId = "roclient",
                 ClientSecret = "secret",
                 AuthenticationMethod = ClientAuthenticationMethod.SharedSecret,
+                
                 Flow = OAuthFlow.ResourceOwner,
-                AllowRefreshToken = true
+                AllowRefreshToken = false
             };
 
             var codeClient = new Client
@@ -94,7 +95,7 @@ namespace Thinktecture.AuthorizationServer.Test
                 ClientSecret = "secret",
                 AuthenticationMethod = ClientAuthenticationMethod.SharedSecret,
 
-                AllowRefreshToken = false,
+                AllowRefreshToken = true,
                 Flow = OAuthFlow.ResourceOwner,
             };
 

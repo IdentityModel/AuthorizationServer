@@ -19,7 +19,7 @@ namespace Tests
                                         new Claim("password", "secret"));
 
         [TestMethod]
-        public void ValidRequest()
+        public void ValidSingleScope()
         {
             var validator = new TokenRequestValidator();
             var app = _testConfig.FindApplication("test");
@@ -48,7 +48,7 @@ namespace Tests
             }
             catch (TokenRequestValidationException ex)
             {
-                Assert.IsTrue(ex.OAuthError == OAuthConstants.Errors.InvalidScope);
+                Assert.AreEqual(OAuthConstants.Errors.InvalidScope, ex.OAuthError);
                 return;
             }
 
@@ -72,7 +72,7 @@ namespace Tests
             }
             catch (TokenRequestValidationException ex)
             {
-                Assert.IsTrue(ex.OAuthError == OAuthConstants.Errors.InvalidScope);
+                Assert.AreEqual(OAuthConstants.Errors.InvalidScope, ex.OAuthError);
                 return;
             }
 
@@ -96,7 +96,7 @@ namespace Tests
             }
             catch (TokenRequestValidationException ex)
             {
-                Assert.IsTrue(ex.OAuthError == OAuthConstants.Errors.InvalidScope);
+                Assert.AreEqual(OAuthConstants.Errors.InvalidScope, ex.OAuthError);
                 return;
             }
 
@@ -120,7 +120,7 @@ namespace Tests
             }
             catch (TokenRequestValidationException ex)
             {
-                Assert.IsTrue(ex.OAuthError == OAuthConstants.Errors.InvalidScope);
+                Assert.AreEqual(OAuthConstants.Errors.InvalidScope, ex.OAuthError);
                 return;
             }
 
@@ -146,7 +146,7 @@ namespace Tests
             }
             catch (TokenRequestValidationException ex)
             {
-                Assert.IsTrue(ex.OAuthError == OAuthConstants.Errors.UnauthorizedClient);
+                Assert.AreEqual(OAuthConstants.Errors.UnauthorizedClient, ex.OAuthError);
                 return;
             }
 
@@ -172,7 +172,7 @@ namespace Tests
             }
             catch (TokenRequestValidationException ex)
             {
-                Assert.IsTrue(ex.OAuthError == OAuthConstants.Errors.UnauthorizedClient);
+                Assert.AreEqual(OAuthConstants.Errors.UnauthorizedClient, ex.OAuthError);
                 return;
             }
 
@@ -198,7 +198,7 @@ namespace Tests
             }
             catch (TokenRequestValidationException ex)
             {
-                Assert.IsTrue(ex.OAuthError == OAuthConstants.Errors.UnauthorizedClient);
+                Assert.AreEqual(OAuthConstants.Errors.UnauthorizedClient, ex.OAuthError);
                 return;
             }
 

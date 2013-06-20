@@ -24,7 +24,7 @@ namespace Tests
 
             var result = controller.Post("unknown", null);
 
-            Assert.IsTrue(result.StatusCode == HttpStatusCode.NotFound);
+            Assert.AreEqual(HttpStatusCode.NotFound, result.StatusCode);
         }
 
         [TestMethod]
@@ -49,7 +49,7 @@ namespace Tests
             }
             catch (TokenRequestValidationException ex)
             {
-                Assert.IsTrue(ex.OAuthError == OAuthConstants.Errors.InvalidClient);
+                Assert.AreEqual(OAuthConstants.Errors.InvalidClient, ex.OAuthError);
                 return;
             }
 
@@ -78,7 +78,7 @@ namespace Tests
             }
             catch (TokenRequestValidationException ex)
             {
-                Assert.IsTrue(ex.OAuthError == OAuthConstants.Errors.InvalidClient);
+                Assert.AreEqual(OAuthConstants.Errors.InvalidClient, ex.OAuthError);
                 return;
             }
 
@@ -104,7 +104,7 @@ namespace Tests
             }
             catch (TokenRequestValidationException ex)
             {
-                Assert.IsTrue(ex.OAuthError == OAuthConstants.Errors.InvalidClient);
+                Assert.AreEqual(OAuthConstants.Errors.InvalidClient, ex.OAuthError);
                 return;
             }
 
@@ -123,7 +123,7 @@ namespace Tests
             }
             catch (TokenRequestValidationException ex)
             {
-                Assert.IsTrue(ex.OAuthError == OAuthConstants.Errors.InvalidRequest);
+                Assert.AreEqual(OAuthConstants.Errors.InvalidRequest, ex.OAuthError);
                 return;
             }
 
@@ -142,7 +142,7 @@ namespace Tests
             }
             catch (TokenRequestValidationException ex)
             {
-                Assert.IsTrue(ex.OAuthError == OAuthConstants.Errors.UnsupportedGrantType);
+                Assert.AreEqual(OAuthConstants.Errors.UnsupportedGrantType, ex.OAuthError);
                 return;
             }
 
@@ -165,7 +165,7 @@ namespace Tests
             }
             catch (TokenRequestValidationException ex)
             {
-                Assert.IsTrue(ex.OAuthError == OAuthConstants.Errors.UnsupportedGrantType);
+                Assert.AreEqual(OAuthConstants.Errors.UnsupportedGrantType, ex.OAuthError);
                 return;
             }
 
@@ -188,7 +188,7 @@ namespace Tests
             }
             catch (TokenRequestValidationException ex)
             {
-                Assert.IsTrue(ex.OAuthError == OAuthConstants.Errors.UnsupportedGrantType);
+                Assert.AreEqual(OAuthConstants.Errors.UnsupportedGrantType, ex.OAuthError);
                 return;
             }
 

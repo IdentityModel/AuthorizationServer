@@ -6,7 +6,7 @@ using Thinktecture.AuthorizationServer.OAuth2;
 namespace Thinktecture.AuthorizationServer.Test
 {
     [TestClass]
-    public class Authorize_Request_Validation_Token
+    public class AuthorizeRequest_Validation_Token
     {
         IAuthorizationServerConfiguration _testConfig = new TestAuthorizationServerConfiguration();
 
@@ -87,7 +87,7 @@ namespace Thinktecture.AuthorizationServer.Test
             }
             catch (AuthorizeRequestClientException ex)
             {
-                Assert.IsTrue(ex.Error == OAuthConstants.Errors.UnsupportedResponseType);
+                Assert.AreEqual(OAuthConstants.Errors.UnsupportedResponseType, ex.Error);
                 return;
             }
 
@@ -115,7 +115,7 @@ namespace Thinktecture.AuthorizationServer.Test
             }
             catch (AuthorizeRequestClientException ex)
             {
-                Assert.IsTrue(ex.Error == OAuthConstants.Errors.InvalidScope);
+                Assert.AreEqual(OAuthConstants.Errors.InvalidScope, ex.Error);
                 return;
             }
 
@@ -141,7 +141,7 @@ namespace Thinktecture.AuthorizationServer.Test
             }
             catch (AuthorizeRequestClientException ex)
             {
-                Assert.IsTrue(ex.Error == OAuthConstants.Errors.InvalidScope);
+                Assert.AreEqual(OAuthConstants.Errors.InvalidScope, ex.Error);
                 return;
             }
 

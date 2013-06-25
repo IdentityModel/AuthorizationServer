@@ -172,6 +172,7 @@
     <Compile Include="Areas\Admin\Api\ClientsController.cs" />
     <Compile Include="Areas\Admin\Api\ClientRedirectsController.cs" />
     <Compile Include="Areas\Admin\Api\ApplicationScopesController.cs" />
+    <Compile Include="Areas\Admin\Api\SymmetricKeysController.cs" />
     <Compile Include="Areas\Admin\Api\TokensController.cs" />
     <Compile Include="Areas\Admin\Api\ScopeClientsController.cs" />
     <Compile Include="Areas\Admin\Api\ScopesController.cs" />
@@ -188,6 +189,7 @@
     <Compile Include="Areas\Admin\Models\ClientModel.cs" />
     <Compile Include="Areas\Admin\Models\ClientRedirectModel.cs" />
     <Compile Include="Areas\Admin\Models\GlobalViewModel.cs" />
+    <Compile Include="Areas\Admin\Models\SymmetricKeyModel.cs" />
     <Compile Include="Areas\Admin\Models\ScopeModel.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Security\AuthorizationManager.cs" />
@@ -214,6 +216,7 @@
     <Content Include="Areas\Admin\Scripts\Client.js" />
     <Content Include="Areas\Admin\Scripts\ClientRedirects.js" />
     <Content Include="Areas\Admin\Scripts\Application.js" />
+    <Content Include="Areas\Admin\Scripts\SymmetricKey.js" />
     <Content Include="Areas\Admin\Scripts\Tokens.js" />
     <Content Include="Areas\Admin\Scripts\Scope.js" />
     <Content Include="Areas\Admin\Scripts\Scopes.js" />
@@ -312,6 +315,7 @@
     <Content Include="Areas\Admin\Views\Application\Manage.cshtml" />
     <Content Include="Areas\Admin\Views\Application\Scopes.cshtml" />
     <Content Include="Areas\Admin\Views\Application\Scope.cshtml" />
+    <Content Include="Areas\Admin\Views\Key\SymmetricKey.cshtml" />
     <None Include="Content\Site.less" />
     <Content Include="Configuration\identityModel.config" />
     <Content Include="Configuration\identityModel.services.config" />

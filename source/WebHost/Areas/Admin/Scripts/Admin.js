@@ -93,9 +93,17 @@
         });
     };
 
-    return {
+    var module = {
         Service: Service,
         util: {
+            prompt: function (message) {
+                message = message || "Confirm Delete";
+                $("#prompt .modal-header :first").text(message);
+
+                var def = $.Deferred();
+                $("#prompt").data("deferred", def).modal("show");
+                return def.promise();
+            },
             addValidation: function (vm, propName, message, valFunc) {
                 var dirty = ko.observable(false);
                 vm[propName].subscribe(function () {
@@ -129,4 +137,40 @@
             }
         }
     };
+
+    $("#prompt button.cancel").click(function () {
+        $("#prompt").modal("hide");
+        var def = $("#prompt").data("deferred");
+        $("#prompt").removeData("deferred");
+        setTimeout(function () {
+            def.reject();
+        }, 500);
+    });
+
+    $("#prompt button.save").click(function () {
+        $("#prompt").modal("hide");
+        var def = $("#prompt").data("deferred");
+        $("#prompt").removeData("deferred");
+        setTimeout(function () {
+            def.resolve();
+        }, 500);
+    });
+
+    document.body.addEventListener("click", function (e) {
+        var $this = $(e.target);
+        if ($this.hasClass("prompt") && !$this.data("in-prompt")) {
+            $this.data("in-prompt", true);
+
+            e.stopImmediatePropagation();
+
+            module.util.prompt($this.data("prompt"))
+                .done(function () {
+                    $this.trigger("click");
+                }).always(function () {
+                    $this.removeData("in-prompt");
+                });
+        }
+    }, true);
+
+    return module;
 })();

@@ -12,6 +12,15 @@
 
 <section class="span9 offset1">
     <span class="pull-right alert" id="message"></span>
+    <div class="modal hide fade" id="prompt">
+        <div class="modal-header">
+            <h3></h3>
+        </div>
+        <div class="modal-footer">
+            <button class="btn cancel">Cancel</button>
+            <button class="btn btn-primary save">Confirm</button>
+        </div>
+    </div>
     @RenderBody()
 </section>
 

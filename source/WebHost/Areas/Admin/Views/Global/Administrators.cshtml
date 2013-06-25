@@ -26,7 +26,7 @@
     </thead>
     <tbody data-bind="foreach:administrators">
         <tr>
-            <td><button class="btn" data-bind="click: function (data, evt) { $parent.deleteAdmin(data) }">Delete</button></td>
+            <td><button class="btn prompt" data-bind="click: function (data, evt) { $parent.deleteAdmin(data) }">Delete</button></td>
             <td data-bind="text:nameID"></td>
         </tr>
     </tbody>

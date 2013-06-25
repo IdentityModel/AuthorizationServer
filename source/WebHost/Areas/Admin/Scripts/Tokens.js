@@ -11,6 +11,12 @@ $(function () {
             vm.tokens.remove(item);
         });
     }
+    Tokens.prototype.deleteAll = function () {
+        var vm = this;
+        svc.delete().then(function () {
+            vm.tokens.removeAll();
+        });
+    }
 
     svc.get().then(function (data) {
         var vm = new Tokens(data);

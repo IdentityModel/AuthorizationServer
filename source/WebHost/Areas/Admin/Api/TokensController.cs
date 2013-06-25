@@ -31,7 +31,7 @@ namespace Thinktecture.AuthorizationServer.WebHost.Areas.Admin.Api
                 };
             return Request.CreateResponse(HttpStatusCode.OK, query.ToArray());
         }
-        
+
         public HttpResponseMessage Delete(string id)
         {
             var item = this.config.Tokens.All.SingleOrDefault(x => x.HandleId == id);
@@ -42,7 +42,15 @@ namespace Thinktecture.AuthorizationServer.WebHost.Areas.Admin.Api
             }
             return Request.CreateResponse(HttpStatusCode.NoContent);
         }
-
-       
+        
+        public HttpResponseMessage Delete()
+        {
+            foreach(var item in this.config.Tokens.All)
+            {
+                this.config.Tokens.Remove(item);
+            }
+            this.config.SaveChanges();
+            return Request.CreateResponse(HttpStatusCode.NoContent);
+        }
     }
 }

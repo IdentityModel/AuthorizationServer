@@ -26,7 +26,7 @@
                     }
                 </ul>
             </div>
-        }        
+        }
 
         @using (Html.BeginForm())
         {
@@ -47,17 +47,43 @@
                     <dd>@scope.Description</dd>
                 }
             </dl>
-            <div>
-                @if (Model.RequestingRefreshToken)
-                {
-                    <div>
-                        <strong>Offline Use</strong>
-                        <i class="icon-exclamation-sign"></i>
-                    </div>
-                    <p>These permissions will be allowed while you are offline.</p>
-                }
-            </div>
-
+            
+            if (Model.RequestingRefreshToken)
+            {
+                <div>
+                    <strong>Offline Use</strong>
+                    <i class="icon-exclamation-sign"></i>
+                </div>
+                <p>These permissions will be allowed while you are offline.</p>
+                
+                <div>
+                    <label for="rememberDuration"><strong>Allow offline use for:</strong></label>
+                    <select id="rememberDuration" name="rememberDuration">
+                        <option value="1">1 hour</option>
+                        <option value="3">3 hours</option>
+                        <option value="12">12 hours</option>
+                        <option value="24">1 day</option>
+                        <option value="72">3 days</option>
+                        <option value="168">1 week</option>
+                        <option value="336">2 weeks</option>
+                        <option value="720">1 month</option>
+                        <option value="2190">3 months</option>
+                        <option value="4380">6 months</option>
+                        <option value="8760">1 year</option>
+                        <option value="-1">forever</option>
+                    </select>
+                </div>
+            }
+            else if (Model.ShowRememberConsent)
+            {
+                <div class="checkbox remember">
+                    <label>
+                        <input type="checkbox" checked name="rememberDuration" value="-1" />
+                        <strong>Remember decision</strong>
+                    </label>
+                </div>
+            }
+            
             <div>           
                 <button class="btn btn-primary" name="button" value="yes">Allow</button>
                 <button class="btn" name="button" value="no">Deny</button>

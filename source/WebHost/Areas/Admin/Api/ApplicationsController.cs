@@ -44,7 +44,7 @@ namespace Thinktecture.AuthorizationServer.WebHost.Areas.Admin.Api
                 app.TokenLifetime,
                 app.AllowRefreshToken,
                 app.RequireConsent,
-                app.RememberConsentDecision,
+                RememberConsentDecision = app.AllowRememberConsentDecision,
                 signingKeyId = app.SigningKey.ID,
                 enabled = app.Enabled
             };
@@ -72,7 +72,7 @@ namespace Thinktecture.AuthorizationServer.WebHost.Areas.Admin.Api
             app.TokenLifetime = model.TokenLifetime;
             app.AllowRefreshToken = model.AllowRefreshToken;
             app.RequireConsent = model.RequireConsent;
-            app.RememberConsentDecision = model.RememberConsentDecision;
+            app.AllowRememberConsentDecision = model.RememberConsentDecision;
             app.SigningKey = config.Keys.All.Single(x => x.ID == model.SigningKeyID);
             app.Enabled = model.Enabled; ;
 
@@ -97,7 +97,7 @@ namespace Thinktecture.AuthorizationServer.WebHost.Areas.Admin.Api
             app.TokenLifetime = model.TokenLifetime;
             app.AllowRefreshToken = model.AllowRefreshToken;
             app.RequireConsent = model.RequireConsent;
-            app.RememberConsentDecision = model.RememberConsentDecision;
+            app.AllowRememberConsentDecision = model.RememberConsentDecision;
             app.SigningKey = config.Keys.All.Single(x => x.ID == model.SigningKeyID);
             app.Enabled = model.Enabled;
 

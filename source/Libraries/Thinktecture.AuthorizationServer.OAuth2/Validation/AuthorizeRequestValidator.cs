@@ -33,6 +33,8 @@ namespace Thinktecture.AuthorizationServer.OAuth2
                 validatedRequest.Application.Name,
                 validatedRequest.Application.Namespace);
 
+            validatedRequest.ShowRememberConsent = application.AllowRememberConsentDecision;
+
             // make sure redirect uri is present
             if (string.IsNullOrWhiteSpace(request.redirect_uri))
             {
@@ -147,6 +149,9 @@ namespace Thinktecture.AuthorizationServer.OAuth2
             }
 
             ValidateScopes(request, validatedRequest);
+
+            // TODO: fix based upon past "remember me" settings
+            validatedRequest.ShowConsent = client.RequireConsent || application.RequireConsent;
 
             Tracing.Information("Authorize request validation successful.");
             return validatedRequest;

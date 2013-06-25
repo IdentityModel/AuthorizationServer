@@ -36,16 +36,24 @@ $(function () {
             return vm.isNew() ? "New" : "Manage";
         });
 
+        vm.rememberConsentDecisionEnabled = ko.computed(function () {
+            return vm.requireConsent();
+        });
+
         vm.save = function () {
+            var data = ko.mapping.toJS(vm);
+            if (!data.requireConsent) {
+                data.rememberConsentDecision = false;
+            }
             if (vm.isNew()) {
-                svc.post(ko.mapping.toJS(vm)).then(function (data, status, xhr) {
+                svc.post(data).then(function (data, status, xhr) {
                     window.location = window.location + '#' + data.id;
                     vm.isNew(false);
                     vm.id(data.id);
                 });
             }
             else {
-                svc.put(ko.mapping.toJS(vm), vm.id());
+                svc.put(data, vm.id());
             }
         };
     }

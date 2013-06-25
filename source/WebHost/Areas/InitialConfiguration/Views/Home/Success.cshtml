@@ -1,0 +1,13 @@
+﻿@{
+    Layout = "~/Views/Shared/_Layout.cshtml"; 
+    ViewBag.Title = "Initial Configuration";
+}
+
+<div class="hero-unit">
+    <h2>Configuration Success</h2>
+    <p>Your authorization server's initial configuration has been saved.</p>
+    <p>
+        <a href="@Url.Action("Index", "Home", new { area = "" })" 
+            class="btn btn-primary btn-large">Click to Continue</a>
+    </p>    
+</div>

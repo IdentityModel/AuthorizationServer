@@ -17,21 +17,6 @@ namespace Thinktecture.AuthorizationServer.WebHost
             try
             {
                 var db = DependencyResolver.Current.GetService<Thinktecture.AuthorizationServer.EF.AuthorizationServerContext>();
-                if (!db.GlobalConfiguration.Any())
-                {
-                    var config = new GlobalConfiguration
-                    {
-                        AuthorizationServerName = "Thinktecture AuthorizationServer",
-                        Issuer = "ThinktectureAuthorizationServer",
-                        Administrators = new List<AuthorizationServerAdministrator>
-                            {
-                                new AuthorizationServerAdministrator{NameID="dominick"},
-                                new AuthorizationServerAdministrator{NameID="brock"},
-                            }
-                    };
-                    db.GlobalConfiguration.Add(config);
-                    db.SaveChanges();
-                }
 
                 var resourceOwnerClient = db.Clients.Find("roclient");
                 var CodeClient = db.Clients.Find("codeclient");
@@ -194,37 +179,6 @@ namespace Thinktecture.AuthorizationServer.WebHost
             {
                 throw;
             }
-        }
-
-        internal static void Test()
-        {
-            //using (var db = new Thinktecture.AuthorizationServer.EF.AuthorizationServerContext())
-            //{
-            //    if (!db.TokenHandles.Any())
-            //    {
-            //        var th = new TokenHandle()
-            //        {
-            //            Created = DateTime.Now,
-            //            Subject = "joe",
-            //            Application = db.Applications.First(),
-            //            Client = db.Clients.First(),
-            //            Type = TokenHandleType.RefreshTokenIdentifier,
-            //            ResourceOwner = new List<TokenHandleClaim>()
-            //            {
-            //                new TokenHandleClaim{Type = "foo", Value="bar"}
-            //            }
-            //        };
-            //        db.TokenHandles.Add(th);
-            //        db.SaveChanges();
-            //    }
-            //}
-
-            //using (var db = new Thinktecture.AuthorizationServer.EF.AuthorizationServerContext())
-            //{
-            //    var th = db.TokenHandles.First();
-            //    db.TokenHandles.Remove(th);
-            //    db.SaveChanges();
-            //}
         }
     }
 }

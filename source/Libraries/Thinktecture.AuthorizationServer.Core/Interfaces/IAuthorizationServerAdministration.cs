@@ -17,7 +17,7 @@ namespace Thinktecture.AuthorizationServer.Interfaces
 
     public interface IAuthorizationServerAdministration
     {
-        GlobalConfiguration GlobalConfiguration { get; }
+        GlobalConfiguration GlobalConfiguration { get; set; }
         IRepository<Application> Applications { get; }
         IRepository<Scope> Scopes { get; }
         IRepository<Client> Clients { get; }

@@ -1,0 +1,29 @@
+﻿using System.Web.Mvc;
+
+namespace Thinktecture.AuthorizationServer.WebHost.Areas.InitialConfiguration
+{
+    public class InitialConfigurationAreaRegistration : AreaRegistration
+    {
+        public override string AreaName
+        {
+            get
+            {
+                return "InitialConfiguration";
+            }
+        }
+
+        public override void RegisterArea(AreaRegistrationContext context)
+        {
+            GlobalFilters.Filters.Add(new InitialConfigurationFilter());
+
+            context.MapRoute(
+                "InitialConfiguration_default",
+                "InitialConfiguration",
+                new { 
+                    controller="Home",
+                    action = "Index"
+                }
+            );
+        }
+    }
+}

@@ -47,7 +47,11 @@ namespace Thinktecture.AuthorizationServer.EF
 
         public Models.GlobalConfiguration GlobalConfiguration
         {
-            get { return db.GlobalConfiguration.Single(); }
+            get { return db.GlobalConfiguration.SingleOrDefault(); }
+            set
+            {
+                db.GlobalConfiguration.Add(value);
+            }
         }
 
         public IRepository<Models.Application> Applications

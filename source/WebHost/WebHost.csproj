@@ -191,6 +191,10 @@
     <Compile Include="Areas\Admin\Models\GlobalViewModel.cs" />
     <Compile Include="Areas\Admin\Models\SymmetricKeyModel.cs" />
     <Compile Include="Areas\Admin\Models\ScopeModel.cs" />
+    <Compile Include="Areas\InitialConfiguration\Controllers\HomeController.cs" />
+    <Compile Include="Areas\InitialConfiguration\InitialConfigurationAreaRegistration.cs" />
+    <Compile Include="Areas\InitialConfiguration\InitialConfigurationFilter.cs" />
+    <Compile Include="Areas\InitialConfiguration\Models\InitialConfigurationModel.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Security\AuthorizationManager.cs" />
     <Compile Include="Security\ClaimsTransformerBase.cs" />
@@ -201,7 +205,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Security\NameIdOrNameToSubjectClaimsTransformer.cs" />
     <Compile Include="Settings.cs" />
-    <Compile Include="TestData.cs" />
+    <Compile Include="Areas\InitialConfiguration\TestData.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Areas\Admin\Content\Admin.less" />
@@ -316,6 +320,8 @@
     <Content Include="Areas\Admin\Views\Application\Scopes.cshtml" />
     <Content Include="Areas\Admin\Views\Application\Scope.cshtml" />
     <Content Include="Areas\Admin\Views\Key\SymmetricKey.cshtml" />
+    <Content Include="Areas\InitialConfiguration\Views\Web.config" />
+    <Content Include="Areas\InitialConfiguration\Views\Home\Success.cshtml" />
     <None Include="Content\Site.less" />
     <Content Include="Configuration\identityModel.config" />
     <Content Include="Configuration\identityModel.services.config" />
@@ -336,6 +342,7 @@
     <Content Include="Views\Shared\_LayoutWithMenu.cshtml" />
     <Content Include="Views\Authorize\_ViewStart.cshtml" />
     <Content Include="Views\Account\SignOut.cshtml" />
+    <Content Include="Areas\InitialConfiguration\Views\Home\Index.cshtml" />
     <None Include="_bin_deployableAssemblies\x86\sqlcese40.dll" />
     <None Include="_bin_deployableAssemblies\x86\sqlceqp40.dll" />
     <None Include="_bin_deployableAssemblies\x86\sqlceme40.dll" />
@@ -390,6 +397,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Areas\InitialConfiguration\Views\Shared\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />

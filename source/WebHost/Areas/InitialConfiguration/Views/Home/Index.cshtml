@@ -1,0 +1,64 @@
+﻿@model Thinktecture.AuthorizationServer.WebHost.Areas.InitialConfiguration.Models.InitialConfigurationModel
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml"; 
+    ViewBag.Title = "Initial Configuration";
+}
+
+@functions
+{
+    string GetModelValue(string field)
+    {
+        var ms = ViewData.ModelState[field];
+        if (ms != null)
+        {
+            return ms.Value.AttemptedValue;
+        }
+        return null;
+    }
+    string GetValidationMessage(string field)
+    {
+        var ms = ViewData.ModelState[field];
+        if (ms != null && ms.Errors.Count > 0)
+        {
+            return ms.Errors.First().ErrorMessage;
+        }
+        return null;
+    }
+}
+
+<div class="hero-unit">
+    <h1>Initial Configuration</h1>
+    <p>Enter your authorization server's initial values.</p>
+</div>
+<fieldset id="global">
+    <legend></legend>
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+        <div>
+            <label for="name">Server Name</label>
+            <input id="name" name="name" class="input-xxlarge" value="@GetModelValue("name")" />
+            <label class="text-error">@GetValidationMessage("name")</label>
+        </div>
+        <div>
+            <label for="issuer">Issuer</label>
+            <input id="issuer" name="issuer" class="input-xxlarge" value="@GetModelValue("issuer")"  />
+            <label class="text-error">@GetValidationMessage("issuer")</label>
+        </div>
+        <div>
+            <label for="admin">Administrator</label>
+            <input id="admin" name="admin" class="input-xxlarge" value="@GetModelValue("admin")"  />
+            <label class="text-error">@GetValidationMessage("admin")</label>
+        </div>
+        <div>
+            <label for="test" class="checkbox">
+                <input id="test" name="test" type="checkbox" checked="@GetModelValue("test")" value="test" />
+                Populate Test Data
+            </label>
+        </div>
+        <div>
+            <button class="btn btn-primary">Save</button>
+        </div>
+    }
+</fieldset>

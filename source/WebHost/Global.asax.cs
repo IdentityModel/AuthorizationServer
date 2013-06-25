@@ -26,9 +26,6 @@ namespace Thinktecture.AuthorizationServer.WebHost
             
             AutofacConfig.Configure();
 
-            TestData.Populate();
-            TestData.Test();
-
             AntiForgeryConfig.UniqueClaimTypeIdentifier = Constants.ClaimTypes.Subject;
             FederatedAuthentication.FederationConfigurationCreated += FederatedAuthentication_FederationConfigurationCreated;
         }

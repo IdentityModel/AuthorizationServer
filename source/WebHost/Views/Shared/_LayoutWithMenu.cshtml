@@ -5,13 +5,14 @@
     <nav class="span2">
         <ul class="nav nav-pills nav-stacked">
             <li class="@GetActive("Home")">@Html.ActionLink("Home", "Index", "Home", new { area="" }, null)</li>
-            @if(Thinktecture.AuthorizationServer.WebHost.Settings.EnableAdmin)
+            @if (IsSectionDefined("Nav"))
             {
-                if (IsSectionDefined("Nav"))
-                {
-                    @RenderSection("Nav")
-                }
-                else
+                @RenderSection("Nav")
+            }
+            else
+            {
+                <li class="@GetActive("Home", "UserApplications")">@Html.ActionLink("Permissions", "Index", "Home", new { area="UserApplications" }, null)</li>
+                if(Thinktecture.AuthorizationServer.WebHost.Settings.EnableAdmin)
                 {
                     <li>@Html.ActionLink("Configure", "Index", "Home", new { area="Admin" }, null)</li>
                 }
@@ -35,13 +36,15 @@
 }
 
 @functions {
-    bool IsController(string controller)
+    bool IsController(string controller, string area = null)
     {
         return Request.RequestContext.RouteData.Values["Controller"].Equals(controller)
-            && Request.RequestContext.RouteData.DataTokens["area"] == null;
+            && ((area == null && Request.RequestContext.RouteData.DataTokens["area"] == null) ||
+               (area != null && area.Equals(Request.RequestContext.RouteData.DataTokens["area"])));
     }
-    string GetActive(string controller){
-        if (IsController(controller))
+    
+    string GetActive(string controller, string area = null){
+        if (IsController(controller, area))
         {
             return "active";
         }

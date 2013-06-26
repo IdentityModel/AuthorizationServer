@@ -1,0 +1,30 @@
+﻿@model Thinktecture.AuthorizationServer.WebHost.Areas.UserApplications.Models.UserApplicationsViewModel
+@{
+    ViewBag.Title = "Client Applications";
+}
+
+<h2>@ViewBag.Title for User: @Model.Subject</h2>
+<div class="hide" data-bind="css: { hide: !applications().length }">
+    <ul class="nav nav-pills">
+        <li><button class="btn" data-bind="click:deleteAll">Remove All</button></li>
+    </ul>
+    <table class="table table-striped table-condensed">
+        <thead>
+            <tr>
+                <th></th>
+                <th>Client Application Name</th>
+            </tr>
+        </thead>
+        <tbody data-bind="foreach:applications">
+            <tr>
+                <td>
+                    <button class="btn" data-bind="click: function (data, evt) { $parent.delete(data) }">Delete</button>
+                </td>
+                <td data-bind="text: name"></td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+<p data-bind="css:{hide:applications().length}" class="hide alert alert-warning">
+    No Applications Found
+</p>

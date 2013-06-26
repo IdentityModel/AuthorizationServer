@@ -1,0 +1,23 @@
+﻿@{
+    Layout = "~/Views/Shared/_LayoutWithMenu.cshtml";
+}
+
+@section css{
+    @Styles.Render("~/Content/UserApplications")
+}
+
+@section nav{
+    @Html.Partial("Nav")
+}
+
+<section class="span9 offset1">
+    <span class="pull-right alert" id="message"></span>
+    @RenderBody()
+</section>
+
+@section scripts{
+    @Scripts.Render("~/bundles/UserApplications")
+    @RenderSection("scripts", required: false)
+    <script src='@Url.Action("Urls", "Home")'></script>
+}
+

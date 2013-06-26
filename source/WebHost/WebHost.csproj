@@ -195,7 +195,12 @@
     <Compile Include="Areas\InitialConfiguration\InitialConfigurationAreaRegistration.cs" />
     <Compile Include="Areas\InitialConfiguration\InitialConfigurationFilter.cs" />
     <Compile Include="Areas\InitialConfiguration\Models\InitialConfigurationModel.cs" />
+    <Compile Include="Areas\UserApplications\Api\UserApplicationsController.cs" />
+    <Compile Include="Areas\UserApplications\Controllers\HomeController.cs" />
+    <Compile Include="Areas\UserApplications\Models\UserApplicationsViewModel.cs" />
+    <Compile Include="Areas\UserApplications\UserApplicationsAreaRegistration.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\MyAppsController.cs" />
     <Compile Include="Security\AuthorizationManager.cs" />
     <Compile Include="Security\ClaimsTransformerBase.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -227,6 +232,13 @@
     <Content Include="Areas\Admin\Scripts\Keys.js" />
     <Content Include="Areas\Admin\Scripts\Global-Administrators.js" />
     <Content Include="Areas\Admin\Scripts\Global.js" />
+    <Content Include="Areas\UserApplications\Content\UserApplications.css">
+      <DependentUpon>UserApplications.less</DependentUpon>
+    </Content>
+    <Content Include="Areas\UserApplications\Content\UserApplications.min.css">
+      <DependentUpon>UserApplications.less</DependentUpon>
+    </Content>
+    <Content Include="Areas\UserApplications\Scripts\UserApplications.js" />
     <Content Include="Content\bootstrap-responsive.css" />
     <Content Include="Content\bootstrap-responsive.min.css" />
     <Content Include="Content\bootstrap.cosmo.css" />
@@ -322,6 +334,12 @@
     <Content Include="Areas\Admin\Views\Key\SymmetricKey.cshtml" />
     <Content Include="Areas\InitialConfiguration\Views\Web.config" />
     <Content Include="Areas\InitialConfiguration\Views\Home\Success.cshtml" />
+    <Content Include="Areas\UserApplications\Views\Web.config" />
+    <Content Include="Areas\UserApplications\Views\Home\Index.cshtml" />
+    <Content Include="Areas\UserApplications\Views\_ViewStart.cshtml" />
+    <Content Include="Areas\UserApplications\Views\Shared\_Layout.cshtml" />
+    <Content Include="Areas\UserApplications\Content\UserApplications.less" />
+    <Content Include="Areas\UserApplications\Views\Shared\Nav.cshtml" />
     <None Include="Content\Site.less" />
     <Content Include="Configuration\identityModel.config" />
     <Content Include="Configuration\identityModel.services.config" />
@@ -343,6 +361,7 @@
     <Content Include="Views\Authorize\_ViewStart.cshtml" />
     <Content Include="Views\Account\SignOut.cshtml" />
     <Content Include="Areas\InitialConfiguration\Views\Home\Index.cshtml" />
+    <Content Include="Views\MyApps\Index.cshtml" />
     <None Include="_bin_deployableAssemblies\x86\sqlcese40.dll" />
     <None Include="_bin_deployableAssemblies\x86\sqlceqp40.dll" />
     <None Include="_bin_deployableAssemblies\x86\sqlceme40.dll" />

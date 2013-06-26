@@ -1,0 +1,9 @@
+﻿@helper SetActiveClass(string controller)
+{
+    if (controller.Equals(ViewContext.RequestContext.RouteData.Values["controller"]))
+    {
+        @: class='active'
+    }
+}
+
+<li @SetActiveClass("Home")>@Html.ActionLink("Permissions", "Index", "Home", new { area="UserApplications" }, null)</li>

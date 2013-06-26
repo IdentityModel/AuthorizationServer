@@ -22,7 +22,7 @@ namespace Thinktecture.AuthorizationServer.WebHost.Areas.Admin.Api
 
         public HttpResponseMessage Get()
         {
-            string key = IdentityModel.CryptoRandom.CreateRandomKeyString(20);
+            string key = IdentityModel.CryptoRandom.CreateRandomKeyString(32);
             return Request.CreateResponse(HttpStatusCode.OK, new { value=key });
         }
 

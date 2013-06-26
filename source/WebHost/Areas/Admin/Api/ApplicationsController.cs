@@ -88,6 +88,12 @@ namespace Thinktecture.AuthorizationServer.WebHost.Areas.Admin.Api
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ModelState.GetErrors());
             }
 
+            if (this.config.Applications.All.Any(x => x.Namespace == model.Namespace))
+            {
+                ModelState.AddModelError("", "That Namespace is already in use.");
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ModelState.GetErrors());
+            }
+
             var app = new Application();
             app.Name = model.Name;
             app.Description = model.Description;

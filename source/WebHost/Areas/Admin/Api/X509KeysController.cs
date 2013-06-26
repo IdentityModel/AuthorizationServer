@@ -34,6 +34,12 @@ namespace Thinktecture.AuthorizationServer.WebHost.Areas.Admin.Api
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ModelState.GetErrors());
             }
 
+            if (this.config.Keys.All.Any(x => x.Name == model.Name))
+            {
+                ModelState.AddModelError("", "That Name is already in use.");
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ModelState.GetErrors());
+            }
+
             var key = new X509CertificateReference();
             key.Name = model.Name;
             key.StoreName = System.Security.Cryptography.X509Certificates.StoreName.My;

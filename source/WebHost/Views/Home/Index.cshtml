@@ -8,8 +8,10 @@
     @if(Thinktecture.AuthorizationServer.WebHost.Settings.EnableAdmin)
     {
         <p>
+            <a href="@Url.Action("Index", "Home", new { area = "UserApplications" })" 
+                class="btn btn-primary btn-large">Application Permissions</a>
             <a href="@Url.Action("Index", "Home", new { area = "Admin" })" 
-                class="btn btn-primary btn-large">Configure</a>
+                class="btn btn-primary btn-large">Configure Server</a>
         </p>
     }
 </div>

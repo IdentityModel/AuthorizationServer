@@ -9,14 +9,14 @@
             {
                 @RenderSection("Nav")
             }
-            else
+            @*else
             {
                 <li class="@GetActive("Home", "UserApplications")">@Html.ActionLink("Permissions", "Index", "Home", new { area="UserApplications" }, null)</li>
                 if(Thinktecture.AuthorizationServer.WebHost.Settings.EnableAdmin)
                 {
                     <li>@Html.ActionLink("Configure", "Index", "Home", new { area="Admin" }, null)</li>
                 }
-            }
+            }*@
             @if (User.Identity.IsAuthenticated || IsController("Account"))
             {
                 <li class="@GetActive("Account")">@Html.ActionLink("Sign Out", "SignOut", "Account", new { area="" }, null)</li>

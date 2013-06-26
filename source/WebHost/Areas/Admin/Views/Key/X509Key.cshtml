@@ -16,6 +16,18 @@
         <input id="name" data-bind="value: name, valueUpdate: 'keyup'" />
         <label class="text-error" data-bind="text: nameError"></label>
     </div>
+    <div>
+        <label for="findType">Find By</label>
+        <select id="findType" data-bind="value: findType">
+            <option value="0">Thumbprint</option>
+            <option value="1">Subject Name</option>
+        </select>
+    </div>
+    <div>
+        <label for="value">Find Value</label>
+        <input id="value" data-bind="value: value, valueUpdate: 'keyup'" />
+        <label class="text-error" data-bind="text: valueError"></label>
+    </div>
     <div><button class="btn btn-primary" data-bind="click: save, disable: anyErrors">Save</button></div>
 </fieldset>
 

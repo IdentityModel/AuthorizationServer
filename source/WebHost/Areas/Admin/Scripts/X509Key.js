@@ -7,11 +7,14 @@ $(function () {
         vm.isNew = ko.observable(!data);
         data = data || {
             id : 0,
-            name: ""
+            name: "",
+            findType: 0,
+            value:""
         };
         ko.mapping.fromJS(data, null, vm);
 
         authz.util.addRequired(this, "name", "Name");
+        authz.util.addRequired(this, "value", "Find Value");
         authz.util.addAnyErrors(this);
 
         vm.editDescription = ko.computed(function () {

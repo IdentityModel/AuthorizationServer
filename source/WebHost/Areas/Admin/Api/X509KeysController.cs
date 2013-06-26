@@ -24,7 +24,7 @@ namespace Thinktecture.AuthorizationServer.WebHost.Areas.Admin.Api
         {
             var item = config.Keys.All.SingleOrDefault(x => x.ID == id) as X509CertificateReference;
             if (item == null) return Request.CreateResponse(HttpStatusCode.NotFound);
-            return Request.CreateResponse(HttpStatusCode.OK, new { item.ID, item.Name });
+            return Request.CreateResponse(HttpStatusCode.OK, new X509KeyModel(item));
         }
 
         public HttpResponseMessage Post(X509KeyModel model)
@@ -36,6 +36,12 @@ namespace Thinktecture.AuthorizationServer.WebHost.Areas.Admin.Api
 
             var key = new X509CertificateReference();
             key.Name = model.Name;
+            key.StoreName = System.Security.Cryptography.X509Certificates.StoreName.My;
+            key.Location = System.Security.Cryptography.X509Certificates.StoreLocation.LocalMachine;
+            key.FindType = model.FindType == FindType.Thumbprint ?
+                System.Security.Cryptography.X509Certificates.X509FindType.FindByThumbprint :
+                System.Security.Cryptography.X509Certificates.X509FindType.FindBySubjectDistinguishedName;
+            key.FindValue = model.Value;
             this.config.Keys.Add(key);
             this.config.SaveChanges();
 
@@ -53,6 +59,12 @@ namespace Thinktecture.AuthorizationServer.WebHost.Areas.Admin.Api
             if (key == null) return Request.CreateResponse(HttpStatusCode.NotFound);
 
             key.Name = model.Name;
+            key.StoreName = System.Security.Cryptography.X509Certificates.StoreName.My;
+            key.Location = System.Security.Cryptography.X509Certificates.StoreLocation.LocalMachine;
+            key.FindType = model.FindType == FindType.Thumbprint ?
+                System.Security.Cryptography.X509Certificates.X509FindType.FindByThumbprint :
+                System.Security.Cryptography.X509Certificates.X509FindType.FindBySubjectDistinguishedName;
+            key.FindValue = model.Value;
             this.config.SaveChanges();
 
             return Request.CreateResponse(HttpStatusCode.NoContent);

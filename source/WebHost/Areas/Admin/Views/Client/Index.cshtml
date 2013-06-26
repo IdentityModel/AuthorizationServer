@@ -19,7 +19,8 @@
     <tbody data-bind="foreach: clients">
         <tr>
             <td>
-                <a class="btn btn-primary" data-href="@Url.Action("Manage")" data-bind="attr: {href:$element.dataset.href + '#' + $data.clientId()}">Manage</a>
+                @{ var url = @Url.Action("Manage"); }
+                <a class="btn btn-primary" data-bind="attr: {href:'@url#' + $data.clientId()}">Manage</a>
                 <button class="btn" data-bind="click: function (data, evt) { $parent.deleteClient(data) }">Delete</button>
             </td>
             <td data-bind="text: enabled"></td>

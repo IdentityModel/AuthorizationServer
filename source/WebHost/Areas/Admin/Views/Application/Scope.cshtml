@@ -6,8 +6,8 @@
 
     <ul class="nav nav-pills">
         <li>
-            <a data-href="@Url.Action("Scopes")"
-                data-bind="attr: { href: $element.dataset.href + '#' + $data.appID() }">
+            @{ var url = @Url.Action("Scopes"); }
+            <a data-bind="attr: { href: '@url#' + $data.appID() }">
                 <i class="icon-arrow-left"></i>Back to Scopes</a>
         </li>
     </ul>

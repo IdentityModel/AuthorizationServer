@@ -18,7 +18,8 @@
     <tbody data-bind="foreach: keys">
         <tr>
             <td>
-                <a class="btn btn-primary" data-href="@Url.Action("SymmetricKey")" data-bind="attr: { href: $element.dataset.href + '#' + $data.id() }">Manage</a>
+                @{ var url = @Url.Action("SymmetricKey"); }
+                <a class="btn btn-primary" data-bind="attr: { href: '@url#' + $data.id() }">Manage</a>
                 <button class="btn" data-bind="click: function (data, evt) { $parent.deleteKey(data) }, enable: applicationCount() == 0">Delete</button>
             </td>
             <td data-bind="text:name"></td>

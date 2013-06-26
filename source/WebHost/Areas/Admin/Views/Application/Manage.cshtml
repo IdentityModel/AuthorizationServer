@@ -8,9 +8,9 @@
         <a href="@Url.Action("Index")">
             <i class="icon-arrow-left"></i> Back to Applications</a>
     </li>
+    @{ var url = @Url.Action("Scopes"); }
     <li class="hide" data-bind="css: { hide: !menusEnabled() }">
-        <a data-href="@Url.Action("Scopes")" 
-            data-bind="attr: { href: $element.dataset.href + '#' + $data.id() }">Scopes</a>
+        <a data-bind="attr: { href: '@url#' + $data.id() }">Scopes</a>
     </li>
 </ul>
 <fieldset>

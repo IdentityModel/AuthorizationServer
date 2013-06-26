@@ -5,8 +5,8 @@
 <h2>@ViewBag.Title</h2>
 <ul class="nav nav-pills">
     <li>
-        <a data-href="@Url.Action("Manage")"
-            data-bind="attr: { href: $element.dataset.href + '#' + $data.backId() }">
+        @{ var url = @Url.Action("Manage"); }
+        <a data-bind="attr: { href: '@url#' + $data.backId() }">
             <i class="icon-arrow-left"></i> Back to Client</a>
     </li>
 </ul>

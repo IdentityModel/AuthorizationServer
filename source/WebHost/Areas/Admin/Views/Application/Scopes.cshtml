@@ -28,7 +28,20 @@
         <tr>
             <td>
                 <a class="btn btn-primary" data-bind="attr: { href: '@url2#' + $data.id() + 'a' + $parent.appID() }">Manage</a>
-                <button class="btn" data-bind="click: function (data, evt) { $parent.deleteScope(data) }">Delete</button>
+                <div class="btn-group">
+                    <a class="btn dropdown-toggle" data-toggle="dropdown" href="#">Delete
+                        <span class="caret"></span></a>
+                    <ul class="dropdown-menu">
+                        <li>
+                            <a href="#" data-bind="click: function (data, evt) { $parent.deleteScope(data) }"><span class="icon-ok"></span>
+                                Confirm</a>
+                        </li>
+                        <li>                            
+                            <a href="#"><span class="icon-remove"></span>
+                                Cancel</a>
+                        </li>
+                    </ul>
+                </div>
             </td>
             <td data-bind="text:name"></td>
             <td><input type="checkbox" disabled data-bind="checked: emphasize" /></td>

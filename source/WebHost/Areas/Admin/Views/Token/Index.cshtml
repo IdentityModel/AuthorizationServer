@@ -5,7 +5,22 @@
 <h2>@ViewBag.Title</h2>
 <div class="hide" data-bind="css: { hide: !tokens().length }">
     <ul class="nav nav-pills">
-        <li><button class="btn" data-bind="click:deleteAll">Delete All</button></li>
+        <li>
+            <div class="btn-group">
+                <a class="btn dropdown-toggle" data-toggle="dropdown" href="#">Delete All
+                    <span class="caret"></span></a>
+                <ul class="dropdown-menu">
+                    <li>
+                        <a href="#" data-bind="click: deleteAll"><span class="icon-ok"></span>
+                            Confirm</a>
+                    </li>
+                    <li>                            
+                        <a href="#"><span class="icon-remove"></span>
+                            Cancel</a>
+                    </li>
+                </ul>
+            </div>
+        </li>
     </ul>
     <table class="table table-striped table-condensed">
         <thead>
@@ -18,7 +33,22 @@
         </thead>
         <tbody data-bind="foreach: tokens">
             <tr>
-                <td><button class="btn" data-bind="click: function (data, evt) { $parent.deleteToken(data) }">Delete</button></td>
+                <td>
+                    <div class="btn-group">
+                        <a class="btn dropdown-toggle" data-toggle="dropdown" href="#">Delete
+                            <span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li>
+                                <a href="#" data-bind="click: function (data, evt) { $parent.deleteToken(data) }"><span class="icon-ok"></span>
+                                    Confirm</a>
+                            </li>
+                            <li>                            
+                                <a href="#"><span class="icon-remove"></span>
+                                    Cancel</a>
+                            </li>
+                        </ul>
+                    </div>
+                </td>
                 <td data-bind="text:subject"></td>
                 <td data-bind="text:client"></td>
                 <td data-bind="text: created"></td>

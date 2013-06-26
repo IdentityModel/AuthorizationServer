@@ -31,7 +31,7 @@ namespace Thinktecture.AuthorizationServer.WebHost.Areas.Admin.Api
                 from s in app.Scopes
                 select new
                 {
-                    s.ID,s.Name,s.Description,s.Emphasize,clientCount=s.AllowedClients.Count
+                    s.ID,s.Name,s.DisplayName,s.Description,s.Emphasize,clientCount=s.AllowedClients.Count
                 };
             return Request.CreateResponse(HttpStatusCode.OK, data.ToArray());
         }
@@ -51,6 +51,7 @@ namespace Thinktecture.AuthorizationServer.WebHost.Areas.Admin.Api
 
             var scope = new Scope();
             scope.Name = model.Name;
+            scope.DisplayName = model.DisplayName;
             scope.Description = model.Description;
             scope.Emphasize = model.Emphasize;
 
@@ -60,6 +61,7 @@ namespace Thinktecture.AuthorizationServer.WebHost.Areas.Admin.Api
             return Request.CreateResponse(HttpStatusCode.OK, new {
                     scope.ID,
                     scope.Name,
+                    scope.DisplayName,
                     scope.Description,
                     scope.Emphasize
                 });

@@ -1,5 +1,5 @@
 ﻿@{
-    ViewBag.Title = "Symmetric Key";
+    ViewBag.Title = "X509 Key";
 }
 
 <h2><span data-bind="text: editDescription"></span> X509 Key</h2>
@@ -7,6 +7,9 @@
     <li>
         <a href="@Url.Action("Index")">
             <i class="icon-arrow-left"></i> Back to Keys</a>
+    </li>
+    <li class="hide" data-bind="css: { hide: isNew }">
+        <a data-bind="attr: { href:certUrl }">Download Certificate</a>
     </li>
 </ul>
 <fieldset>
@@ -20,13 +23,17 @@
         <label for="findType">Find By</label>
         <select id="findType" data-bind="value: findType">
             <option value="0">Thumbprint</option>
-            <option value="1">Subject Name</option>
+            <option value="1">Subject Distinguished Name</option>
         </select>
     </div>
     <div>
         <label for="value">Find Value</label>
-        <input id="value" data-bind="value: value, valueUpdate: 'keyup'" />
+        <input class="input-xxlarge" id="value" data-bind="value: value, valueUpdate: 'keyup'" />
         <label class="text-error" data-bind="text: valueError"></label>
+    </div>
+    <div class="hide" data-bind="css: { hide: isNew }">
+        <label>Thumbprint</label>
+        <strong data-bind="text: thumbprint"></strong>
     </div>
     <div><button class="btn btn-primary" data-bind="click: save, disable: anyErrors">Save</button></div>
 </fieldset>

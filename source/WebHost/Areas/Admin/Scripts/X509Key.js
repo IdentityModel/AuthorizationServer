@@ -9,7 +9,8 @@ $(function () {
             id : 0,
             name: "",
             findType: 0,
-            value:""
+            value: "",
+            thumbprint:""
         };
         ko.mapping.fromJS(data, null, vm);
 
@@ -21,12 +22,17 @@ $(function () {
             return vm.isNew() ? "New" : "Manage";
         });
 
+        vm.certUrl = ko.computed(function () {
+            return authz.baseUrl + "admin/Certificate/" + vm.id();
+        });
+
         vm.save = function () {
             if (vm.isNew()) {
                 svc.post(ko.mapping.toJS(vm)).then(function (data, status, xhr) {
                     window.location = window.location + '#' + data.id;
                     vm.isNew(false);
                     vm.id(data.id);
+                    vm.thumbprint(data.thumbprint);
                 });
             }
             else {

@@ -42,10 +42,16 @@ namespace Thinktecture.AuthorizationServer.WebHost.Areas.Admin.Api
                 System.Security.Cryptography.X509Certificates.X509FindType.FindByThumbprint :
                 System.Security.Cryptography.X509Certificates.X509FindType.FindBySubjectDistinguishedName;
             key.FindValue = model.Value;
+
+            if (key.Certificate == null)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, new { error = "Invalid Values For Certificate" });
+            }
+
             this.config.Keys.Add(key);
             this.config.SaveChanges();
 
-            return Request.CreateResponse(HttpStatusCode.OK, new { ID = key.ID });
+            return Request.CreateResponse(HttpStatusCode.OK, new X509KeyModel(key));
         }
 
         public HttpResponseMessage Put(int id, X509KeyModel model)
@@ -65,6 +71,12 @@ namespace Thinktecture.AuthorizationServer.WebHost.Areas.Admin.Api
                 System.Security.Cryptography.X509Certificates.X509FindType.FindByThumbprint :
                 System.Security.Cryptography.X509Certificates.X509FindType.FindBySubjectDistinguishedName;
             key.FindValue = model.Value;
+
+            if (key.Certificate == null)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, new { error = "Invalid Values For Certificate" });
+            }
+
             this.config.SaveChanges();
 
             return Request.CreateResponse(HttpStatusCode.NoContent);

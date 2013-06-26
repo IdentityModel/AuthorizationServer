@@ -172,6 +172,8 @@
     <Compile Include="Areas\Admin\Api\ClientsController.cs" />
     <Compile Include="Areas\Admin\Api\ClientRedirectsController.cs" />
     <Compile Include="Areas\Admin\Api\ApplicationScopesController.cs" />
+    <Compile Include="Areas\Admin\Api\CertificateController.cs" />
+    <Compile Include="Areas\Admin\Api\Formatters\X509CertificateReferenceFormatter.cs" />
     <Compile Include="Areas\Admin\Api\X509KeysController.cs" />
     <Compile Include="Areas\Admin\Api\SymmetricKeysController.cs" />
     <Compile Include="Areas\Admin\Api\TokensController.cs" />

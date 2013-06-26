@@ -5,6 +5,7 @@
 <h2>Keys</h2>
 <ul class="nav nav-pills">
     <li>@Html.ActionLink("New Symmetric Key", "SymmetricKey")</li>
+    <li>@Html.ActionLink("New X509 Key", "X509Key")</li>
 </ul>
 <table class="table table-striped hide table-condensed" data-bind="css: { hide: !keys().length }">
     <thead>
@@ -18,8 +19,11 @@
     <tbody data-bind="foreach: keys">
         <tr>
             <td>
-                @{ var url = @Url.Action("SymmetricKey"); }
-                <a class="btn btn-primary" data-bind="attr: { href: '@url#' + $data.id() }">Manage</a>
+                @{ 
+                    var url1 = @Url.Action("X509Key");
+                    var url2 = @Url.Action("SymmetricKey");
+                }
+                <a class="btn btn-primary" data-bind="attr: { href: (type()==='X509' ? '@url1#' : '@url2#') + $data.id() }">Manage</a>
                 <button class="btn" data-bind="click: function (data, evt) { $parent.deleteKey(data) }, enable: applicationCount() == 0">Delete</button>
             </td>
             <td data-bind="text:name"></td>

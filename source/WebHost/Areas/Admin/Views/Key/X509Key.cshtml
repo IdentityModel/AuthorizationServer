@@ -1,0 +1,24 @@
+﻿@{
+    ViewBag.Title = "Symmetric Key";
+}
+
+<h2><span data-bind="text: editDescription"></span> X509 Key</h2>
+<ul class="nav nav-pills">
+    <li>
+        <a href="@Url.Action("Index")">
+            <i class="icon-arrow-left"></i> Back to Keys</a>
+    </li>
+</ul>
+<fieldset>
+    <legend></legend>
+    <div>
+        <label for="name">Name</label>
+        <input id="name" data-bind="value: name, valueUpdate: 'keyup'" />
+        <label class="text-error" data-bind="text: nameError"></label>
+    </div>
+    <div><button class="btn btn-primary" data-bind="click: save, disable: anyErrors">Save</button></div>
+</fieldset>
+
+@section scripts{
+    <script src="~/Areas/Admin/Scripts/X509Key.js"></script>
+}

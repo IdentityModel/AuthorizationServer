@@ -12,7 +12,6 @@ $(function () {
         });
     }
 
-
     svc.get().then(function (data) {
         var vm = new Keys(data);
         ko.applyBindings(vm);

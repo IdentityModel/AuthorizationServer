@@ -172,6 +172,7 @@
     <Compile Include="Areas\Admin\Api\ClientsController.cs" />
     <Compile Include="Areas\Admin\Api\ClientRedirectsController.cs" />
     <Compile Include="Areas\Admin\Api\ApplicationScopesController.cs" />
+    <Compile Include="Areas\Admin\Api\X509KeysController.cs" />
     <Compile Include="Areas\Admin\Api\SymmetricKeysController.cs" />
     <Compile Include="Areas\Admin\Api\TokensController.cs" />
     <Compile Include="Areas\Admin\Api\ScopeClientsController.cs" />
@@ -188,6 +189,7 @@
     <Compile Include="Areas\Admin\Models\ApplicationModel.cs" />
     <Compile Include="Areas\Admin\Models\ClientModel.cs" />
     <Compile Include="Areas\Admin\Models\ClientRedirectModel.cs" />
+    <Compile Include="Areas\Admin\Models\X509KeyModel.cs" />
     <Compile Include="Areas\Admin\Models\GlobalViewModel.cs" />
     <Compile Include="Areas\Admin\Models\SymmetricKeyModel.cs" />
     <Compile Include="Areas\Admin\Models\ScopeModel.cs" />
@@ -224,6 +226,7 @@
     <Content Include="Areas\Admin\Scripts\Client.js" />
     <Content Include="Areas\Admin\Scripts\ClientRedirects.js" />
     <Content Include="Areas\Admin\Scripts\Application.js" />
+    <Content Include="Areas\Admin\Scripts\X509Key.js" />
     <Content Include="Areas\Admin\Scripts\SymmetricKey.js" />
     <Content Include="Areas\Admin\Scripts\Tokens.js" />
     <Content Include="Areas\Admin\Scripts\Scope.js" />
@@ -339,6 +342,7 @@
     <Content Include="Areas\UserApplications\Views\Shared\_Layout.cshtml" />
     <Content Include="Areas\UserApplications\Content\UserApplications.less" />
     <Content Include="Areas\UserApplications\Views\Shared\Nav.cshtml" />
+    <Content Include="Areas\Admin\Views\Key\X509Key.cshtml" />
     <None Include="Content\Site.less" />
     <Content Include="Configuration\identityModel.config" />
     <Content Include="Configuration\identityModel.services.config" />

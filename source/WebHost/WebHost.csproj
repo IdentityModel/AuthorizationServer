@@ -200,7 +200,6 @@
     <Compile Include="Areas\UserApplications\Models\UserApplicationsViewModel.cs" />
     <Compile Include="Areas\UserApplications\UserApplicationsAreaRegistration.cs" />
     <Compile Include="Controllers\AccountController.cs" />
-    <Compile Include="Controllers\MyAppsController.cs" />
     <Compile Include="Security\AuthorizationManager.cs" />
     <Compile Include="Security\ClaimsTransformerBase.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -361,7 +360,6 @@
     <Content Include="Views\Authorize\_ViewStart.cshtml" />
     <Content Include="Views\Account\SignOut.cshtml" />
     <Content Include="Areas\InitialConfiguration\Views\Home\Index.cshtml" />
-    <Content Include="Views\MyApps\Index.cshtml" />
     <None Include="_bin_deployableAssemblies\x86\sqlcese40.dll" />
     <None Include="_bin_deployableAssemblies\x86\sqlceqp40.dll" />
     <None Include="_bin_deployableAssemblies\x86\sqlceme40.dll" />

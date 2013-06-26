@@ -10,7 +10,7 @@ $(function () {
             name: "",
             value:""
         };
-        ko.mapping.fromJS(data, null, this);
+        ko.mapping.fromJS(data, null, vm);
 
         authz.util.addRequired(this, "name", "Name");
         authz.util.addRequired(this, "value", "Value");
@@ -43,7 +43,7 @@ $(function () {
     if (window.location.hash) {
         var id = window.location.hash.substring(1);
         svc.get(id).then(function (data) {
-            var key = new SymmetricKey(data);
+            var vm = new SymmetricKey(data);
             ko.applyBindings(vm);
         });
     }

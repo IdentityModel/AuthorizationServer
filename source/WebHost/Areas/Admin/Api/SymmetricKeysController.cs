@@ -28,9 +28,9 @@ namespace Thinktecture.AuthorizationServer.WebHost.Areas.Admin.Api
 
         public HttpResponseMessage Get(int id)
         {
-            var item = config.Keys.All.SingleOrDefault(x => x.ID == id && x is SymmetricKey);
+            var item = config.Keys.All.SingleOrDefault(x => x.ID == id) as SymmetricKey;
             if (item == null) return Request.CreateResponse(HttpStatusCode.NotFound);
-            return Request.CreateResponse(HttpStatusCode.OK, item);
+            return Request.CreateResponse(HttpStatusCode.OK, new { item.ID, item.Name, Value=Convert.ToBase64String(item.Value) });
         }
 
         public HttpResponseMessage Post(SymmetricKeyModel model)

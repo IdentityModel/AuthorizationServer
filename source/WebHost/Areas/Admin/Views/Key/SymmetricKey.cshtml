@@ -16,11 +16,15 @@
         <input id="name" data-bind="value: name, valueUpdate: 'keyup'" />
         <label class="text-error" data-bind="text: nameError"></label>
     </div>
-    <div>
+    <div data-bind="visible: isNew">
         <label for="value">Value (base64)</label>
         <input id="value" class="input-xxlarge" data-bind="value: value, valueUpdate: 'keyup', enable: isNew" />
         <button type="button" class="btn" data-bind="click: createKey, enable: isNew">create</button>
         <label class="text-error" data-bind="text: valueError"></label>
+    </div>
+    <div data-bind="visible: !isNew()">
+        <label for="value2">Value (base64)</label>
+        <strong id="value2" data-bind="text: value"></strong>
     </div>
     <div><button class="btn btn-primary" data-bind="click: save, disable: anyErrors">Save</button></div>
 </fieldset>

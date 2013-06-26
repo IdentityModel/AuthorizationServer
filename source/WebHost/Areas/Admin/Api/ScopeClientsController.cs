@@ -43,7 +43,7 @@ namespace Thinktecture.AuthorizationServer.WebHost.Areas.Admin.Api
             if (String.IsNullOrEmpty(clientID))
             {
                 ModelState.AddModelError("clientID", "Client ID is required");
-                return Request.CreateErrorResponse(HttpStatusCode.BadRequest, ModelState);
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ModelState.GetErrors());
             }
 
             var scope = config.Scopes.All.SingleOrDefault(x => x.ID == scopeID);
@@ -69,7 +69,7 @@ namespace Thinktecture.AuthorizationServer.WebHost.Areas.Admin.Api
             if (String.IsNullOrEmpty(clientID))
             {
                 ModelState.AddModelError("clientID", "Client ID is required");
-                return Request.CreateErrorResponse(HttpStatusCode.BadRequest, ModelState);
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ModelState.GetErrors());
             }
 
             var scope = config.Scopes.All.SingleOrDefault(x => x.ID == scopeID);

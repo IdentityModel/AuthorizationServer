@@ -1,16 +1,24 @@
 ﻿var authz = (function () {
     "use strict";
 
-    function showMessage(msg, css, detail) {
+    function showMessage(msg, css, details) {
         var elem = $("#message");
         if (elem.is(":visible")) {
             elem.clearQueue().delay(1000).fadeOut(function () {
-                showMessage(msg, css, detail);
+                showMessage(msg, css, details);
             });
         }
         else {
-            if (detail) {
-                msg += "<br><br>" + detail;
+            if (details) {
+                if (!Array.isArray(details)) {
+                    details = [details];
+                }
+
+                msg += "<br><ul>";
+                details.forEach(function (detail) {
+                    msg += "<li>" + detail + "</li>";
+                });
+                msg += "</ul>";
             }
             elem
                 .addClass(css)
@@ -30,8 +38,9 @@
     }
 
     function getErrorDetail(xhr) {
-        if (xhr.responseJSON && xhr.responseJSON.error) {
-            return xhr.responseJSON.error;
+        if (xhr.responseJSON) {
+            return xhr.responseJSON.errors || 
+                xhr.responseJSON.exceptionMessage;
         }
     }
 

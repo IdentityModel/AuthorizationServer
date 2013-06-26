@@ -55,7 +55,7 @@ namespace Thinktecture.AuthorizationServer.WebHost.Areas.Admin.Api
         {
             if (!ModelState.IsValid)
             {
-                return Request.CreateErrorResponse(HttpStatusCode.BadRequest, ModelState);
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ModelState.GetErrors());
             }
 
             var app = config.Applications.All.SingleOrDefault(x => x.ID == id);
@@ -85,7 +85,7 @@ namespace Thinktecture.AuthorizationServer.WebHost.Areas.Admin.Api
         {
             if (!ModelState.IsValid)
             {
-                return Request.CreateErrorResponse(HttpStatusCode.BadRequest, ModelState);
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ModelState.GetErrors());
             }
 
             var app = new Application();

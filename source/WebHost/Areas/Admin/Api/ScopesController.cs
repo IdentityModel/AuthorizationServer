@@ -29,7 +29,7 @@ namespace Thinktecture.AuthorizationServer.WebHost.Areas.Admin.Api
             var data =
                 new
                 {
-                    scope.ID, scope.Name, scope.Description, scope.Emphasize
+                    scope.ID, scope.Name, scope.DisplayName, scope.Description, scope.Emphasize
                 };
             return Request.CreateResponse(HttpStatusCode.OK, data);
         }
@@ -47,6 +47,7 @@ namespace Thinktecture.AuthorizationServer.WebHost.Areas.Admin.Api
                 return Request.CreateResponse(HttpStatusCode.NotFound);
             }
 
+            scope.DisplayName = model.DisplayName;
             scope.Description = model.Description;
             scope.Emphasize = model.Emphasize;
 

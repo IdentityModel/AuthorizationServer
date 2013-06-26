@@ -19,9 +19,13 @@
             <label class="text-error" data-bind="text: nameError"></label>
         </div>
         <div>
+            <label for="displayName">Display Name</label>
+            <input id="displayName" data-bind="value: displayName, valueUpdate: 'keyup'" />
+            <label class="text-error" data-bind="text: displayNameError"></label>
+        </div>
+        <div>
             <label for="description">Description</label>
             <input id="description" data-bind="value: description, valueUpdate: 'keyup'" />
-            <label class="text-error" data-bind="text: descriptionError"></label>
         </div>
         <div>
             <label for="emphasize" class="checkbox">

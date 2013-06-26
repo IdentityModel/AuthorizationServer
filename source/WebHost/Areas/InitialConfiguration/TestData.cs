@@ -137,6 +137,7 @@ namespace Thinktecture.AuthorizationServer.WebHost
                     {
                         AllowedClients = new List<Client> { CodeClient, ImplicitClient, resourceOwnerClient, client },
                         Name = "read",
+                        DisplayName = "Read",
                         Description = "Read data",
                         Emphasize = false
                     };
@@ -145,6 +146,7 @@ namespace Thinktecture.AuthorizationServer.WebHost
                     {
                         AllowedClients = new List<Client> { CodeClient, resourceOwnerClient },
                         Name = "search",
+                        DisplayName="Search",
                         Description = "Search data",
                         Emphasize = false
                     };
@@ -153,6 +155,7 @@ namespace Thinktecture.AuthorizationServer.WebHost
                     {
                         AllowedClients = new List<Client> { resourceOwnerClient },
                         Name = "write",
+                        DisplayName="Write",
                         Description = "write data",
                         Emphasize = true
                     };

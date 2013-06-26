@@ -28,6 +28,7 @@ $(function () {
         data = data || {
             id:0,
             name: "",
+            displayName:"",
             description: "",
             emphasize: false
         };
@@ -47,7 +48,7 @@ $(function () {
         });
 
         authz.util.addRequired(this, "name", "Name");
-        authz.util.addRequired(this, "description", "Description");
+        authz.util.addRequired(this, "displayName", "Display Name");
         authz.util.addAnyErrors(this);
 
         vm.save = function () {

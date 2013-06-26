@@ -13,6 +13,8 @@ namespace Thinktecture.AuthorizationServer.Models
         public virtual int ID { get; set; }
         [Required]
         public virtual string Name { get; set; }
+        [Required]
+        public virtual string DisplayName { get; set; }
         public virtual string Description { get; set; }
         public virtual bool Emphasize { get; set; }
 

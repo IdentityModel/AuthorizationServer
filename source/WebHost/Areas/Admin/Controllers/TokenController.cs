@@ -8,7 +8,7 @@ using Thinktecture.IdentityModel.Authorization.Mvc;
 
 namespace Thinktecture.AuthorizationServer.WebHost.Areas.Admin.Controllers
 {
-    [ClaimsAuthorize(Constants.Actions.Configure, Constants.Resources.Tokens)]
+    [ClaimsAuthorize(Constants.Actions.Configure, Constants.Resources.Server)]
     public class TokenController : Controller
     {
         public ActionResult Index()

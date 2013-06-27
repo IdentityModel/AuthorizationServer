@@ -11,7 +11,7 @@ using Thinktecture.IdentityModel.Authorization.WebApi;
 
 namespace Thinktecture.AuthorizationServer.WebHost.Areas.Admin.Api
 {
-    [ClaimsAuthorize(Constants.Actions.Configure, Constants.Resources.Keys)]
+    [ClaimsAuthorize(Constants.Actions.Configure, Constants.Resources.Server)]
     public class X509KeysController : ApiController
     {
         IAuthorizationServerAdministration config;

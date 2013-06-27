@@ -8,7 +8,7 @@ using Thinktecture.IdentityModel.Authorization.WebApi;
 
 namespace Thinktecture.AuthorizationServer.WebHost.Areas.Admin.Api
 {
-    [ClaimsAuthorize(Constants.Actions.Configure, Constants.Resources.Global)]
+    [ClaimsAuthorize(Constants.Actions.Configure, Constants.Resources.Server)]
     public class GlobalAdministratorsController : ApiController
     {
         IAuthorizationServerAdministration config;

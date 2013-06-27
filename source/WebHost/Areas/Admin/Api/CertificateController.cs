@@ -21,13 +21,6 @@ namespace Thinktecture.AuthorizationServer.WebHost.Areas.Admin.Api
             this.config = config;
         }
 
-        //protected override void Initialize(System.Web.Http.Controllers.HttpControllerContext controllerContext)
-        //{
-        //    base.Initialize(controllerContext);
-        //    controllerContext.Configuration.Formatters.Clear();
-        //    controllerContext.Configuration.Formatters.Insert(0, new X509CertificateReferenceFormatter());
-        //}
-
         public HttpResponseMessage Get(int id)
         {
             var item = config.Keys.All.SingleOrDefault(x => x.ID == id) as X509CertificateReference;

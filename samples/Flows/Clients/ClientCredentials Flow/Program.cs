@@ -18,7 +18,9 @@ namespace Thinktecture.Samples
         static void Main(string[] args)
         {
             var token = RequestToken();
+            
             CallService(token);
+            //CallServiceInvalidScope(token);
         }
 
         private static string RequestToken()
@@ -58,6 +60,29 @@ namespace Thinktecture.Samples
 
                     var claims = response.Content.ReadAsAsync<IEnumerable<ViewClaim>>().Result;
                     Helper.ShowConsole(claims);
+                });
+
+                Console.ReadLine();
+            }
+        }
+
+        private static void CallServiceInvalidScope(string token)
+        {
+            var client = new HttpClient
+            {
+                BaseAddress = _baseAddress
+            };
+
+            client.SetBearerToken(token);
+
+            while (true)
+            {
+                "Calling service with unsufficient scope (should fail).".ConsoleYellow();
+
+                Helper.Timer(() =>
+                {
+                    var response = client.PutAsync("identity", null).Result;
+                    response.EnsureSuccessStatusCode();
                 });
 
                 Console.ReadLine();

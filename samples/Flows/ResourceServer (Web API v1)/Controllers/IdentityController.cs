@@ -20,5 +20,14 @@ namespace Thinktecture.Samples
             var principal = Request.GetClaimsPrincipal();
             return ViewClaims.GetAll(principal);
         }
+
+        /// <summary>
+        /// Update identity data
+        /// </summary>
+        [Scope("write")]
+        public void Put()
+        {
+            
+        }
     }
 }

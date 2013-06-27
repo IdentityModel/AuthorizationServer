@@ -406,5 +406,10 @@
             Returns the claims of the current principal
             </summary>
         </member>
+        <member name="M:Thinktecture.Samples.IdentityController.Put">
+            <summary>
+            Update identity data
+            </summary>
+        </member>
     </members>
 </doc>

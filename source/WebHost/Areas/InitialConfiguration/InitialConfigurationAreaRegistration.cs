@@ -15,15 +15,18 @@ namespace Thinktecture.AuthorizationServer.WebHost.Areas.InitialConfiguration
         public override void RegisterArea(AreaRegistrationContext context)
         {
             GlobalFilters.Filters.Add(new InitialConfigurationFilter());
-
-            context.MapRoute(
-                "InitialConfiguration_default",
-                "InitialConfiguration",
-                new { 
-                    controller="Home",
-                    action = "Index"
-                }
-            );
+            if (Settings.EnableInitialConfiguration)
+            {
+                context.MapRoute(
+                    "InitialConfiguration_default",
+                    "InitialConfiguration",
+                    new
+                    {
+                        controller = "Home",
+                        action = "Index"
+                    }
+                );
+            }
         }
     }
 }

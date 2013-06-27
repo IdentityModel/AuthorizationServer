@@ -16,14 +16,17 @@ namespace Thinktecture.AuthorizationServer.WebHost.Areas.UserApplications
 
         public override void RegisterArea(AreaRegistrationContext context)
         {
-            context.MapRoute(
-                "UserApplications_default",
-                "UserApplications/{controller}/{action}/{id}",
-                new { action = "Index", id = UrlParameter.Optional }
-            );
+            if (Settings.EnableSelfService)
+            {
+                context.MapRoute(
+                    "UserApplications_default",
+                    "UserApplications/{controller}/{action}/{id}",
+                    new { action = "Index", id = UrlParameter.Optional }
+                );
 
-            RegisterBundles(BundleTable.Bundles);
-            RegisterWebApiRoutes(GlobalConfiguration.Configuration);
+                RegisterBundles(BundleTable.Bundles);
+                RegisterWebApiRoutes(GlobalConfiguration.Configuration);
+            }
         }
 
         private void RegisterWebApiRoutes(HttpConfiguration config)

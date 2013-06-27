@@ -11,5 +11,19 @@ namespace Thinktecture.AuthorizationServer.WebHost
                 return ConfigurationManager.AppSettings["authz:EnableAdmin"].Equals("true");
             }
         }
+        public static bool EnableInitialConfiguration
+        {
+            get
+            {
+                return ConfigurationManager.AppSettings["authz:EnableInitialConfiguration"].Equals("true");
+            }
+        }
+        public static bool EnableSelfService
+        {
+            get
+            {
+                return ConfigurationManager.AppSettings["authz:EnableSelfService"].Equals("true");
+            }
+        }
     }
 }

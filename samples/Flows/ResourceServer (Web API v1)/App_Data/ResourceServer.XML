@@ -405,7 +405,6 @@
             <summary>
             Returns the claims of the current principal
             </summary>
-            <returns></returns>
         </member>
     </members>
 </doc>

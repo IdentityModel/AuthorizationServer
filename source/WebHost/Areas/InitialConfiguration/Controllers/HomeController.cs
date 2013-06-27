@@ -28,6 +28,10 @@ namespace Thinktecture.AuthorizationServer.WebHost.Areas.InitialConfiguration.Co
 
         public ActionResult Index()
         {
+            if (authorizationServerAdministration.GlobalConfiguration != null)
+            {
+                return Redirect("~/");
+            }
             return View("Index");
         }
 
@@ -35,6 +39,11 @@ namespace Thinktecture.AuthorizationServer.WebHost.Areas.InitialConfiguration.Co
         [ValidateAntiForgeryToken]
         public ActionResult Index(InitialConfigurationModel model)
         {
+            if (authorizationServerAdministration.GlobalConfiguration != null)
+            {
+                return Redirect("~/");
+            }
+
             if (ModelState.IsValid)
             {
                 var global = new GlobalConfiguration()

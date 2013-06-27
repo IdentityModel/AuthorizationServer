@@ -137,8 +137,8 @@ namespace Thinktecture.AuthorizationServer.WebHost
                     {
                         AllowedClients = new List<Client> { CodeClient, ImplicitClient, resourceOwnerClient, client },
                         Name = "read",
-                        DisplayName = "Read DisplayName",
-                        Description = "Read Description",
+                        DisplayName = "Read data",
+                        Description = "Allows to read data",
                         Emphasize = false
                     };
 
@@ -146,8 +146,8 @@ namespace Thinktecture.AuthorizationServer.WebHost
                     {
                         AllowedClients = new List<Client> { CodeClient, resourceOwnerClient },
                         Name = "search",
-                        DisplayName = "Search DisplayName",
-                        Description = "Search Description",
+                        DisplayName = "Search data",
+                        Description = "Allows to search for data",
                         Emphasize = false
                     };
 
@@ -155,8 +155,8 @@ namespace Thinktecture.AuthorizationServer.WebHost
                     {
                         AllowedClients = new List<Client> { resourceOwnerClient },
                         Name = "write",
-                        DisplayName = "Write DisplayName",
-                        Description = "Write Description",
+                        DisplayName = "Write data",
+                        Description = "Allows to write data",
                         Emphasize = true
                     };
 
@@ -172,7 +172,7 @@ namespace Thinktecture.AuthorizationServer.WebHost
                         RequireConsent = true,
                         TokenLifetime = 60,
                         AllowRefreshToken = true,
-                        SigningKey = new SymmetricKey { Name="main signing key", Value = Convert.FromBase64String("1fTiS2clmPTUlNcpwYzd5i4AEFJ2DEsd8TcUsllmaKQ=") }
+                        SigningKey = new SymmetricKey { Name="demo signing key", Value = Convert.FromBase64String("1fTiS2clmPTUlNcpwYzd5i4AEFJ2DEsd8TcUsllmaKQ=") }
                     };
                     db.Applications.Add(application);
                     db.SaveChanges();

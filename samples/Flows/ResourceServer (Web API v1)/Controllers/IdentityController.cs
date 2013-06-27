@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Web.Http;
+using Thinktecture.IdentityModel.Authorization.WebApi;
 using Thinktecture.Samples.Models;
 
 namespace Thinktecture.Samples
@@ -13,7 +14,7 @@ namespace Thinktecture.Samples
         /// <summary>
         /// Returns the claims of the current principal
         /// </summary>
-        /// <returns></returns>
+        [Scope("read")]
         public IEnumerable<ViewClaim> Get()
         {
             var principal = Request.GetClaimsPrincipal();

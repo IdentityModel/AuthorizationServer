@@ -1,4 +1,9 @@
-﻿using System.Configuration;
+﻿/*
+ * Copyright (c) Dominick Baier, Brock Allen.  All rights reserved.
+ * see license.txt
+ */
+
+using System.Configuration;
 
 namespace Thinktecture.AuthorizationServer.WebHost
 {

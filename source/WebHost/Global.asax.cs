@@ -37,16 +37,5 @@ namespace Thinktecture.AuthorizationServer.WebHost
             e.FederationConfiguration.IdentityConfiguration.ClaimsAuthenticationManager = new NameIdToSubjectClaimsTransformer(svc);
             e.FederationConfiguration.IdentityConfiguration.ClaimsAuthorizationManager = new AuthorizationManager();
         }
-
-        //void Application_EndRequest()
-        //{
-        //    //if (Response.StatusCode == 401 && 
-        //    //    !User.Identity.IsAuthenticated)
-        //    //{
-        //    //    var app = Request.RequestContext.RouteData.Values["application"];
-        //    //    var originalUrl = Request.Url.AbsoluteUri;
-        //    //    // logic here for a 302....
-        //    //}
-        //}
     }
 }

@@ -1,4 +1,9 @@
-﻿var userApps = (function () {
+﻿/*
+ * Copyright (c) Dominick Baier, Brock Allen.  All rights reserved.
+ * see license.txt
+ */
+
+var userApps = (function () {
     "use strict";
 
     function showMessage(msg, css, details) {

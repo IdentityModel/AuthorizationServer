@@ -1,4 +1,9 @@
-﻿using System.Linq;
+﻿/*
+ * Copyright (c) Dominick Baier, Brock Allen.  All rights reserved.
+ * see license.txt
+ */
+
+using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;

@@ -50,12 +50,11 @@ namespace Thinktecture.AuthorizationServer.WebHost.Areas.Admin.Api
             key.Name = model.Name;
             key.StoreName = System.Security.Cryptography.X509Certificates.StoreName.My;
             key.Location = System.Security.Cryptography.X509Certificates.StoreLocation.LocalMachine;
-            key.FindType = model.FindType == FindType.Thumbprint ?
-                System.Security.Cryptography.X509Certificates.X509FindType.FindByThumbprint :
-                System.Security.Cryptography.X509Certificates.X509FindType.FindBySubjectDistinguishedName;
-            key.FindValue = model.Value;
+            key.FindType = System.Security.Cryptography.X509Certificates.X509FindType.FindByThumbprint;
+            key.FindValue = model.Thumbprint;
 
-            if (key.Certificate == null)
+            var cert = key.Certificate;
+            if (cert == null)
             {
                 ModelState.AddModelError("", "Invalid Values For Certificate");
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ModelState.GetErrors());
@@ -63,12 +62,27 @@ namespace Thinktecture.AuthorizationServer.WebHost.Areas.Admin.Api
 
             try
             {
-                var tmp = key.Certificate.PrivateKey;
+                var tmp = cert.PrivateKey;
             }
             catch (CryptographicException)
             {
                 ModelState.AddModelError("", "No Read Access to Private Key of Certificate");
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ModelState.GetErrors());
+            }
+
+            if (model.FindType != FindType.Thumbprint)
+            {
+                key.FindType = System.Security.Cryptography.X509Certificates.X509FindType.FindBySubjectDistinguishedName;
+                key.FindValue = cert.Subject;
+                try
+                {
+                    cert = key.Certificate;
+                }
+                catch (InvalidOperationException)
+                {
+                    ModelState.AddModelError("", "Multiple certificates match that subject name");
+                    return Request.CreateResponse(HttpStatusCode.BadRequest, ModelState.GetErrors());
+                }
             }
 
             this.config.Keys.Add(key);
@@ -87,15 +101,20 @@ namespace Thinktecture.AuthorizationServer.WebHost.Areas.Admin.Api
             var key = this.config.Keys.All.SingleOrDefault(x => x.ID == id) as X509CertificateReference;
             if (key == null) return Request.CreateResponse(HttpStatusCode.NotFound);
 
+            if (this.config.Keys.All.Any(x => x.Name == model.Name && x.ID != id))
+            {
+                ModelState.AddModelError("", "That Name is already in use.");
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ModelState.GetErrors());
+            }
+
             key.Name = model.Name;
             key.StoreName = System.Security.Cryptography.X509Certificates.StoreName.My;
             key.Location = System.Security.Cryptography.X509Certificates.StoreLocation.LocalMachine;
-            key.FindType = model.FindType == FindType.Thumbprint ?
-                System.Security.Cryptography.X509Certificates.X509FindType.FindByThumbprint :
-                System.Security.Cryptography.X509Certificates.X509FindType.FindBySubjectDistinguishedName;
-            key.FindValue = model.Value;
+            key.FindType = System.Security.Cryptography.X509Certificates.X509FindType.FindByThumbprint;
+            key.FindValue = model.Thumbprint;
 
-            if (key.Certificate == null)
+            var cert = key.Certificate;
+            if (cert == null)
             {
                 ModelState.AddModelError("", "Invalid Values For Certificate");
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ModelState.GetErrors());
@@ -103,12 +122,27 @@ namespace Thinktecture.AuthorizationServer.WebHost.Areas.Admin.Api
 
             try
             {
-                var tmp = key.Certificate.PrivateKey;
+                var tmp = cert.PrivateKey;
             }
             catch (CryptographicException)
             {
                 ModelState.AddModelError("", "No Read Access to Private Key of Certificate");
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ModelState.GetErrors());
+            }
+
+            if (model.FindType != FindType.Thumbprint)
+            {
+                key.FindType = System.Security.Cryptography.X509Certificates.X509FindType.FindBySubjectDistinguishedName;
+                key.FindValue = cert.Subject;
+                try
+                {
+                    cert = key.Certificate;
+                }
+                catch(InvalidOperationException)
+                {
+                    ModelState.AddModelError("", "Multiple certificates match that subject name");
+                    return Request.CreateResponse(HttpStatusCode.BadRequest, ModelState.GetErrors());
+                }
             }
 
             this.config.SaveChanges();

@@ -172,7 +172,7 @@
     <Compile Include="Areas\Admin\Api\ClientsController.cs" />
     <Compile Include="Areas\Admin\Api\ClientRedirectsController.cs" />
     <Compile Include="Areas\Admin\Api\ApplicationScopesController.cs" />
-    <Compile Include="Areas\Admin\Api\CertificateController.cs" />
+    <Compile Include="Areas\Admin\Api\CertificatesController.cs" />
     <Compile Include="Areas\Admin\Api\Utility\ModelStateDictionaryExtensions.cs" />
     <Compile Include="Areas\Admin\Api\Utility\X509CertificateReferenceFormatter.cs" />
     <Compile Include="Areas\Admin\Api\X509KeysController.cs" />

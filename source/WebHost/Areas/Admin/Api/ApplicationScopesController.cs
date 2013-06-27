@@ -40,13 +40,19 @@ namespace Thinktecture.AuthorizationServer.WebHost.Areas.Admin.Api
         {
             if (!ModelState.IsValid)
             {
-                return Request.CreateErrorResponse(HttpStatusCode.BadRequest, ModelState);
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ModelState.GetErrors());
             }
 
             var app = config.Applications.All.SingleOrDefault(x => x.ID == id);
             if (app == null)
             {
                 return Request.CreateResponse(HttpStatusCode.NotFound);
+            }
+
+            if (app.Scopes.Any(x => x.Name == model.Name))
+            {
+                ModelState.AddModelError("", "That Scope name is already in use.");
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ModelState.GetErrors());
             }
 
             var scope = new Scope();

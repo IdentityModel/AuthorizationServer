@@ -1,34 +1,52 @@
 ﻿var userApps = (function () {
     "use strict";
 
-    function showMessage(msg, css) {
+    function showMessage(msg, css, details) {
         var elem = $("#message");
         if (elem.is(":visible")) {
-            elem.clearQueue().fadeOut(function () {
-                showMessage(msg, css);
+            elem.clearQueue().delay(1000).fadeOut(function () {
+                showMessage(msg, css, details);
             });
         }
         else {
+            if (details) {
+                if (!Array.isArray(details)) {
+                    details = [details];
+                }
+
+                msg += "<br><ul>";
+                details.forEach(function (detail) {
+                    msg += "<li>" + detail + "</li>";
+                });
+                msg += "</ul>";
+            }
             elem
                 .addClass(css)
-                .text(msg)
+                .html(msg)
                 .fadeIn()
-                .delay(2000)
+                .delay(3000)
                 .fadeOut(function () {
-                    $(this).text("").removeClass(css);
+                    $(this).html("").removeClass(css);
                 });
         }
     }
     function showSuccessMessage(msg) {
         showMessage(msg, "alert-success");
     }
-    function showErrorMessage(msg) {
-        showMessage(msg, "alert-error");
+    function showErrorMessage(msg, detail) {
+        showMessage(msg, "alert-error", detail);
+    }
+
+    function getErrorDetail(xhr) {
+        if (xhr.responseJSON) {
+            return xhr.responseJSON.errors ||
+                xhr.responseJSON.exceptionMessage;
+        }
     }
 
     function Service(path, settings) {
         this.path = path;
-        if (this.path.charAt(this.path.length-1) !== '/') {
+        if (this.path.charAt(this.path.length - 1) !== '/') {
             this.path += "/";
         }
         this.settings = settings || {};
@@ -39,7 +57,7 @@
             url: userApps.baseUrl + this.path + id,
             type: 'GET'
         }).fail(function (xhr, status, error) {
-            showErrorMessage("Error Loading")
+            showErrorMessage("Error Loading", getErrorDetail(xhr))
             return xhr;
         });
     };
@@ -51,12 +69,12 @@
             contentType: 'application/json',
             data: JSON.stringify(data)
         }).then(
-        function(data, status, xhr){
+        function (data, status, xhr) {
             showSuccessMessage("Update Successful");
             return xhr;
         },
-        function(xhr, status, error){
-            showErrorMessage("Error Updating");
+        function (xhr, status, error) {
+            showErrorMessage("Error Updating", getErrorDetail(xhr));
             return xhr;
         });
     };
@@ -66,12 +84,12 @@
             url: userApps.baseUrl + this.path + id,
             type: 'DELETE'
         }).then(
-        function(data, status, xhr){
+        function (data, status, xhr) {
             showSuccessMessage("Delete Successful");
             return xhr;
         },
-        function(xhr, status, error){
-            showErrorMessage("Error Deleting");
+        function (xhr, status, error) {
+            showErrorMessage("Error Deleting", getErrorDetail(xhr));
             return xhr;
         });
     };
@@ -88,7 +106,7 @@
             return xhr;
         },
         function (xhr, status, error) {
-            showErrorMessage("Error Creating");
+            showErrorMessage("Error Creating", getErrorDetail(xhr));
             return xhr;
         });
     };

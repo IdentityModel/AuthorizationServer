@@ -37,7 +37,7 @@ namespace Thinktecture.AuthorizationServer.WebHost.Areas.Admin.Api
         {
             if (!ModelState.IsValid)
             {
-                return Request.CreateErrorResponse(HttpStatusCode.BadRequest, ModelState);
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ModelState.GetErrors());
             }
 
             var sk = new SymmetricKey();
@@ -53,7 +53,7 @@ namespace Thinktecture.AuthorizationServer.WebHost.Areas.Admin.Api
         {
             if (!ModelState.IsValid)
             {
-                return Request.CreateErrorResponse(HttpStatusCode.BadRequest, ModelState);
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ModelState.GetErrors());
             }
 
             var sk = this.config.Keys.All.SingleOrDefault(x => x.ID == id) as SymmetricKey;

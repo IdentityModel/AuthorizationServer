@@ -30,7 +30,13 @@ namespace Thinktecture.AuthorizationServer.WebHost.Areas.Admin.Api
             if (String.IsNullOrEmpty(nameID))
             {
                 ModelState.AddModelError("nameID", "Invalid nameID");
-                return Request.CreateErrorResponse(HttpStatusCode.BadRequest, ModelState);
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ModelState.GetErrors());
+            }
+
+            if (this.config.GlobalConfiguration.Administrators.Any(x => x.NameID == nameID))
+            {
+                ModelState.AddModelError("", "That user is already an administrator.");
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ModelState.GetErrors());
             }
 
             var item = new AuthorizationServer.Models.AuthorizationServerAdministrator { NameID = nameID };

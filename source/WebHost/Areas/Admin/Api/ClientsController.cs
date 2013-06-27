@@ -64,7 +64,7 @@ namespace Thinktecture.AuthorizationServer.WebHost.Areas.Admin.Api
         {
             if (!ModelState.IsValid)
             {
-                return Request.CreateErrorResponse(HttpStatusCode.BadRequest, ModelState);
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ModelState.GetErrors());
             }
 
             var item = this.config.Clients.All.SingleOrDefault(X => X.ClientId == model.ClientId);
@@ -97,7 +97,7 @@ namespace Thinktecture.AuthorizationServer.WebHost.Areas.Admin.Api
 
             if (!ModelState.IsValid)
             {
-                return Request.CreateErrorResponse(HttpStatusCode.BadRequest, ModelState);
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ModelState.GetErrors());
             }
 
             var item = new Client();

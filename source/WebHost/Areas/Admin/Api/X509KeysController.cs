@@ -31,7 +31,13 @@ namespace Thinktecture.AuthorizationServer.WebHost.Areas.Admin.Api
         {
             if (!ModelState.IsValid)
             {
-                return Request.CreateErrorResponse(HttpStatusCode.BadRequest, ModelState);
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ModelState.GetErrors());
+            }
+
+            if (this.config.Keys.All.Any(x => x.Name == model.Name))
+            {
+                ModelState.AddModelError("", "That Name is already in use.");
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ModelState.GetErrors());
             }
 
             var key = new X509CertificateReference();
@@ -45,7 +51,8 @@ namespace Thinktecture.AuthorizationServer.WebHost.Areas.Admin.Api
 
             if (key.Certificate == null)
             {
-                return Request.CreateResponse(HttpStatusCode.BadRequest, new { error = "Invalid Values For Certificate" });
+                ModelState.AddModelError("", "Invalid Values For Certificate");
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ModelState.GetErrors());
             }
 
             this.config.Keys.Add(key);
@@ -74,7 +81,8 @@ namespace Thinktecture.AuthorizationServer.WebHost.Areas.Admin.Api
 
             if (key.Certificate == null)
             {
-                return Request.CreateResponse(HttpStatusCode.BadRequest, new { error = "Invalid Values For Certificate" });
+                ModelState.AddModelError("", "Invalid Values For Certificate");
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ModelState.GetErrors());
             }
 
             this.config.SaveChanges();

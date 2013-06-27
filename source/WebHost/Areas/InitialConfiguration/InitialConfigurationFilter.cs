@@ -12,19 +12,31 @@ namespace Thinktecture.AuthorizationServer.WebHost.Areas.InitialConfiguration
     {
         public override void OnActionExecuting(ActionExecutingContext filterContext)
         {
-            if (!filterContext.IsChildAction &&
-                !"InitialConfiguration".Equals(filterContext.RequestContext.RouteData.DataTokens["area"]))
+            if (filterContext.IsChildAction) return;
+
+            if (Settings.EnableInitialConfiguration)
+            {
+                if (!"InitialConfiguration".Equals(filterContext.RequestContext.RouteData.DataTokens["area"]))
+                {
+                    var svc = DependencyResolver.Current.GetService<IAuthorizationServerAdministration>();
+                    if (svc.GlobalConfiguration == null)
+                    {
+                        var route = new RouteValueDictionary(new
+                        {
+                            area = "InitialConfiguration",
+                            controller = "Home",
+                            action = "Index"
+                        });
+                        filterContext.Result = new RedirectToRouteResult(route);
+                    }
+                }
+            }
+            else
             {
                 var svc = DependencyResolver.Current.GetService<IAuthorizationServerAdministration>();
                 if (svc.GlobalConfiguration == null)
                 {
-                    var route = new RouteValueDictionary(new
-                    {
-                        area = "InitialConfiguration",
-                        controller = "Home",
-                        action = "Index"
-                    });
-                    filterContext.Result = new RedirectToRouteResult(route);
+                    filterContext.Result = new ViewResult() { ViewName="Error" };
                 }
             }
 

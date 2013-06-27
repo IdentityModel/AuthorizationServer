@@ -10,10 +10,10 @@
     @Html.Partial("Nav")
 }
 
-<section>
-    <span class="pull-right alert" id="message"></span>
+<div id="main">
+    <span class="alert" id="message"></span>
     @RenderBody()
-</section>
+</div>
 
 @section scripts{
     @Scripts.Render("~/bundles/UserApplications")

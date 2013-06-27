@@ -25,9 +25,15 @@ namespace Thinktecture.AuthorizationServer.WebHost
             );
 
             routes.MapRoute(
-                name: "Default",
-                url: "{controller}/{action}/{id}",
-                defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional },
+                name: "Signout",
+                url: "Signout",
+                defaults: new { controller = "Account", action = "SignOut" },
+                namespaces: new[] { "Thinktecture.AuthorizationServer.WebHost.Controllers" }
+            );
+            routes.MapRoute(
+                name: "Home",
+                url: "{action}",
+                defaults: new { controller = "Home", action = "Index" },
                 namespaces: new[] { "Thinktecture.AuthorizationServer.WebHost.Controllers" }
             );
         }

@@ -1,4 +1,9 @@
-﻿
+﻿/*
+ * Copyright (c) Dominick Baier, Brock Allen.  All rights reserved.
+ * see license.txt
+ */
+
+
 $(function () {
     var hash = window.location.hash.substring(1);
     var scopeID = parseInt(hash);

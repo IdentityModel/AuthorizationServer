@@ -1,4 +1,9 @@
-﻿using System.Web.Mvc;
+﻿/*
+ * Copyright (c) Dominick Baier, Brock Allen.  All rights reserved.
+ * see license.txt
+ */
+
+using System.Web.Mvc;
 
 namespace Thinktecture.AuthorizationServer.WebHost.Areas.InitialConfiguration
 {
@@ -15,15 +20,18 @@ namespace Thinktecture.AuthorizationServer.WebHost.Areas.InitialConfiguration
         public override void RegisterArea(AreaRegistrationContext context)
         {
             GlobalFilters.Filters.Add(new InitialConfigurationFilter());
-
-            context.MapRoute(
-                "InitialConfiguration_default",
-                "InitialConfiguration",
-                new { 
-                    controller="Home",
-                    action = "Index"
-                }
-            );
+            if (Settings.EnableInitialConfiguration)
+            {
+                context.MapRoute(
+                    "InitialConfiguration_default",
+                    "InitialConfiguration",
+                    new
+                    {
+                        controller = "Home",
+                        action = "Index"
+                    }
+                );
+            }
         }
     }
 }

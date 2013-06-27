@@ -26,12 +26,7 @@ namespace Thinktecture.AuthorizationServer
 
         public static class Resources
         {
-            public const string General = "General";
-            public const string Applications = "Application";
-            public const string Global = "Global";
-            public const string Keys = "Keys";
-            public const string Tokens = "Tokens";
-            public const string Clients = "Clients";
+            public const string Server = "Server";
         }
     }
 

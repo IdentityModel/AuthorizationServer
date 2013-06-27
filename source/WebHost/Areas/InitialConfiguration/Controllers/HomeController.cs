@@ -1,4 +1,12 @@
-﻿using System.Collections.Generic;
+﻿/*
+ * Copyright (c) Dominick Baier, Brock Allen.  All rights reserved.
+ * see license.txt
+ */
+
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
 using System.Web.Mvc;
 using Thinktecture.AuthorizationServer.Interfaces;
 using Thinktecture.AuthorizationServer.Models;
@@ -25,6 +33,10 @@ namespace Thinktecture.AuthorizationServer.WebHost.Areas.InitialConfiguration.Co
 
         public ActionResult Index()
         {
+            if (authorizationServerAdministration.GlobalConfiguration != null)
+            {
+                return Redirect("~/");
+            }
             return View("Index");
         }
 
@@ -32,6 +44,11 @@ namespace Thinktecture.AuthorizationServer.WebHost.Areas.InitialConfiguration.Co
         [ValidateAntiForgeryToken]
         public ActionResult Index(InitialConfigurationModel model)
         {
+            if (authorizationServerAdministration.GlobalConfiguration != null)
+            {
+                return Redirect("~/");
+            }
+
             if (ModelState.IsValid)
             {
                 var global = new GlobalConfiguration()

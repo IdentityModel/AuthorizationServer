@@ -1,4 +1,9 @@
-﻿using System.Linq;
+﻿/*
+ * Copyright (c) Dominick Baier, Brock Allen.  All rights reserved.
+ * see license.txt
+ */
+
+using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
@@ -8,7 +13,7 @@ using Thinktecture.IdentityModel.Authorization.WebApi;
 
 namespace Thinktecture.AuthorizationServer.WebHost.Areas.Admin.Api
 {
-    [ClaimsAuthorize(Constants.Actions.Configure, Constants.Resources.Applications)]
+    [ClaimsAuthorize(Constants.Actions.Configure, Constants.Resources.Server)]
     public class ScopesController : ApiController
     {
         IAuthorizationServerAdministration config;

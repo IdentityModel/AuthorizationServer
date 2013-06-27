@@ -1,4 +1,9 @@
-﻿
+﻿/*
+ * Copyright (c) Dominick Baier, Brock Allen.  All rights reserved.
+ * see license.txt
+ */
+
+
 $(function () {
     var svc = new authz.Service("admin/X509Keys");
 

@@ -1,4 +1,9 @@
-﻿using System.Web.Http;
+﻿/*
+ * Copyright (c) Dominick Baier, Brock Allen.  All rights reserved.
+ * see license.txt
+ */
+
+using System.Web.Http;
 using System.Web.Mvc;
 using System.Web.Optimization;
 
@@ -16,14 +21,17 @@ namespace Thinktecture.AuthorizationServer.WebHost.Areas.UserApplications
 
         public override void RegisterArea(AreaRegistrationContext context)
         {
-            context.MapRoute(
-                "UserApplications_default",
-                "UserApplications/{controller}/{action}/{id}",
-                new { action = "Index", id = UrlParameter.Optional }
-            );
+            if (Settings.EnableSelfService)
+            {
+                context.MapRoute(
+                    "UserApplications_default",
+                    "UserApplications/{controller}/{action}/{id}",
+                    new { action = "Index", id = UrlParameter.Optional }
+                );
 
-            RegisterBundles(BundleTable.Bundles);
-            RegisterWebApiRoutes(GlobalConfiguration.Configuration);
+                RegisterBundles(BundleTable.Bundles);
+                RegisterWebApiRoutes(GlobalConfiguration.Configuration);
+            }
         }
 
         private void RegisterWebApiRoutes(HttpConfiguration config)

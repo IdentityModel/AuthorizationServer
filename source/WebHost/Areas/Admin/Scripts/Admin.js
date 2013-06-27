@@ -1,4 +1,9 @@
-﻿var authz = (function () {
+﻿/*
+ * Copyright (c) Dominick Baier, Brock Allen.  All rights reserved.
+ * see license.txt
+ */
+
+var authz = (function () {
     "use strict";
 
     function showMessage(msg, css, details) {

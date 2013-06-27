@@ -21,6 +21,7 @@ namespace Thinktecture.AuthorizationServer.WebHost.Controllers
             return View();
         }
 
+        [ChildActionOnly]
         public ActionResult Banner()
         {
             var global = config.GlobalConfiguration;
@@ -31,6 +32,7 @@ namespace Thinktecture.AuthorizationServer.WebHost.Controllers
             return PartialView("Banner");
         }
 
+        [ChildActionOnly]
         public ActionResult Footer()
         {
             return PartialView("Footer");

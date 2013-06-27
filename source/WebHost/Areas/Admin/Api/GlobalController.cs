@@ -1,4 +1,9 @@
-﻿using System.Net;
+﻿/*
+ * Copyright (c) Dominick Baier, Brock Allen.  All rights reserved.
+ * see license.txt
+ */
+
+using System.Net;
 using System.Net.Http;
 using System.Web.Http;
 using Thinktecture.AuthorizationServer.Interfaces;
@@ -7,7 +12,7 @@ using Thinktecture.IdentityModel.Authorization.WebApi;
 
 namespace Thinktecture.AuthorizationServer.WebHost.Areas.Admin.Api
 {
-    [ClaimsAuthorize(Constants.Actions.Configure, Constants.Resources.Global)]
+    [ClaimsAuthorize(Constants.Actions.Configure, Constants.Resources.Server)]
     public class GlobalController : ApiController
     {
         IAuthorizationServerAdministration config;

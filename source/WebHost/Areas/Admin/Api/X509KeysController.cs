@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Security.Cryptography;
 using System.Web.Http;
 using Thinktecture.AuthorizationServer.Interfaces;
 using Thinktecture.AuthorizationServer.Models;
@@ -55,6 +56,16 @@ namespace Thinktecture.AuthorizationServer.WebHost.Areas.Admin.Api
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ModelState.GetErrors());
             }
 
+            try
+            {
+                var tmp = key.Certificate.PrivateKey;
+            }
+            catch (CryptographicException)
+            {
+                ModelState.AddModelError("", "No Read Access to Private Key of Certificate");
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ModelState.GetErrors());
+            }
+
             this.config.Keys.Add(key);
             this.config.SaveChanges();
 
@@ -82,6 +93,16 @@ namespace Thinktecture.AuthorizationServer.WebHost.Areas.Admin.Api
             if (key.Certificate == null)
             {
                 ModelState.AddModelError("", "Invalid Values For Certificate");
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ModelState.GetErrors());
+            }
+
+            try
+            {
+                var tmp = key.Certificate.PrivateKey;
+            }
+            catch (CryptographicException)
+            {
+                ModelState.AddModelError("", "No Read Access to Private Key of Certificate");
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ModelState.GetErrors());
             }
 

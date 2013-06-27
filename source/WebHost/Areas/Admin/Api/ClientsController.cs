@@ -78,6 +78,12 @@ namespace Thinktecture.AuthorizationServer.WebHost.Areas.Admin.Api
                 return Request.CreateResponse(HttpStatusCode.NotFound);
             }
 
+            if (config.Clients.All.Any(x => x.Name == model.Name && x.ClientId != model.ClientId))
+            {
+                ModelState.AddModelError("", "That Name is already in use.");
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ModelState.GetErrors());
+            }
+
             if (!String.IsNullOrEmpty(model.ClientSecret))
             {
                 item.ClientSecret = model.ClientSecret;
@@ -102,6 +108,17 @@ namespace Thinktecture.AuthorizationServer.WebHost.Areas.Admin.Api
 
             if (!ModelState.IsValid)
             {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ModelState.GetErrors());
+            }
+
+            if (config.Clients.All.Any(x => x.ClientId == model.ClientId))
+            {
+                ModelState.AddModelError("", "That Client ID is already in use.");
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ModelState.GetErrors());
+            }
+            if (config.Clients.All.Any(x => x.Name == model.Name))
+            {
+                ModelState.AddModelError("", "That Name is already in use.");
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ModelState.GetErrors());
             }
 

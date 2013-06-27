@@ -24,9 +24,10 @@
         <label for="clientID2">Client ID</label>
         <strong id="clientID2" data-bind="text: clientId"></strong>
     </div>
-    <div>
+    <div class="">
         <label for="clientSecret">Client Secret</label>
-        <input id="clientSecret" data-bind="value: clientSecret, valueUpdate: 'keyup'" type="password" />
+        <input id="clientSecret" data-bind="value: clientSecret, valueUpdate: 'keyup'" />
+        <button type="button" class="btn" data-bind="click:generateSecret">Generate</button>
         <label class="text-error" data-bind="text: clientSecretError"></label>
     </div>
     <div>

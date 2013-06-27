@@ -31,23 +31,25 @@ namespace Thinktecture.AuthorizationServer.WebHost.Areas.Admin.Api
         public HttpResponseMessage Get()
         {
             var store = new X509Store(StoreName.My, StoreLocation.LocalMachine);
+            
             store.Open(OpenFlags.ReadOnly);
 
             try
             {
                 var query =
                     from cert in store.Certificates.Cast<X509Certificate2>()
-                    select new { 
-                        cert.Subject, 
-                        cert.FriendlyName, 
-                        cert.Thumbprint };
+                    select new
+                    {
+                        cert.Subject,
+                        cert.FriendlyName,
+                        cert.Thumbprint
+                    };
                 return Request.CreateResponse(HttpStatusCode.OK, query.ToArray());
             }
             finally
             {
                 store.Close();
             }
-            return Request.CreateResponse(HttpStatusCode.InternalServerError);
         }
 
         public HttpResponseMessage Get(int id)

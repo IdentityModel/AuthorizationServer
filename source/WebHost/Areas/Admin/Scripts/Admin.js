@@ -10,6 +10,7 @@ var authz = (function () {
         var elem = $("#message");
         if (elem.is(":visible")) {
             elem.clearQueue().delay(1000).fadeOut(function () {
+                elem.removeClass("alert-success").removeClass("alert-error");
                 showMessage(msg, css, details);
             });
         }
@@ -25,6 +26,7 @@ var authz = (function () {
                 });
                 msg += "</ul>";
             }
+
             elem
                 .addClass(css)
                 .html(msg)

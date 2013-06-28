@@ -123,18 +123,18 @@ namespace Thinktecture.AuthorizationServer.WebHost
                     db.SaveChanges();
                 }
 
-                if (!db.SigningKeys.Any())
-                {
-                    db.SigningKeys.Add(new X509CertificateReference
-                    {
-                        Name = "Default X509 Cert",
-                        Location = System.Security.Cryptography.X509Certificates.StoreLocation.LocalMachine,
-                        FindValue = "CN=idsrv.local",
-                        FindType = System.Security.Cryptography.X509Certificates.X509FindType.FindBySubjectDistinguishedName,
-                        StoreName = System.Security.Cryptography.X509Certificates.StoreName.My
-                    });
-                    db.SaveChanges();
-                }
+                //if (!db.SigningKeys.Any())
+                //{
+                //    db.SigningKeys.Add(new X509CertificateReference
+                //    {
+                //        Name = "Default X509 Cert",
+                //        Location = System.Security.Cryptography.X509Certificates.StoreLocation.LocalMachine,
+                //        FindValue = "CN=idsrv.local",
+                //        FindType = System.Security.Cryptography.X509Certificates.X509FindType.FindBySubjectDistinguishedName,
+                //        StoreName = System.Security.Cryptography.X509Certificates.StoreName.My
+                //    });
+                //    db.SaveChanges();
+                //}
 
                 if (!db.Applications.Any())
                 {

@@ -22,6 +22,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Implicit Flow (Windows8)", 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ClientCredentials Flow", "Clients\ClientCredentials Flow\ClientCredentials Flow.csproj", "{0452120D-787B-4837-BB1F-8C2B9FAFAB33}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Implicit Flow (JavaScript)", "Implicit Flow (JavaScript)\Implicit Flow (JavaScript).csproj", "{0EF1D1BB-604D-411D-B776-71DFF69D0141}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -108,6 +110,16 @@ Global
 		{0452120D-787B-4837-BB1F-8C2B9FAFAB33}.Release|ARM.ActiveCfg = Release|Any CPU
 		{0452120D-787B-4837-BB1F-8C2B9FAFAB33}.Release|x64.ActiveCfg = Release|Any CPU
 		{0452120D-787B-4837-BB1F-8C2B9FAFAB33}.Release|x86.ActiveCfg = Release|Any CPU
+		{0EF1D1BB-604D-411D-B776-71DFF69D0141}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0EF1D1BB-604D-411D-B776-71DFF69D0141}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0EF1D1BB-604D-411D-B776-71DFF69D0141}.Debug|ARM.ActiveCfg = Debug|Any CPU
+		{0EF1D1BB-604D-411D-B776-71DFF69D0141}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{0EF1D1BB-604D-411D-B776-71DFF69D0141}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{0EF1D1BB-604D-411D-B776-71DFF69D0141}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0EF1D1BB-604D-411D-B776-71DFF69D0141}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0EF1D1BB-604D-411D-B776-71DFF69D0141}.Release|ARM.ActiveCfg = Release|Any CPU
+		{0EF1D1BB-604D-411D-B776-71DFF69D0141}.Release|x64.ActiveCfg = Release|Any CPU
+		{0EF1D1BB-604D-411D-B776-71DFF69D0141}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -117,5 +129,6 @@ Global
 		{ED29CA6E-9F3C-4F52-BDB9-71CF6897BEC9} = {103816A7-D9C4-4707-96C9-68F9A384B10C}
 		{4ED6CBBA-01A7-4D1C-9D4B-271EDAFB8AED} = {103816A7-D9C4-4707-96C9-68F9A384B10C}
 		{0452120D-787B-4837-BB1F-8C2B9FAFAB33} = {103816A7-D9C4-4707-96C9-68F9A384B10C}
+		{0EF1D1BB-604D-411D-B776-71DFF69D0141} = {103816A7-D9C4-4707-96C9-68F9A384B10C}
 	EndGlobalSection
 EndGlobal

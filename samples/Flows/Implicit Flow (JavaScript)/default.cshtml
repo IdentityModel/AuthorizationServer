@@ -1,0 +1,35 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title></title>
+</head>
+<body>
+    <p>
+        <button id="implicitButton">OAuth Implicit Flow</button>
+    </p>
+    <script src="Scripts/jquery-2.0.2.js"></script>
+    <script>
+        $(function () {
+            var authorizationUrl = '@Thinktecture.Samples.Constants.AS.OAuth2AuthorizeEndpoint';
+            var client_id = '@Thinktecture.Samples.Constants.Clients.ImplicitClient';
+            var redirect_uri = '@Thinktecture.Samples.Constants.Clients.JavaScriptImplicitClientRedirectUrl';
+            var response_type = "token";
+            var scope = "read";
+            var state = Date.now() + "" + Math.random();
+
+            $("#implicitButton").click(function () {
+                var url =
+                    authorizationUrl + "?" + 
+                    "client_id=" + encodeURI(client_id) + "&" + 
+                    "redirect_uri=" + encodeURI(redirect_uri) + "&" + 
+                    "response_type=" + encodeURI(response_type) + "&" + 
+                    "scope=" + encodeURI(scope) + "&" + 
+                    "state=" + encodeURI(state);
+                sessionStorage["state"] = state;
+                window.location = url;
+            });
+        });
+
+    </script>
+</body>
+</html>

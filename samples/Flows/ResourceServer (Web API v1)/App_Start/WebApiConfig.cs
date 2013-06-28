@@ -16,6 +16,11 @@ namespace Thinktecture.Samples
                 defaults: new { id = RouteParameter.Optional }
             );
 
+            var corsConfig = new Thinktecture.IdentityModel.Http.Cors.WebApi.WebApiCorsConfiguration();
+            corsConfig.ForResources("Identity").ForOrigins("https://localhost:44300").AllowAll();
+            var handler = new Thinktecture.IdentityModel.Http.Cors.WebApi.CorsMessageHandler(corsConfig, config);
+            config.MessageHandlers.Add(handler);
+
             config.EnableSystemDiagnosticsTracing();
             config.MessageHandlers.Add(
                 new AuthenticationHandler(CreateAuthenticationConfiguration()));

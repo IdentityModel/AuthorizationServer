@@ -1,0 +1,83 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title></title>
+    <style>
+        li
+        {
+            list-style-type: none;
+        }
+    </style>
+</head>
+<body>
+    <button disabled>Call Service</button>
+    <ul></ul>
+    <script src="Scripts/jquery-2.0.2.js"></script>
+    <script>
+        var baseUrl = '@Thinktecture.Samples.Constants.WebHostv1BaseAddress';
+        var identityUrl = baseUrl + 'identity';
+
+        function HttpBearerTokenClient(token) {
+            this.scheme = "Bearer";
+            this.token = token;
+        }
+        HttpBearerTokenClient.prototype.get = function (url) {
+            var scheme = this.scheme;
+            var token = this.token;
+            var settings = {
+                type: "GET",
+                url: url,
+                dataType:"json",
+                beforeSend: function (xhr) {
+                    xhr.setRequestHeader("Authorization", scheme + " " + token);
+                }
+            };
+            return $.ajax(settings);
+        }
+
+        $(function () {
+            function log(msg) {
+                $("<li>").html(msg).appendTo("ul");
+            }
+
+            var params = {},
+                queryString = location.hash.substring(1),
+                regex = /([^&=]+)=([^&]*)/g,
+                m;
+            while (m = regex.exec(queryString)) {
+                params[decodeURIComponent(m[1])] = decodeURIComponent(m[2]);
+            }
+
+            if (params.error) {
+                log("error: " + params.error);
+                return;
+            }
+
+            var state = sessionStorage["state"];
+            if (params.state !== state) {
+                log("error: bad state");
+                return;
+            }
+
+            var token = params.access_token;
+            log("Token Obtained: " + token);
+
+            $("button").prop("disabled", false).click(function () {
+                log("&nbsp;");
+                log("Calling Service...");
+                var client = new HttpBearerTokenClient(token);
+                client.get(identityUrl).done(function (result) {
+                    console.log(result);
+                    log("Claims Returned:");
+                    result.forEach(function (item) {
+                        log("&nbsp;&nbsp;&nbsp;" + item.Type + ", " + item.Value);
+                    });
+                }).fail(function (xhr, error, status) {
+                    log("error calling service: " + xhr.status);
+                });
+            });
+        });
+
+    </script>
+</body>
+</html>

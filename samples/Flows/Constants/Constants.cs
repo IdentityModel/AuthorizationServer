@@ -28,6 +28,7 @@ namespace Thinktecture.Samples
             public const string ResourceOwnerClientSecret = "secret";
 
             public const string ImplicitClient = "implicitclient";
+            public const string JavaScriptImplicitClientRedirectUrl = "https://localhost:44300/callback.cshtml";
 
             public const string Client = "client";
             public const string ClientSecret = "secret";

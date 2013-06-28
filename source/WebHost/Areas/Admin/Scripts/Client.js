@@ -34,11 +34,11 @@ $(function () {
         authz.util.addRequired(this, "name", "Name");
         authz.util.addAnyErrors(this);
 
-        vm.flow.subscribe(function (val) {
-            vm.allowRefreshToken(val === "Code" || val === "ResourceOwner");
-        });
         vm.allowRefreshTokenEnabled = ko.computed(function () {
             return vm.flow() === "Code" || vm.flow() === "ResourceOwner";
+        });
+        vm.requireConsentEnabled = ko.computed(function () {
+            return vm.flow() === "Code" || vm.flow() === "Implicit";
         });
         vm.clientIdEnabled = ko.computed(function () {
             return vm.isNew();

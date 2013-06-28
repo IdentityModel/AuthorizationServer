@@ -43,7 +43,7 @@
         <select id="signingKeyId" data-bind="value: signingKeyId, options: signingKeys, optionsText: function (item) { return item.name() + ' (' + item.type() + ')'; }, optionsValue: 'id'" class="input-xxlarge"></select>
     </div>
     <div>
-        <label for="tokenLifetime">Token Lifetime</label>
+        <label for="tokenLifetime">Token Lifetime (minutes)</label>
         <input id="tokenLifetime" data-bind="value: tokenLifetime, valueUpdate: 'keyup'" type="number" min="0" />
     </div>
     <div>

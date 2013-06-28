@@ -6,6 +6,7 @@
 
 $(function () {
     var svc = new authz.Service("admin/Clients");
+    var secretSvc = new authz.Service("admin/SymmetricKeys");
 
     function Client(data) {
         var vm = this;
@@ -48,6 +49,11 @@ $(function () {
         vm.editDescription = ko.computed(function () {
             return vm.isNew() ? "New" : "Manage";
         });
+        vm.generateSecret = function () {
+            secretSvc.get().done(function (data) {
+                vm.clientSecret(data.value.replace(/[+/=]/gi, ""));
+            });
+        };
         vm.save = function () {
             if (vm.isNew()) {
                 svc.post(ko.mapping.toJS(vm)).then(function (data, status, xhr) {

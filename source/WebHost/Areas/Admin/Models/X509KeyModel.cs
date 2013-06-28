@@ -23,7 +23,6 @@ namespace Thinktecture.AuthorizationServer.WebHost.Areas.Admin.Models
         {
             this.ID = key.ID;
             this.Name = key.Name;
-            this.Value = key.FindValue;
             this.FindType =
                 key.FindType == System.Security.Cryptography.X509Certificates.X509FindType.FindByThumbprint ?
                 FindType.Thumbprint : Models.FindType.SubjectName;
@@ -35,7 +34,6 @@ namespace Thinktecture.AuthorizationServer.WebHost.Areas.Admin.Models
         public string Name { get; set; }
         public FindType FindType { get; set; }
         [Required]
-        public string Value { get; set; }
         public string Thumbprint { get; set; }
     }
 }

@@ -20,20 +20,21 @@
         <label class="text-error" data-bind="text: nameError"></label>
     </div>
     <div>
-        <label for="findType">Find By</label>
+        <label for="cert">Certificate</label>
+        <select class="input-xxlarge" id="cert" data-bind="options: certs, optionsText:'name', optionsValue:'value', value:thumbprint">
+        </select>
+        <label class="text-error" data-bind="text: thumbprintError"></label>
+    </div>
+    <div>
+        <label>Thumbprint</label>
+        <strong data-bind="text: thumbprint"></strong>
+    </div>
+    <div>
+        <label for="findType">Store Using</label>
         <select class="input-xlarge" id="findType" data-bind="value: findType">
             <option value="0">Thumbprint</option>
             <option value="1">Subject Distinguished Name</option>
         </select>
-    </div>
-    <div>
-        <label for="value">Find Value</label>
-        <input class="input-xxlarge" id="value" data-bind="value: value, valueUpdate: 'keyup'" />
-        <label class="text-error" data-bind="text: valueError"></label>
-    </div>
-    <div class="hide" data-bind="css: { hide: isNew }">
-        <label>Thumbprint</label>
-        <strong data-bind="text: thumbprint"></strong>
     </div>
     <div><button class="btn btn-primary" data-bind="click: save, disable: anyErrors">Save</button></div>
 </fieldset>

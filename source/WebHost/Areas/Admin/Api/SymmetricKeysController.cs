@@ -45,6 +45,12 @@ namespace Thinktecture.AuthorizationServer.WebHost.Areas.Admin.Api
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ModelState.GetErrors());
             }
 
+            if (this.config.Keys.All.Any(x => x.Name == model.Name))
+            {
+                ModelState.AddModelError("", "That Name is already in use.");
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ModelState.GetErrors());
+            }
+
             var sk = new SymmetricKey();
             sk.Name = model.Name;
             sk.Value = Convert.FromBase64String(model.Value);
@@ -64,6 +70,12 @@ namespace Thinktecture.AuthorizationServer.WebHost.Areas.Admin.Api
             var sk = this.config.Keys.All.SingleOrDefault(x => x.ID == id) as SymmetricKey;
             if (sk == null) return Request.CreateResponse(HttpStatusCode.NotFound);
 
+            if (this.config.Keys.All.Any(x => x.Name == model.Name && x.ID != id))
+            {
+                ModelState.AddModelError("", "That Name is already in use.");
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ModelState.GetErrors());
+            } 
+            
             sk.Name = model.Name;
             this.config.SaveChanges();
 

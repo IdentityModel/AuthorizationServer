@@ -183,7 +183,7 @@ namespace Thinktecture.AuthorizationServer.WebHost
                     db.SaveChanges();
                 }
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 throw;
             }

@@ -69,6 +69,17 @@ namespace Thinktecture.AuthorizationServer.WebHost.Areas.Admin.Api
                 return Request.CreateResponse(HttpStatusCode.NotFound);
             }
 
+            if (this.config.Applications.All.Any(x => x.Namespace == model.Namespace && x.ID != id))
+            {
+                ModelState.AddModelError("", "That Namespace is already in use.");
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ModelState.GetErrors());
+            }
+            if (this.config.Applications.All.Any(x => x.Audience == model.Audience && x.ID != id))
+            {
+                ModelState.AddModelError("", "That Audience is already in use.");
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ModelState.GetErrors());
+            }
+
             app.Name = model.Name;
             app.Description = model.Description;
             app.LogoUrl = model.LogoUrl;
@@ -96,6 +107,11 @@ namespace Thinktecture.AuthorizationServer.WebHost.Areas.Admin.Api
             if (this.config.Applications.All.Any(x => x.Namespace == model.Namespace))
             {
                 ModelState.AddModelError("", "That Namespace is already in use.");
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ModelState.GetErrors());
+            }
+            if (this.config.Applications.All.Any(x => x.Audience == model.Audience))
+            {
+                ModelState.AddModelError("", "That Audience is already in use.");
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ModelState.GetErrors());
             }
 

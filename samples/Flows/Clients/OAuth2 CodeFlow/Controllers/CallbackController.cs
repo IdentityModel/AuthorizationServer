@@ -25,7 +25,7 @@ namespace OAuth2CodeFlow.Controllers
         public ActionResult Postback()
         {
             var client = new OAuth2Client(
-                new Uri(Constants.AuthzSrv.OAuth2TokenEndpoint),
+                new Uri(Constants.AS.OAuth2TokenEndpoint),
                 Constants.Clients.CodeClient,
                 Constants.Clients.CodeClientSecret);
 
@@ -61,7 +61,7 @@ namespace OAuth2CodeFlow.Controllers
         public ActionResult RenewToken(string refreshToken)
         {
             var client = new OAuth2Client(
-                new Uri(Constants.AuthzSrv.OAuth2TokenEndpoint),
+                new Uri(Constants.AS.OAuth2TokenEndpoint),
                 Constants.Clients.CodeClient,
                 Constants.Clients.CodeClientSecret);
             var response = client.RequestAccessTokenRefreshToken(refreshToken);

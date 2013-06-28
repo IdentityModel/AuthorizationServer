@@ -33,13 +33,12 @@ namespace Thinktecture.Samples
             public const string ClientSecret = "secret";
         }
 
-        public static class AuthzSrv
+        public static class AS
         {
             public const string OAuth2TokenEndpoint = "https://roadie/authz/" + Application + "/oauth/token";
             public const string OAuth2AuthorizeEndpoint = "https://roadie/authz/" + Application + "/oauth/authorize";
 
             public const string IssuerName = "AS";
-            public const string SigningCertName = "CN=idsrv.local";
             public const string SigningKey = "1fTiS2clmPTUlNcpwYzd5i4AEFJ2DEsd8TcUsllmaKQ=";
         }
     }

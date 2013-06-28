@@ -28,7 +28,7 @@ namespace Thinktecture.Samples
             "Requesting token.".ConsoleYellow();
 
             var client = new OAuth2Client(
-                new Uri(Constants.AuthzSrv.OAuth2TokenEndpoint),
+                new Uri(Constants.AS.OAuth2TokenEndpoint),
                 Constants.Clients.Client,
                 Constants.Clients.ClientSecret);
 

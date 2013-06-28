@@ -58,7 +58,7 @@ namespace ImplicitClientWindows8
             try
             {
                 var response = await WebAuthentication.DoImplicitFlowAsync(
-                    endpoint: new Uri(Constants.AuthzSrv.OAuth2AuthorizeEndpoint),
+                    endpoint: new Uri(Constants.AS.OAuth2AuthorizeEndpoint),
                     clientId: Constants.Clients.ImplicitClient,
                     scope: "read");
 

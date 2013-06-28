@@ -17,7 +17,8 @@ namespace Thinktecture.Samples
             );
 
             config.EnableSystemDiagnosticsTracing();
-            config.MessageHandlers.Add(new AuthenticationHandler(CreateAuthenticationConfiguration()));
+            config.MessageHandlers.Add(
+                new AuthenticationHandler(CreateAuthenticationConfiguration()));
         }
 
         private static AuthenticationConfiguration CreateAuthenticationConfiguration()
@@ -28,9 +29,9 @@ namespace Thinktecture.Samples
             };
 
             authentication.AddJsonWebToken(
-                issuer: Constants.AuthzSrv.IssuerName,
+                issuer: Constants.AS.IssuerName,
                 audience: Constants.Audience,
-                signingKey: Constants.AuthzSrv.SigningKey,
+                signingKey: Constants.AS.SigningKey,
                 claimMappings: ClaimMappings.None);
 
             return authentication;

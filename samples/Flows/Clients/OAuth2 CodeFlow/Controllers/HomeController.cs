@@ -9,7 +9,7 @@ namespace OAuth2CodeFlow.Controllers
         public ActionResult Index()
         {
             var url = OAuth2Client.CreateCodeFlowUrl(
-                Constants.AuthzSrv.OAuth2AuthorizeEndpoint,
+                Constants.AS.OAuth2AuthorizeEndpoint,
                 Constants.Clients.CodeClient,
                 "read search",
                 Constants.Clients.CodeClientRedirectUrl);

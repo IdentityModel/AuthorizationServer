@@ -24,6 +24,9 @@ $(function () {
         authz.util.addAnyErrors(this);
 
         var certs = [];
+        if (vm.isNew() || !vm.thumbprint()) {
+            certs.push({name:"-choose a certificate-", value:""});
+        }
         list.forEach(function (cert) {
             var name = cert.subject;
             if (cert.friendlyName) {

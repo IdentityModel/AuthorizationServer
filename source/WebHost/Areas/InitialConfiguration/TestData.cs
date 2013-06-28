@@ -178,7 +178,7 @@ namespace Thinktecture.AuthorizationServer.WebHost
                         TokenLifetime = 60,
                         AllowRefreshToken = true,
                         AllowRememberConsentDecision = true,
-                        SigningKey = new SymmetricKey { Name="demo signing key", Value = Convert.FromBase64String("1fTiS2clmPTUlNcpwYzd5i4AEFJ2DEsd8TcUsllmaKQ=") }
+                        SigningKey = new SymmetricKey { Name="Demo signing key", Value = Convert.FromBase64String("1fTiS2clmPTUlNcpwYzd5i4AEFJ2DEsd8TcUsllmaKQ=") }
                     };
                     db.Applications.Add(application);
                     db.SaveChanges();

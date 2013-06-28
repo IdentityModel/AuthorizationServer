@@ -35,8 +35,8 @@ namespace Thinktecture.Samples
 
         public static class AS
         {
-            public const string OAuth2TokenEndpoint = "https://roadie/authz/" + Application + "/oauth/token";
-            public const string OAuth2AuthorizeEndpoint = "https://roadie/authz/" + Application + "/oauth/authorize";
+            public const string OAuth2TokenEndpoint = "https://as.local/" + Application + "/oauth/token";
+            public const string OAuth2AuthorizeEndpoint = "https://as.local/" + Application + "/oauth/authorize";
 
             public const string IssuerName = "AS";
             public const string SigningKey = "1fTiS2clmPTUlNcpwYzd5i4AEFJ2DEsd8TcUsllmaKQ=";

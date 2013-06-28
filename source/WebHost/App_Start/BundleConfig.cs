@@ -26,8 +26,9 @@ namespace Thinktecture.AuthorizationServer.WebHost
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
                 "~/Content/bootstrap.cosmo.css",
-                //"~/Content/bootstrap-responsive.css",
                 "~/Content/site.css"));
+            bundles.Add(new StyleBundle("~/Content/responsive").Include(
+                "~/Content/bootstrap-responsive.css"));
         }
     }
 }

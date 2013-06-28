@@ -90,6 +90,8 @@
             </div>
         }
     </div>
+    @if(!Request.UserAgent.Contains("MSAuthHost"))
+    {
     <div class="span4 offset1" id="appInfo">
         <div class="hero-unit">
             <h3>@Model.Application.Name</h3>
@@ -101,4 +103,5 @@
             <div class="clearfix"></div>
         </div>
     </div>
+    }
 </div>

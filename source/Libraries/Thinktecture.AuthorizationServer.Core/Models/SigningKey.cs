@@ -51,6 +51,16 @@ namespace Thinktecture.AuthorizationServer.Models
         [Required]
         public virtual byte[] Value { get; set; }
 
+        public void SetValue(byte[] value, byte[] masterKey)
+        {
+            this.Value = value;
+        }
+
+        public byte[] GetValue(byte[] masterKey)
+        {
+            return this.Value;
+        }
+
         public override SigningCredentials GetSigningCredentials()
         {
             if (this.Value == null) return null;

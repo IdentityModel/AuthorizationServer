@@ -31,6 +31,22 @@ namespace Thinktecture.AuthorizationServer.Models
         public virtual List<TokenHandleClaim> ResourceOwner { get; set; }
         public virtual List<Scope> Scopes { get; set; }
 
+        public static TokenHandle CreateConsentDecisionHandle(string subject, Client client, Application application, IEnumerable<Scope> scopes)
+        {
+            if (client == null) throw new ArgumentNullException("client");
+            if (application == null) throw new ArgumentNullException("application");
+            if (scopes == null) throw new ArgumentNullException("scopes");
+
+            return new TokenHandle
+            {
+                Type = TokenHandleType.ConsentDecision,
+                Subject = subject,
+                Client = client,
+                Application = application, 
+                Scopes = scopes.ToList()
+            };
+        }
+
         public static TokenHandle CreateRefreshTokenHandle(string subject, Client client, Application application, IEnumerable<Claim> claims, IEnumerable<Scope> scopes, DateTime? expiration = null)
         {
             if (client == null) throw new ArgumentNullException("client");

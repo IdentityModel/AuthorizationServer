@@ -8,6 +8,7 @@ namespace Thinktecture.AuthorizationServer.Models
     public enum TokenHandleType
     {
         AuthorizationCode,
-        RefreshTokenIdentifier
+        RefreshTokenIdentifier,
+        ConsentDecision
     }
 }

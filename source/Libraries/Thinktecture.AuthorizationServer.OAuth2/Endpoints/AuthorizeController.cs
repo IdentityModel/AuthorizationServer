@@ -54,6 +54,8 @@ namespace Thinktecture.AuthorizationServer.OAuth2
                 // show consent screen
                 Tracing.Verbose("Showing consent screen");
 
+                // todo: check first if a remembered consent decision exists
+
                 return View("Consent", validatedRequest);
             }
 
@@ -103,8 +105,11 @@ namespace Thinktecture.AuthorizationServer.OAuth2
                     return View("Consent", validatedRequest);
                 }
 
-                // todo: parse scopes form post and substitue scopes
+                // parse scopes form post and substitue scopes
                 validatedRequest.Scopes.RemoveAll(x => !scopes.Contains(x.Name));
+                
+                // todo: store consent decision if checkbox was checked
+                
                 var grantResult = PerformGrant(validatedRequest);
                 if (grantResult != null) return grantResult;
             }

@@ -108,7 +108,7 @@ namespace Thinktecture.AuthorizationServer.OAuth2
                 // parse scopes form post and substitue scopes
                 validatedRequest.Scopes.RemoveAll(x => !scopes.Contains(x.Name));
                 
-                // todo: store consent decision if checkbox was checked
+                // todo: store consent decision if checkbox was checked (and storage is allowed) and flow == implicit
                 
                 var grantResult = PerformGrant(validatedRequest);
                 if (grantResult != null) return grantResult;

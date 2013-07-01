@@ -56,6 +56,7 @@ namespace Thinktecture.AuthorizationServer.OAuth2
                     ClaimsPrincipal.Current.GetSubject(),
                     validatedRequest.Client,
                     validatedRequest.Application,
+                    validatedRequest.Scopes,
                     TokenHandleType.ConsentDecision);
 
                 if (handle != null)

@@ -50,13 +50,6 @@ namespace Thinktecture.AuthorizationServer.Models
             var requestedScopeNames = requestedScopes.OrderBy(s => s.Name).Select(s => s.Name).ToArray();
 
             return storedScopeNames.SequenceEqual(requestedScopeNames);
-
-            //if (string.Join("", storedScopeNames).Equals(string.Join("", requestedScopeNames)))
-            //{
-            //    return true;
-            //}
-
-            //return false;
         }
     }
 }

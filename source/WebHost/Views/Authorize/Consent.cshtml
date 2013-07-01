@@ -36,7 +36,16 @@
                 {
                     <dt class="checkbox">
                         <label>
-                            <input type="checkbox" checked name="scopes" value="@scope.Name" />
+                            @helper GetCheckedForScope(string val)
+                            {
+                                var scopes = Request["scopes"];
+                                if ((String.IsNullOrWhiteSpace(scopes) && Request.HttpMethod=="GET") ||
+                                    (scopes != null && scopes.Contains(val))) 
+                                {
+                                    @: checked
+                                }
+                            }
+                            <input type="checkbox" name="scopes" value="@scope.Name" @GetCheckedForScope(@scope.Name) />
                             <strong>@scope.DisplayName</strong>
                         @if (scope.Emphasize)
                         {
@@ -59,18 +68,18 @@
                 <div>
                     <label for="rememberDuration">Allow offline use for:</label>
                     <select id="rememberDuration" name="rememberDuration">
-                        <option value="1">1 hour</option>
-                        <option value="3">3 hours</option>
-                        <option value="12">12 hours</option>
-                        <option value="24">1 day</option>
-                        <option value="72">3 days</option>
-                        <option value="168">1 week</option>
-                        <option value="336">2 weeks</option>
-                        <option value="720">1 month</option>
-                        <option value="2190">3 months</option>
-                        <option value="4380">6 months</option>
-                        <option value="8760">1 year</option>
-                        <option value="-1">forever</option>
+                        <option value="1" selected="@("1".Equals(Request["rememberDuration"]))">1 hour</option>
+                        <option value="3" selected="@("3".Equals(Request["rememberDuration"]))">3 hours</option>
+                        <option value="12" selected="@("12".Equals(Request["rememberDuration"]))">12 hours</option>
+                        <option value="24" selected="@("24".Equals(Request["rememberDuration"]))">1 day</option>
+                        <option value="72" selected="@("72".Equals(Request["rememberDuration"]))">3 days</option>
+                        <option value="168" selected="@("168".Equals(Request["rememberDuration"]))">1 week</option>
+                        <option value="336" selected="@("336".Equals(Request["rememberDuration"]))">2 weeks</option>
+                        <option value="720" selected="@("720".Equals(Request["rememberDuration"]))">1 month</option>
+                        <option value="2190" selected="@("2190".Equals(Request["rememberDuration"]))">3 months</option>
+                        <option value="4380" selected="@("4380".Equals(Request["rememberDuration"]))">6 months</option>
+                        <option value="8760" selected="@("8760".Equals(Request["rememberDuration"]))">1 year</option>
+                        <option value="-1" selected="@("-1".Equals(Request["rememberDuration"]))">forever</option>
                     </select>
                 </div>
             }
@@ -78,7 +87,7 @@
             {
                 <div class="checkbox">
                     <label>
-                        <input type="checkbox" name="rememberDuration" value="-1" />
+                        <input type="checkbox" name="rememberDuration" value="-1" checked="@Request["rememberDuration"]" />
                         Remember decision
                     </label>
                 </div>

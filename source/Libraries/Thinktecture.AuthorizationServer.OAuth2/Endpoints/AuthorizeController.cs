@@ -55,7 +55,8 @@ namespace Thinktecture.AuthorizationServer.OAuth2
                 var handle = _handleManager.Find(
                     ClaimsPrincipal.Current.GetSubject(),
                     validatedRequest.Client,
-                    validatedRequest.Application);
+                    validatedRequest.Application,
+                    TokenHandleType.ConsentDecision);
 
                 if (handle != null)
                 {

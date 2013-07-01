@@ -5,6 +5,7 @@
 
 using System.Linq;
 using Thinktecture.AuthorizationServer.Interfaces;
+using Thinktecture.AuthorizationServer.Models;
 
 namespace Thinktecture.AuthorizationServer.EF
 {
@@ -38,12 +39,12 @@ namespace Thinktecture.AuthorizationServer.EF
             }
         }
 
-        public Models.TokenHandle Find(string subject, Models.Client client, Models.Application application)
+        public Models.TokenHandle Find(string subject, Models.Client client, Models.Application application, TokenHandleType type)
         {
             var handle = db.TokenHandles.FirstOrDefault(h => h.Subject == subject &&
                                                              h.Client.ClientId == client.ClientId &&
                                                              h.Application.ID == application.ID &&
-                                                             h.Type == Models.TokenHandleType.ConsentDecision);
+                                                             h.Type == type);
 
             return handle;
         }

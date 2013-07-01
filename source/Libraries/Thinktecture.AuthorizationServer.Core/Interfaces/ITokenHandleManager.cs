@@ -12,9 +12,7 @@ namespace Thinktecture.AuthorizationServer.Interfaces
     {
         void Add(TokenHandle handle);
         TokenHandle Get(string handleIdentifier);
-        TokenHandle Find(string subject, Client client, Application application);
+        TokenHandle Find(string subject, Client client, Application application, TokenHandleType type);
         void Delete(string handleIdentifier);
-        
-        //IEnumerable<CodeToken> Search(int? clientId, string username, string scope, CodeTokenType type)
     }
 }

@@ -45,5 +45,11 @@ namespace Thinktecture.AuthorizationServer.Test
         {
             
         }
+
+
+        public TokenHandle Find(string subject, Client client, Application application)
+        {
+            throw new System.NotImplementedException();
+        }
     }
 }

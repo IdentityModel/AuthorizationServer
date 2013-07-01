@@ -51,11 +51,28 @@ namespace Thinktecture.AuthorizationServer.OAuth2
 
             if (validatedRequest.ShowConsent)
             {
+                //// todo: check first if a remembered consent decision exists
+                //var handle = _handleManager.Find(
+                //    ClaimsPrincipal.Current.GetSubject(),
+                //    validatedRequest.Client,
+                //    validatedRequest.Application);
+
+                //if (handle != null)
+                //{
+                //    // todo: compare scopes
+                //    var storedScopes = handle.Scopes.OrderBy(s => s.Name).Select(s => s.Name).ToArray();
+                //    var requestScopes = validatedRequest.Scopes.OrderBy(s => s.Name).Select(s => s.Name).ToArray();
+
+                //    if (string.Join("", storedScopes).Equals(string.Join("", requestScopes)))
+                //    {
+                //        // if scopes match, perform grant
+                //        Tracing.Verbose("Stored consent decision found.");
+                //        return PerformGrant(validatedRequest);
+                //    }
+                //}
+
                 // show consent screen
                 Tracing.Verbose("Showing consent screen");
-
-                // todo: check first if a remembered consent decision exists
-
                 return View("Consent", validatedRequest);
             }
 
@@ -108,8 +125,22 @@ namespace Thinktecture.AuthorizationServer.OAuth2
                 // parse scopes form post and substitue scopes
                 validatedRequest.Scopes.RemoveAll(x => !scopes.Contains(x.Name));
                 
-                // todo: store consent decision if checkbox was checked (and storage is allowed) and flow == implicit
-                
+                // store consent decision if checkbox was checked (and storage is allowed) and flow == implicit
+                if (validatedRequest.Application.AllowRememberConsentDecision && 
+                    validatedRequest.Client.Flow == OAuthFlow.Implicit && 
+                    rememberDuration == -1)
+                {
+                    // todo: check if same decision is already remembered
+
+                    var handle = TokenHandle.CreateConsentDecisionHandle(
+                        ClaimsPrincipal.Current.GetSubject(),
+                        validatedRequest.Client,
+                        validatedRequest.Application,
+                        validatedRequest.Scopes);
+
+                    _handleManager.Add(handle);
+                }
+
                 var grantResult = PerformGrant(validatedRequest);
                 if (grantResult != null) return grantResult;
             }

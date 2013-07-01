@@ -13,6 +13,7 @@
             <tr>
                 <th></th>
                 <th>Client Application Name</th>
+                <th>Services Being Used</th>
             </tr>
         </thead>
         <tbody data-bind="foreach:applications">
@@ -21,6 +22,7 @@
                     <button class="btn" data-bind="click: function (data, evt) { $parent.delete(data) }">Remove</button>
                 </td>
                 <td data-bind="text: name"></td>
+                <td data-bind="foreach: apps"><span data-bind="if:$index() > 0">,&nbsp;</span><span data-bind="text:$data"></span></td>
             </tr>
         </tbody>
     </table>

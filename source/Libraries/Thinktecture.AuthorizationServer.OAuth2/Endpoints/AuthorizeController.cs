@@ -61,12 +61,8 @@ namespace Thinktecture.AuthorizationServer.OAuth2
 
                 if (handle != null)
                 {
-                    if (handle.Scopes.ScopeEquals(validatedRequest.Scopes))
-                    {
-                        // if scopes match, perform grant
-                        Tracing.Verbose("Stored consent decision found.");
-                        return PerformGrant(validatedRequest);
-                    }
+                    Tracing.Verbose("Stored consent decision found.");
+                    return PerformGrant(validatedRequest);
                 }
 
                 // show consent screen
@@ -122,10 +118,10 @@ namespace Thinktecture.AuthorizationServer.OAuth2
 
                 // parse scopes form post and substitue scopes
                 validatedRequest.Scopes.RemoveAll(x => !scopes.Contains(x.Name));
-                
+
                 // store consent decision if checkbox was checked (and storage is allowed) and flow == implicit
-                if (validatedRequest.Application.AllowRememberConsentDecision && 
-                    validatedRequest.Client.Flow == OAuthFlow.Implicit && 
+                if (validatedRequest.Application.AllowRememberConsentDecision &&
+                    validatedRequest.Client.Flow == OAuthFlow.Implicit &&
                     rememberDuration == -1)
                 {
                     var handle = TokenHandle.CreateConsentDecisionHandle(
@@ -144,9 +140,9 @@ namespace Thinktecture.AuthorizationServer.OAuth2
             }
 
             return new ClientErrorResult(
-                new Uri(request.redirect_uri), 
-                OAuthConstants.Errors.InvalidRequest, 
-                request.response_type, 
+                new Uri(request.redirect_uri),
+                OAuthConstants.Errors.InvalidRequest,
+                request.response_type,
                 request.state);
         }
 

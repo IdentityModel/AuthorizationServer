@@ -41,8 +41,8 @@ namespace Thinktecture.AuthorizationServer.EF
         public Models.TokenHandle Find(string subject, Models.Client client, Models.Application application)
         {
             var handle = db.TokenHandles.FirstOrDefault(h => h.Subject == subject &&
-                                                             h.Client == client &&
-                                                             h.Application == application &&
+                                                             h.Client.ClientId == client.ClientId &&
+                                                             h.Application.ID == application.ID &&
                                                              h.Type == Models.TokenHandleType.ConsentDecision);
 
             return handle;

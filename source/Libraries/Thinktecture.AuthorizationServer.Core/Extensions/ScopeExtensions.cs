@@ -43,5 +43,20 @@ namespace Thinktecture.AuthorizationServer.Models
 
             return true;
         }
+
+        public static bool ScopeEquals(this IEnumerable<Scope> requestedScopes, IEnumerable<Scope> storedScopes)
+        {
+            var storedScopeNames = storedScopes.OrderBy(s => s.Name).Select(s => s.Name).ToArray();
+            var requestedScopeNames = requestedScopes.OrderBy(s => s.Name).Select(s => s.Name).ToArray();
+
+            return storedScopeNames.SequenceEqual(requestedScopeNames);
+
+            //if (string.Join("", storedScopeNames).Equals(string.Join("", requestedScopeNames)))
+            //{
+            //    return true;
+            //}
+
+            //return false;
+        }
     }
 }

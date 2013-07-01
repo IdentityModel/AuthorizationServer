@@ -30,11 +30,20 @@ namespace Thinktecture.AuthorizationServer.WebHost.Areas.UserApplications.Api
 
             var query =
                 from token in config.Tokens.All
-                where token.Subject == subject
-                select new { id = token.Client.ClientId, name = token.Client.Name };
-            var data = query.Distinct().ToArray();
-            
-            return Request.CreateResponse(HttpStatusCode.OK, data);
+                where
+                    token.Type != AuthorizationServer.Models.TokenHandleType.AuthorizationCode &&
+                    token.Subject == subject
+                select new { id=token.Client.ClientId, name=token.Client.Name, application=token.Application.Name };
+            var tokens = query.ToArray();
+            var data =
+                from token in tokens
+                group token by token.id into clients
+                select new { 
+                    id = clients.Key, 
+                    name = clients.First().name, 
+                    apps = clients.Select(x => x.application).Distinct() 
+                };
+            return Request.CreateResponse(HttpStatusCode.OK, data.ToArray());
         }
 
         public HttpResponseMessage Delete(string id)

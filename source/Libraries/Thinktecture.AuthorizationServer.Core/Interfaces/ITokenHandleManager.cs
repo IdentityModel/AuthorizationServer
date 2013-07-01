@@ -12,7 +12,7 @@ namespace Thinktecture.AuthorizationServer.Interfaces
     {
         void Add(TokenHandle handle);
         TokenHandle Get(string handleIdentifier);
-        TokenHandle Find(string subject, Client client, Application application, TokenHandleType type);
+        TokenHandle Find(string subject, Client client, Application application, IEnumerable<Scope> scopes, TokenHandleType type);
         void Delete(string handleIdentifier);
     }
 }

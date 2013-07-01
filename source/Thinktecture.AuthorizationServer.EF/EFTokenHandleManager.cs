@@ -3,7 +3,9 @@
  * see license.txt
  */
 
+using System.Linq;
 using Thinktecture.AuthorizationServer.Interfaces;
+using Thinktecture.AuthorizationServer.Models;
 
 namespace Thinktecture.AuthorizationServer.EF
 {
@@ -35,6 +37,16 @@ namespace Thinktecture.AuthorizationServer.EF
                 db.TokenHandles.Remove(item);
                 db.SaveChanges();
             }
+        }
+
+        public Models.TokenHandle Find(string subject, Models.Client client, Models.Application application, TokenHandleType type)
+        {
+            var handle = db.TokenHandles.FirstOrDefault(h => h.Subject == subject &&
+                                                             h.Client.ClientId == client.ClientId &&
+                                                             h.Application.ID == application.ID &&
+                                                             h.Type == type);
+
+            return handle;
         }
     }
 }

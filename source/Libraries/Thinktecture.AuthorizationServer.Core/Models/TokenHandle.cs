@@ -43,7 +43,8 @@ namespace Thinktecture.AuthorizationServer.Models
                 Subject = subject,
                 Client = client,
                 Application = application, 
-                Scopes = scopes.ToList()
+                Scopes = scopes.ToList(),
+                Created = DateTime.UtcNow
             };
         }
 

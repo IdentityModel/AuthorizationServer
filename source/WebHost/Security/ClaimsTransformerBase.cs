@@ -36,7 +36,7 @@ namespace Thinktecture.AuthorizationServer.WebHost
             var adminNameIDs = this.service.GetAdministratorNameIDs();
             var result = new List<Claim>();
 
-            if (adminNameIDs.Contains(subject))
+            if (adminNameIDs.Any(a => a.Equals(subject, System.StringComparison.InvariantCultureIgnoreCase)))
             {
                 result.Add(new Claim(
                     ClaimTypes.Role, 

@@ -1,0 +1,73 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <title>Thinktecture AuthorizationServer by thinktecture</title>
+
+    <link rel="stylesheet" href="stylesheets/styles.css">
+    <link rel="stylesheet" href="stylesheets/pygment_trac.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <div class="wrapper">
+      <header>
+        <h1>Thinktecture AuthorizationServer</h1>
+        <p>An implementation of an OAuth2 authorization server</p>
+
+        <p class="view"><a href="https://github.com/thinktecture/Thinktecture.AuthorizationServer">View the Project on GitHub <small>thinktecture/Thinktecture.AuthorizationServer</small></a></p>
+
+
+        <ul>
+          <li><a href="https://github.com/thinktecture/Thinktecture.AuthorizationServer/zipball/master">Download <strong>ZIP File</strong></a></li>
+          <li><a href="https://github.com/thinktecture/Thinktecture.AuthorizationServer/tarball/master">Download <strong>TAR Ball</strong></a></li>
+          <li><a href="https://github.com/thinktecture/Thinktecture.AuthorizationServer">View On <strong>GitHub</strong></a></li>
+        </ul>
+      </header>
+      <section>
+        <h1>
+<a name="thinktecture-authorizationserver" class="anchor" href="#thinktecture-authorizationserver"><span class="octicon octicon-link"></span></a>Thinktecture AuthorizationServer</h1>
+
+<p>AuthorizationServer is the foundation for implementing application and API authorization.
+As a first step, we provide an implementation of the OAuth2 authorization framework.</p>
+
+<p><strong>This is a really early version - for feedback, bug reports, feature ideas etc., please use the issue tracker</strong></p>
+
+<h3>
+<a name="concepts" class="anchor" href="#concepts"><span class="octicon octicon-link"></span></a>Concepts</h3>
+
+<p>We support the following primitives:</p>
+
+<p><strong>Applications</strong>
+Applications are containers for settings (token lifetime, key material, audience…) and scopes. Every application gets its own entry point in the URL structure, e.g. ../myapp/oauth/authorize and ../myapp/oauth/token.</p>
+
+<p><strong>Scopes</strong>
+Scopes represent permissions a client can ask for. They will be shown on consent screens, so the resource owner can grant (or deny) access. A scope also defines which clients can request it.</p>
+
+<p><strong>Clients</strong>
+A client has a client ID and a secret. A client can use exactly one OAuth2 flow to request tokens (code, implicit, resource owner credentials, client credentials). A client has a list of allowed redirect URIs for flows that require a callback.</p>
+
+<p><strong>Access Tokens</strong>
+An access token will contain JWT standard claims like iss (issuer), aud (audience), nbf (not before), exp (expiration). In addition it will contain information about the subject (sub claim), the client that requested the token as well as the requested scopes.</p>
+
+<h3>
+<a name="architecture" class="anchor" href="#architecture"><span class="octicon octicon-link"></span></a>Architecture</h3>
+
+<p>AS deliberately doesn't do authentication. It solely focuses on authorization. The default configuration assumes AS is a relying party to some WS-Federation identity provider (e.g. IdentityServer, ADFS, Windows Azure Active Directory or Azure Access Control Service). You can of course customize that in any way you want, e.g. add a local login page.</p>
+
+<p>AS has only a single requirement when it comes to identity of the resource owner: the current principal must contain a claim of type "sub" (subject). You can adapt to your own claims structure using the ClaimsTransformer class in the web host project.</p>
+
+<p>See the <a href="https://github.com/thinktecture/Thinktecture.AuthorizationServer/wiki">wiki</a> for more information.</p>
+      </section>
+      <footer>
+        <p>This project is maintained by <a href="https://github.com/thinktecture">thinktecture</a></p>
+        <p><small>Hosted on GitHub Pages &mdash; Theme by <a href="https://github.com/orderedlist">orderedlist</a></small></p>
+      </footer>
+    </div>
+    <script src="javascripts/scale.fix.js"></script>
+    
+  </body>
+</html>

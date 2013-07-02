@@ -213,6 +213,7 @@
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Security\NameIdOrNameToSubjectClaimsTransformer.cs" />
+    <Compile Include="Security\ValidateHttpAntiForgeryTokenAttribute.cs" />
     <Compile Include="Settings.cs" />
     <Compile Include="Areas\InitialConfiguration\TestData.cs" />
   </ItemGroup>
@@ -355,7 +356,7 @@
     </Content>
     <Content Include="Areas\Admin\Views\Web.config" />
     <None Include="Scripts\jquery-2.0.1.intellisense.js" />
-    <Content Include="Areas\Admin\Scripts\Admin.js" />
+    <Content Include="Scripts\app\as.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Scripts\jquery-2.0.1.js" />

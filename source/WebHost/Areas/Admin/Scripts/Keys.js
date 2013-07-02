@@ -5,7 +5,7 @@
 
 
 $(function () {
-    var svc = new authz.Service("admin/Keys");
+    var svc = new as.Service("admin/Keys");
 
     function Keys(list) {
         this.keys = ko.mapping.fromJS(list);

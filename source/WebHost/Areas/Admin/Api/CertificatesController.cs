@@ -28,6 +28,7 @@ namespace Thinktecture.AuthorizationServer.WebHost.Areas.Admin.Api
             this.config = config;
         }
 
+        [ValidateHttpAntiForgeryToken]
         public HttpResponseMessage Get()
         {
             var store = new X509Store(StoreName.My, StoreLocation.LocalMachine);

@@ -6,13 +6,13 @@
 
 $(function () {
 
-    var svc = new authz.Service("admin/GlobalAdministrators");
+    var svc = new as.Service("admin/GlobalAdministrators");
 
     function GlobalAdministrators(list) {
         this.administrators = ko.mapping.fromJS(list);
         this.nameToAdd = ko.observable("");
-        authz.util.addRequired(this, "nameToAdd", "Name To Add");
-        authz.util.addAnyErrors(this);
+        as.util.addRequired(this, "nameToAdd", "Name To Add");
+        as.util.addAnyErrors(this);
     }
     
     GlobalAdministrators.prototype.addAdmin = function(){

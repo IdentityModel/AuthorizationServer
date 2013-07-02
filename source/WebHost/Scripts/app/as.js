@@ -3,13 +3,13 @@
  * see license.txt
  */
 
-var authz = (function () {
+(function () {
     "use strict";
 
     function showMessage(msg, css, details) {
         var elem = $("#message");
         if (elem.is(":visible")) {
-            elem.clearQueue().delay(1000).fadeOut(function () {
+            elem.clearQueue().slideUp("fast", function () {
                 elem.removeClass("alert-success").removeClass("alert-error");
                 showMessage(msg, css, details);
             });
@@ -28,9 +28,10 @@ var authz = (function () {
             }
 
             elem
+                .hide()
                 .addClass(css)
                 .html(msg)
-                .fadeIn()
+                .fadeIn("fast")
                 .delay(3000)
                 .fadeOut(function () {
                     $(this).html("").removeClass(css);
@@ -46,22 +47,37 @@ var authz = (function () {
 
     function getErrorDetail(xhr) {
         if (xhr.responseJSON) {
-            return xhr.responseJSON.errors || 
+            return xhr.responseJSON.errors ||
                 xhr.responseJSON.exceptionMessage;
         }
     }
 
+    function ajax(settings) {
+        settings = settings || {};
+
+        var antiForgeryToken = $("#antiForgeryToken").val();
+        if (antiForgeryToken) {
+            settings.headers = settings.headers || {};
+            $.extend(settings.headers, {
+                'RequestVerificationToken': antiForgeryToken
+            });
+        }
+
+        return $.ajax(settings);
+    }
+
     function Service(path, settings) {
         this.path = path;
-        if (this.path.charAt(this.path.length-1) !== '/') {
+        if (this.path.charAt(this.path.length - 1) !== '/') {
             this.path += "/";
         }
         this.settings = settings || {};
     }
+    Service.baseUrl = "/";
     Service.prototype.get = function (id) {
         id = id || "";
-        return $.ajax({
-            url: authz.baseUrl + this.path + id,
+        return ajax({
+            url: Service.baseUrl + this.path + id,
             type: 'GET'
         }).fail(function (xhr, status, error) {
             showErrorMessage("Error Loading", getErrorDetail(xhr))
@@ -70,40 +86,40 @@ var authz = (function () {
     };
     Service.prototype.put = function (data, id) {
         id = id || "";
-        return $.ajax({
-            url: authz.baseUrl + this.path + id,
+        return ajax({
+            url: Service.baseUrl + this.path + id,
             type: 'PUT',
             contentType: 'application/json',
             data: JSON.stringify(data)
         }).then(
-        function(data, status, xhr){
+        function (data, status, xhr) {
             showSuccessMessage("Update Successful");
             return xhr;
         },
-        function(xhr, status, error){
+        function (xhr, status, error) {
             showErrorMessage("Error Updating", getErrorDetail(xhr));
             return xhr;
         });
     };
     Service.prototype.delete = function (id) {
         id = id || "";
-        return $.ajax({
-            url: authz.baseUrl + this.path + id,
+        return ajax({
+            url: Service.baseUrl + this.path + id,
             type: 'DELETE'
         }).then(
-        function(data, status, xhr){
+        function (data, status, xhr) {
             showSuccessMessage("Delete Successful");
             return xhr;
         },
-        function(xhr, status, error){
+        function (xhr, status, error) {
             showErrorMessage("Error Deleting", getErrorDetail(xhr));
             return xhr;
         });
     };
     Service.prototype.post = function (data, id) {
         id = id || "";
-        return $.ajax({
-            url: authz.baseUrl + this.path + id,
+        return ajax({
+            url: Service.baseUrl + this.path + id,
             type: 'POST',
             contentType: 'application/json',
             data: JSON.stringify(data)
@@ -136,7 +152,7 @@ var authz = (function () {
                 });
             },
             addRequired: function (vm, propName, displayName) {
-                authz.util.addValidation(vm, propName, displayName + " is required", ko.computed(function() {
+                as.util.addValidation(vm, propName, displayName + " is required", ko.computed(function () {
                     return !!vm[propName]();
                 }));
             },
@@ -155,5 +171,5 @@ var authz = (function () {
         }
     };
 
-    return module;
+    window.as = module;
 })();

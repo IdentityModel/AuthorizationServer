@@ -23,6 +23,7 @@
     </div>
 
     @Scripts.Render("~/bundles/js")
+    <script src='@Url.Action("Urls", "Home", new {area=""})'></script>
     @RenderSection("scripts", required: false)
 </body>
 </html>

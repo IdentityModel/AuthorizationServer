@@ -5,8 +5,8 @@
 
 
 $(function () {
-    var svc = new authz.Service("admin/ApplicationScopes");
-    var scopesSvc = new authz.Service("admin/Scopes");
+    var svc = new as.Service("admin/ApplicationScopes");
+    var scopesSvc = new as.Service("admin/Scopes");
 
     var appID = window.location.hash.substring(1);
     svc.get(appID).then(function (data) {
@@ -20,9 +20,9 @@ $(function () {
         this.newScope = ko.mapping.fromJS({
             name:"", description:"", emphasize:false
         });
-        authz.util.addRequired(this.newScope, "name", "Name");
-        authz.util.addRequired(this.newScope, "description", "Description");
-        authz.util.addAnyErrors(this.newScope);
+        as.util.addRequired(this.newScope, "name", "Name");
+        as.util.addRequired(this.newScope, "description", "Description");
+        as.util.addAnyErrors(this.newScope);
     }
     Scopes.prototype.addScope = function () {
         var vm = this;

@@ -11,18 +11,18 @@ $(function () {
     var appID = hash.substring(idx + 1);
 
     if (scopeID) {
-        var svc = new authz.Service("admin/Scopes/" + scopeID);
+        var svc = new as.Service("admin/Scopes/" + scopeID);
         svc.get().then(function (data) {
             ko.applyBindings(new Scope(data), document.getElementById("scopes"));
         });
 
-        var scopeClientSvc = new authz.Service("admin/ScopeClients/" + scopeID);
+        var scopeClientSvc = new as.Service("admin/ScopeClients/" + scopeID);
         scopeClientSvc.get().then(function (data) {
             ko.applyBindings(new ScopeClients(data), document.getElementById("scopeClients"));
         });
     }
     else {
-        var svc = new authz.Service("admin/ApplicationScopes/" + appID);
+        var svc = new as.Service("admin/ApplicationScopes/" + appID);
         ko.applyBindings(new Scope(), document.getElementById("scopes"));
     }
 
@@ -52,9 +52,9 @@ $(function () {
             return !vm.isNew();
         });
 
-        authz.util.addRequired(this, "name", "Name");
-        authz.util.addRequired(this, "displayName", "Display Name");
-        authz.util.addAnyErrors(this);
+        as.util.addRequired(this, "name", "Name");
+        as.util.addRequired(this, "displayName", "Display Name");
+        as.util.addAnyErrors(this);
 
         vm.save = function () {
             if (vm.isNew()) {
@@ -68,8 +68,8 @@ $(function () {
                     vm.id(data.id);
                     vm.isNew(false);
 
-                    svc = new authz.Service("admin/Scopes/" + scopeID);
-                    scopeClientSvc = new authz.Service("admin/ScopeClients/" + scopeID);
+                    svc = new as.Service("admin/Scopes/" + scopeID);
+                    scopeClientSvc = new as.Service("admin/ScopeClients/" + scopeID);
                     scopeClientSvc.get().then(function (data) {
                         ko.applyBindings(new ScopeClients(data), document.getElementById("scopeClients"));
                     });

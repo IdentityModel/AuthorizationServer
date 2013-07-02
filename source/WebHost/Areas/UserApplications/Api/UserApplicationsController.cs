@@ -14,6 +14,7 @@ using Thinktecture.AuthorizationServer.Interfaces;
 namespace Thinktecture.AuthorizationServer.WebHost.Areas.UserApplications.Api
 {
     [Authorize]
+    [ValidateHttpAntiForgeryToken]
     public class UserApplicationsController : ApiController
     {
         IAuthorizationServerAdministration config;

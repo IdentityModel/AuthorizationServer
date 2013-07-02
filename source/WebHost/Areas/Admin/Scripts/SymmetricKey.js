@@ -5,7 +5,7 @@
 
 
 $(function () {
-    var svc = new authz.Service("admin/SymmetricKeys");
+    var svc = new as.Service("admin/SymmetricKeys");
 
     function SymmetricKey(data) {
         var vm = this;
@@ -17,9 +17,9 @@ $(function () {
         };
         ko.mapping.fromJS(data, null, vm);
 
-        authz.util.addRequired(this, "name", "Name");
-        authz.util.addRequired(this, "value", "Value");
-        authz.util.addAnyErrors(this);
+        as.util.addRequired(this, "name", "Name");
+        as.util.addRequired(this, "value", "Value");
+        as.util.addAnyErrors(this);
 
         vm.editDescription = ko.computed(function () {
             return vm.isNew() ? "New" : "Manage";

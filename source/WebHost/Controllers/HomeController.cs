@@ -3,6 +3,7 @@
  * see license.txt
  */
 
+using System;
 using System.Web.Mvc;
 using Thinktecture.AuthorizationServer.Interfaces;
 
@@ -38,5 +39,16 @@ namespace Thinktecture.AuthorizationServer.WebHost.Controllers
             return PartialView("Footer");
         }
 
+        public JavaScriptResult Urls()
+        {
+            var path = Request.ApplicationPath;
+            if (!path.EndsWith("/")) path += "/";
+            path += "api/";
+
+            var url = new Uri(Request.Url, path);
+            var js = String.Format("if(window.as){{window.as.Service.baseUrl='{0}';}}", url);
+
+            return base.JavaScript(js);
+        }
     }
 }

@@ -22,7 +22,8 @@ namespace Thinktecture.AuthorizationServer.WebHost
                 "~/Scripts/knockout-{version}.js",
                 "~/Scripts/knockout.mapping-latest.js",
                 //"~/Scripts/knockout-es5.js",
-                "~/Scripts/bootstrap.js"));
+                "~/Scripts/bootstrap.js",
+                "~/Scripts/app/as.js"));
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
                 "~/Content/bootstrap.cosmo.css",

@@ -5,8 +5,8 @@
 
 
 $(function () {
-    var svc = new authz.Service("admin/Clients");
-    var secretSvc = new authz.Service("admin/SymmetricKeys");
+    var svc = new as.Service("admin/Clients");
+    var secretSvc = new as.Service("admin/SymmetricKeys");
 
     function Client(data) {
         var vm = this;
@@ -26,13 +26,13 @@ $(function () {
         };
         ko.mapping.fromJS(data, null, this);
 
-        authz.util.addRequired(this, "clientId", "Client ID");
-        authz.util.addValidation(this, "clientSecret", "Client Secret is required", ko.computed(function () {
+        as.util.addRequired(this, "clientId", "Client ID");
+        as.util.addValidation(this, "clientSecret", "Client Secret is required", ko.computed(function () {
             if (!vm.isNew()) return true;
             return !!vm.clientSecret();
         }));
-        authz.util.addRequired(this, "name", "Name");
-        authz.util.addAnyErrors(this);
+        as.util.addRequired(this, "name", "Name");
+        as.util.addAnyErrors(this);
 
         vm.allowRefreshTokenEnabled = ko.computed(function () {
             return vm.flow() === "Code" || vm.flow() === "ResourceOwner";

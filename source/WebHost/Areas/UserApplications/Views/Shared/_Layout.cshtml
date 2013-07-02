@@ -10,14 +10,23 @@
     @Html.Partial("Nav")
 }
 
+@functions{
+    public string GetAntiForgeryToken()
+    {
+        string cookieToken, formToken;
+        AntiForgery.GetTokens(null, out cookieToken, out formToken);
+        return cookieToken + ":" + formToken;                
+    }
+}
+
 <div id="main">
     <span class="alert" id="message"></span>
     @RenderBody()
+    <input type="hidden" id="antiForgeryToken" value="@GetAntiForgeryToken()" />
 </div>
 
 @section scripts{
     @Scripts.Render("~/bundles/UserApplications")
     @RenderSection("scripts", required: false)
-    <script src='@Url.Action("Urls", "Home")'></script>
 }
 

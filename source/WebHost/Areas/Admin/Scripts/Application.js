@@ -5,7 +5,7 @@
 
 
 $(function () {
-    var svc = new authz.Service("admin/Applications");
+    var svc = new as.Service("admin/Applications");
 
     function Application(keys, data) {
         var vm = this;
@@ -27,11 +27,11 @@ $(function () {
         ko.mapping.fromJS(data, null, this);
         this.signingKeys = ko.mapping.fromJS(keys);
 
-        authz.util.addRequired(this, "name", "Name");
-        authz.util.addRequired(this, "namespace", "Namespace");
-        authz.util.addRequired(this, "audience", "Audience");
-        authz.util.addRequired(this, "signingKeyId", "Signing Key");
-        authz.util.addAnyErrors(this);
+        as.util.addRequired(this, "name", "Name");
+        as.util.addRequired(this, "namespace", "Namespace");
+        as.util.addRequired(this, "audience", "Audience");
+        as.util.addRequired(this, "signingKeyId", "Signing Key");
+        as.util.addAnyErrors(this);
 
         vm.menusEnabled = ko.computed(function () {
             return !vm.isNew();
@@ -63,7 +63,7 @@ $(function () {
         };
     }
 
-    var keysSvc = new authz.Service("admin/Keys");
+    var keysSvc = new as.Service("admin/Keys");
     var kd = keysSvc.get();
     var ad = null;
 

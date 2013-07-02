@@ -5,8 +5,8 @@
 
 
 $(function () {
-    var svc = new authz.Service("admin/X509Keys");
-    var certSvc = new authz.Service("admin/Certificates");
+    var svc = new as.Service("admin/X509Keys");
+    var certSvc = new as.Service("admin/Certificates");
 
     function X509Key(list, data) {
         var vm = this;
@@ -19,9 +19,9 @@ $(function () {
         };
         ko.mapping.fromJS(data, null, vm);
 
-        authz.util.addRequired(this, "name", "Name");
-        authz.util.addRequired(this, "thumbprint", "Certificate");
-        authz.util.addAnyErrors(this);
+        as.util.addRequired(this, "name", "Name");
+        as.util.addRequired(this, "thumbprint", "Certificate");
+        as.util.addAnyErrors(this);
 
         var certs = [];
         if (vm.isNew() || !vm.thumbprint()) {
@@ -41,7 +41,7 @@ $(function () {
         });
 
         vm.certUrl = ko.computed(function () {
-            return authz.baseUrl + "admin/Certificates/" + vm.id();
+            return as.Service.baseUrl + "admin/Certificates/" + vm.id();
         });
 
         vm.save = function () {

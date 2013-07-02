@@ -50,9 +50,6 @@ namespace Thinktecture.AuthorizationServer.WebHost.Areas.Admin
 
         private void RegisterAdminBundles(BundleCollection bundles)
         {
-            bundles.Add(new ScriptBundle("~/bundles/admin").Include(
-                "~/Areas/Admin/Scripts/Admin.js"));
-            
             bundles.Add(new StyleBundle("~/Content/admin").Include(
                 "~/Areas/Admin/Content/Admin.css"));
         }

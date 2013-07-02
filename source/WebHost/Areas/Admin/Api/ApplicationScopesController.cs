@@ -15,6 +15,7 @@ using Thinktecture.IdentityModel.Authorization.WebApi;
 namespace Thinktecture.AuthorizationServer.WebHost.Areas.Admin.Api
 {
     [ClaimsAuthorize(Constants.Actions.Configure, Constants.Resources.Server)]
+    [ValidateHttpAntiForgeryToken]
     public class ApplicationScopesController : ApiController
     {
         IAuthorizationServerAdministration config;

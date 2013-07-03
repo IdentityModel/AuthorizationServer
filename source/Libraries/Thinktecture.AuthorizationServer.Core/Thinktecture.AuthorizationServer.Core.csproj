@@ -57,11 +57,15 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Constants.cs" />
+    <Compile Include="DataProtectection\LocalKeyProtection.cs" />
+    <Compile Include="DataProtectection\MachineKeyProtection.cs" />
+    <Compile Include="DataProtectection\NoProtectection.cs" />
     <Compile Include="Extensions\ClaimsPrincipalExtensions.cs" />
     <Compile Include="Interfaces\IAuthorizationServerAdministration.cs" />
     <Compile Include="Interfaces\IAuthorizationServerAdministratorsService.cs" />
     <Compile Include="Interfaces\IAuthorizationServerConfiguration.cs" />
     <Compile Include="Interfaces\IResourceOwnerCredentialValidation.cs" />
+    <Compile Include="DataProtectection\IDataProtectection.cs" />
     <Compile Include="Interfaces\ITokenHandleManager.cs" />
     <Compile Include="Extensions\ScopeExtensions.cs" />
     <Compile Include="Extensions\RedirectUriExtensions.cs" />

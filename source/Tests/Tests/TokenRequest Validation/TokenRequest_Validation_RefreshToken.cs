@@ -33,6 +33,33 @@ namespace Thinktecture.AuthorizationServer.Test
         }
 
         [TestMethod]
+        public void ExpiredRefreshToken()
+        {
+            TestTokenHandleManager handleManager =
+                new TestTokenHandleManager("abc", "codeclient", "https://validredirect", expired: true);
+
+            var validator = new TokenRequestValidator(handleManager);
+            var app = _testConfig.FindApplication("test");
+            var request = new TokenRequest
+            {
+                Grant_Type = OAuthConstants.GrantTypes.RefreshToken,
+                Refresh_Token = "abc"
+            };
+
+            try
+            {
+                var result = validator.Validate(app, request, _client);
+            }
+            catch (TokenRequestValidationException ex)
+            {
+                Assert.AreEqual(OAuthConstants.Errors.InvalidGrant, ex.OAuthError);
+                return;
+            }
+
+            Assert.Fail("No exception thrown.");
+        }
+
+        [TestMethod]
         public void MissingCode()
         {
             var validator = new TokenRequestValidator(_handleManager);

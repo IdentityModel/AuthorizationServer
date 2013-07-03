@@ -25,3 +25,6 @@
 td {
   white-space: nowrap;
 }
+td.icon {
+  padding-left: 20px;
+}

@@ -157,7 +157,7 @@ namespace Thinktecture.AuthorizationServer.OAuth2
                         validatedRequest.RefreshTokenExpiration = DateTime.UtcNow.AddHours(rememberDuration.Value);
                     }
 
-                    Tracing.Information("Refresh token lifetime in hours: " + rememberDuration);
+                    Tracing.Information("Selected refresh token lifetime in hours: " + rememberDuration);
                 }
 
                 var grantResult = PerformGrant(validatedRequest);

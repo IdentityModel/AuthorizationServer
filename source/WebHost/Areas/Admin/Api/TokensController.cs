@@ -27,14 +27,14 @@ namespace Thinktecture.AuthorizationServer.WebHost.Areas.Admin.Api
         public HttpResponseMessage Get()
         {
             var query =
-                from item in config.Tokens.All
-                orderby item.Created
+                from item in config.Tokens.All.OrderBy(x=>x.Created).ToArray()
                 select new { 
                     id = item.HandleId,
                     type = item.Type == TokenHandleType.AuthorizationCode ? "authorization" : (item.Type == TokenHandleType.RefreshTokenIdentifier ? "refresh":"consent"),
                     subject = item.Subject,
                     client = item.Client.Name,
-                    created = item.Created,
+                    created = item.Created.ToString("s"),
+                    expiration = item.Expiration != null ? item.Expiration.Value.ToString("s") : "",
                     application = item.Application.Name
                 };
             return Request.CreateResponse(HttpStatusCode.OK, query.ToArray());

@@ -150,11 +150,11 @@ namespace Thinktecture.AuthorizationServer.OAuth2
                 {
                     if (rememberDuration == -1)
                     {
-                        validatedRequest.RefreshTokenExpiration = DateTime.UtcNow.AddYears(50);
+                        validatedRequest.RequestedRefreshTokenExpiration = DateTime.UtcNow.AddYears(50);
                     }
                     else
                     {
-                        validatedRequest.RefreshTokenExpiration = DateTime.UtcNow.AddHours(rememberDuration.Value);
+                        validatedRequest.RequestedRefreshTokenExpiration = DateTime.UtcNow.AddHours(rememberDuration.Value);
                     }
 
                     Tracing.Information("Selected refresh token lifetime in hours: " + rememberDuration);
@@ -197,7 +197,7 @@ namespace Thinktecture.AuthorizationServer.OAuth2
                 ClaimsPrincipal.Current.FilterInternalClaims(),
                 validatedRequest.Scopes,
                 validatedRequest.RequestingRefreshToken,
-                validatedRequest.RefreshTokenExpiration);
+                validatedRequest.RequestedRefreshTokenExpiration);
 
             _handleManager.Add(handle);
             var tokenString = string.Format("code={0}", handle.HandleId);

@@ -154,6 +154,22 @@ namespace Thinktecture.AuthorizationServer.OAuth2
             validatedRequest.TokenHandle = handle;
             Tracing.Information("Token handle found: " + handle.HandleId);
 
+            // make sure the refresh token has an expiration time
+            if (validatedRequest.TokenHandle.Expiration == null)
+            {
+                throw new TokenRequestValidationException(
+                    "No expiration time set for refresh token. That's not allowed.",
+                    OAuthConstants.Errors.InvalidGrant);
+            }
+
+            // make sure refresh token has not expired
+            if (DateTime.UtcNow > validatedRequest.TokenHandle.Expiration)
+            {
+                throw new TokenRequestValidationException(
+                    "Refresh token expired.",
+                    OAuthConstants.Errors.InvalidGrant);
+            }
+
             // check the client binding
             if (handle.Client.ClientId != validatedRequest.Client.ClientId)
             {
@@ -241,7 +257,7 @@ namespace Thinktecture.AuthorizationServer.OAuth2
 
             validatedRequest.AuthorizationCode = request.Code;
             Tracing.Information("Authorization code: " + validatedRequest.AuthorizationCode);
-            
+
             // check for authorization code in datastore
             var handle = _handleManager.Get(validatedRequest.AuthorizationCode);
             if (handle == null)

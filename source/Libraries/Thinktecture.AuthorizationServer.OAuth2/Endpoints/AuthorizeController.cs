@@ -127,7 +127,7 @@ namespace Thinktecture.AuthorizationServer.OAuth2
                 //  and storage is allowed 
                 //  and flow == implicit
                 if (validatedRequest.Application.AllowRememberConsentDecision &&
-                    validatedRequest.Client.Flow == OAuthFlow.Implicit &&
+                    validatedRequest.ResponseType == OAuthConstants.ResponseTypes.Token &&
                     rememberDuration == -1)
                 {
                     var handle = TokenHandle.CreateConsentDecisionHandle(

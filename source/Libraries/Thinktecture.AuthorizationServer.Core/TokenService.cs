@@ -78,6 +78,11 @@ namespace Thinktecture.AuthorizationServer
                 "OAuth2",
                 handle.ResourceOwner.ToClaims().ToArray());
 
+            if (DateTime.UtcNow > handle.Expiration)
+            {
+                throw new InvalidOperationException("Refresh token has expired.");
+            }
+
             var validatedRequest = new ValidatedRequest
             {
                 Client = handle.Client,

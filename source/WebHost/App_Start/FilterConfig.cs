@@ -4,6 +4,7 @@
  */
 
 using System.Web.Mvc;
+using Thinktecture.IdentityModel.Web.Mvc;
 
 namespace Thinktecture.AuthorizationServer.WebHost
 {
@@ -12,6 +13,7 @@ namespace Thinktecture.AuthorizationServer.WebHost
         public static void RegisterGlobalFilters(GlobalFilterCollection filters)
         {
             filters.Add(new HandleErrorAttribute());
+            filters.Add(new FrameOptionsAttribute(FrameOptions.Deny));
         }
     }
 }

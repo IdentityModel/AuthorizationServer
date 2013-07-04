@@ -9,10 +9,12 @@ using System.Security.Claims;
 using System.Web.Mvc;
 using Thinktecture.AuthorizationServer.Interfaces;
 using Thinktecture.AuthorizationServer.Models;
+using Thinktecture.IdentityModel.Web.Mvc;
 
 namespace Thinktecture.AuthorizationServer.OAuth2
 {
     [Authorize]
+    [FrameOptions(FrameOptions.Deny)]
     public class AuthorizeController : Controller
     {
         ITokenHandleManager _handleManager;

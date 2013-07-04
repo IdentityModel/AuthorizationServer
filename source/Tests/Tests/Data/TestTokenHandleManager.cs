@@ -1,4 +1,5 @@
-﻿using Thinktecture.AuthorizationServer.Interfaces;
+﻿using System;
+using Thinktecture.AuthorizationServer.Interfaces;
 using Thinktecture.AuthorizationServer.Models;
 
 namespace Thinktecture.AuthorizationServer.Test
@@ -8,12 +9,14 @@ namespace Thinktecture.AuthorizationServer.Test
         string _clientId;
         string _redirectUri;
         string _id;
+        bool _expired;
 
-        public TestTokenHandleManager(string id, string clientId, string redirectUri)
+        public TestTokenHandleManager(string id, string clientId, string redirectUri, bool expired = false)
         {
             _clientId = clientId;
             _redirectUri = redirectUri;
             _id = id;
+            _expired = expired;
         }
 
         public void Add(Models.TokenHandle handle)
@@ -23,6 +26,16 @@ namespace Thinktecture.AuthorizationServer.Test
 
         public Models.TokenHandle Get(string handleIdentifier)
         {
+            DateTime expiration;
+            if (_expired)
+            {
+                expiration = DateTime.UtcNow.Subtract(TimeSpan.FromHours(1));
+            }
+            else
+            {
+                expiration = DateTime.UtcNow.Add(TimeSpan.FromHours(1));
+            }
+
             if (handleIdentifier == _id)
             {
                 var handle = new TokenHandle
@@ -32,7 +45,8 @@ namespace Thinktecture.AuthorizationServer.Test
                         ClientId = _clientId
                     },
 
-                    RedirectUri = _redirectUri
+                    RedirectUri = _redirectUri,
+                    Expiration = expiration
                 };
 
                 return handle;

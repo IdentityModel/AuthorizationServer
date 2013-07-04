@@ -52,17 +52,20 @@ namespace Thinktecture.AuthorizationServer.OAuth2
             if (validatedRequest.ShowConsent)
             {
                 // todo: check first if a remembered consent decision exists
-                var handle = _handleManager.Find(
-                    ClaimsPrincipal.Current.GetSubject(),
-                    validatedRequest.Client,
-                    validatedRequest.Application,
-                    validatedRequest.Scopes,
-                    TokenHandleType.ConsentDecision);
-
-                if (handle != null)
+                if (validatedRequest.ResponseType == OAuthConstants.ResponseTypes.Token)
                 {
-                    Tracing.Verbose("Stored consent decision found.");
-                    return PerformGrant(validatedRequest);
+                    var handle = _handleManager.Find(
+                        ClaimsPrincipal.Current.GetSubject(),
+                        validatedRequest.Client,
+                        validatedRequest.Application,
+                        validatedRequest.Scopes,
+                        TokenHandleType.ConsentDecision);
+
+                    if (handle != null)
+                    {
+                        Tracing.Verbose("Stored consent decision found.");
+                        return PerformGrant(validatedRequest);
+                    }
                 }
 
                 // show consent screen
@@ -119,9 +122,12 @@ namespace Thinktecture.AuthorizationServer.OAuth2
                 // parse scopes form post and substitue scopes
                 validatedRequest.Scopes.RemoveAll(x => !scopes.Contains(x.Name));
 
-                // store consent decision if checkbox was checked (and storage is allowed) and flow == implicit
+                // store consent decision if 
+                //  checkbox was checked
+                //  and storage is allowed 
+                //  and flow == implicit
                 if (validatedRequest.Application.AllowRememberConsentDecision &&
-                    validatedRequest.Client.Flow == OAuthFlow.Implicit &&
+                    validatedRequest.ResponseType == OAuthConstants.ResponseTypes.Token &&
                     rememberDuration == -1)
                 {
                     var handle = TokenHandle.CreateConsentDecisionHandle(
@@ -133,6 +139,25 @@ namespace Thinktecture.AuthorizationServer.OAuth2
                     _handleManager.Add(handle);
 
                     Tracing.Information("Consent decision stored.");
+                }
+
+                // parse refresh token lifetime if 
+                // code flow is used 
+                // and refresh tokens are allowed
+                if (validatedRequest.RequestingRefreshToken &&
+                    rememberDuration != null &&
+                    validatedRequest.Client.Flow == OAuthFlow.Code)
+                {
+                    if (rememberDuration == -1)
+                    {
+                        validatedRequest.RequestedRefreshTokenExpiration = DateTime.UtcNow.AddYears(50);
+                    }
+                    else
+                    {
+                        validatedRequest.RequestedRefreshTokenExpiration = DateTime.UtcNow.AddHours(rememberDuration.Value);
+                    }
+
+                    Tracing.Information("Selected refresh token lifetime in hours: " + rememberDuration);
                 }
 
                 var grantResult = PerformGrant(validatedRequest);
@@ -171,7 +196,8 @@ namespace Thinktecture.AuthorizationServer.OAuth2
                 validatedRequest.RedirectUri.Uri,
                 ClaimsPrincipal.Current.FilterInternalClaims(),
                 validatedRequest.Scopes,
-                validatedRequest.RequestingRefreshToken);
+                validatedRequest.RequestingRefreshToken,
+                validatedRequest.RequestedRefreshTokenExpiration);
 
             _handleManager.Add(handle);
             var tokenString = string.Format("code={0}", handle.HandleId);

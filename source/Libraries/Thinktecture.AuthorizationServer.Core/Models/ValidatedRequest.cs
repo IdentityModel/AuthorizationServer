@@ -3,6 +3,7 @@
  * see license.txt
  */
 
+using System;
 using System.Collections.Generic;
 
 namespace Thinktecture.AuthorizationServer.Models
@@ -22,6 +23,7 @@ namespace Thinktecture.AuthorizationServer.Models
         public string RefreshToken { get; set; }
         public TokenHandle TokenHandle { get; set; }
         public bool RequestingRefreshToken { get; set; }
+        public DateTime RequestedRefreshTokenExpiration { get; set; }
         public bool ShowConsent { get; set; }
         public bool ShowRememberConsent { get; set; }
     }

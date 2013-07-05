@@ -87,7 +87,7 @@ namespace Thinktecture.AuthorizationServer.WebHost.Areas.Admin.Api
 
             if (!String.IsNullOrEmpty(model.ClientSecret))
             {
-                item.ClientSecret = model.ClientSecret;
+                item.SetSharedSecret(model.ClientSecret);
             }
             item.Name = model.Name;
             item.Flow = model.Flow;
@@ -125,7 +125,7 @@ namespace Thinktecture.AuthorizationServer.WebHost.Areas.Admin.Api
 
             var item = new Client();
             item.ClientId = model.ClientId;
-            item.ClientSecret = model.ClientSecret;
+            item.SetSharedSecret(model.ClientSecret);
             item.Name = model.Name;
             item.Flow = model.Flow;
             item.AllowRefreshToken = model.AllowRefreshToken;

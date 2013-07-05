@@ -23,7 +23,7 @@ namespace Thinktecture.AuthorizationServer.Models
                 return null;
             }
 
-            if (client.ClientSecret == clientSecret)
+            if (client.ValidateSharedSecret(clientSecret))
             {
                 return client;
             }

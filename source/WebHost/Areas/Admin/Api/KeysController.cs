@@ -54,7 +54,7 @@ namespace Thinktecture.AuthorizationServer.WebHost.Areas.Admin.Api
 
             var sk = new SymmetricKey();
             sk.Name = model.Name;
-            sk.Value = Convert.FromBase64String(model.Value);
+            sk.SetValue(Convert.FromBase64String(model.Value));
             this.config.Keys.Add(sk);
             this.config.SaveChanges();
 

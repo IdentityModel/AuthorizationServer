@@ -3,6 +3,7 @@
  * see license.txt
  */
 
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
@@ -14,7 +15,7 @@ namespace Thinktecture.AuthorizationServer.Models
         [Required]
         public virtual string ClientId { get; set; }
         [Required]
-        public virtual string ClientSecret { get; set; }
+        public virtual string ClientSecret { get; private set; }
         public virtual ClientAuthenticationMethod AuthenticationMethod { get; set; }
         [Required]
         public virtual string Name { get; set; }
@@ -36,16 +37,23 @@ namespace Thinktecture.AuthorizationServer.Models
             }
         }
 
-        public void SetSharedSecret(string password, byte[] masterKey)
+        public void SetSharedSecret(string password)
         {
             this.AuthenticationMethod = ClientAuthenticationMethod.SharedSecret;
-            this.ClientSecret = password;
+
+            var bytes = System.Text.Encoding.UTF8.GetBytes(password);
+            bytes = DataProtectection.Instance.Protect(bytes);
+            this.ClientSecret = Convert.ToBase64String(bytes);
         }
 
-        public bool ValidateSharedSecret(string password, byte[] masterKey)
+        public bool ValidateSharedSecret(string password)
         {
             if (this.AuthenticationMethod != ClientAuthenticationMethod.SharedSecret) return false;
-            return password == this.ClientSecret;
+
+            var bytes = Convert.FromBase64String(this.ClientSecret);
+            bytes = DataProtectection.Instance.Unprotect(bytes);
+            var val = System.Text.Encoding.UTF8.GetString(bytes);
+            return Thinktecture.IdentityModel.ObfuscatingComparer.IsEqual(password, val);
         }
         
         public void SetCertificateThumbprint(string thumbprint)

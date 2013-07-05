@@ -4,6 +4,7 @@
  */
 
 using System.Web.Mvc;
+using Thinktecture.AuthorizationServer.WebHost.Security;
 using Thinktecture.IdentityModel.Web.Mvc;
 
 namespace Thinktecture.AuthorizationServer.WebHost
@@ -14,6 +15,7 @@ namespace Thinktecture.AuthorizationServer.WebHost
         {
             filters.Add(new HandleErrorAttribute());
             filters.Add(new FrameOptionsAttribute(FrameOptions.Deny));
+            filters.Add(new DataProtectionConfigurationFilter());
         }
     }
 }

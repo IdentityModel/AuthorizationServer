@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.IdentityModel.Tokens;
 using System.Linq;
@@ -49,22 +50,26 @@ namespace Thinktecture.AuthorizationServer.Models
     public class SymmetricKey : SigningKey
     {
         [Required]
-        public virtual byte[] Value { get; set; }
+        public virtual byte[] Value { get; private set; }
 
-        public void SetValue(byte[] value, byte[] masterKey)
+        public void SetValue(byte[] value)
         {
-            this.Value = value;
+            if (value == null || value.Length == 0) throw new ArgumentNullException("value");
+            
+            this.Value = DataProtectection.Instance.Protect(value);
         }
 
-        public byte[] GetValue(byte[] masterKey)
+        public byte[] GetValue()
         {
-            return this.Value;
+            if (this.Value == null) return null;
+            return DataProtectection.Instance.Unprotect(this.Value);
         }
 
         public override SigningCredentials GetSigningCredentials()
         {
-            if (this.Value == null) return null;
-            return new HmacSigningCredentials(this.Value);
+            var val = GetValue();
+            if (val == null) return null;
+            return new HmacSigningCredentials(val);
         }
     }
 }

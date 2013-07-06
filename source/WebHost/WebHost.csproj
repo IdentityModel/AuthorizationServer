@@ -220,6 +220,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Areas\Admin\Content\Admin.less" />
+    <Content Include="App_Data\dummy.txt" />
     <Content Include="Areas\Admin\Content\Admin.css">
       <DependentUpon>Admin.less</DependentUpon>
     </Content>
@@ -351,7 +352,9 @@
     <None Include="Content\Site.less" />
     <Content Include="Configuration\identityModel.config" />
     <Content Include="Configuration\identityModel.services.config" />
-    <Content Include="Configuration\tracing.config" />
+    <Content Include="Configuration\tracing.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Configuration\autofac.config">
       <SubType>Designer</SubType>
     </Content>
@@ -359,6 +362,7 @@
     <Content Include="Scripts\app\as.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
+    <None Include="Properties\PublishProfiles\Local Release.pubxml" />
     <None Include="Scripts\jquery-2.0.2.intellisense.js" />
     <Content Include="Scripts\jquery-2.0.2.js" />
     <Content Include="Scripts\jquery-2.0.2.min.js" />
@@ -422,7 +426,6 @@
     <None Include="_bin_deployableAssemblies\x86\Microsoft.VC90.CRT\Microsoft.VC90.CRT.manifest" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="App_Data\" />
     <Folder Include="Areas\InitialConfiguration\Views\Shared\" />
   </ItemGroup>
   <ItemGroup>

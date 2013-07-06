@@ -12,9 +12,6 @@ $(function () {
         var vm = this;
         vm.isNew = ko.observable(!data);
 
-        if (data && !data.clientSecret) {
-            data.clientSecret = "";
-        }
         data = data || {
             clientId: "",
             clientSecret:"",
@@ -27,10 +24,7 @@ $(function () {
         ko.mapping.fromJS(data, null, this);
 
         as.util.addRequired(this, "clientId", "Client ID");
-        as.util.addValidation(this, "clientSecret", "Client Secret is required", ko.computed(function () {
-            if (!vm.isNew()) return true;
-            return !!vm.clientSecret();
-        }));
+        as.util.addRequired(this, "clientSecret", "Client Secret");
         as.util.addRequired(this, "name", "Name");
         as.util.addAnyErrors(this);
 

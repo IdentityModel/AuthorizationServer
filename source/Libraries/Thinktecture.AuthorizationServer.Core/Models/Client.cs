@@ -45,14 +45,20 @@ namespace Thinktecture.AuthorizationServer.Models
             bytes = DataProtectection.Instance.Protect(bytes);
             this.ClientSecret = Convert.ToBase64String(bytes);
         }
+        public string GetSharedSecret()
+        {
+            if (this.AuthenticationMethod != ClientAuthenticationMethod.SharedSecret) return null;
+
+            var bytes = Convert.FromBase64String(this.ClientSecret);
+            bytes = DataProtectection.Instance.Unprotect(bytes);
+            return System.Text.Encoding.UTF8.GetString(bytes);
+        }
 
         public bool ValidateSharedSecret(string password)
         {
             if (this.AuthenticationMethod != ClientAuthenticationMethod.SharedSecret) return false;
 
-            var bytes = Convert.FromBase64String(this.ClientSecret);
-            bytes = DataProtectection.Instance.Unprotect(bytes);
-            var val = System.Text.Encoding.UTF8.GetString(bytes);
+            var val = GetSharedSecret();
             return Thinktecture.IdentityModel.ObfuscatingComparer.IsEqual(password, val);
         }
         

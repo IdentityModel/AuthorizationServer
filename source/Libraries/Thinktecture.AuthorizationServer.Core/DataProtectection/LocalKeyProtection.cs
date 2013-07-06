@@ -5,19 +5,31 @@
 
 using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Web.Security;
+using Thinktecture.IdentityModel;
 
-namespace Thinktecture.AuthorizationServer.DataProtectection
+namespace Thinktecture.AuthorizationServer
 {
     public class LocalKeyProtection : IDataProtectection
     {
+        public const string AppSettingsConfigurationKey = "authz:protectionKey";
+
         byte[] cipherKey;
+        public LocalKeyProtection()
+            : this(ConfigurationManager.AppSettings[AppSettingsConfigurationKey])
+        {
+        }
+
         public LocalKeyProtection(string cipherHexKey)
         {
+            if (String.IsNullOrWhiteSpace(cipherHexKey)) throw new ArgumentNullException("cipherHexKey");
+
             this.cipherKey = BytesFromHexString(cipherHexKey);
+            if (this.cipherKey.Length * 8 != 256) throw new ArgumentException("cipherHexKey must be 256 bits or 64 hex characters");
         }
 
         public byte[] Protect(byte[] data)

@@ -10,7 +10,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Web.Security;
 
-namespace Thinktecture.AuthorizationServer.DataProtectection
+namespace Thinktecture.AuthorizationServer
 {
     public class NoProtection : IDataProtectection
     {

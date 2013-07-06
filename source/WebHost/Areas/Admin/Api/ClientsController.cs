@@ -50,7 +50,8 @@ namespace Thinktecture.AuthorizationServer.WebHost.Areas.Admin.Api
                 flow = Enum.GetName(typeof(OAuthFlow), item.Flow),
                 item.AllowRefreshToken, 
                 item.RequireConsent,
-                item.Enabled
+                item.Enabled,
+                clientSecret = item.GetSharedSecret()
             };
             return Request.CreateResponse(HttpStatusCode.OK, data);
         }
@@ -85,15 +86,12 @@ namespace Thinktecture.AuthorizationServer.WebHost.Areas.Admin.Api
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ModelState.GetErrors());
             }
 
-            if (!String.IsNullOrEmpty(model.ClientSecret))
-            {
-                item.ClientSecret = model.ClientSecret;
-            }
             item.Name = model.Name;
             item.Flow = model.Flow;
             item.AllowRefreshToken = model.AllowRefreshToken;
             item.RequireConsent = model.RequireConsent;
             item.Enabled = model.Enabled;
+            item.SetSharedSecret(model.ClientSecret);
 
             this.config.SaveChanges();
 
@@ -125,12 +123,12 @@ namespace Thinktecture.AuthorizationServer.WebHost.Areas.Admin.Api
 
             var item = new Client();
             item.ClientId = model.ClientId;
-            item.ClientSecret = model.ClientSecret;
             item.Name = model.Name;
             item.Flow = model.Flow;
             item.AllowRefreshToken = model.AllowRefreshToken;
             item.RequireConsent = model.RequireConsent;
             item.Enabled = model.Enabled;
+            item.SetSharedSecret(model.ClientSecret);
             
             this.config.Clients.Add(item);
             this.config.SaveChanges();

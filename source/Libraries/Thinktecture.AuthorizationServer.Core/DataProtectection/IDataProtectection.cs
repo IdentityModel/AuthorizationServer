@@ -10,11 +10,16 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Web.Security;
 
-namespace Thinktecture.AuthorizationServer.DataProtectection
+namespace Thinktecture.AuthorizationServer
 {
     public interface IDataProtectection
     {
         byte[] Protect(byte[] data);
         byte[] Unprotect(byte[] data);
+    }
+
+    public static class DataProtectection
+    {
+        public static IDataProtectection Instance { get; set; }
     }
 }

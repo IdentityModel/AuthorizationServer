@@ -36,18 +36,17 @@ namespace Thinktecture.AuthorizationServer.Test
             {
                 Name = "Resource Owner Flow Client",
                 ClientId = "roclient",
-                ClientSecret = "secret",
                 AuthenticationMethod = ClientAuthenticationMethod.SharedSecret,
                 
                 Flow = OAuthFlow.ResourceOwner,
                 AllowRefreshToken = false
             };
+            resourceOwnerClient.SetSharedSecret("secret");
 
             var codeClient = new Client
             {
                 Name = "Code Flow Client",
                 ClientId = "codeclient",
-                ClientSecret = "secret",
                 AuthenticationMethod = ClientAuthenticationMethod.SharedSecret,
 
                 AllowRefreshToken = true,
@@ -67,12 +66,12 @@ namespace Thinktecture.AuthorizationServer.Test
                         }
                     }
             };
+            codeClient.SetSharedSecret("secret");
 
             var implicitClient = new Client
             {
                 Name = "Implicit Flow Client",
                 ClientId = "implicitclient",
-                ClientSecret = "secret",
                 AuthenticationMethod = ClientAuthenticationMethod.SharedSecret,
 
                 AllowRefreshToken = false,
@@ -87,28 +86,29 @@ namespace Thinktecture.AuthorizationServer.Test
                         }
                     }
             };
+            implicitClient.SetSharedSecret("secret");
 
             var trustedClient = new Client
             {
                 Name = "Trusted Client",
                 ClientId = "trustedclient",
-                ClientSecret = "secret",
                 AuthenticationMethod = ClientAuthenticationMethod.SharedSecret,
 
                 AllowRefreshToken = true,
                 Flow = OAuthFlow.ResourceOwner,
             };
+            trustedClient.SetSharedSecret("secret");
 
             var serviceClient = new Client
             {
                 Name = "Service Client",
                 ClientId = "client",
-                ClientSecret = "secret",
                 AuthenticationMethod = ClientAuthenticationMethod.SharedSecret,
 
                 AllowRefreshToken = false,
                 Flow = OAuthFlow.Client,
             };
+            serviceClient.SetSharedSecret("secret");
 
             var readScope = new Scope
             {

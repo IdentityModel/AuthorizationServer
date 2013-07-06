@@ -35,9 +35,9 @@ namespace Thinktecture.AuthorizationServer.WebHost
                         Enabled = true,
                         Name = "Client",
                         ClientId = "client",
-                        ClientSecret = "secret",
                         Flow = OAuthFlow.Client
                     };
+                    client.SetSharedSecret("secret");
                     db.Clients.Add(client);
                     db.SaveChanges();
                 }
@@ -49,11 +49,11 @@ namespace Thinktecture.AuthorizationServer.WebHost
                         Enabled = true,
                         Name = "Resource Owner Flow Client",
                         ClientId = "roclient",
-                        ClientSecret = "secret",
                         AuthenticationMethod = ClientAuthenticationMethod.SharedSecret,
                         Flow = OAuthFlow.ResourceOwner,
                         AllowRefreshToken = true
                     };
+                    resourceOwnerClient.SetSharedSecret("secret");
                     db.Clients.Add(resourceOwnerClient);
                     db.SaveChanges();
                 }
@@ -64,7 +64,6 @@ namespace Thinktecture.AuthorizationServer.WebHost
                         Enabled = true,
                         Name = "Code Flow Client",
                         ClientId = "codeclient",
-                        ClientSecret = "secret",
                         AuthenticationMethod = ClientAuthenticationMethod.SharedSecret,
 
                         AllowRefreshToken = true,
@@ -89,6 +88,7 @@ namespace Thinktecture.AuthorizationServer.WebHost
                             }
                         }
                     };
+                    CodeClient.SetSharedSecret("secret");
                     db.Clients.Add(CodeClient);
                     db.SaveChanges();
                 }
@@ -99,7 +99,6 @@ namespace Thinktecture.AuthorizationServer.WebHost
                         Enabled = true,
                         Name = "Implicit Flow Client",
                         ClientId = "implicitclient",
-                        ClientSecret = "secret",
                         AuthenticationMethod = ClientAuthenticationMethod.SharedSecret,
 
                         AllowRefreshToken = false,
@@ -124,6 +123,7 @@ namespace Thinktecture.AuthorizationServer.WebHost
                             }
                         }
                     };
+                    ImplicitClient.SetSharedSecret("secret");
                     db.Clients.Add(ImplicitClient);
                     db.SaveChanges();
                 }
@@ -170,6 +170,9 @@ namespace Thinktecture.AuthorizationServer.WebHost
                         Emphasize = true
                     };
 
+                    var key = new SymmetricKey { Name = "Demo signing key" };
+                    key.SetValue(Convert.FromBase64String("1fTiS2clmPTUlNcpwYzd5i4AEFJ2DEsd8TcUsllmaKQ="));
+
                     var application = new Application
                     {
                         Enabled = true,
@@ -183,8 +186,9 @@ namespace Thinktecture.AuthorizationServer.WebHost
                         TokenLifetime = 60,
                         AllowRefreshToken = true,
                         AllowRememberConsentDecision = true,
-                        SigningKey = new SymmetricKey { Name="Demo signing key", Value = Convert.FromBase64String("1fTiS2clmPTUlNcpwYzd5i4AEFJ2DEsd8TcUsllmaKQ=") }
+                        SigningKey = key
                     };
+                    
                     db.Applications.Add(application);
                     db.SaveChanges();
                 }

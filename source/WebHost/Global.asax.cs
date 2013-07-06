@@ -25,6 +25,7 @@ namespace Thinktecture.AuthorizationServer.WebHost
             BundleConfig.RegisterBundles(BundleTable.Bundles);
             
             AutofacConfig.Configure();
+            Thinktecture.AuthorizationServer.DataProtectection.Instance = new LocalKeyProtection();
 
             AntiForgeryConfig.UniqueClaimTypeIdentifier = Constants.ClaimTypes.Subject;
             FederatedAuthentication.FederationConfigurationCreated += FederatedAuthentication_FederationConfigurationCreated;

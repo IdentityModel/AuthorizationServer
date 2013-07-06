@@ -15,6 +15,7 @@ namespace Thinktecture.AuthorizationServer.OAuth2
 {
     [Authorize]
     [FrameOptions(FrameOptions.Deny)]
+    [OutputCache(NoStore = true, Location = System.Web.UI.OutputCacheLocation.None)]
     public class AuthorizeController : Controller
     {
         ITokenHandleManager _handleManager;

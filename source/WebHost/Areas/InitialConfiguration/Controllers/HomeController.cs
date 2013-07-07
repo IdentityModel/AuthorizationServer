@@ -31,14 +31,6 @@ namespace Thinktecture.AuthorizationServer.WebHost.Areas.InitialConfiguration.Co
             }
         }
 
-        protected override void OnActionExecuted(ActionExecutedContext filterContext)
-        {
-            if (IsKeyConfigEmpty)
-            {
-                ViewData["EmptyKeys"] = true;
-            }
-        }
-
         public ActionResult Index()
         {
             if (authorizationServerAdministration.GlobalConfiguration != null)
@@ -47,15 +39,6 @@ namespace Thinktecture.AuthorizationServer.WebHost.Areas.InitialConfiguration.Co
             }
 
             return View("Index");
-        }
-
-        public bool IsKeyConfigEmpty
-        {
-            get
-            {
-                return String.IsNullOrWhiteSpace(SymmetricProtectionKeysConfigurationSection.Instance.Confidentiality) &&
-                    String.IsNullOrWhiteSpace(SymmetricProtectionKeysConfigurationSection.Instance.Integrity);
-            }
         }
 
         [HttpPost]
@@ -69,10 +52,7 @@ namespace Thinktecture.AuthorizationServer.WebHost.Areas.InitialConfiguration.Co
 
             if (ModelState.IsValid)
             {
-                if (IsKeyConfigEmpty)
-                {
-                    GenerateNewSymmetricProtectionKeysConfigurationSection();
-                }
+                GenerateNewSymmetricProtectionKeysConfigurationSection();
 
                 var global = new GlobalConfiguration()
                 {

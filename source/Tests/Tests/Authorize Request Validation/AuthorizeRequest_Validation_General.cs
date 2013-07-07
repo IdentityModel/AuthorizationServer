@@ -8,7 +8,15 @@ namespace Thinktecture.AuthorizationServer.Test
     [TestClass]
     public class AuthorizeRequest_Validation_General
     {
-        IAuthorizationServerConfiguration _testConfig = new TestAuthorizationServerConfiguration();
+        IAuthorizationServerConfiguration _testConfig;
+
+        [TestInitialize]
+        public void Init()
+        {
+            DataProtectection.Instance = new NoProtection();
+
+            _testConfig = new TestAuthorizationServerConfiguration();
+        }
 
         [TestMethod]
         public void UnknownApplication()

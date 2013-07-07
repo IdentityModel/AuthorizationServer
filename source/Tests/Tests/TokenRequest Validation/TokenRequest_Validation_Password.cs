@@ -9,11 +9,19 @@ namespace Thinktecture.AuthorizationServer.Test
     [TestClass]
     public class TokenRequest_Validation_Password
     {
-        IAuthorizationServerConfiguration _testConfig = new TestAuthorizationServerConfiguration();
+        IAuthorizationServerConfiguration _testConfig;
+        ClaimsPrincipal _client;
 
-        ClaimsPrincipal _client = Principal.Create("Test",
-                                        new Claim(ClaimTypes.Name, "roclient"),
-                                        new Claim("password", "secret"));
+        [TestInitialize]
+        public void Init()
+        {
+            DataProtectection.Instance = new NoProtection();
+    
+            _testConfig = new TestAuthorizationServerConfiguration();
+            _client = Principal.Create("Test",
+                                            new Claim(ClaimTypes.Name, "roclient"),
+                                            new Claim("password", "secret"));
+        }
 
         [TestMethod]
         public void ValidSingleScope()

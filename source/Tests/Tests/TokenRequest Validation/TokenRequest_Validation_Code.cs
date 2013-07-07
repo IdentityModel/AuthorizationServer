@@ -9,14 +9,24 @@ namespace Thinktecture.AuthorizationServer.Test
     [TestClass]
     public class TokenRequest_Validation_Code
     {
-        IAuthorizationServerConfiguration _testConfig = new TestAuthorizationServerConfiguration();
+        IAuthorizationServerConfiguration _testConfig;
+        ClaimsPrincipal _client;
+        TestTokenHandleManager _handleManager;
 
-        ClaimsPrincipal _client = Principal.Create("Test",
-                                        new Claim(ClaimTypes.Name, "codeclient"),
-                                        new Claim("password", "secret"));
+        [TestInitialize]
+        public void Init()
+        {
+            DataProtectection.Instance = new NoProtection();
+            _testConfig = new TestAuthorizationServerConfiguration();
 
-        TestTokenHandleManager _handleManager = 
-            new TestTokenHandleManager("abc", "codeclient", "https://validredirect");
+            _client = Principal.Create("Test",
+                                            new Claim(ClaimTypes.Name, "codeclient"),
+                                            new Claim("password", "secret"));
+
+            _handleManager =
+                new TestTokenHandleManager("abc", "codeclient", "https://validredirect");
+
+        }
 
         [TestMethod]
         public void ValidSingleScope()

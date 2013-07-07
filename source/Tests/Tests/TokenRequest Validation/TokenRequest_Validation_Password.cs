@@ -18,9 +18,10 @@ namespace Thinktecture.AuthorizationServer.Test
             DataProtectection.Instance = new NoProtection();
     
             _testConfig = new TestAuthorizationServerConfiguration();
-            _client = Principal.Create("Test",
-                                            new Claim(ClaimTypes.Name, "roclient"),
-                                            new Claim("password", "secret"));
+            _client = Principal.Create(
+                "Test",
+                new Claim(ClaimTypes.Name, "roclient"),
+                new Claim("password", "secret"));
         }
 
         [TestMethod]

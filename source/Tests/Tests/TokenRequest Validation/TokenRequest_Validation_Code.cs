@@ -19,12 +19,14 @@ namespace Thinktecture.AuthorizationServer.Test
             DataProtectection.Instance = new NoProtection();
             _testConfig = new TestAuthorizationServerConfiguration();
 
-            _client = Principal.Create("Test",
-                                            new Claim(ClaimTypes.Name, "codeclient"),
-                                            new Claim("password", "secret"));
-
-            _handleManager =
-                new TestTokenHandleManager("abc", "codeclient", "https://validredirect");
+            _client = Principal.Create(
+                "Test",
+                new Claim(ClaimTypes.Name, "codeclient"),
+                new Claim("password", "secret"));
+            _handleManager = new TestTokenHandleManager(
+                "abc", 
+                "codeclient", 
+                "https://validredirect");
 
         }
 

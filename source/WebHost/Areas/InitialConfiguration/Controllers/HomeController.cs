@@ -3,8 +3,11 @@
  * see license.txt
  */
 
+using System;
+using System.Linq;
 using System.Collections.Generic;
 using System.Web.Mvc;
+using Thinktecture.AuthorizationServer.Configuration;
 using Thinktecture.AuthorizationServer.Interfaces;
 using Thinktecture.AuthorizationServer.Models;
 using Thinktecture.AuthorizationServer.WebHost.Areas.InitialConfiguration.Models;
@@ -28,13 +31,31 @@ namespace Thinktecture.AuthorizationServer.WebHost.Areas.InitialConfiguration.Co
             }
         }
 
+        protected override void OnActionExecuted(ActionExecutedContext filterContext)
+        {
+            if (IsKeyConfigEmpty)
+            {
+                ViewData["EmptyKeys"] = true;
+            }
+        }
+
         public ActionResult Index()
         {
             if (authorizationServerAdministration.GlobalConfiguration != null)
             {
                 return Redirect("~/");
             }
+
             return View("Index");
+        }
+
+        public bool IsKeyConfigEmpty
+        {
+            get
+            {
+                return String.IsNullOrWhiteSpace(SymmetricProtectionKeysConfigurationSection.Instance.Confidentiality) &&
+                    String.IsNullOrWhiteSpace(SymmetricProtectionKeysConfigurationSection.Instance.Integrity);
+            }
         }
 
         [HttpPost]
@@ -48,6 +69,11 @@ namespace Thinktecture.AuthorizationServer.WebHost.Areas.InitialConfiguration.Co
 
             if (ModelState.IsValid)
             {
+                if (IsKeyConfigEmpty)
+                {
+                    GenerateNewSymmetricProtectionKeysConfigurationSection();
+                }
+
                 var global = new GlobalConfiguration()
                 {
                     AuthorizationServerName = model.Name,
@@ -69,6 +95,21 @@ namespace Thinktecture.AuthorizationServer.WebHost.Areas.InitialConfiguration.Co
             }
 
             return View("Index");
+        }
+
+        const string configTemplate = "<symmetricProtectionKeys confidentiality=\"{0}\" integrity=\"{1}\" />";
+
+        private void GenerateNewSymmetricProtectionKeysConfigurationSection()
+        {
+            var protectionKeyBytes = IdentityModel.CryptoRandom.CreateRandomKey(32);
+            var protectionKeyString = protectionKeyBytes.Select(x => x.ToString("X2")).Aggregate((x, y) => x + y);
+
+            var integrityKeyString = "";
+
+            var fileContents = String.Format(configTemplate, protectionKeyString, integrityKeyString);
+            System.IO.File.WriteAllText(Server.MapPath("~/App_Data/symmetricProtectionKeys.config"), fileContents);
+            
+            DataProtectection.Instance = new LocalKeyProtection(protectionKeyString);
         }
     }
 }

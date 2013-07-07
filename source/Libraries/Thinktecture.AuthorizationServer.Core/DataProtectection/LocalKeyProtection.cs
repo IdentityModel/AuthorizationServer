@@ -23,12 +23,13 @@ namespace Thinktecture.AuthorizationServer
         {
         }
 
-        public LocalKeyProtection(string confidentialityHexKey)
+        public LocalKeyProtection(string confidentialityKey)
         {
-            if (String.IsNullOrWhiteSpace(confidentialityHexKey)) throw new ArgumentNullException("confidentialityHexKey");
+            if (String.IsNullOrWhiteSpace(confidentialityKey)) throw new ArgumentNullException("confidentialityKey");
+            if (confidentialityKey.Length != 64) throw new ArgumentException("Invalid Confidentiality Key. It must be 256 bits or 64 hex characters.");
 
-            this.cipherKey = BytesFromHexString(confidentialityHexKey);
-            if (this.cipherKey.Length * 8 != 256) throw new ArgumentException("confidentialityHexKey must be 256 bits or 64 hex characters");
+            this.cipherKey = BytesFromHexString(confidentialityKey);
+            if (this.cipherKey == null) throw new ArgumentException("Invalid Confidentiality Key. It must be 256 bits or 64 hex characters.");
         }
 
         public byte[] Protect(byte[] data)

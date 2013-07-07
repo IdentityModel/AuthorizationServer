@@ -3,6 +3,7 @@
  * see license.txt
  */
 
+using System;
 using System.IdentityModel.Services;
 using System.Web.Helpers;
 using System.Web.Http;
@@ -25,10 +26,18 @@ namespace Thinktecture.AuthorizationServer.WebHost
             BundleConfig.RegisterBundles(BundleTable.Bundles);
             
             AutofacConfig.Configure();
-            Thinktecture.AuthorizationServer.DataProtectection.Instance = new LocalKeyProtection();
+            ConfigureDataProtectection();
 
             AntiForgeryConfig.UniqueClaimTypeIdentifier = Constants.ClaimTypes.Subject;
             FederatedAuthentication.FederationConfigurationCreated += FederatedAuthentication_FederationConfigurationCreated;
+        }
+
+        private void ConfigureDataProtectection()
+        {
+            if (!String.IsNullOrWhiteSpace(Configuration.SymmetricProtectionKeysConfigurationSection.Instance.Confidentiality))
+            {
+                DataProtectection.Instance = new LocalKeyProtection();
+            }
         }
 
         void FederatedAuthentication_FederationConfigurationCreated(object sender, System.IdentityModel.Services.Configuration.FederationConfigurationCreatedEventArgs e)

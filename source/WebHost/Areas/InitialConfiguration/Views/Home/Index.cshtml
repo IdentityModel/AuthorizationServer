@@ -31,6 +31,10 @@
     <h1>Initial Configuration</h1>
     <p>Enter your authorization server's initial values.</p>
 </div>
+@if (true.Equals(ViewData["EmptyKeys"]))
+{
+    <p class="alert alert-warning">We've detected that your ~/App_Data/symmetricProtectionKeys.config file does not have any keys configured. New keys will automatically be generated when you click the "Save" button.</p>
+}
 <fieldset id="global">
     <legend></legend>
     @using (Html.BeginForm())

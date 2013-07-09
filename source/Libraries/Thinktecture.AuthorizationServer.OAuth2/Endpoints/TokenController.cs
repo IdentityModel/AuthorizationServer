@@ -132,7 +132,8 @@ namespace Thinktecture.AuthorizationServer.OAuth2
                         validatedRequest.Client,
                         validatedRequest.Application,
                         principal.Claims,
-                        validatedRequest.Scopes);
+                        validatedRequest.Scopes,
+                        DateTime.UtcNow.AddYears(5));
 
                     _handleManager.Add(handle);
                     response.RefreshToken = handle.HandleId;

@@ -26,18 +26,10 @@ namespace Thinktecture.AuthorizationServer.WebHost
             BundleConfig.RegisterBundles(BundleTable.Bundles);
             
             AutofacConfig.Configure();
-            ConfigureDataProtectection();
+            DataProtectionConfig.Configure();
 
             AntiForgeryConfig.UniqueClaimTypeIdentifier = Constants.ClaimTypes.Subject;
             FederatedAuthentication.FederationConfigurationCreated += FederatedAuthentication_FederationConfigurationCreated;
-        }
-
-        private void ConfigureDataProtectection()
-        {
-            if (!String.IsNullOrWhiteSpace(Configuration.SymmetricProtectionKeysConfigurationSection.Instance.Confidentiality))
-            {
-                DataProtectection.Instance = new LocalKeyProtection();
-            }
         }
 
         void FederatedAuthentication_FederationConfigurationCreated(object sender, System.IdentityModel.Services.Configuration.FederationConfigurationCreatedEventArgs e)

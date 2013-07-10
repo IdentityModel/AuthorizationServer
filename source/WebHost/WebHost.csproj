@@ -165,6 +165,7 @@
   <ItemGroup>
     <Compile Include="App_Start\AutofacConfig.cs" />
     <Compile Include="App_Start\BundleConfig.cs" />
+    <Compile Include="App_Start\DataProtectionConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
@@ -222,7 +223,6 @@
   <ItemGroup>
     <None Include="Areas\Admin\Content\Admin.less" />
     <Content Include="App_Data\dummy.txt" />
-    <None Include="App_Data\symmetricProtectionKeys.config" />
     <Content Include="Areas\Admin\Content\Admin.css">
       <DependentUpon>Admin.less</DependentUpon>
     </Content>

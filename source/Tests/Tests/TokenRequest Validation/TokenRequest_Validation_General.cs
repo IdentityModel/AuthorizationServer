@@ -11,7 +11,13 @@ namespace Thinktecture.AuthorizationServer.Test
     [TestClass]
     public class TokenRequest_Validation_General
     {
-        IAuthorizationServerConfiguration _testConfig = new TestAuthorizationServerConfiguration();
+        IAuthorizationServerConfiguration _testConfig;
+
+        [TestInitialize]
+        public void Init()
+        {
+            _testConfig = new TestAuthorizationServerConfiguration();
+        }
 
         [TestMethod]
         public void UnknownApplication()

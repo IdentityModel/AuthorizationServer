@@ -223,6 +223,9 @@
   <ItemGroup>
     <None Include="Areas\Admin\Content\Admin.less" />
     <Content Include="App_Data\dummy.txt" />
+    <None Include="App_Data\symmetricProtectionKeys.config">
+      <SubType>Designer</SubType>
+    </None>
     <Content Include="Areas\Admin\Content\Admin.css">
       <DependentUpon>Admin.less</DependentUpon>
     </Content>

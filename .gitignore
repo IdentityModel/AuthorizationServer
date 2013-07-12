@@ -109,4 +109,4 @@ Backup*/
 UpgradeLog*.XML
 
 # local only
-symmetricProtectionKeys.config
+dataProtectionKeys.json

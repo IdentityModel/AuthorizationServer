@@ -4,18 +4,12 @@
  */
 
 using System;
-using System.Collections.Generic;
-using System.Configuration;
 using System.Linq;
 using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
-using System.Web.Security;
-using Thinktecture.IdentityModel;
 
 namespace Thinktecture.AuthorizationServer
 {
-    public class LocalKeyProtection : IDataProtectection
+    public class KeyProtection : IDataProtectection
     {
         const int RequiredEncryptionKeyByteLength = 32;
         const int RequiredSigningKeyByteLength = 128;
@@ -34,7 +28,16 @@ namespace Thinktecture.AuthorizationServer
         byte[] encryptionKey;
         byte[] signingKey;
 
-        public LocalKeyProtection(string confidentialityKey, string validationKey)
+        public KeyProtection(string confidentialityKey, string validationKey)
+        {
+            SetKeys(confidentialityKey, validationKey);
+        }
+
+        protected KeyProtection()
+        {
+        }
+
+        protected void SetKeys(string confidentialityKey, string validationKey)
         {
             if (String.IsNullOrWhiteSpace(confidentialityKey)) throw new ArgumentNullException("confidentialityKey");
             if (confidentialityKey.Length != RequiredEncryptionKeyByteLength * 2) throw new ArgumentException("Invalid Confidentiality Key. It must be 256 bits or 64 hex characters.");
@@ -44,7 +47,7 @@ namespace Thinktecture.AuthorizationServer
 
             this.encryptionKey = BytesFromHexString(confidentialityKey);
             if (this.encryptionKey == null) throw new ArgumentException("Invalid Confidentiality Key. It must be 256 bits or 64 hex characters.");
-            
+
             this.signingKey = BytesFromHexString(validationKey);
             if (this.signingKey == null) throw new ArgumentException("Invalid Confidentiality Key. It must be 128 bytes or 256 hex characters.");
         }

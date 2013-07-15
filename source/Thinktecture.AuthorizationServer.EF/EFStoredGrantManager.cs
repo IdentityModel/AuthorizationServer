@@ -10,48 +10,48 @@ using Thinktecture.AuthorizationServer.Models;
 
 namespace Thinktecture.AuthorizationServer.EF
 {
-    public class EFTokenHandleManager : ITokenHandleManager
+    public class EFStoredGrantManager : IStoredGrantManager
     {
         AuthorizationServerContext db;
 
-        public EFTokenHandleManager(AuthorizationServerContext db)
+        public EFStoredGrantManager(AuthorizationServerContext db)
         {
             this.db = db;
         }
 
-        public void Add(Models.TokenHandle handle)
+        public void Add(Models.StoredGrant grant)
         {
-            db.TokenHandles.Add(handle);
+            db.StoredGrants.Add(grant);
             db.SaveChanges();
         }
 
-        public Models.TokenHandle Get(string handleIdentifier)
+        public Models.StoredGrant Get(string grantIdentifier)
         {
-            return db.TokenHandles.Find(handleIdentifier);
+            return db.StoredGrants.Find(grantIdentifier);
         }
 
-        public void Delete(string handleIdentifier)
+        public void Delete(string grantIdentifier)
         {
-            var item = db.TokenHandles.Find(handleIdentifier);
+            var item = db.StoredGrants.Find(grantIdentifier);
             if (item != null)
             {
-                db.TokenHandles.Remove(item);
+                db.StoredGrants.Remove(item);
                 db.SaveChanges();
             }
         }
 
-        public Models.TokenHandle Find(string subject, Models.Client client, Models.Application application, IEnumerable<Scope> scopes, TokenHandleType type)
+        public Models.StoredGrant Find(string subject, Models.Client client, Models.Application application, IEnumerable<Scope> scopes, StoredGrantType type)
         {
-            var handles = db.TokenHandles.Where(h => h.Subject == subject &&
+            var grants = db.StoredGrants.Where(h => h.Subject == subject &&
                                                              h.Client.ClientId == client.ClientId &&
                                                              h.Application.ID == application.ID &&
                                                              h.Type == type).ToList();
 
-            foreach (var handle in handles)
+            foreach (var grant in grants)
             {
-                if (handle.Scopes.ScopeEquals(scopes))
+                if (grant.Scopes.ScopeEquals(scopes))
                 {
-                    return handle;
+                    return grant;
                 }
             }
 

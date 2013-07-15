@@ -17,12 +17,12 @@ namespace Thinktecture.AuthorizationServer.OAuth2
     {
         IResourceOwnerCredentialValidation _rocv;
         IAuthorizationServerConfiguration _config;
-        ITokenHandleManager _handleManager;
+        IStoredGrantManager _handleManager;
 
         public TokenController(
             IResourceOwnerCredentialValidation rocv, 
             IAuthorizationServerConfiguration config,
-            ITokenHandleManager handleManager)
+            IStoredGrantManager handleManager)
         {
             _rocv = rocv;
             _config = config;
@@ -89,7 +89,7 @@ namespace Thinktecture.AuthorizationServer.OAuth2
             Tracing.Information("Processing refresh token request");
 
             var tokenService = new TokenService(_config.GlobalConfiguration);
-            var response = tokenService.CreateTokenResponse(validatedRequest.TokenHandle, _handleManager);
+            var response = tokenService.CreateTokenResponse(validatedRequest.StoredGrant, _handleManager);
 
             return Request.CreateTokenResponse(response);
         }
@@ -99,7 +99,7 @@ namespace Thinktecture.AuthorizationServer.OAuth2
             Tracing.Information("Processing authorization code request");
 
             var tokenService = new TokenService(_config.GlobalConfiguration);
-            var response = tokenService.CreateTokenResponse(validatedRequest.TokenHandle, _handleManager);
+            var response = tokenService.CreateTokenResponse(validatedRequest.StoredGrant, _handleManager);
 
             return Request.CreateTokenResponse(response);
         }
@@ -127,7 +127,7 @@ namespace Thinktecture.AuthorizationServer.OAuth2
                 // check if refresh token is enabled for the client
                 if (validatedRequest.Client.AllowRefreshToken && validatedRequest.Application.AllowRefreshToken)
                 {
-                    var handle = TokenHandle.CreateRefreshTokenHandle(
+                    var handle = StoredGrant.CreateRefreshTokenHandle(
                         principal.GetSubject(),
                         validatedRequest.Client,
                         validatedRequest.Application,
@@ -136,7 +136,7 @@ namespace Thinktecture.AuthorizationServer.OAuth2
                         DateTime.UtcNow.AddYears(5));
 
                     _handleManager.Add(handle);
-                    response.RefreshToken = handle.HandleId;
+                    response.RefreshToken = handle.GrantId;
                 }
 
                 return Request.CreateTokenResponse(response);

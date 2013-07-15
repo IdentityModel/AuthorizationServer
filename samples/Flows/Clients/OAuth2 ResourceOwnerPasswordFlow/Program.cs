@@ -14,7 +14,7 @@ namespace Thinktecture.Samples
         {
             var response = RequestToken();
 
-            var token = response.RefreshToken;
+            var token = response.AccessToken;
             //token = RefreshToken(response.RefreshToken);
 
             CallService(token);

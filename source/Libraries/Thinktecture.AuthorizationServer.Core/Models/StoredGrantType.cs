@@ -5,7 +5,7 @@
 
 namespace Thinktecture.AuthorizationServer.Models
 {
-    public enum TokenHandleType
+    public enum StoredGrantType
     {
         AuthorizationCode,
         RefreshTokenIdentifier,

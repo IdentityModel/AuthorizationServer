@@ -4,7 +4,7 @@ using Thinktecture.AuthorizationServer.Models;
 
 namespace Thinktecture.AuthorizationServer.Test
 {
-    class TestTokenHandleManager : ITokenHandleManager
+    class TestTokenHandleManager : IStoredGrantManager
     {
         string _clientId;
         string _redirectUri;
@@ -19,12 +19,12 @@ namespace Thinktecture.AuthorizationServer.Test
             _expired = expired;
         }
 
-        public void Add(Models.TokenHandle handle)
+        public void Add(Models.StoredGrant handle)
         {
             
         }
 
-        public Models.TokenHandle Get(string handleIdentifier)
+        public Models.StoredGrant Get(string handleIdentifier)
         {
             DateTime expiration;
             if (_expired)
@@ -38,7 +38,7 @@ namespace Thinktecture.AuthorizationServer.Test
 
             if (handleIdentifier == _id)
             {
-                var handle = new TokenHandle
+                var handle = new StoredGrant
                 {
                     Client = new Client
                     {
@@ -60,7 +60,7 @@ namespace Thinktecture.AuthorizationServer.Test
             
         }
 
-        public TokenHandle Find(string subject, Client client, Application application, System.Collections.Generic.IEnumerable<Scope> scopes, TokenHandleType type)
+        public StoredGrant Find(string subject, Client client, Application application, System.Collections.Generic.IEnumerable<Scope> scopes, StoredGrantType type)
         {
             throw new System.NotImplementedException();
         }

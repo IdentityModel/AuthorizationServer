@@ -12,11 +12,15 @@ namespace Thinktecture.Samples
 
         static void Main(string[] args)
         {
-            var token = RequestToken();
+            var response = RequestToken();
+
+            var token = response.RefreshToken;
+            //token = RefreshToken(response.RefreshToken);
+
             CallService(token);
         }
 
-        private static string RequestToken()
+        private static AccessTokenResponse RequestToken()
         {
             "Requesting token.".ConsoleYellow();
 
@@ -34,7 +38,7 @@ namespace Thinktecture.Samples
             response.RefreshToken.ConsoleGreen();
             Console.WriteLine();
 
-            return response.AccessToken;
+            return response;
         }
 
         private static void CallService(string token)
@@ -60,6 +64,20 @@ namespace Thinktecture.Samples
 
                 Console.ReadLine();
             }            
+        }
+
+        private static string RefreshToken(string refreshToken)
+        {
+            "Refreshing token.".ConsoleYellow();
+
+            var client = new OAuth2Client(
+                new Uri(Constants.AS.OAuth2TokenEndpoint),
+                Constants.Clients.ResourceOwnerClient,
+                Constants.Clients.ResourceOwnerClientSecret);
+
+            var response = client.RequestAccessTokenRefreshToken(refreshToken);
+
+            return response.AccessToken;
         }
     }
 }

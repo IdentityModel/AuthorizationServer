@@ -24,13 +24,13 @@ namespace Thinktecture.AuthorizationServer
             this.globalConfiguration = globalConfiguration;
         }
 
-        public virtual TokenResponse CreateTokenResponse(TokenHandle handle, ITokenHandleManager handleManager)
+        public virtual TokenResponse CreateTokenResponse(StoredGrant handle, IStoredGrantManager handleManager)
         {
-            if (handle.Type == TokenHandleType.AuthorizationCode)
+            if (handle.Type == StoredGrantType.AuthorizationCode)
             {
                 return CreateTokenResponseFromAuthorizationCode(handle, handleManager);
             }
-            if (handle.Type == TokenHandleType.RefreshTokenIdentifier)
+            if (handle.Type == StoredGrantType.RefreshTokenIdentifier)
             {
                 return CreateTokenResponseFromRefreshToken(handle, handleManager);
             }
@@ -38,7 +38,7 @@ namespace Thinktecture.AuthorizationServer
             throw new ArgumentException("handle.Type");
         }
 
-        public virtual TokenResponse CreateTokenResponseFromAuthorizationCode(TokenHandle handle, ITokenHandleManager handleManager)
+        public virtual TokenResponse CreateTokenResponseFromAuthorizationCode(StoredGrant handle, IStoredGrantManager handleManager)
         {
             var resourceOwner = Principal.Create(
                 "OAuth2",
@@ -55,24 +55,24 @@ namespace Thinktecture.AuthorizationServer
 
             if (handle.CreateRefreshToken)
             {
-                var refreshTokenHandle = TokenHandle.CreateRefreshTokenHandle(
+                var refreshTokenHandle = StoredGrant.CreateRefreshTokenHandle(
                     resourceOwner.GetSubject(),
                     handle.Client,
                     handle.Application,
                     resourceOwner.Claims,
                     handle.Scopes,
-                    handle.RefreshTokenExpiration);
+                    handle.RefreshTokenExpiration.Value);
 
                 handleManager.Add(refreshTokenHandle);
-                response.RefreshToken = refreshTokenHandle.HandleId;
+                response.RefreshToken = refreshTokenHandle.GrantId;
             }
                 
-            handleManager.Delete(handle.HandleId);
+            handleManager.Delete(handle.GrantId);
 
             return response;
         }
 
-        public virtual TokenResponse CreateTokenResponseFromRefreshToken(TokenHandle handle, ITokenHandleManager handleManager)
+        public virtual TokenResponse CreateTokenResponseFromRefreshToken(StoredGrant handle, IStoredGrantManager handleManager)
         {
             var resourceOwner = Principal.Create(
                 "OAuth2",
@@ -91,7 +91,7 @@ namespace Thinktecture.AuthorizationServer
             };
 
             var response = CreateTokenResponse(validatedRequest, resourceOwner);
-            response.RefreshToken = handle.HandleId;
+            response.RefreshToken = handle.GrantId;
             
             return response;
         }

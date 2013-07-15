@@ -21,15 +21,15 @@ namespace Thinktecture.AuthorizationServer.EF
         public DbSet<Client> Clients { get; set; }
         public DbSet<ClientRedirectUri> ClientRedirectUris { get; set; }
         public DbSet<SigningKey> SigningKeys { get; set; }
-        public DbSet<TokenHandle> TokenHandles { get; set; }
+        public DbSet<StoredGrant> StoredGrants { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Client>().HasMany(x => x.RedirectUris).WithRequired();
             modelBuilder.Entity<Application>().HasMany(x => x.Scopes).WithRequired();
             modelBuilder.Entity<Scope>().HasMany(x => x.AllowedClients).WithMany();
-            modelBuilder.Entity<TokenHandle>().HasMany(x => x.Scopes).WithMany();
-            modelBuilder.Entity<TokenHandle>().HasMany(x => x.ResourceOwner).WithRequired();
+            modelBuilder.Entity<StoredGrant>().HasMany(x => x.Scopes).WithMany();
+            modelBuilder.Entity<StoredGrant>().HasMany(x => x.ResourceOwner).WithRequired();
         }
     }
 }

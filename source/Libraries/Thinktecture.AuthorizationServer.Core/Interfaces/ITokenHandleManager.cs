@@ -8,11 +8,11 @@ using Thinktecture.AuthorizationServer.Models;
 
 namespace Thinktecture.AuthorizationServer.Interfaces
 {
-    public interface ITokenHandleManager
+    public interface IStoredGrantManager
     {
-        void Add(TokenHandle handle);
-        TokenHandle Get(string handleIdentifier);
-        TokenHandle Find(string subject, Client client, Application application, IEnumerable<Scope> scopes, TokenHandleType type);
-        void Delete(string handleIdentifier);
+        void Add(StoredGrant grant);
+        StoredGrant Get(string grantIdentifier);
+        StoredGrant Find(string subject, Client client, Application application, IEnumerable<Scope> scopes, StoredGrantType type);
+        void Delete(string grantIdentifier);
     }
 }

@@ -14,14 +14,14 @@ namespace Thinktecture.AuthorizationServer.OAuth2
 {
     public class TokenRequestValidator
     {
-        ITokenHandleManager _handleManager;
+        IStoredGrantManager _handleManager;
 
         public TokenRequestValidator()
         {
 
         }
 
-        public TokenRequestValidator(ITokenHandleManager handleManager)
+        public TokenRequestValidator(IStoredGrantManager handleManager)
         {
             _handleManager = handleManager;
         }
@@ -152,7 +152,7 @@ namespace Thinktecture.AuthorizationServer.OAuth2
             }
 
             validatedRequest.TokenHandle = handle;
-            Tracing.Information("Token handle found: " + handle.HandleId);
+            Tracing.Information("Token handle found: " + handle.GrantId);
 
             // make sure the refresh token has an expiration time
             if (validatedRequest.TokenHandle.Expiration == null)
@@ -268,7 +268,7 @@ namespace Thinktecture.AuthorizationServer.OAuth2
             }
 
             validatedRequest.TokenHandle = handle;
-            Tracing.Information("Token handle found: " + handle.HandleId);
+            Tracing.Information("Token handle found: " + handle.GrantId);
 
             // check the client binding
             if (handle.Client.ClientId != validatedRequest.Client.ClientId)

@@ -32,7 +32,7 @@ namespace Thinktecture.AuthorizationServer.WebHost.Areas.UserApplications.Api
             var query =
                 from token in config.Tokens.All
                 where
-                    token.Type != AuthorizationServer.Models.TokenHandleType.AuthorizationCode &&
+                    token.Type != AuthorizationServer.Models.StoredGrantType.AuthorizationCode &&
                     token.Subject == subject
                 select new { id=token.Client.ClientId, name=token.Client.Name, application=token.Application.Name };
             var tokens = query.ToArray();

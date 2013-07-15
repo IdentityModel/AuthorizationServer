@@ -23,7 +23,7 @@ namespace Thinktecture.AuthorizationServer.Interfaces
         IRepository<Client> Clients { get; }
         IRepository<ClientRedirectUri> ClientRedirects { get; }
         IRepository<SigningKey> Keys { get; }
-        IRepository<TokenHandle> Tokens { get; }
+        IRepository<StoredGrant> Tokens { get; }
 
         void SaveChanges();
     }

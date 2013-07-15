@@ -18,10 +18,10 @@ namespace Thinktecture.AuthorizationServer.OAuth2
     [OutputCache(NoStore = true, Location = System.Web.UI.OutputCacheLocation.None)]
     public class AuthorizeController : Controller
     {
-        ITokenHandleManager _handleManager;
+        IStoredGrantManager _handleManager;
         IAuthorizationServerConfiguration _config;
 
-        public AuthorizeController(ITokenHandleManager handleManager, IAuthorizationServerConfiguration config)
+        public AuthorizeController(IStoredGrantManager handleManager, IAuthorizationServerConfiguration config)
         {
             _handleManager = handleManager;
             _config = config;
@@ -62,7 +62,7 @@ namespace Thinktecture.AuthorizationServer.OAuth2
                         validatedRequest.Client,
                         validatedRequest.Application,
                         validatedRequest.Scopes,
-                        TokenHandleType.ConsentDecision);
+                        StoredGrantType.ConsentDecision);
 
                     if (handle != null)
                     {
@@ -133,7 +133,7 @@ namespace Thinktecture.AuthorizationServer.OAuth2
                     validatedRequest.ResponseType == OAuthConstants.ResponseTypes.Token &&
                     rememberDuration == -1)
                 {
-                    var handle = TokenHandle.CreateConsentDecisionHandle(
+                    var handle = StoredGrant.CreateConsentDecision(
                         ClaimsPrincipal.Current.GetSubject(),
                         validatedRequest.Client,
                         validatedRequest.Application,
@@ -193,7 +193,7 @@ namespace Thinktecture.AuthorizationServer.OAuth2
 
         private ActionResult PerformAuthorizationCodeGrant(ValidatedRequest validatedRequest)
         {
-            var handle = TokenHandle.CreateAuthorizationCode(
+            var handle = StoredGrant.CreateAuthorizationCode(
                 validatedRequest.Client,
                 validatedRequest.Application,
                 validatedRequest.RedirectUri.Uri,
@@ -203,7 +203,7 @@ namespace Thinktecture.AuthorizationServer.OAuth2
                 validatedRequest.RequestedRefreshTokenExpiration);
 
             _handleManager.Add(handle);
-            var tokenString = string.Format("code={0}", handle.HandleId);
+            var tokenString = string.Format("code={0}", handle.GrantId);
 
             if (!string.IsNullOrWhiteSpace(validatedRequest.State))
             {

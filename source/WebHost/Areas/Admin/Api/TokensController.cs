@@ -29,12 +29,12 @@ namespace Thinktecture.AuthorizationServer.WebHost.Areas.Admin.Api
             var query =
                 from item in config.Tokens.All.OrderBy(x=>x.Created).ToArray()
                 select new { 
-                    id = item.HandleId,
-                    type = item.Type == TokenHandleType.AuthorizationCode ? "authorization" : (item.Type == TokenHandleType.RefreshTokenIdentifier ? "refresh":"consent"),
+                    id = item.GrantId,
+                    type = item.Type == StoredGrantType.AuthorizationCode ? "authorization" : (item.Type == StoredGrantType.RefreshTokenIdentifier ? "refresh":"consent"),
                     subject = item.Subject,
                     client = item.Client.Name,
                     created = item.Created.ToString("s"),
-                    expiration = item.Expiration != null ? item.Expiration.Value.ToString("s") : "",
+                    expiration = item.Expiration.ToString("s"),
                     application = item.Application.Name
                 };
             return Request.CreateResponse(HttpStatusCode.OK, query.ToArray());
@@ -42,7 +42,7 @@ namespace Thinktecture.AuthorizationServer.WebHost.Areas.Admin.Api
 
         public HttpResponseMessage Delete(string id)
         {
-            var item = this.config.Tokens.All.SingleOrDefault(x => x.HandleId == id);
+            var item = this.config.Tokens.All.SingleOrDefault(x => x.GrantId == id);
             if (item != null)
             {
                 this.config.Tokens.Remove(item);

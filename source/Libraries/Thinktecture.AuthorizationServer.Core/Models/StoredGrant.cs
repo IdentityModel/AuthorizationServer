@@ -11,64 +11,64 @@ using System.Security.Claims;
 
 namespace Thinktecture.AuthorizationServer.Models
 {
-    public class TokenHandle
+    public class StoredGrant
     {
         [Key]
-        public virtual string HandleId { get; set; }
+        public virtual string GrantId { get; set; }
 
         public string Subject { get; set; }
         public virtual Client Client { get; set; }
         public virtual Application Application { get; set; }
-
+        public virtual List<StoredGrantClaim> ResourceOwner { get; set; }
+        public virtual List<Scope> Scopes { get; set; }
         public virtual string RedirectUri { get; set; }
-        public virtual TokenHandleType Type { get; set; }
+        public virtual StoredGrantType Type { get; set; }
+        
         public virtual DateTime Created { get; set; }
-        public virtual DateTime? Expiration { get; set; }
+        public virtual DateTime Expiration { get; set; }
 
         public virtual bool CreateRefreshToken { get; set; }
         public virtual DateTime? RefreshTokenExpiration { get; set; }
 
-        public virtual List<TokenHandleClaim> ResourceOwner { get; set; }
-        public virtual List<Scope> Scopes { get; set; }
-
-        public static TokenHandle CreateConsentDecisionHandle(string subject, Client client, Application application, IEnumerable<Scope> scopes)
+        public static StoredGrant CreateConsentDecision(string subject, Client client, Application application, IEnumerable<Scope> scopes)
         {
             if (client == null) throw new ArgumentNullException("client");
             if (application == null) throw new ArgumentNullException("application");
             if (scopes == null) throw new ArgumentNullException("scopes");
 
-            return new TokenHandle
+            return new StoredGrant
             {
-                Type = TokenHandleType.ConsentDecision,
+                Type = StoredGrantType.ConsentDecision,
                 Subject = subject,
                 Client = client,
                 Application = application, 
                 Scopes = scopes.ToList(),
-                Created = DateTime.UtcNow
+                Created = DateTime.UtcNow,
+                Expiration = DateTime.UtcNow.AddYears(5)
             };
         }
 
-        public static TokenHandle CreateRefreshTokenHandle(string subject, Client client, Application application, IEnumerable<Claim> claims, IEnumerable<Scope> scopes, DateTime? expiration = null)
+        public static StoredGrant CreateRefreshTokenHandle(string subject, Client client, Application application, IEnumerable<Claim> claims, IEnumerable<Scope> scopes, DateTime expiration)
         {
             if (client == null) throw new ArgumentNullException("client");
             if (application == null) throw new ArgumentNullException("application");
             if (claims == null) throw new ArgumentNullException("claims");
             if (scopes == null) throw new ArgumentNullException("scopes");
 
-            return new TokenHandle
+            return new StoredGrant
             {
-                Type = TokenHandleType.RefreshTokenIdentifier,
+                Type = StoredGrantType.RefreshTokenIdentifier,
                 Subject = subject,
                 Client = client,
                 Application = application,
-                ResourceOwner = claims.ToTokenHandleClaims().ToList(),
+                ResourceOwner = claims.ToStoredGrantClaims().ToList(),
                 Scopes = scopes.ToList(),
                 Created = DateTime.UtcNow,
                 Expiration = expiration
             };
         }
 
-        public static TokenHandle CreateAuthorizationCode(
+        public static StoredGrant CreateAuthorizationCode(
             Client client, 
             Application application, 
             string redirectUri, 
@@ -83,29 +83,29 @@ namespace Thinktecture.AuthorizationServer.Models
             if (claims == null) throw new ArgumentNullException("claims");
             if (scopes == null) throw new ArgumentNullException("scopes");
 
-            return new TokenHandle
+            return new StoredGrant
             {
-                Type = TokenHandleType.AuthorizationCode,
+                Type = StoredGrantType.AuthorizationCode,
                 Client = client,
                 Application = application,
                 RedirectUri = redirectUri,
-                ResourceOwner = claims.ToTokenHandleClaims().ToList(),
+                ResourceOwner = claims.ToStoredGrantClaims().ToList(),
                 Scopes = scopes.ToList(),
                 Created = DateTime.UtcNow,
-                Expiration = expiration,
+                Expiration = DateTime.UtcNow.AddHours(1),
                 CreateRefreshToken = createRefreshToken,
                 RefreshTokenExpiration = refreshTokenExpiration
             };
         }
 
 
-        public TokenHandle()
+        public StoredGrant()
         {
-            HandleId = Guid.NewGuid().ToString("N");
+            GrantId = Guid.NewGuid().ToString("N");
         }
     }
 
-    public class TokenHandleClaim
+    public class StoredGrantClaim
     {
         public virtual int ID { get; set; }
         public virtual string Type { get; set; }

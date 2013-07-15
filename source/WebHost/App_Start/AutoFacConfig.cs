@@ -22,7 +22,7 @@ namespace Thinktecture.AuthorizationServer.WebHost
             var builder = new ContainerBuilder();
 
             //builder.RegisterType<DummyTokenHandleManager>().As<ITokenHandleManager>();
-            builder.RegisterType<EFTokenHandleManager>().As<ITokenHandleManager>();
+            builder.RegisterType<EFStoredGrantManager>().As<IStoredGrantManager>();
             
             //builder.RegisterType<DummyAuthorizationServerConfiguration>().As<IAuthorizationServerConfiguration>();
             builder.RegisterType<EFAuthorizationServerConfiguration>().As<IAuthorizationServerConfiguration>();

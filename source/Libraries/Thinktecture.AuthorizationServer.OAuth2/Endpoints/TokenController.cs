@@ -89,7 +89,7 @@ namespace Thinktecture.AuthorizationServer.OAuth2
             Tracing.Information("Processing refresh token request");
 
             var tokenService = new TokenService(_config.GlobalConfiguration);
-            var response = tokenService.CreateTokenResponse(validatedRequest.TokenHandle, _handleManager);
+            var response = tokenService.CreateTokenResponse(validatedRequest.StoredGrant, _handleManager);
 
             return Request.CreateTokenResponse(response);
         }
@@ -99,7 +99,7 @@ namespace Thinktecture.AuthorizationServer.OAuth2
             Tracing.Information("Processing authorization code request");
 
             var tokenService = new TokenService(_config.GlobalConfiguration);
-            var response = tokenService.CreateTokenResponse(validatedRequest.TokenHandle, _handleManager);
+            var response = tokenService.CreateTokenResponse(validatedRequest.StoredGrant, _handleManager);
 
             return Request.CreateTokenResponse(response);
         }

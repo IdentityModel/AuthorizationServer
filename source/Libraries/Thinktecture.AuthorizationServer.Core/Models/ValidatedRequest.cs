@@ -21,7 +21,7 @@ namespace Thinktecture.AuthorizationServer.Models
         public string UserName { get; set; }
         public string AuthorizationCode { get; set; }
         public string RefreshToken { get; set; }
-        public StoredGrant TokenHandle { get; set; }
+        public StoredGrant StoredGrant { get; set; }
         public bool RequestingRefreshToken { get; set; }
         public DateTime RequestedRefreshTokenExpiration { get; set; }
         public bool ShowConsent { get; set; }

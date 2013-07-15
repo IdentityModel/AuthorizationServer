@@ -51,8 +51,6 @@ namespace Thinktecture.AuthorizationServer.WebHost.Areas.InitialConfiguration.Co
 
             if (ModelState.IsValid)
             {
-                DataProtectionConfig.ConfigureNewLocalKey();
-
                 var global = new GlobalConfiguration()
                 {
                     AuthorizationServerName = model.Name,

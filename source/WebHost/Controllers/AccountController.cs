@@ -10,6 +10,7 @@ namespace Thinktecture.AuthorizationServer.WebHost.Controllers
 {
     public class AccountController : Controller
     {
+        [AllowAnonymous]
         public ActionResult SignOut()
         {
             if (User.Identity.IsAuthenticated)

@@ -44,10 +44,8 @@ namespace Thinktecture.AuthorizationServer.WebHost.Controllers
             var path = Request.ApplicationPath;
             if (!path.EndsWith("/")) path += "/";
             path += "api/";
-
-            var url = new Uri(Request.Url, path);
-            var js = String.Format("if(window.as){{window.as.Service.baseUrl='{0}';}}", url);
-
+            
+            var js = String.Format("if(window.as){{window.as.Service.baseUrl='{0}';}}", path);
             return base.JavaScript(js);
         }
     }

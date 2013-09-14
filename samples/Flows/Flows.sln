@@ -24,6 +24,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ClientCredentials Flow", "C
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Implicit Flow (JavaScript)", "Implicit Flow (JavaScript)\Implicit Flow (JavaScript).csproj", "{0EF1D1BB-604D-411D-B776-71DFF69D0141}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ResourceServer (Web API v2)", "ResourceServer (Web API v2)\ResourceServer (Web API v2).csproj", "{941948EE-A355-455C-88AE-44E326284C0E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -120,6 +122,16 @@ Global
 		{0EF1D1BB-604D-411D-B776-71DFF69D0141}.Release|ARM.ActiveCfg = Release|Any CPU
 		{0EF1D1BB-604D-411D-B776-71DFF69D0141}.Release|x64.ActiveCfg = Release|Any CPU
 		{0EF1D1BB-604D-411D-B776-71DFF69D0141}.Release|x86.ActiveCfg = Release|Any CPU
+		{941948EE-A355-455C-88AE-44E326284C0E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{941948EE-A355-455C-88AE-44E326284C0E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{941948EE-A355-455C-88AE-44E326284C0E}.Debug|ARM.ActiveCfg = Debug|Any CPU
+		{941948EE-A355-455C-88AE-44E326284C0E}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{941948EE-A355-455C-88AE-44E326284C0E}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{941948EE-A355-455C-88AE-44E326284C0E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{941948EE-A355-455C-88AE-44E326284C0E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{941948EE-A355-455C-88AE-44E326284C0E}.Release|ARM.ActiveCfg = Release|Any CPU
+		{941948EE-A355-455C-88AE-44E326284C0E}.Release|x64.ActiveCfg = Release|Any CPU
+		{941948EE-A355-455C-88AE-44E326284C0E}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

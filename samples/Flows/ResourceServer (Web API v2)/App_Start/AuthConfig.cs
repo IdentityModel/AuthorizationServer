@@ -1,6 +1,5 @@
 ﻿using Microsoft.Owin.Security.Jwt;
 using Owin;
-using System.Collections.Generic;
 using System.IdentityModel.Tokens;
 using Thinktecture.IdentityModel.Tokens;
 

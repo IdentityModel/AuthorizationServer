@@ -14,7 +14,7 @@ namespace Thinktecture.Samples
                 routeTemplate: "api/{controller}/{id}",
                 defaults: new { id = RouteParameter.Optional }
             );
-            
+
             config.EnableCors();
 
             app.UseWebApi(config);

@@ -1,8 +1,6 @@
 ﻿using System.Web.Http;
-using Thinktecture.IdentityModel;
-using Thinktecture.IdentityModel.Tokens.Http;
-using System.Linq;
 using Thinktecture.IdentityModel.Tokens;
+using Thinktecture.IdentityModel.Tokens.Http;
 
 namespace Thinktecture.Samples
 {

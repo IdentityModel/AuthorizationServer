@@ -1,12 +1,8 @@
 ﻿using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Net.Http;
-using System.Text;
-using System.Threading.Tasks;
 using Thinktecture.IdentityModel.Clients;
-using Thinktecture.IdentityModel.Constants;
 using Thinktecture.IdentityModel.Extensions;
 
 namespace Thinktecture.Samples

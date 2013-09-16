@@ -9,7 +9,8 @@ namespace OAuth2CodeFlow.Controllers
 {
     public class CallbackController : Controller
     {
-        static Uri _baseAddress = new Uri(Constants.WebHostv1BaseAddress);
+        //static Uri _baseAddress = new Uri(Constants.WebHostv1BaseAddress);
+        static Uri _baseAddress = new Uri(Constants.WebHostv2BaseAddress);
 
         public ActionResult Index()
         {

@@ -11,13 +11,20 @@ namespace Thinktecture.Samples
         {
             JwtSecurityTokenHandler.InboundClaimTypeMap = ClaimMappings.None;
 
-            app.UseJwtBearerAuthentication(new JwtBearerAuthenticationOptions
-            {
-                AllowedAudiences = new[] { Constants.Audience },
-                IssuerSecurityTokenProviders = new[] { new SymmetricKeyIssuerSecurityTokenProvider(
-                        Constants.AS.IssuerName,
-                        Constants.AS.SigningKey) }
-            });
+            app.UseJwtBearerToken(
+                issuer:     Constants.AS.IssuerName,
+                audience:   Constants.Audience,
+                signingKey: Constants.AS.SigningKey);
+
+            #region Katana
+            //app.UseJwtBearerAuthentication(new JwtBearerAuthenticationOptions
+            //{
+            //    AllowedAudiences = new[] { Constants.Audience },
+            //    IssuerSecurityTokenProviders = new[] { new SymmetricKeyIssuerSecurityTokenProvider(
+            //            Constants.AS.IssuerName,
+            //            Constants.AS.SigningKey) }
+            //});
+            #endregion
         }
     }
 }

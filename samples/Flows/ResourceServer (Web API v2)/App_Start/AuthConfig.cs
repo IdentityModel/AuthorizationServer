@@ -9,12 +9,17 @@ namespace Thinktecture.Samples
     {
         public static void Configure(IAppBuilder app)
         {
+            // no mapping of incoming claims to Microsoft types
             JwtSecurityTokenHandler.InboundClaimTypeMap = ClaimMappings.None;
 
+            // validate JWT tokens from AuthorizationServer
             app.UseJwtBearerToken(
                 issuer:     Constants.AS.IssuerName,
                 audience:   Constants.Audience,
                 signingKey: Constants.AS.SigningKey);
+
+            // claims transformation
+            app.UseClaimsTransformation(new ClaimsTransformer());
 
             #region Katana
             //app.UseJwtBearerAuthentication(new JwtBearerAuthenticationOptions

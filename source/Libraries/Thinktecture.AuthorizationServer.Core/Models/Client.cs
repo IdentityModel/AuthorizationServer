@@ -51,7 +51,7 @@ namespace Thinktecture.AuthorizationServer.Models
 
             var bytes = Convert.FromBase64String(this.ClientSecret);
             bytes = DataProtectection.Instance.Unprotect(bytes);
-            return System.Text.Encoding.UTF8.GetString(bytes);
+            return System.Text.Encoding.UTF8.GetString(bytes??new byte[0]);
         }
 
         public bool ValidateSharedSecret(string password)

@@ -1,8 +1,7 @@
-﻿using Newtonsoft.Json;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Net.Http;
-using Thinktecture.IdentityModel.Clients;
+using Thinktecture.IdentityModel.Clients.Preview;
 using Thinktecture.IdentityModel.Extensions;
 
 namespace Thinktecture.Samples
@@ -20,7 +19,7 @@ namespace Thinktecture.Samples
             //CallServiceInvalidScope(token);
         }
 
-        private static AccessTokenResponse RequestToken()
+        private static TokenResponse RequestToken()
         {
             "Requesting token.".ConsoleYellow();
 
@@ -29,7 +28,7 @@ namespace Thinktecture.Samples
                 Constants.Clients.Client,
                 Constants.Clients.ClientSecret);
 
-            var response = client.RequestAccessTokenClientCredentials("read");
+            var response = client.RequestClientCredentialsAsync("read").Result;
 
             Console.WriteLine(" access token");
             response.AccessToken.ConsoleGreen();
@@ -85,21 +84,5 @@ namespace Thinktecture.Samples
                 Console.ReadLine();
             }
         }
-    }
-
-    [JsonObject]
-    public class TokenResponse
-    {
-        [JsonProperty(PropertyName = "access_token")]
-        public string AccessToken { get; set; }
-
-        [JsonProperty(PropertyName = "token_type")]
-        public string TokenType { get; set; }
-
-        [JsonProperty(PropertyName = "expires_in")]
-        public int ExpiresIn { get; set; }
-
-        [JsonProperty(PropertyName = "refresh_token")]
-        public string RefreshToken { get; set; }
     }
 }

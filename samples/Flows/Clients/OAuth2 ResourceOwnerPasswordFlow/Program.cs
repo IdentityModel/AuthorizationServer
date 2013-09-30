@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Net.Http;
-using Thinktecture.IdentityModel.Clients;
+using Thinktecture.IdentityModel.Clients.Preview;
 using Thinktecture.IdentityModel.Extensions;
 
 namespace Thinktecture.Samples
@@ -21,7 +21,7 @@ namespace Thinktecture.Samples
             CallService(token);
         }
 
-        private static AccessTokenResponse RequestToken()
+        private static TokenResponse RequestToken()
         {
             "Requesting token.".ConsoleYellow();
 
@@ -30,7 +30,7 @@ namespace Thinktecture.Samples
                 Constants.Clients.ResourceOwnerClient,
                 Constants.Clients.ResourceOwnerClientSecret);
 
-            var response = client.RequestAccessTokenUserName("bob", "abc!123", "read");
+            var response = client.RequestResourceOwnerPasswordAsync("bob", "abc!123", "read").Result;
 
             Console.WriteLine(" access token");
             response.AccessToken.ConsoleGreen();
@@ -76,7 +76,7 @@ namespace Thinktecture.Samples
                 Constants.Clients.ResourceOwnerClient,
                 Constants.Clients.ResourceOwnerClientSecret);
 
-            var response = client.RequestAccessTokenRefreshToken(refreshToken);
+            var response = client.RequestRefreshTokenAsync(refreshToken).Result;
 
             return response.AccessToken;
         }

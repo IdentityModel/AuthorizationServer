@@ -14,13 +14,13 @@ namespace Thinktecture.Samples
 
         static void Main(string[] args)
         {
-            var token = RequestToken();
+            var response = RequestToken();
             
-            CallService(token);
+            CallService(response.AccessToken);
             //CallServiceInvalidScope(token);
         }
 
-        private static string RequestToken()
+        private static AccessTokenResponse RequestToken()
         {
             "Requesting token.".ConsoleYellow();
 
@@ -35,7 +35,7 @@ namespace Thinktecture.Samples
             response.AccessToken.ConsoleGreen();
             
             Console.WriteLine();
-            return response.AccessToken;
+            return response;
         }
 
         private static void CallService(string token)

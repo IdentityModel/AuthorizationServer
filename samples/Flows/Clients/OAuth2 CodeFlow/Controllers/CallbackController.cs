@@ -1,8 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Net.Http;
+using System.Threading.Tasks;
 using System.Web.Mvc;
-using Thinktecture.IdentityModel.Clients;
+using Thinktecture.IdentityModel.Clients.Preview;
 using Thinktecture.Samples;
 
 namespace OAuth2CodeFlow.Controllers
@@ -23,7 +24,7 @@ namespace OAuth2CodeFlow.Controllers
 
         [HttpPost]
         [ActionName("Index")]
-        public ActionResult Postback()
+        public async Task<ActionResult> Postback()
         {
             var client = new OAuth2Client(
                 new Uri(Constants.AS.OAuth2TokenEndpoint),
@@ -32,9 +33,9 @@ namespace OAuth2CodeFlow.Controllers
 
             var code = Request.QueryString["code"];
 
-            var response = client.RequestAccessTokenCode(
+            var response = await client.RequestAuthorizationCodeAsync(
                 code,
-                new Uri(Constants.Clients.CodeClientRedirectUrl));
+                Constants.Clients.CodeClientRedirectUrl);
 
             return View("Postback", response);
         }
@@ -59,13 +60,14 @@ namespace OAuth2CodeFlow.Controllers
         }
 
         [HttpPost]
-        public ActionResult RenewToken(string refreshToken)
+        public async Task<ActionResult> RenewToken(string refreshToken)
         {
             var client = new OAuth2Client(
                 new Uri(Constants.AS.OAuth2TokenEndpoint),
                 Constants.Clients.CodeClient,
                 Constants.Clients.CodeClientSecret);
-            var response = client.RequestAccessTokenRefreshToken(refreshToken);
+
+            var response = await client.RequestRefreshTokenAsync(refreshToken);
             return View("Postback", response);
         }
     }

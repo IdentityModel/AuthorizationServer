@@ -1,5 +1,6 @@
-﻿using System.Web.Mvc;
-using Thinktecture.IdentityModel.Clients;
+﻿using System;
+using System.Web.Mvc;
+using Thinktecture.IdentityModel.Clients.Preview;
 using Thinktecture.Samples;
 
 namespace OAuth2CodeFlow.Controllers
@@ -8,8 +9,9 @@ namespace OAuth2CodeFlow.Controllers
     {
         public ActionResult Index()
         {
-            var url = OAuth2Client.CreateCodeFlowUrl(
-                Constants.AS.OAuth2AuthorizeEndpoint,
+            var client = new OAuth2Client(new Uri(Constants.AS.OAuth2AuthorizeEndpoint));
+
+            var url = client.CreateCodeFlowUrl(
                 Constants.Clients.CodeClient,
                 "read search",
                 Constants.Clients.CodeClientRedirectUrl);

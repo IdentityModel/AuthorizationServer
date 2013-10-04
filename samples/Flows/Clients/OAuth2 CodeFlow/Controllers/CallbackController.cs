@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web.Mvc;
-using Thinktecture.IdentityModel.Clients.Preview;
+using Thinktecture.IdentityModel.Client;
 using Thinktecture.Samples;
 
 namespace OAuth2CodeFlow.Controllers

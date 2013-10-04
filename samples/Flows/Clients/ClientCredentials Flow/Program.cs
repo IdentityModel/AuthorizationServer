@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Net.Http;
-using Thinktecture.IdentityModel.Clients.Preview;
+using Thinktecture.IdentityModel.Client;
 using Thinktecture.IdentityModel.Extensions;
 
 namespace Thinktecture.Samples

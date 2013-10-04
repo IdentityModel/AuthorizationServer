@@ -20,7 +20,7 @@ namespace Thinktecture.IdentityModel.Clients.Preview
 		{
 			BasicAuthentication,
 			PostValues,
-            None
+			None
 		};
 
 		public OAuth2Client(Uri address)
@@ -31,7 +31,7 @@ namespace Thinktecture.IdentityModel.Clients.Preview
 			};
 			
 			_address = address;
-            _authenticationStyle = ClientAuthenticationStyle.None;
+			_authenticationStyle = ClientAuthenticationStyle.None;
 		}
 
 		public OAuth2Client(Uri address, string clientId, string clientSecret, ClientAuthenticationStyle style = ClientAuthenticationStyle.BasicAuthentication)

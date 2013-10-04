@@ -1,34 +1,36 @@
 ﻿using Microsoft.Owin;
 using System;
-using System.Security.Claims;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace Thinktecture.IdentityModel.Owin
 {
-    public class ClaimsTransformationMiddleware : OwinMiddleware
+    public class ClaimsTransformationMiddleware
     {
-        ClaimsAuthenticationManager _claimsAuthenticationManager;
+        readonly ClaimsTransformationOptions _options;
+        readonly Func<IDictionary<string, object>, Task> _next;
 
-        public ClaimsTransformationMiddleware(OwinMiddleware next, ClaimsAuthenticationManager claimsAuthenticationManager) : base(next)
+        public ClaimsTransformationMiddleware(Func<IDictionary<string, object>, Task> next, ClaimsTransformationOptions options)
         {
-            if (claimsAuthenticationManager == null)
-            {
-                throw new ArgumentNullException("claimsAuthenticationManager");
-            }
-
-            _claimsAuthenticationManager = claimsAuthenticationManager;
+            _next = next;
+            _options = options;
         }
 
-        public override Task Invoke(IOwinContext context)
+        public async Task Invoke(IDictionary<string, object> env)
         {
-            if (context.Authentication.User != null)
+            // use Katana OWIN abstractions (optional)
+            var context = new OwinContext(env);
+            var transformer = _options.ClaimsAuthenticationManager;
+
+            if (context.Authentication != null && 
+                context.Authentication.User != null)
             {
-                context.Authentication.User = _claimsAuthenticationManager.Authenticate(
-                    context.Request.Uri.AbsoluteUri, 
+                context.Authentication.User = transformer.Authenticate(
+                    context.Request.Uri.AbsoluteUri,
                     context.Authentication.User);
             }
 
-            return Next.Invoke(context);
+            await _next(env);
         }
     }
 }

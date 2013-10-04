@@ -1,13 +1,18 @@
-﻿using System.Security.Claims;
+﻿using System;
 using Thinktecture.IdentityModel.Owin;
 
 namespace Owin
 {
     public static class ClaimsTransformationMiddlewareExtensions
     {
-        public static IAppBuilder UseClaimsTransformation(this IAppBuilder app, ClaimsAuthenticationManager claimsAuthenticationManager)
+        public static IAppBuilder UseClaimsTransformation(this IAppBuilder app, ClaimsTransformationOptions options)
         {
-            app.Use(typeof(ClaimsTransformationMiddleware), claimsAuthenticationManager);
+            if (options == null)
+            {
+                throw new ArgumentNullException("options");
+            }
+
+            app.Use(typeof(ClaimsTransformationMiddleware), options);
             return app;
         }
     }

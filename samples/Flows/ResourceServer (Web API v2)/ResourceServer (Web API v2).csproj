@@ -130,6 +130,8 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controller\IdentityController.cs" />
     <Compile Include="IdentityModel.Katana\ClaimsTransformationMiddleware.cs" />
+    <Compile Include="IdentityModel.Katana\ClaimsTransformationOptions.cs" />
+    <Compile Include="IdentityModel.Katana\KatanaClaimsTransformationMiddleware.cs" />
     <Compile Include="IdentityModel.Katana\ClaimsTransformationMiddlewareExtensions.cs" />
     <Compile Include="IdentityModel.Katana\IdentityModelJwtBearerAuthenticationExtensions.cs" />
     <Compile Include="Models\ViewClaims.cs" />

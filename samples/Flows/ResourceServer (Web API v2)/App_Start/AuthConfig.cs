@@ -1,6 +1,6 @@
-﻿using Microsoft.Owin.Security.Jwt;
-using Owin;
+﻿using Owin;
 using System.IdentityModel.Tokens;
+using Thinktecture.IdentityModel.Owin;
 using Thinktecture.IdentityModel.Tokens;
 
 namespace Thinktecture.Samples
@@ -19,17 +19,10 @@ namespace Thinktecture.Samples
                 signingKey: Constants.AS.SigningKey);
 
             // claims transformation
-            app.UseClaimsTransformation(new ClaimsTransformer());
-
-            #region Katana
-            //app.UseJwtBearerAuthentication(new JwtBearerAuthenticationOptions
-            //{
-            //    AllowedAudiences = new[] { Constants.Audience },
-            //    IssuerSecurityTokenProviders = new[] { new SymmetricKeyIssuerSecurityTokenProvider(
-            //            Constants.AS.IssuerName,
-            //            Constants.AS.SigningKey) }
-            //});
-            #endregion
+            app.UseClaimsTransformation(new ClaimsTransformationOptions
+                {
+                    ClaimsAuthenticationManager = new ClaimsTransformer()
+                });
         }
     }
 }

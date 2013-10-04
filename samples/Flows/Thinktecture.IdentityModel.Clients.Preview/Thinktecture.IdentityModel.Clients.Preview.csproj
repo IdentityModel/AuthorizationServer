@@ -46,6 +46,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BasicAuthenticationHeaderValue.cs" />
+    <Compile Include="HttpClientExtensions.cs" />
     <Compile Include="OAuth2Client.cs" />
     <Compile Include="OAuth2Constants.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

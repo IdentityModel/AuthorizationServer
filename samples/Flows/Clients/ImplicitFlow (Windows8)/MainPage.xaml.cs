@@ -55,7 +55,7 @@ namespace ImplicitClientWindows8
                     clientId: Constants.Clients.ImplicitClient,
                     scope: "read");
 
-                TokenVault.StoreToken(_resourceName, response);
+                TokenVault.StoreToken(_resourceName, response.AccessToken, response.ExpiresIn, response.TokenType);
                 RetrieveStoredToken();
 
             }

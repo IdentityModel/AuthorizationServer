@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Thinktecture.IdentityModel.Extensions
+namespace Thinktecture.IdentityModel.Client
 {
     public static class DateTimeExtensions
     {

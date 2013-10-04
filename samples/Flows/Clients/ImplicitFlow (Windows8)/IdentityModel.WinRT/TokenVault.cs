@@ -1,19 +1,19 @@
 ﻿using System.Linq;
-using Thinktecture.IdentityModel.Extensions;
 using Windows.Data.Json;
 using Windows.Security.Credentials;
+using Thinktecture.IdentityModel.Client;
 
 namespace Thinktecture.IdentityModel.WinRT
 {
     public static class TokenVault
     {
-        public static void StoreToken(string identifier, TokenResponse response)
+        public static void StoreToken(string identifier, string accessToken, long ExpiresIn, string tokenType)
         {
             var json = new JsonObject();
 
-            json["access_token"] = JsonValue.CreateStringValue(response.AccessToken);
-            json["expires_in"] = JsonValue.CreateNumberValue(response.ExpiresIn);
-            json["token_type"] = JsonValue.CreateStringValue(response.TokenType);
+            json["access_token"] = JsonValue.CreateStringValue(accessToken);
+            json["expires_in"] = JsonValue.CreateNumberValue(ExpiresIn);
+            json["token_type"] = JsonValue.CreateStringValue(tokenType);
 
             var vault = new PasswordVault();
             vault.Add(new PasswordCredential(identifier, "token", json.Stringify()));

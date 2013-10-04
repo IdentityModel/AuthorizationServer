@@ -39,7 +39,9 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AuthorizeResponse.cs" />
     <Compile Include="BasicAuthenticationHeaderValue.cs" />
+    <Compile Include="EpochTimeExtensions.cs" />
     <Compile Include="HttpClientExtensions.cs" />
     <Compile Include="OAuth2Client.cs" />
     <Compile Include="OAuth2Constants.cs" />

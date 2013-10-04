@@ -3,7 +3,7 @@
  * see license.txt
  */
 
-namespace Thinktecture.IdentityModel.Constants.Preview
+namespace Thinktecture.IdentityModel.Client
 {
     public static class OAuth2Constants
     {

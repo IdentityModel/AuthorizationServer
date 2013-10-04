@@ -1,10 +1,14 @@
-﻿using System;
+﻿/*
+ * Copyright (c) Dominick Baier, Brock Allen.  All rights reserved.
+ * see LICENSE
+ */
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
-using Thinktecture.IdentityModel.Constants.Preview;
 
 namespace Thinktecture.IdentityModel.Client
 {

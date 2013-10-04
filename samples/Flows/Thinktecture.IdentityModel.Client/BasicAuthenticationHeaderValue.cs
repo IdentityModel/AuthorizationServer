@@ -1,6 +1,6 @@
 ﻿/*
  * Copyright (c) Dominick Baier, Brock Allen.  All rights reserved.
- * see license.txt
+ * see LICENSE
  */
 
 using System;

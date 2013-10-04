@@ -1,6 +1,10 @@
-﻿using System.Net.Http;
-using System.Net.Http.Headers;
+﻿/*
+ * Copyright (c) Dominick Baier, Brock Allen.  All rights reserved.
+ * see LICENSE
+ */
 
+using System.Net.Http;
+using System.Net.Http.Headers;
 
 namespace Thinktecture.IdentityModel.Client.Extensions
 {

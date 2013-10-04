@@ -1,5 +1,9 @@
-﻿using Newtonsoft.Json.Linq;
-using Thinktecture.IdentityModel.Constants.Preview;
+﻿/*
+ * Copyright (c) Dominick Baier, Brock Allen.  All rights reserved.
+ * see LICENSE
+ */
+
+using Newtonsoft.Json.Linq;
 
 namespace Thinktecture.IdentityModel.Client
 {

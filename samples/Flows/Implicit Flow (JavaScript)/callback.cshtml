@@ -70,7 +70,7 @@
                     console.log(result);
                     log("Claims Returned:");
                     result.forEach(function (item) {
-                        log("&nbsp;&nbsp;&nbsp;" + item.Type + ", " + item.Value);
+                        log("&nbsp;&nbsp;&nbsp;" + item.m_Item1 + ", " + item.m_Item2);
                     });
                 }).fail(function (xhr, error, status) {
                     log("error calling service: " + xhr.status);

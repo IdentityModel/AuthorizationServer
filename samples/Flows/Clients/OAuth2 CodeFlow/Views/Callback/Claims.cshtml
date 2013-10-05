@@ -1,4 +1,4 @@
-﻿@model IEnumerable<OAuth2CodeFlow.Controllers.ViewClaim>
+﻿@model IEnumerable<Tuple<string, string>>
 
 @{
     ViewBag.Title = "Claims";
@@ -10,8 +10,8 @@
 @foreach (var claim in Model)
 {
     <p>
-        @claim.Type
+        @claim.Item1
         <br />
-        <strong>@claim.Value</strong>
+        <strong>@claim.Item2</strong>
     </p>
 }

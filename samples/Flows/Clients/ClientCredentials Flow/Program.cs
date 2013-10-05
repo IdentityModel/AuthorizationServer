@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Net.Http;
 using Thinktecture.IdentityModel.Client;
-using Thinktecture.IdentityModel.Extensions;
+using Thinktecture.IdentityModel.Client.Extensions;
 
 namespace Thinktecture.Samples
 {
@@ -54,7 +54,7 @@ namespace Thinktecture.Samples
                     var response = client.GetAsync("identity").Result;
                     response.EnsureSuccessStatusCode();
 
-                    var claims = response.Content.ReadAsAsync<IEnumerable<ViewClaim>>().Result;
+                    var claims = response.Content.ReadAsAsync<IEnumerable<Tuple<string, string>>>().Result;
                     Helper.ShowConsole(claims);
                 });
 

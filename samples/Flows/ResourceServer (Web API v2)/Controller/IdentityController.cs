@@ -1,8 +1,9 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Security.Claims;
 using System.Web.Http;
 using System.Web.Http.Cors;
-using Thinktecture.Samples.Models;
 
 namespace Thinktecture.Samples
 {
@@ -10,9 +11,12 @@ namespace Thinktecture.Samples
     [EnableCors("https://localhost:44300", "*", "*")]
     public class IdentityController : ApiController
     {
-        public IEnumerable<ViewClaim> Get()
+        public IEnumerable<Tuple<string, string>> Get()
         {
-            return ViewClaims.GetAll(User as ClaimsPrincipal);
+            var principal = User as ClaimsPrincipal;
+
+            return from c in principal.Claims
+                   select new Tuple<string, string>(c.Type, c.Value);
         }
     }
 }

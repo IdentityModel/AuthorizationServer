@@ -4,6 +4,7 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web.Mvc;
 using Thinktecture.IdentityModel.Client;
+using Thinktecture.IdentityModel.Client.Extensions;
 using Thinktecture.Samples;
 
 namespace OAuth2CodeFlow.Controllers
@@ -54,7 +55,7 @@ namespace OAuth2CodeFlow.Controllers
             var response = client.GetAsync("identity").Result;
             response.EnsureSuccessStatusCode();
 
-            var claims = response.Content.ReadAsAsync<IEnumerable<ViewClaim>>().Result;
+            var claims = response.Content.ReadAsAsync<IEnumerable<Tuple<string, string>>>().Result;
 
             return View("Claims", claims);
         }
@@ -71,13 +72,4 @@ namespace OAuth2CodeFlow.Controllers
             return View("Postback", response);
         }
     }
-
-
-
-    public class ViewClaim
-    {
-        public string Type { get; set; }
-        public string Value { get; set; }
-    }
-
 }

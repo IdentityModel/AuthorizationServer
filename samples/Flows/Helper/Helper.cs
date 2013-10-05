@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
-using Thinktecture.IdentityModel.Extensions;
 
 namespace Thinktecture.Samples
 {
@@ -18,21 +17,15 @@ namespace Thinktecture.Samples
             string.Format("\n\nElapsed Time: {0}\n", sw.ElapsedMilliseconds).ConsoleRed();
         }
 
-        public static void ShowConsole(IEnumerable<ViewClaim> claims)
+        public static void ShowConsole(IEnumerable<Tuple<string, string>> claims)
         {
             "\nClaims\n".ConsoleYellow();
 
             claims.ToList().ForEach(c =>
             {
-                Console.WriteLine(" " + c.Type);
-                string.Format("  {0}\n", c.Value).ConsoleGreen();
+                Console.WriteLine(" " + c.Item1);
+                string.Format("  {0}\n", c.Item2).ConsoleGreen();
             });
         }    
-    }
-    
-    public class ViewClaim
-    {
-        public string Type { get; set; }
-        public string Value { get; set; }
     }
 }

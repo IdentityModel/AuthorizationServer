@@ -39,6 +39,7 @@ namespace Thinktecture.IdentityModel.Client
                 return TryGet(OAuth2Constants.AccessToken);
             }
         }
+
         public string Error
         {
             get
@@ -46,14 +47,20 @@ namespace Thinktecture.IdentityModel.Client
                 return TryGet(OAuth2Constants.Error);
             }
         }
+
         public long ExpiresIn
         {
             get
             {
                 var value = TryGet(OAuth2Constants.ExpiresIn);
-                return long.Parse(value);
+
+                long longValue = 0;
+                long.TryParse(value, out longValue);
+
+                return longValue;
             }
         }
+
         public string Scope
         {
             get
@@ -74,10 +81,10 @@ namespace Thinktecture.IdentityModel.Client
         {
             Raw = raw;
             Values = new Dictionary<string, string>();
-            ParseResponse();
+            ParseRaw();
         }
 
-        private void ParseResponse()
+        private void ParseRaw()
         {
             var queryParameters = new Dictionary<string, string>();
             string[] fragments = null;
@@ -97,7 +104,7 @@ namespace Thinktecture.IdentityModel.Client
                 throw new InvalidOperationException("Malformed callback URL");
             }
 
-            if (Raw.Contains("error"))
+            if (Raw.Contains(OAuth2Constants.Error))
             {
                 ResponseType = ResponseTypes.Error;
             }

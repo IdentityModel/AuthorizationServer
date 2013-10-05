@@ -23,6 +23,7 @@ namespace Thinktecture.IdentityModel.Client
         public const string ClientSecret = "client_secret";
         public const string ResponseType = "response_type";
         public const string State = "state";
+        public const string Error = "error";
 
         public static class GrantTypes
         {

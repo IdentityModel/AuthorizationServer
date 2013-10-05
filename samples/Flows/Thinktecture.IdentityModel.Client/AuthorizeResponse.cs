@@ -21,83 +21,113 @@ namespace Thinktecture.IdentityModel.Client
         };
 
         public ResponseTypes ResponseType { get; protected set; }
-        public string ResponseString { get; protected set; }
+        public string Raw { get; protected set; }
+        public Dictionary<string, string> Values { get; protected set; }
 
-        public string Code { get; set; }
-        public string AccessToken { get; set; }
-        public string Error { get; set; }
-        public long ExpiresIn { get; set; }
-        public string Scopes { get; set; }
-        public string TokenType { get; set; }
-
-        public AuthorizeResponse(string responseString)
+        public string Code
         {
-            ResponseString = responseString;
+            get
+            {
+                return TryGet(OAuth2Constants.Code);
+            }
+        }
+
+        public string AccessToken
+        {
+            get
+            {
+                return TryGet(OAuth2Constants.AccessToken);
+            }
+        }
+        public string Error
+        {
+            get
+            {
+                return TryGet(OAuth2Constants.Error);
+            }
+        }
+        public long ExpiresIn
+        {
+            get
+            {
+                var value = TryGet(OAuth2Constants.ExpiresIn);
+                return long.Parse(value);
+            }
+        }
+        public string Scope
+        {
+            get
+            {
+                return TryGet(OAuth2Constants.Scope);
+            }
+        }
+
+        public string TokenType
+        {
+            get
+            {
+                return TryGet(OAuth2Constants.TokenType);
+            }
+        }
+
+        public AuthorizeResponse(string raw)
+        {
+            Raw = raw;
+            Values = new Dictionary<string, string>();
             ParseResponse();
         }
 
         private void ParseResponse()
         {
-            if (ResponseString.Contains("error"))
+            var queryParameters = new Dictionary<string, string>();
+            string[] fragments = null;
+
+            if (Raw.Contains("#"))
             {
-                ParseError();
+                fragments = Raw.Split('#');
+                ResponseType = ResponseTypes.Token;
             }
-            else if (ResponseString.Contains("#"))
+            else if (Raw.Contains("?"))
             {
-                ParseImplicitResponse();
+                fragments = Raw.Split('?');
+                ResponseType = ResponseTypes.AuthorizationCode;
             }
             else
             {
-                ParseCodeResponse();
+                throw new InvalidOperationException("Malformed callback URL");
             }
-        }
 
-        private void ParseError()
-        {
-            ResponseType = ResponseTypes.Error;
+            if (Raw.Contains("error"))
+            {
+                ResponseType = ResponseTypes.Error;
+            }
 
-            throw new NotImplementedException();
-        }
-
-        private void ParseCodeResponse()
-        {
-            ResponseType = ResponseTypes.AuthorizationCode;
-
-
-            throw new NotImplementedException();
-        }
-
-        private void ParseImplicitResponse()
-        {
-            ResponseType = ResponseTypes.Token;
-
-            var fragments = ResponseString.Split('#');
             var qparams = fragments[1].Split('&');
 
             foreach (var param in qparams)
             {
                 var parts = param.Split('=');
+                
                 if (parts.Length == 2)
                 {
-                    if (parts[0].Equals("access_token", StringComparison.Ordinal))
-                    {
-                        AccessToken = parts[1];
-
-                    }
-                    else if (parts[0].Equals("expires_in", StringComparison.Ordinal))
-                    {
-                        ExpiresIn = long.Parse(parts[1]);
-                    }
-                    else if (parts[0].Equals("token_type", StringComparison.Ordinal))
-                    {
-                        TokenType = parts[1];
-                    }
+                    Values.Add(parts[0], parts[1]);
                 }
                 else
                 {
-                    throw new InvalidOperationException("Malformed token response.");
+                    throw new InvalidOperationException("Malformed callback URL.");
                 }
             }
+        }
+
+        private string TryGet(string type)
+        {
+            string value;
+            if (Values.TryGetValue(type, out value))
+            {
+                return value;
+            }
+
+            return null;
         }
     }
 }

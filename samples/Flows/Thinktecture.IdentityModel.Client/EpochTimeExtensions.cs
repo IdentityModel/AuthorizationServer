@@ -7,7 +7,7 @@ using System;
 
 namespace Thinktecture.IdentityModel.Client
 {
-    public static class DateTimeExtensions
+    public static class EpochTimeExtensions
     {
         /// <summary>
         /// Converts the given date value to epoch time.

@@ -45,46 +45,9 @@ namespace Thinktecture.IdentityModel.WinRT
             }
             catch
             {
-                //
                 // Bad Parameter, SSL/TLS Errors and Network Unavailable errors are to be handled here.
-                //
                 throw;
             }
         }
-
-        //private static TokenResponse ParseImplicitResponse(string tokenResponse)
-        //{
-        //    var response = new TokenResponse();
-        //    var fragments = tokenResponse.Split('#');
-        //    var qparams = fragments[1].Split('&');
-
-        //    foreach (var param in qparams)
-        //    {
-        //        var parts = param.Split('=');
-        //        if (parts.Length == 2)
-        //        {
-        //            if (parts[0].Equals("access_token", StringComparison.Ordinal))
-        //            {
-        //                response.AccessToken = parts[1];
-
-        //            }
-        //            else if (parts[0].Equals("expires_in", StringComparison.Ordinal))
-        //            {
-        //                var expiresIn = int.Parse(parts[1]);
-        //                var expiresInDateTime = DateTime.UtcNow.AddSeconds(expiresIn);
-        //                var epoch = expiresInDateTime.ToEpochTime();
-
-        //                response.ExpiresIn = (int)epoch;
-        //            }
-        //        }
-        //        else
-        //        {
-        //            throw new InvalidOperationException("Malformed token response.");
-        //        }
-        //    }
-
-        //    response.TokenType = "Bearer";
-        //    return response;
-        //}
     }
 }

@@ -22,8 +22,8 @@ namespace ImplicitClientWindows8
         string _resourceName = "backend";
         TokenCredential _credential;
 
-        //static Uri _baseAddress = new Uri(Constants.WebHostv1BaseAddress);
-        static Uri _baseAddress = new Uri(Constants.WebHostv2BaseAddress);
+        static Uri _baseAddress = new Uri(Constants.WebHostv1BaseAddress);
+        //static Uri _baseAddress = new Uri(Constants.WebHostv2BaseAddress);
 
         public MainPage()
         {

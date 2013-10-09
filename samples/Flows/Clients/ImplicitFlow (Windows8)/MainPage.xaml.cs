@@ -90,7 +90,7 @@ namespace ImplicitClientWindows8
                 await md.ShowAsync();
                 return;
             }
-
+            
             var claims = await response.Content.ReadAsAsync<IEnumerable<ViewClaim>>();
 
             foreach (var claim in claims)

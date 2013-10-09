@@ -8,7 +8,7 @@ using System.Web.Http.Cors;
 namespace Thinktecture.Samples
 {
     [Authorize]
-    [EnableCors("https://localhost:44300", "*", "*")]
+    //[EnableCors("https://localhost:44300", "*", "*")]
     public class IdentityController : ApiController
     {
         public IEnumerable<Tuple<string, string>> Get()

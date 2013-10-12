@@ -54,7 +54,7 @@ namespace Thinktecture.Samples
                     var response = client.GetAsync("identity").Result;
                     response.EnsureSuccessStatusCode();
 
-                    var claims = response.Content.ReadAsAsync<IEnumerable<Tuple<string, string>>>().Result;
+                    var claims = response.Content.ReadAsAsync<IEnumerable<ViewClaim>>().Result;
                     Helper.ShowConsole(claims);
                 });
 

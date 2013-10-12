@@ -1,4 +1,4 @@
-﻿@model IEnumerable<Tuple<string, string>>
+﻿@model IEnumerable<Models.ViewClaim>
 
 @{
     ViewBag.Title = "Claims";
@@ -10,8 +10,8 @@
 @foreach (var claim in Model)
 {
     <p>
-        @claim.Item1
+        @claim.Type
         <br />
-        <strong>@claim.Item2</strong>
+        <strong>@claim.Value</strong>
     </p>
 }

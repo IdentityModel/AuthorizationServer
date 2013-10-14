@@ -131,9 +131,11 @@
     <Compile Include="Controller\IdentityController.cs" />
     <Compile Include="IdentityModel.Katana\ClaimsTransformationMiddleware.cs" />
     <Compile Include="IdentityModel.Katana\ClaimsTransformationOptions.cs" />
+    <Compile Include="IdentityModel.Katana\HeaderOAuthBearerProvider.cs" />
     <Compile Include="IdentityModel.Katana\KatanaClaimsTransformationMiddleware.cs" />
     <Compile Include="IdentityModel.Katana\ClaimsTransformationMiddlewareExtensions.cs" />
     <Compile Include="IdentityModel.Katana\IdentityModelJwtBearerAuthenticationExtensions.cs" />
+    <Compile Include="IdentityModel.Katana\QueryStringOAuthBearerProvider.cs" />
     <Compile Include="Models\ViewClaim.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Security\ClaimsTransformer.cs" />

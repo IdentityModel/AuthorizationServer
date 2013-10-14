@@ -13,17 +13,29 @@ namespace Owin
                 throw new ArgumentNullException("app");
             }
 
-            OAuthBearerAuthenticationOptions options = new OAuthBearerAuthenticationOptions
+            var op = new JwtBearerAuthenticationOptions
             {
-                Realm = audience,
-                AccessTokenFormat = new JwtFormat(
-                    audience, 
-                    new SymmetricKeyIssuerSecurityTokenProvider(
-                        issuer,
-                        signingKey)),
+                AllowedAudiences = new[] { audience },
+                IssuerSecurityTokenProviders = new[] 
+                    {
+                        new SymmetricKeyIssuerSecurityTokenProvider(
+                            issuer,
+                            signingKey)
+                    }
             };
 
-            app.UseOAuthBearerAuthentication(options);
+            //var options = new OAuthBearerAuthenticationOptions
+            //{
+            //    Realm = audience,
+            //    AccessTokenFormat = new JwtFormat(
+            //        audience, 
+            //        new SymmetricKeyIssuerSecurityTokenProvider(
+            //            issuer,
+            //            signingKey)),
+            //};
+
+            app.UseJwtBearerAuthentication(op);
+            //app.UseOAuthBearerAuthentication(options);
             return app;
         }
     }

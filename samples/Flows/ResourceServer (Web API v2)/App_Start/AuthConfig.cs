@@ -1,6 +1,5 @@
 ﻿using Owin;
 using System.IdentityModel.Tokens;
-using Thinktecture.IdentityModel.Owin;
 using Thinktecture.IdentityModel.Tokens;
 
 namespace Thinktecture.Samples

@@ -14,7 +14,7 @@ namespace Thinktecture.IdentityModel.Owin
 
         public override async Task RequestToken(OAuthRequestTokenContext context)
         {
-            var value = context.Request.Query[_name];
+            var value = context.Request.Query.Get(_name);
 
             if (!string.IsNullOrEmpty(value))
             {

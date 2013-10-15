@@ -61,7 +61,7 @@ namespace Thinktecture.AuthorizationServer
                     handle.Application,
                     resourceOwner.Claims,
                     handle.Scopes,
-                    handle.RefreshTokenExpiration.Value);
+                    handle.RefreshTokenExpiration);
 
                 handleManager.Add(refreshTokenHandle);
                 response.RefreshToken = refreshTokenHandle.GrantId;

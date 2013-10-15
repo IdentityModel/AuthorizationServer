@@ -28,7 +28,8 @@ namespace Thinktecture.AuthorizationServer.Models
         public virtual DateTime Expiration { get; set; }
 
         public virtual bool CreateRefreshToken { get; set; }
-        public virtual DateTime? RefreshTokenExpiration { get; set; }
+
+public virtual DateTime? RefreshTokenExpiration { get;set; }
 
         public static StoredGrant CreateConsentDecision(string subject, Client client, Application application, IEnumerable<Scope> scopes)
         {
@@ -48,7 +49,7 @@ namespace Thinktecture.AuthorizationServer.Models
             };
         }
 
-        public static StoredGrant CreateRefreshTokenHandle(string subject, Client client, Application application, IEnumerable<Claim> claims, IEnumerable<Scope> scopes, DateTime expiration)
+        public static StoredGrant CreateRefreshTokenHandle(string subject, Client client, Application application, IEnumerable<Claim> claims, IEnumerable<Scope> scopes, DateTime? expiration)
         {
             if (client == null) throw new ArgumentNullException("client");
             if (application == null) throw new ArgumentNullException("application");
@@ -64,7 +65,7 @@ namespace Thinktecture.AuthorizationServer.Models
                 ResourceOwner = claims.ToStoredGrantClaims().ToList(),
                 Scopes = scopes.ToList(),
                 Created = DateTime.UtcNow,
-                Expiration = expiration
+                Expiration = expiration.Value != System.DateTime.MinValue ? expiration.Value : DateTime.UtcNow.AddHours(1)
             };
         }
 
@@ -92,9 +93,9 @@ namespace Thinktecture.AuthorizationServer.Models
                 ResourceOwner = claims.ToStoredGrantClaims().ToList(),
                 Scopes = scopes.ToList(),
                 Created = DateTime.UtcNow,
-                Expiration = DateTime.UtcNow.AddHours(1),
+                Expiration = expiration?? DateTime.UtcNow.AddHours(1),
                 CreateRefreshToken = createRefreshToken,
-                RefreshTokenExpiration = refreshTokenExpiration
+                RefreshTokenExpiration = (!createRefreshToken ? null : (refreshTokenExpiration != System.DateTime.MinValue ? refreshTokenExpiration : DateTime.UtcNow.AddHours(1)))
             };
         }
 

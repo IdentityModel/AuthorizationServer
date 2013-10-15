@@ -94,7 +94,7 @@ namespace Thinktecture.AuthorizationServer.Models
                 Created = DateTime.UtcNow,
                 Expiration = DateTime.UtcNow.AddHours(1),
                 CreateRefreshToken = createRefreshToken,
-                RefreshTokenExpiration = refreshTokenExpiration
+                RefreshTokenExpiration = createRefreshToken ? refreshTokenExpiration : null
             };
         }
 

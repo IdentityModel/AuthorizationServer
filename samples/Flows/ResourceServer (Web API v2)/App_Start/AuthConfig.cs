@@ -19,10 +19,7 @@ namespace Thinktecture.Samples
                 signingKey: Constants.AS.SigningKey);
 
             // claims transformation
-            app.UseClaimsTransformation(new ClaimsTransformationOptions
-                {
-                    ClaimsAuthenticationManager = new ClaimsTransformer()
-                });
+            app.UseClaimsTransformation(new ClaimsTransformer());
         }
     }
 }

@@ -13,7 +13,7 @@ namespace Thinktecture.Samples
             JwtSecurityTokenHandler.InboundClaimTypeMap = ClaimMappings.None;
 
             // validate JWT tokens from AuthorizationServer
-            app.UseJwtBearerToken(
+            app.UseJsonWebToken(
                 issuer:     Constants.AS.IssuerName,
                 audience:   Constants.Audience,
                 signingKey: Constants.AS.SigningKey);

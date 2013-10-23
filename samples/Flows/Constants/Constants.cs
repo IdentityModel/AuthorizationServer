@@ -7,7 +7,7 @@ namespace Thinktecture.Samples
         // change the below constants to match your local system
         //
 
-        public const string WebHostName = "roadie";
+        public const string WebHostName = "web.local";
         public const string WebHostv1Path = "/rs/api/";
         public const string WebHostv2Path = "/rs2/api/";
         

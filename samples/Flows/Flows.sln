@@ -30,6 +30,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ResourceServer (Web API v2)
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Thinktecture.IdentityModel.Client", "Thinktecture.IdentityModel.Client\Thinktecture.IdentityModel.Client.csproj", "{E52D391B-8996-4544-9586-0A812CAA5975}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ResourceServer (Nancy)", "ResourceServer (Nancy)\ResourceServer (Nancy).csproj", "{CFEFAE6E-B07E-475B-9F57-CF2DB8BCDD47}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -146,6 +148,16 @@ Global
 		{E52D391B-8996-4544-9586-0A812CAA5975}.Release|ARM.ActiveCfg = Release|Any CPU
 		{E52D391B-8996-4544-9586-0A812CAA5975}.Release|x64.ActiveCfg = Release|Any CPU
 		{E52D391B-8996-4544-9586-0A812CAA5975}.Release|x86.ActiveCfg = Release|Any CPU
+		{CFEFAE6E-B07E-475B-9F57-CF2DB8BCDD47}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CFEFAE6E-B07E-475B-9F57-CF2DB8BCDD47}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CFEFAE6E-B07E-475B-9F57-CF2DB8BCDD47}.Debug|ARM.ActiveCfg = Debug|Any CPU
+		{CFEFAE6E-B07E-475B-9F57-CF2DB8BCDD47}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{CFEFAE6E-B07E-475B-9F57-CF2DB8BCDD47}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{CFEFAE6E-B07E-475B-9F57-CF2DB8BCDD47}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CFEFAE6E-B07E-475B-9F57-CF2DB8BCDD47}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CFEFAE6E-B07E-475B-9F57-CF2DB8BCDD47}.Release|ARM.ActiveCfg = Release|Any CPU
+		{CFEFAE6E-B07E-475B-9F57-CF2DB8BCDD47}.Release|x64.ActiveCfg = Release|Any CPU
+		{CFEFAE6E-B07E-475B-9F57-CF2DB8BCDD47}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

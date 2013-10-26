@@ -7,11 +7,11 @@ using System.Security.Claims;
 
 public static class NancyOwinContextExtensions
 {
-    /// <summary>
-    ///     Gets the OWIN authentication manager from the nancy context.
-    /// </summary>
-    /// <param name="context">The current nancy context.</param>
-    /// <returns>An <see cref="IAuthenticationManager" />.</returns>
+    public static void RequireOwinAuthentication(this NancyModule module)
+    {
+        
+    }
+
     public static IAuthenticationManager GetOwinAuthentication(this NancyContext context)
     {
         var environment = (IDictionary<string, object>)context.Items[NancyOwinHost.RequestEnvironmentKey];

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Nancy.Security;
+using ResourceServer.Security;
 
 namespace ResourceServer
 {
@@ -9,16 +10,13 @@ namespace ResourceServer
     {
         public IdentityModule()
         {
+            this.RequiresAuthentication();
+
             Get["/api/identity"] = _ =>
                 {
-                    var principal = Context.GetOwinPrincipal();
-                    
-                    if (!principal.Identity.IsAuthenticated)
-                    {
-                        return HttpStatusCode.Unauthorized;
-                    }
-
-                    var claims = from c in principal.Claims
+                    var user = Context.CurrentUser as ClaimsUserIdentity;
+                  
+                    var claims = from c in user.Principal.Claims
                                  select new ViewClaim
                                  {
                                      Type = c.Type,

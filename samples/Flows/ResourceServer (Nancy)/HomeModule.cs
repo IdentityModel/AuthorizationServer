@@ -10,7 +10,7 @@ namespace ResourceServer
     {
         public HomeModule()
         {
-            Get["/"] = _ => View["Home"];
+            Get["/"] = _ => "Nancy home";
         }
     }
 }

@@ -7,11 +7,6 @@ using System.Security.Claims;
 
 public static class NancyOwinContextExtensions
 {
-    public static void RequireOwinAuthentication(this NancyModule module)
-    {
-        
-    }
-
     public static IAuthenticationManager GetOwinAuthentication(this NancyContext context)
     {
         var environment = (IDictionary<string, object>)context.Items[NancyOwinHost.RequestEnvironmentKey];

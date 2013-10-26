@@ -14,7 +14,6 @@ namespace ResourceServer.Security
         public ClaimsUserIdentity(ClaimsPrincipal principal)
         {
             _principal = principal;
-
         }
 
         public ClaimsPrincipal Principal

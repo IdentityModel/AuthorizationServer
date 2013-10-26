@@ -25,6 +25,7 @@ namespace ResourceServer.Security
         Task<Response> CheckOwinContext(NancyContext context, CancellationToken token)
         {
             var principal = context.GetOwinPrincipal();
+            
             if (principal.Identity.IsAuthenticated)
             {
                 context.CurrentUser = new ClaimsUserIdentity(principal);

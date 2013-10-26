@@ -8,11 +8,12 @@ namespace ResourceServer
 {
     public class IdentityModule : NancyModule
     {
-        public IdentityModule()
+        public IdentityModule() : base("/api/identity")
         {
             this.RequiresAuthentication();
 
-            Get["/api/identity"] = _ =>
+
+            Get["/"] = _ =>
                 {
                     var user = Context.CurrentUser as ClaimsUserIdentity;
                   

@@ -2,14 +2,9 @@
 using Nancy.Bootstrapper;
 using Nancy.Security;
 using Nancy.TinyIoc;
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
 using System.Security.Claims;
 using System.Threading;
 using System.Threading.Tasks;
-using System.Web;
 
 namespace ResourceServer.Security
 {
@@ -34,6 +29,4 @@ namespace ResourceServer.Security
             return Task.FromResult<Response>(null);
         }
     }
-
-    
 }

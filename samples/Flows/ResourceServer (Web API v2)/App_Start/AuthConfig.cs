@@ -1,6 +1,6 @@
 ﻿using Owin;
+using System.Collections.Generic;
 using System.IdentityModel.Tokens;
-using Thinktecture.IdentityModel.Tokens;
 
 namespace Thinktecture.Samples
 {
@@ -9,7 +9,7 @@ namespace Thinktecture.Samples
         public static void Configure(IAppBuilder app)
         {
             // no mapping of incoming claims to Microsoft types
-            JwtSecurityTokenHandler.InboundClaimTypeMap = ClaimMappings.None;
+            JwtSecurityTokenHandler.InboundClaimTypeMap = new Dictionary<string, string>();
 
             // validate JWT tokens from AuthorizationServer
             app.UseJsonWebToken(

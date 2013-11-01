@@ -21,7 +21,7 @@ namespace Thinktecture.IdentityModel.Owin
             // use Katana OWIN abstractions (optional)
             var context = new OwinContext(env);
             var transformer = _options.ClaimsAuthenticationManager;
-
+            
             if (context.Authentication != null && 
                 context.Authentication.User != null)
             {

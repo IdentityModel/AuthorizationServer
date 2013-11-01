@@ -116,13 +116,11 @@
     <Reference Include="System.Configuration" />
     <Reference Include="System.Web.Services" />
     <Reference Include="System.EnterpriseServices" />
-    <Reference Include="Thinktecture.IdentityModel, Version=3.6.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Thinktecture.IdentityModel.3.6.0\lib\net45\Thinktecture.IdentityModel.dll</HintPath>
-    </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Web.config" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\AuthConfig.cs" />
@@ -130,12 +128,8 @@
     <Compile Include="Controller\IdentityController.cs" />
     <Compile Include="IdentityModel.Katana\ClaimsTransformationMiddleware.cs" />
     <Compile Include="IdentityModel.Katana\ClaimsTransformationOptions.cs" />
-    <Compile Include="IdentityModel.Katana\HeaderOAuthBearerProvider.cs" />
-    <Compile Include="IdentityModel.Katana\KatanaClaimsTransformationMiddleware.cs" />
     <Compile Include="IdentityModel.Katana\ClaimsTransformationMiddlewareExtensions.cs" />
     <Compile Include="IdentityModel.Katana\IdentityModelJwtBearerAuthenticationExtensions.cs" />
-    <Compile Include="IdentityModel.Katana\TokenLocation.cs" />
-    <Compile Include="IdentityModel.Katana\QueryStringOAuthBearerProvider.cs" />
     <Compile Include="Models\ViewClaim.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Security\ClaimsTransformer.cs" />
@@ -167,7 +161,15 @@
     <VisualStudio>
       <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
         <WebProjectProperties>
-          <SaveServerSettingsInUserFile>True</SaveServerSettingsInUserFile>
+          <UseIIS>False</UseIIS>
+          <AutoAssignPort>True</AutoAssignPort>
+          <DevelopmentServerPort>9917</DevelopmentServerPort>
+          <DevelopmentServerVPath>/</DevelopmentServerVPath>
+          <IISUrl>http://localhost:9913/</IISUrl>
+          <NTLMAuthentication>False</NTLMAuthentication>
+          <UseCustomServer>True</UseCustomServer>
+          <CustomServerUrl>https://web.local/rs2</CustomServerUrl>
+          <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
         </WebProjectProperties>
       </FlavorProperties>
     </VisualStudio>

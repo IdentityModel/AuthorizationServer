@@ -23,7 +23,7 @@
                     var url1 = @Url.Action("X509Key");
                     var url2 = @Url.Action("SymmetricKey");
                 }
-                <a class="btn btn-primary" data-bind="attr: { href: (type()==='X509' ? '@url1#' : '@url2#') + $data.id() }">Manage</a>
+                <a class="btn btn-primary" data-bind="attr: { href: (type()==='X509' ? '@url1#' : '@url2#') + $data.iD() }">Manage</a>
                 <div class="btn-group">
                     <a class="btn dropdown-toggle" data-toggle="dropdown" href="#">Delete
                         <span class="caret"></span></a>

@@ -12,7 +12,7 @@ $(function () {
     }
     Keys.prototype.deleteKey = function (item) {
         var vm = this;
-        svc.delete(item.id()).then(function () {
+        svc.delete(item.iD()).then(function () {
             vm.keys.remove(item);
         });
     }

@@ -60,6 +60,13 @@ namespace Thinktecture.AuthorizationServer.OAuth2
                 validatedRequest.GrantType = request.Grant_Type;
                 Tracing.Information("Grant type: " + validatedRequest.GrantType);
             }
+            // assertion poc
+            // todo: cleanup
+            else if (request.Grant_Type == OAuthConstants.GrantTypes.MsaIdentityToken)
+            {
+                validatedRequest.GrantType = request.Grant_Type;
+                Tracing.Information("Grant type: " + validatedRequest.GrantType);
+            }
             else
             {
                 throw new TokenRequestValidationException(
@@ -95,6 +102,9 @@ namespace Thinktecture.AuthorizationServer.OAuth2
                 case OAuthConstants.GrantTypes.ClientCredentials:
                     ValidateClientCredentialsGrant(validatedRequest, request);
                     break;
+                case OAuthConstants.GrantTypes.MsaIdentityToken:
+                    ValidateAssertionGrant(validatedRequest, request);
+                    break;
                 default:
                     throw new TokenRequestValidationException(
                         "Invalid grant_type: " + request.Grant_Type,
@@ -103,6 +113,22 @@ namespace Thinktecture.AuthorizationServer.OAuth2
 
             Tracing.Information("Token request validation successful.");
             return validatedRequest;
+        }
+
+        // hardcoded to Microsoft Account
+        private void ValidateAssertionGrant(ValidatedRequest validatedRequest, TokenRequest request)
+        {
+            ValidateScopes(validatedRequest, request);
+
+            //todo: validate post fields.
+            if (string.IsNullOrWhiteSpace(request.Assertion))
+            {
+                throw new TokenRequestValidationException(
+                    "Missing assertion",
+                    OAuthConstants.Errors.InvalidGrant);
+            }
+
+            validatedRequest.Assertion = request.Assertion;
         }
 
         private void ValidateClientCredentialsGrant(ValidatedRequest validatedRequest, TokenRequest request)

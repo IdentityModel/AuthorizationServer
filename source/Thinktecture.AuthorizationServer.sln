@@ -1,6 +1,8 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2012
+# Visual Studio 2013
+VisualStudioVersion = 12.0.21005.1
+MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebHost", "WebHost\WebHost.csproj", "{140C1E0F-D01F-415E-BD28-3F2B7CE2C7B1}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{AC182D2C-E414-4E6A-BCDE-3D72C3A2550F}"
@@ -19,6 +21,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tests", "Tests\Tests\Tests.csproj", "{E317F79E-23B3-4D52-B869-2DC80215934E}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Thinktecture.AuthorizationServer.EF", "Thinktecture.AuthorizationServer.EF\Thinktecture.AuthorizationServer.EF.csproj", "{8D40FCEB-B25A-4EC3-81CC-201F7BBF41CF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AssertionDemoExtension", "AssertionDemoExtension\AssertionDemoExtension.csproj", "{37953CA3-1BAB-4900-ACA3-972F71214E84}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -46,6 +50,10 @@ Global
 		{8D40FCEB-B25A-4EC3-81CC-201F7BBF41CF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8D40FCEB-B25A-4EC3-81CC-201F7BBF41CF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8D40FCEB-B25A-4EC3-81CC-201F7BBF41CF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{37953CA3-1BAB-4900-ACA3-972F71214E84}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{37953CA3-1BAB-4900-ACA3-972F71214E84}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{37953CA3-1BAB-4900-ACA3-972F71214E84}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{37953CA3-1BAB-4900-ACA3-972F71214E84}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

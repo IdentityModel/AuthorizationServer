@@ -13,6 +13,7 @@ namespace Thinktecture.AuthorizationServer.OAuth2
             public const string AuthorizationCode = "authorization_code";
             public const string ClientCredentials = "client_credentials";
             public const string RefreshToken = "refresh_token";
+            public const string Assertion = "assertion";
             
             // assertion grants
             public const string Saml2 = "urn:ietf:params:oauth:grant-type:saml2-bearer";

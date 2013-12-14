@@ -62,9 +62,12 @@ namespace Thinktecture.AuthorizationServer.OAuth2
             }
             // assertion poc
             // todo: cleanup
-            else if (request.Grant_Type == OAuthConstants.GrantTypes.MsaIdentityToken)
+            else if (!string.IsNullOrWhiteSpace(request.Assertion))
             {
-                validatedRequest.GrantType = request.Grant_Type;
+                validatedRequest.GrantType = OAuthConstants.GrantTypes.Assertion;
+                validatedRequest.Assertion = request.Assertion;
+                validatedRequest.AssertionType = request.Grant_Type;
+
                 Tracing.Information("Grant type: " + validatedRequest.GrantType);
             }
             else
@@ -88,7 +91,7 @@ namespace Thinktecture.AuthorizationServer.OAuth2
                 validatedRequest.Client.Name,
                 validatedRequest.Client.ClientId);
 
-            switch (request.Grant_Type)
+            switch (validatedRequest.GrantType)
             {
                 case OAuthConstants.GrantTypes.AuthorizationCode:
                     ValidateCodeGrant(validatedRequest, request);
@@ -102,7 +105,7 @@ namespace Thinktecture.AuthorizationServer.OAuth2
                 case OAuthConstants.GrantTypes.ClientCredentials:
                     ValidateClientCredentialsGrant(validatedRequest, request);
                     break;
-                case OAuthConstants.GrantTypes.MsaIdentityToken:
+                case OAuthConstants.GrantTypes.Assertion:
                     ValidateAssertionGrant(validatedRequest, request);
                     break;
                 default:
@@ -115,20 +118,21 @@ namespace Thinktecture.AuthorizationServer.OAuth2
             return validatedRequest;
         }
 
-        // hardcoded to Microsoft Account
         private void ValidateAssertionGrant(ValidatedRequest validatedRequest, TokenRequest request)
         {
             ValidateScopes(validatedRequest, request);
 
-            //todo: validate post fields.
-            if (string.IsNullOrWhiteSpace(request.Assertion))
-            {
-                throw new TokenRequestValidationException(
-                    "Missing assertion",
-                    OAuthConstants.Errors.InvalidGrant);
-            }
+            // todo: check for supported assertion type
 
-            validatedRequest.Assertion = request.Assertion;
+            ////todo: validate post fields.
+            //if (string.IsNullOrWhiteSpace(request.Assertion))
+            //{
+            //    throw new TokenRequestValidationException(
+            //        "Missing assertion",
+            //        OAuthConstants.Errors.InvalidGrant);
+            //}
+
+            //validatedRequest.Assertion = request.Assertion;
         }
 
         private void ValidateClientCredentialsGrant(ValidatedRequest validatedRequest, TokenRequest request)

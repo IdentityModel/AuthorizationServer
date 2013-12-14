@@ -434,6 +434,10 @@
     <Content Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\AssertionDemoExtension\AssertionDemoExtension.csproj">
+      <Project>{37953ca3-1bab-4900-aca3-972f71214e84}</Project>
+      <Name>AssertionDemoExtension</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Libraries\Thinktecture.AuthorizationServer.Core\Thinktecture.AuthorizationServer.Core.csproj">
       <Project>{e8643146-28ae-437b-9bad-e4593509b4dc}</Project>
       <Name>Thinktecture.AuthorizationServer.Core</Name>

@@ -3,7 +3,6 @@
  * see license.txt
  */
 
-using Microsoft.Live;
 using System;
 using System.Net;
 using System.Net.Http;
@@ -20,15 +19,18 @@ namespace Thinktecture.AuthorizationServer.OAuth2
         IResourceOwnerCredentialValidation _rocv;
         IAuthorizationServerConfiguration _config;
         IStoredGrantManager _handleManager;
+        IAssertionGrantHandler _assertionGrantHandler;
 
         public TokenController(
             IResourceOwnerCredentialValidation rocv, 
             IAuthorizationServerConfiguration config,
-            IStoredGrantManager handleManager)
+            IStoredGrantManager handleManager,
+            IAssertionGrantHandler assertionGrantHandler)
         {
             _rocv = rocv;
             _config = config;
             _handleManager = handleManager;
+            _assertionGrantHandler = assertionGrantHandler;
         }
 
         public HttpResponseMessage Post(string appName, TokenRequest request)
@@ -72,42 +74,24 @@ namespace Thinktecture.AuthorizationServer.OAuth2
             {
                 return ProcessClientCredentialsRequest(validatedRequest);
             }
-            // poc support for Microsoft Account identity tokens
-            // todo: cleanup
-            else if (string.Equals(validatedRequest.GrantType, OAuthConstants.GrantTypes.MsaIdentityToken))
+            else if (string.Equals(validatedRequest.GrantType, OAuthConstants.GrantTypes.Assertion))
             {
-                return ProcessMicrosoftAccountAssertionRequest(validatedRequest);
+                var identity = _assertionGrantHandler.ProcessAssertion(validatedRequest);
+                if (identity != null)
+                {
+                    return ProcessExtensionGrant(validatedRequest, identity);
+                }
             }
 
             Tracing.Error("invalid grant type: " + request.Grant_Type);
             return Request.CreateOAuthErrorResponse(OAuthConstants.Errors.UnsupportedGrantType);
         }
 
-        private HttpResponseMessage ProcessMicrosoftAccountAssertionRequest(ValidatedRequest validatedRequest)
+        private HttpResponseMessage ProcessExtensionGrant(ValidatedRequest validatedRequest, ClaimsIdentity identity)
         {
-            // todo: read from config
-            var appId = "ms-app://s-1-15-2-566730974-2602954100-374302646-1642987517-3006637339-1063681522-1721721910";
-            var appSecret = "jqRW49YVlEy3qzKuNdnBQy2JYB4KxOxv";
-            var redirectUri = "http://www.thinktecture.com";
-
-            var authClient = new LiveAuthClient(
-                   appId,
-                   appSecret,
-                   redirectUri);
-
-            try
-            {
-                var msaId = authClient.GetUserId(validatedRequest.Assertion);
-                var principal = Principal.Create("Assertion", new Claim("sub", msaId));
-
-                var sts = new TokenService(_config.GlobalConfiguration);
-                var response = sts.CreateTokenResponse(validatedRequest, principal);
-                return Request.CreateTokenResponse(response);
-            }
-            catch
-            {
-                return Request.CreateOAuthErrorResponse(OAuthConstants.Errors.InvalidGrant);
-            }
+            var sts = new TokenService(_config.GlobalConfiguration);
+            var response = sts.CreateTokenResponse(validatedRequest, new ClaimsPrincipal(identity));
+            return Request.CreateTokenResponse(response);
         }
 
         private HttpResponseMessage ProcessClientCredentialsRequest(ValidatedRequest validatedRequest)

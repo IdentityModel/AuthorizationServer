@@ -60,14 +60,12 @@ namespace Thinktecture.AuthorizationServer.OAuth2
                 validatedRequest.GrantType = request.Grant_Type;
                 Tracing.Information("Grant type: " + validatedRequest.GrantType);
             }
-            // assertion poc
-            // todo: cleanup
             else if (!string.IsNullOrWhiteSpace(request.Assertion))
             {
                 validatedRequest.GrantType = OAuthConstants.GrantTypes.Assertion;
-                validatedRequest.Assertion = request.Assertion;
                 validatedRequest.AssertionType = request.Grant_Type;
-
+                validatedRequest.Assertion = request.Assertion;
+                
                 Tracing.Information("Grant type: " + validatedRequest.GrantType);
             }
             else
@@ -116,23 +114,6 @@ namespace Thinktecture.AuthorizationServer.OAuth2
 
             Tracing.Information("Token request validation successful.");
             return validatedRequest;
-        }
-
-        private void ValidateAssertionGrant(ValidatedRequest validatedRequest, TokenRequest request)
-        {
-            ValidateScopes(validatedRequest, request);
-
-            // todo: check for supported assertion type
-
-            ////todo: validate post fields.
-            //if (string.IsNullOrWhiteSpace(request.Assertion))
-            //{
-            //    throw new TokenRequestValidationException(
-            //        "Missing assertion",
-            //        OAuthConstants.Errors.InvalidGrant);
-            //}
-
-            //validatedRequest.Assertion = request.Assertion;
         }
 
         private void ValidateClientCredentialsGrant(ValidatedRequest validatedRequest, TokenRequest request)
@@ -236,33 +217,6 @@ namespace Thinktecture.AuthorizationServer.OAuth2
             }
         }
 
-        private static void ValidateScopes(ValidatedRequest validatedRequest, TokenRequest request)
-        {
-            // validate scope
-            if (string.IsNullOrWhiteSpace(request.Scope))
-            {
-                throw new TokenRequestValidationException(
-                    "Missing scope",
-                    OAuthConstants.Errors.InvalidScope);
-            }
-
-            // make sure client is allowed to request all scope
-            var requestedScopes = request.Scope.Split(' ').ToList();
-            List<Scope> resultingScopes;
-
-            if (validatedRequest.Application.Scopes.TryValidateScopes(validatedRequest.Client.ClientId, requestedScopes, out resultingScopes))
-            {
-                validatedRequest.Scopes = resultingScopes;
-                Tracing.InformationFormat("Requested scopes: {0}", request.Scope);
-            }
-            else
-            {
-                throw new TokenRequestValidationException(
-                    "Invalid scope",
-                    OAuthConstants.Errors.InvalidScope);
-            }
-        }
-
         private void ValidateCodeGrant(ValidatedRequest validatedRequest, TokenRequest request)
         {
             if (_handleManager == null)
@@ -322,6 +276,40 @@ namespace Thinktecture.AuthorizationServer.OAuth2
                 throw new TokenRequestValidationException(
                     string.Format("Redirect URI in token request ({0}), does not match redirect URI from authorize request ({1})", validatedRequest.RedirectUri, handle.RedirectUri),
                     OAuthConstants.Errors.InvalidRequest);
+            }
+        }
+
+        private void ValidateAssertionGrant(ValidatedRequest validatedRequest, TokenRequest request)
+        {
+            ValidateScopes(validatedRequest, request);
+
+            // todo: is client allowed to use this assertion type (for this application?)
+        }
+
+        private static void ValidateScopes(ValidatedRequest validatedRequest, TokenRequest request)
+        {
+            // validate scope
+            if (string.IsNullOrWhiteSpace(request.Scope))
+            {
+                throw new TokenRequestValidationException(
+                    "Missing scope",
+                    OAuthConstants.Errors.InvalidScope);
+            }
+
+            // make sure client is allowed to request all scope
+            var requestedScopes = request.Scope.Split(' ').ToList();
+            List<Scope> resultingScopes;
+
+            if (validatedRequest.Application.Scopes.TryValidateScopes(validatedRequest.Client.ClientId, requestedScopes, out resultingScopes))
+            {
+                validatedRequest.Scopes = resultingScopes;
+                Tracing.InformationFormat("Requested scopes: {0}", request.Scope);
+            }
+            else
+            {
+                throw new TokenRequestValidationException(
+                    "Invalid scope",
+                    OAuthConstants.Errors.InvalidScope);
             }
         }
 

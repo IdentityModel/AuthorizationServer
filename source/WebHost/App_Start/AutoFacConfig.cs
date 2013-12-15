@@ -23,7 +23,7 @@ namespace Thinktecture.AuthorizationServer.WebHost
 
             builder.RegisterType<EFStoredGrantManager>().As<IStoredGrantManager>();
 
-            builder.RegisterType<Thinktecture.Samples.AssertionGrantHandler>().As<IAssertionGrantHandler>();
+            builder.RegisterType<Thinktecture.Samples.AssertionGrantValidator>().As<IAssertionGrantValidation>();
             //builder.RegisterType<DefaultAssertionGrantHandler>().As<IAssertionGrantHandler>();
 
             builder.RegisterType<EFAuthorizationServerConfiguration>().As<IAuthorizationServerConfiguration>();

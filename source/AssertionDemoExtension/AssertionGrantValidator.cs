@@ -1,6 +1,6 @@
 ﻿using Microsoft.Live;
-using System;
 using System.Collections.Generic;
+using System.IdentityModel.Services;
 using System.Security.Claims;
 using Thinktecture.AuthorizationServer.Interfaces;
 using Thinktecture.AuthorizationServer.Models;
@@ -8,14 +8,17 @@ using Thinktecture.AuthorizationServer.OAuth2;
 
 namespace Thinktecture.Samples
 {
-    public class AssertionGrantHandler : IAssertionGrantHandler
+    public class AssertionGrantValidator : IAssertionGrantValidation
     {
-        public IEnumerable<string> SupportedAssertions
+        public IEnumerable<string> SupportedAssertionTypes
         {
-            get { throw new NotImplementedException(); }
+            get 
+            { 
+                return new[] { OAuthConstants.GrantTypes.MsaIdentityToken }; 
+            }
         }
 
-        public ClaimsIdentity ProcessAssertion(ValidatedRequest validatedRequest)
+        public ClaimsPrincipal ValidateAssertion(ValidatedRequest validatedRequest)
         {
             if (validatedRequest.AssertionType == OAuthConstants.GrantTypes.MsaIdentityToken)
             {
@@ -30,9 +33,11 @@ namespace Thinktecture.Samples
 
                 var msaId = authClient.GetUserId(validatedRequest.Assertion);
                 var id = new ClaimsIdentity("MSA");
-                id.AddClaim(new Claim("sub", msaId));
+                id.AddClaim(new Claim(ClaimTypes.NameIdentifier, msaId));
 
-                return id;
+                return FederatedAuthentication.FederationConfiguration.IdentityConfiguration.ClaimsAuthenticationManager.Authenticate(
+                    "AssertionValidation", 
+                    new ClaimsPrincipal(id));
             }
 
             return null;

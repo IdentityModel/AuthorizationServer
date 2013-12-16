@@ -283,7 +283,12 @@ namespace Thinktecture.AuthorizationServer.OAuth2
         {
             ValidateScopes(validatedRequest, request);
 
-            // todo: is client allowed to use this assertion type (for this application?)
+            if (validatedRequest.Client.Flow != OAuthFlow.Assertion)
+            {
+                throw new TokenRequestValidationException(
+                    "Assertion flow not allowed for client",
+                    OAuthConstants.Errors.UnauthorizedClient);
+            }
         }
 
         private static void ValidateScopes(ValidatedRequest validatedRequest, TokenRequest request)

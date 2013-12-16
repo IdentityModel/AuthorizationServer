@@ -10,6 +10,7 @@ namespace Thinktecture.AuthorizationServer.Models
         Code,
         Implicit,
         ResourceOwner,
-        Client
+        Client, 
+        Assertion
     }
 }

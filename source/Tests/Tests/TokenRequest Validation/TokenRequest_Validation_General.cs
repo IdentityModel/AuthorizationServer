@@ -22,7 +22,7 @@ namespace Thinktecture.AuthorizationServer.Test
         [TestMethod]
         public void UnknownApplication()
         {
-            var controller = new TokenController(null, _testConfig, null)
+            var controller = new TokenController(null, _testConfig, null, null)
             {
                 Request = new HttpRequestMessage()
             };

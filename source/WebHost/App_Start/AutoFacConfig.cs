@@ -21,10 +21,11 @@ namespace Thinktecture.AuthorizationServer.WebHost
         {
             var builder = new ContainerBuilder();
 
-            //builder.RegisterType<DummyTokenHandleManager>().As<ITokenHandleManager>();
             builder.RegisterType<EFStoredGrantManager>().As<IStoredGrantManager>();
-            
-            //builder.RegisterType<DummyAuthorizationServerConfiguration>().As<IAuthorizationServerConfiguration>();
+
+            //builder.RegisterType<Thinktecture.Samples.AssertionGrantValidator>().As<IAssertionGrantValidation>();
+            builder.RegisterType<DefaultAssertionGrantValidator>().As<IAssertionGrantValidation>();
+
             builder.RegisterType<EFAuthorizationServerConfiguration>().As<IAuthorizationServerConfiguration>();
             builder.RegisterType<EFAuthorizationServerAdministration>().As<IAuthorizationServerAdministration>();
             builder.RegisterType<EFAuthorizationServerAdministratorsService>().As<IAuthorizationServerAdministratorsService>();

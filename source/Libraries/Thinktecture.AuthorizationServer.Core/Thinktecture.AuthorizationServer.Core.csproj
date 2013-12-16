@@ -66,6 +66,7 @@
     <Compile Include="Interfaces\IAuthorizationServerAdministration.cs" />
     <Compile Include="Interfaces\IAuthorizationServerAdministratorsService.cs" />
     <Compile Include="Interfaces\IAuthorizationServerConfiguration.cs" />
+    <Compile Include="Interfaces\IAssertionGrantValidation.cs" />
     <Compile Include="Interfaces\IResourceOwnerCredentialValidation.cs" />
     <Compile Include="DataProtectection\IDataProtectection.cs" />
     <Compile Include="Interfaces\IStoredGrantManager.cs" />

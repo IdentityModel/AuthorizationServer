@@ -17,6 +17,8 @@ namespace Thinktecture.AuthorizationServer.Models
         public List<Scope> Scopes { get; set; }
         public string State { get; set; }
         public string GrantType { get; set; }
+        public string AssertionType { get; set; }
+        public string Assertion { get; set; }
         public string Password { get; set; }
         public string UserName { get; set; }
         public string AuthorizationCode { get; set; }

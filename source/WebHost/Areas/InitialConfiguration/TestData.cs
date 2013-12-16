@@ -45,7 +45,7 @@ namespace Thinktecture.AuthorizationServer.WebHost
 
                 if (assertionClient == null)
                 {
-                    client = new Client
+                    assertionClient = new Client
                     {
                         Enabled = true,
                         Name = "Assertion Client",
@@ -53,8 +53,8 @@ namespace Thinktecture.AuthorizationServer.WebHost
                         ClientId = "assertionclient",
                         Flow = OAuthFlow.Assertion
                     };
-                    client.SetSharedSecret("secret");
-                    db.Clients.Add(client);
+                    assertionClient.SetSharedSecret("secret");
+                    db.Clients.Add(assertionClient);
                     db.SaveChanges();
                 }
 

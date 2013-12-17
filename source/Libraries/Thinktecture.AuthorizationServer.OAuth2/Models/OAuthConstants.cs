@@ -18,7 +18,6 @@ namespace Thinktecture.AuthorizationServer.OAuth2
             // assertion grants
             public const string Saml2 = "urn:ietf:params:oauth:grant-type:saml2-bearer";
             public const string JwtBearer = "urn:ietf:params:oauth:grant-type:jwt-bearer";
-            public const string MsaIdentityToken = "urn:msaidentitytoken";
         }
 
         public static class ResponseTypes

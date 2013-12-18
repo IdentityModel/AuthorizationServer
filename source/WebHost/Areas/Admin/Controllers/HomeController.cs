@@ -3,7 +3,6 @@
  * see license.txt
  */
 
-using System;
 using System.Web.Mvc;
 using Thinktecture.IdentityModel.Authorization.Mvc;
 

@@ -3,7 +3,6 @@
  * see license.txt
  */
 
-using System;
 using System.IdentityModel.Services;
 using System.Web.Helpers;
 using System.Web.Http;

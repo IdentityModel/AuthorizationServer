@@ -78,6 +78,7 @@
     <Compile Include="Data\TestAuthorizationServerConfiguration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TokenRequest Validation\TokenRequest_Validation_Client.cs" />
+    <Compile Include="TokenRequest Validation\TokenRequest_Validation_Assertion.cs" />
     <Compile Include="TokenRequest Validation\TokenRequest_Validation_RefreshToken.cs" />
     <Compile Include="TokenRequest Validation\TokenRequest_Validation_Password.cs" />
     <Compile Include="TokenRequest Validation\TokenRequest_Validation_Code.cs" />

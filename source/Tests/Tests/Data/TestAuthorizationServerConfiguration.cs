@@ -43,6 +43,17 @@ namespace Thinktecture.AuthorizationServer.Test
             };
             resourceOwnerClient.SetSharedSecret("secret");
 
+            var assertionClient = new Client
+            {
+                Name = "Assertion Flow Client",
+                ClientId = "assertionclient",
+                AuthenticationMethod = ClientAuthenticationMethod.SharedSecret,
+
+                Flow = OAuthFlow.Assertion,
+                AllowRefreshToken = false
+            };
+            assertionClient.SetSharedSecret("secret");
+
             var codeClient = new Client
             {
                 Name = "Code Flow Client",
@@ -112,7 +123,7 @@ namespace Thinktecture.AuthorizationServer.Test
 
             var readScope = new Scope
             {
-                AllowedClients = new List<Client> { codeClient, implicitClient, resourceOwnerClient, serviceClient },
+                AllowedClients = new List<Client> { codeClient, implicitClient, resourceOwnerClient, serviceClient, assertionClient },
                 Name = "read",
                 Description = "Read data",
                 Emphasize = false

@@ -56,26 +56,18 @@ namespace Thinktecture.AuthorizationServer.OAuth2
                 return Request.CreateOAuthErrorResponse(ex.OAuthError);
             }
 
-            // switch over the grant type
-            if (validatedRequest.GrantType.Equals(OAuthConstants.GrantTypes.Password))
+            switch (validatedRequest.GrantType)
             {
-                return ProcessResourceOwnerCredentialRequest(validatedRequest);
-            }
-            else if (validatedRequest.GrantType.Equals(OAuthConstants.GrantTypes.AuthorizationCode))
-            {
-                return ProcessAuthorizationCodeRequest(validatedRequest);
-            }
-            else if (string.Equals(validatedRequest.GrantType, OAuthConstants.GrantTypes.RefreshToken))
-            {
-                return ProcessRefreshTokenRequest(validatedRequest);
-            }
-            else if (string.Equals(validatedRequest.GrantType, OAuthConstants.GrantTypes.ClientCredentials))
-            {
-                return ProcessClientCredentialsRequest(validatedRequest);
-            }
-            else if (string.Equals(validatedRequest.GrantType, OAuthConstants.GrantTypes.Assertion))
-            {
-                return ProcessAssertionGrant(validatedRequest);
+                case OAuthConstants.GrantTypes.Password:
+                    return ProcessResourceOwnerCredentialRequest(validatedRequest);
+                case OAuthConstants.GrantTypes.AuthorizationCode:
+                    return ProcessAuthorizationCodeRequest(validatedRequest);
+                case OAuthConstants.GrantTypes.RefreshToken:
+                    return ProcessRefreshTokenRequest(validatedRequest);
+                case OAuthConstants.GrantTypes.ClientCredentials:
+                    return ProcessClientCredentialsRequest(validatedRequest);
+                case OAuthConstants.GrantTypes.Assertion:
+                    return ProcessAssertionGrant(validatedRequest);
             }
 
             Tracing.Error("invalid grant type: " + request.Grant_Type);

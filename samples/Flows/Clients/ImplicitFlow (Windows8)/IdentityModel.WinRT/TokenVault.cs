@@ -2,6 +2,7 @@
 using Windows.Data.Json;
 using Windows.Security.Credentials;
 using Thinktecture.IdentityModel.Client;
+using System;
 
 namespace Thinktecture.IdentityModel.WinRT
 {
@@ -11,8 +12,10 @@ namespace Thinktecture.IdentityModel.WinRT
         {
             var json = new JsonObject();
 
+            var expiresAt = DateTime.UtcNow.ToEpochTime() + ExpiresIn;
+
             json["access_token"] = JsonValue.CreateStringValue(accessToken);
-            json["expires_in"] = JsonValue.CreateNumberValue(ExpiresIn);
+            json["expires_in"] = JsonValue.CreateNumberValue(expiresAt);
             json["token_type"] = JsonValue.CreateStringValue(tokenType);
 
             var vault = new PasswordVault();

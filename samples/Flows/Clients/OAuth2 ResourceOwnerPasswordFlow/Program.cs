@@ -22,6 +22,8 @@ namespace Thinktecture.Samples
             //token = RefreshToken(response.RefreshToken);
 
             CallService(token);
+
+            //TestAuthorization(token);
         }
 
         private static TokenResponse RequestToken()
@@ -82,6 +84,17 @@ namespace Thinktecture.Samples
             var response = client.RequestRefreshTokenAsync(refreshToken).Result;
 
             return response.AccessToken;
+        }
+
+        private static void TestAuthorization(string token)
+        {
+            var client = new HttpClient {
+                BaseAddress = _baseAddress
+            };
+
+            client.SetBearerToken(token);
+
+            var response = client.GetAsync("identity").Result;
         }
 
         private static void SetClipboard(string text)

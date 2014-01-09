@@ -118,6 +118,12 @@
     <Reference Include="System.Configuration" />
     <Reference Include="System.Web.Services" />
     <Reference Include="System.EnterpriseServices" />
+    <Reference Include="Thinktecture.IdentityModel.Core">
+      <HintPath>..\packages\Thinktecture.IdentityModel.Core.1.0.0\lib\net45\Thinktecture.IdentityModel.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Thinktecture.IdentityModel.WebApi">
+      <HintPath>..\packages\Thinktecture.IdentityModel.WebApi.1.0.0-beta3\lib\net45\Thinktecture.IdentityModel.WebApi.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Content Include="Web.config">
@@ -128,6 +134,8 @@
     <Compile Include="App_Start\AuthConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controller\IdentityController.cs" />
+    <Compile Include="Controller\TestController.cs" />
+    <Compile Include="Security\AuthorizationManager.cs" />
     <Compile Include="Security\ClaimsTransformationMiddleware.cs" />
     <Compile Include="Security\ClaimsTransformationOptions.cs" />
     <Compile Include="Security\ClaimsTransformationMiddlewareExtensions.cs" />

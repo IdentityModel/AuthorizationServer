@@ -94,7 +94,8 @@ namespace Thinktecture.Samples
 
             client.SetBearerToken(token);
 
-            var response = client.GetAsync("identity").Result;
+            var response = client.GetAsync("test").Result;
+            response.StatusCode.ToString().ConsoleRed();
         }
 
         private static void SetClipboard(string text)

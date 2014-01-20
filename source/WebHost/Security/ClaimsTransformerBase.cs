@@ -24,9 +24,7 @@ namespace Thinktecture.AuthorizationServer.WebHost
         public override ClaimsPrincipal Authenticate(string resourceName, ClaimsPrincipal incomingPrincipal)
         {
             var subject = GetSubject(incomingPrincipal);
-            var claims = new List<Claim> { new Claim(Constants.ClaimTypes.Subject, subject) };
-
-            claims.AddRange(AddInternalClaims(subject));
+            var claims = new List<Claim> { new Claim(Constants.ClaimTypes.Subject, subject) }.Union(incomingPrincipal.Claims).Union(AddInternalClaims(subject));
 
             return Principal.Create("AuthorizationServer", claims.ToArray());
         }

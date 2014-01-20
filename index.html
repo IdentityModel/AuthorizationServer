@@ -51,6 +51,10 @@ A client has a client ID and a secret. A client can use exactly one OAuth2 flow 
 <p><strong>Access Tokens</strong>
 An access token will contain JWT standard claims like iss (issuer), aud (audience), nbf (not before), exp (expiration). In addition it will contain information about the subject (sub claim), the client that requested the token as well as the requested scopes.</p>
 
+<p><strong>Flows</strong>
+We support all OAuth2 flows like authorization code, implicit, resource owner and client credentials flow. In addition you can extend the token endpoint to support assertion flow, which enables delegation and federation scenarios.
+</p>
+
 <h3>
 <a name="architecture" class="anchor" href="#architecture"><span class="octicon octicon-link"></span></a>Architecture</h3>
 

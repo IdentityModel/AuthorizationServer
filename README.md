@@ -20,6 +20,9 @@ A client has a client ID and a secret. A client can use exactly one OAuth2 flow 
 **Access Tokens**
 An access token will contain JWT standard claims like iss (issuer), aud (audience), nbf (not before), exp (expiration). In addition it will contain information about the subject (sub claim), the client that requested the token as well as the requested scopes.
 
+**Flows** 
+We support all OAuth2 flows like authorization code, implicit, resource owner and client credentials flow. In addition you can extend the token endpoint to support assertion flow, which enables delegation and federation scenarios.
+
 ### Architecture
 
 AS deliberately doesn't do authentication. It solely focuses on authorization. The default configuration assumes AS is a relying party to some WS-Federation identity provider (e.g. IdentityServer, ADFS, Windows Azure Active Directory or Azure Access Control Service). You can of course customize that in any way you want, e.g. add a local login page.

@@ -4,6 +4,7 @@
  */
 
 using System.IdentityModel.Services;
+using System.IdentityModel.Tokens;
 using System.Web.Helpers;
 using System.Web.Http;
 using System.Web.Mvc;
@@ -18,7 +19,9 @@ namespace Thinktecture.AuthorizationServer.WebHost
     {
         protected void Application_Start()
         {
-            System.IdentityModel.Tokens.JwtSecurityTokenHandler.OutboundClaimTypeMap = ClaimMappings.None;
+            // don't let the JWT handler change claim types
+            JwtSecurityTokenHandler.InboundClaimTypeMap = ClaimMappings.None;
+            JwtSecurityTokenHandler.OutboundClaimTypeMap = ClaimMappings.None;
 
             AreaRegistration.RegisterAllAreas();
 

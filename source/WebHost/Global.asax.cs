@@ -10,6 +10,7 @@ using System.Web.Mvc;
 using System.Web.Optimization;
 using System.Web.Routing;
 using Thinktecture.AuthorizationServer.Interfaces;
+using Thinktecture.IdentityModel.Tokens;
 
 namespace Thinktecture.AuthorizationServer.WebHost
 {
@@ -17,6 +18,8 @@ namespace Thinktecture.AuthorizationServer.WebHost
     {
         protected void Application_Start()
         {
+            System.IdentityModel.Tokens.JwtSecurityTokenHandler.OutboundClaimTypeMap = ClaimMappings.None;
+
             AreaRegistration.RegisterAllAreas();
 
             WebApiConfig.Register(GlobalConfiguration.Configuration);

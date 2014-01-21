@@ -215,7 +215,7 @@
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Security\DataProtectionConfigurationFilter.cs" />
-    <Compile Include="Security\NameIdOrNameToSubjectClaimsTransformer.cs" />
+    <Compile Include="Security\SubjectClaimsTransformer.cs" />
     <Compile Include="Security\ValidateHttpAntiForgeryTokenAttribute.cs" />
     <Compile Include="Settings.cs" />
     <Compile Include="Areas\InitialConfiguration\TestData.cs" />

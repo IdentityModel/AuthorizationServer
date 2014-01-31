@@ -18,9 +18,9 @@ namespace Thinktecture.AuthorizationServer.WebHost
                 defaults: new { Controller = "Token" }
             );
 
-            //config.Formatters.JsonFormatter.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
+            config.Formatters.JsonFormatter.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
 
-            config.EnableSystemDiagnosticsTracing();
+            //config.EnableSystemDiagnosticsTracing();
         }
     }
 }

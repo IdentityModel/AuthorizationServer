@@ -4,7 +4,7 @@
  */
 
 using Autofac;
-using Autofac.Configuration;
+//using Autofac.Configuration;
 using Autofac.Integration.Mvc;
 using Autofac.Integration.WebApi;
 using System.Web.Http;
@@ -23,7 +23,6 @@ namespace Thinktecture.AuthorizationServer.WebHost
 
             builder.RegisterType<EFStoredGrantManager>().As<IStoredGrantManager>();
 
-            //builder.RegisterType<Thinktecture.Samples.AssertionGrantValidator>().As<IAssertionGrantValidation>();
             builder.RegisterType<DefaultAssertionGrantValidator>().As<IAssertionGrantValidation>();
 
             builder.RegisterType<EFAuthorizationServerConfiguration>().As<IAuthorizationServerConfiguration>();
@@ -31,7 +30,8 @@ namespace Thinktecture.AuthorizationServer.WebHost
             builder.RegisterType<EFAuthorizationServerAdministratorsService>().As<IAuthorizationServerAdministratorsService>();
             builder.RegisterType<AuthorizationServerContext>().InstancePerHttpRequest();
             
-            builder.RegisterModule(new ConfigurationSettingsReader("autofac"));
+            // todo
+            //builder.RegisterModule(new ConfigurationSettingsReader("autofac"));
 
             builder.RegisterControllers(typeof(AuthorizeController).Assembly);
             builder.RegisterControllers(typeof(AutofacConfig).Assembly);

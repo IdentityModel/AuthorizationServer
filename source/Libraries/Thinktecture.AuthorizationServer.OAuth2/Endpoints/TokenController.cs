@@ -13,6 +13,7 @@ using Thinktecture.AuthorizationServer.Models;
 
 namespace Thinktecture.AuthorizationServer.OAuth2
 {
+    [ClientCredentialsFilter]
     public class TokenController : ApiController
     {
         IResourceOwnerCredentialValidation _rocv;
@@ -32,7 +33,7 @@ namespace Thinktecture.AuthorizationServer.OAuth2
             _assertionGrantValidator = assertionGrantValidator;
         }
 
-        public HttpResponseMessage Post(string appName, TokenRequest request)
+        public HttpResponseMessage Post([FromUri] string appName, [FromBody] TokenRequest request)
         {
             Tracing.Start("OAuth2 Token Endpoint");
 

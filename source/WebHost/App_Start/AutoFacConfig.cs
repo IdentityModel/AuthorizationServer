@@ -30,7 +30,6 @@ namespace Thinktecture.AuthorizationServer.WebHost
             builder.RegisterType<EFAuthorizationServerAdministratorsService>().As<IAuthorizationServerAdministratorsService>();
             builder.RegisterType<AuthorizationServerContext>().InstancePerHttpRequest();
             
-            // todo
             builder.RegisterModule(new ConfigurationSettingsReader("autofac"));
 
             builder.RegisterControllers(typeof(AuthorizeController).Assembly);

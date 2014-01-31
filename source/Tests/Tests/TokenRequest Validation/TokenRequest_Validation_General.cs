@@ -27,7 +27,7 @@ namespace Thinktecture.AuthorizationServer.Test
                 Request = new HttpRequestMessage()
             };
 
-            var result = controller.Post("unknown", null);
+            var result = controller.Post(null, "unknown");
 
             Assert.AreEqual(HttpStatusCode.NotFound, result.StatusCode);
         }

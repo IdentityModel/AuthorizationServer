@@ -4,7 +4,7 @@
  */
 
 using Autofac;
-//using Autofac.Configuration;
+using Autofac.Configuration;
 using Autofac.Integration.Mvc;
 using Autofac.Integration.WebApi;
 using System.Web.Http;
@@ -31,7 +31,7 @@ namespace Thinktecture.AuthorizationServer.WebHost
             builder.RegisterType<AuthorizationServerContext>().InstancePerHttpRequest();
             
             // todo
-            //builder.RegisterModule(new ConfigurationSettingsReader("autofac"));
+            builder.RegisterModule(new ConfigurationSettingsReader("autofac"));
 
             builder.RegisterControllers(typeof(AuthorizeController).Assembly);
             builder.RegisterControllers(typeof(AutofacConfig).Assembly);

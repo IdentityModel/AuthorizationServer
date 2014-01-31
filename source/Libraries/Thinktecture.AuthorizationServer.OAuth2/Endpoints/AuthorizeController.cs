@@ -9,7 +9,7 @@ using System.Security.Claims;
 using System.Web.Mvc;
 using Thinktecture.AuthorizationServer.Interfaces;
 using Thinktecture.AuthorizationServer.Models;
-using Thinktecture.IdentityModel.Web.Mvc;
+using Thinktecture.IdentityModel.SystemWeb.Mvc;
 
 namespace Thinktecture.AuthorizationServer.OAuth2
 {

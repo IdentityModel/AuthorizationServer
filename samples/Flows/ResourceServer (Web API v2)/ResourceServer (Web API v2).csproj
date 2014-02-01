@@ -125,6 +125,9 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Thinktecture.IdentityModel.Core.1.1.0\lib\net45\Thinktecture.IdentityModel.Core.dll</HintPath>
     </Reference>
+    <Reference Include="Thinktecture.IdentityModel.Owin">
+      <HintPath>..\packages\Thinktecture.IdentityModel.Owin.1.0.0\lib\net45\Thinktecture.IdentityModel.Owin.dll</HintPath>
+    </Reference>
     <Reference Include="Thinktecture.IdentityModel.WebApi, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Thinktecture.IdentityModel.WebApi.1.1.0\lib\net45\Thinktecture.IdentityModel.WebApi.dll</HintPath>
@@ -136,15 +139,10 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="App_Start\AuthConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controller\IdentityController.cs" />
     <Compile Include="Controller\TestController.cs" />
     <Compile Include="Security\AuthorizationManager.cs" />
-    <Compile Include="Security\ClaimsTransformationMiddleware.cs" />
-    <Compile Include="Security\ClaimsTransformationOptions.cs" />
-    <Compile Include="Security\ClaimsTransformationMiddlewareExtensions.cs" />
-    <Compile Include="Security\IdentityModelJwtBearerAuthenticationExtensions.cs" />
     <Compile Include="Models\ViewClaim.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Security\ClaimsTransformer.cs" />

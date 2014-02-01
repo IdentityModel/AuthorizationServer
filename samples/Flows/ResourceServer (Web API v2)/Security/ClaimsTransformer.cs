@@ -1,17 +1,19 @@
 ﻿using System.Linq;
 using System.Security.Claims;
+using System.Threading.Tasks;
 
 namespace Thinktecture.Samples
 {
-    public class ClaimsTransformer : ClaimsAuthenticationManager
+    public class ClaimsTransformer
     {
-        public override ClaimsPrincipal Authenticate(string resourceName, ClaimsPrincipal incomingPrincipal)
+        public async Task<ClaimsPrincipal> Transform(ClaimsPrincipal incomingPrincipal)
         {
             if (!incomingPrincipal.Identity.IsAuthenticated)
             {
                 return incomingPrincipal;
             }
 
+            // go to datastore and add app specific claims
             incomingPrincipal.Identities.First().AddClaim(
                 new Claim("localclaim", "localvalue"));
 

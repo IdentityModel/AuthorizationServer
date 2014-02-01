@@ -19,8 +19,8 @@ namespace Thinktecture.AuthorizationServer.Test
 
             _testConfig = new TestAuthorizationServerConfiguration();
             _client = Principal.Create("Test",
-                                            new Claim(ClaimTypes.Name, "client"),
-                                            new Claim("password", "secret"));
+                                            new Claim("client_id", "client"),
+                                            new Claim("secret", "secret"));
         }
 
         [TestMethod]

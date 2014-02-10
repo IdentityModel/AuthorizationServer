@@ -21,8 +21,8 @@ namespace Thinktecture.AuthorizationServer.Test
 
             _client = Principal.Create(
                 "Test",
-                new Claim(ClaimTypes.Name, "codeclient"),
-                new Claim("password", "secret"));
+                new Claim("client_id", "codeclient"),
+                new Claim("secret", "secret"));
             _handleManager = new TestTokenHandleManager(
                 "abc", 
                 "codeclient", 

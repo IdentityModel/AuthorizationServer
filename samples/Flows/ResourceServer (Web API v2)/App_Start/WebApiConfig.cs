@@ -5,7 +5,7 @@ namespace Thinktecture.Samples
 {
     public class WebApiConfig
     {
-        public static void Configure(IAppBuilder app)
+        public static HttpConfiguration Configure()
         {
             var config = new HttpConfiguration();
             
@@ -17,7 +17,7 @@ namespace Thinktecture.Samples
 
             config.EnableCors();
 
-            app.UseWebApi(config);
+            return config;
         }
     }
 }

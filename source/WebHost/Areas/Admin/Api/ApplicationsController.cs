@@ -10,11 +10,11 @@ using System.Web.Http;
 using Thinktecture.AuthorizationServer.Interfaces;
 using Thinktecture.AuthorizationServer.Models;
 using Thinktecture.AuthorizationServer.WebHost.Areas.Admin.Models;
-using Thinktecture.IdentityModel.Authorization.WebApi;
+using Thinktecture.IdentityModel.WebApi;
 
 namespace Thinktecture.AuthorizationServer.WebHost.Areas.Admin.Api
 {
-    [ClaimsAuthorize(Constants.Actions.Configure, Constants.Resources.Server)]
+    [ResourceActionAuthorize(Constants.Actions.Configure, Constants.Resources.Server)]
     [ValidateHttpAntiForgeryToken]
     public class ApplicationsController : ApiController
     {

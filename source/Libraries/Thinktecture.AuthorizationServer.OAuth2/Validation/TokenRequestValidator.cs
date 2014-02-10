@@ -326,7 +326,14 @@ namespace Thinktecture.AuthorizationServer.OAuth2
                 return null;
             }
 
-            var passwordClaim = clientPrincipal.FindFirst("password");
+            var clientIdClaim = clientPrincipal.FindFirst("client_id");
+            if (clientIdClaim == null)
+            {
+                Tracing.Error("No client_id provided.");
+                return null;
+            }
+
+            var passwordClaim = clientPrincipal.FindFirst("secret");
             if (passwordClaim == null)
             {
                 Tracing.Error("No client secret provided.");
@@ -334,7 +341,7 @@ namespace Thinktecture.AuthorizationServer.OAuth2
             }
 
             return application.Clients.ValidateClient(
-                clientPrincipal.Identity.Name,
+                clientIdClaim.Value,
                 passwordClaim.Value);
         }
     }

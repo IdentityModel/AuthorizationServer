@@ -1,8 +1,7 @@
 ﻿using Nancy;
+using Nancy.Security;
 using System.Collections.Generic;
 using System.Linq;
-using Nancy.Security;
-using ResourceServer.Security;
 
 namespace ResourceServer
 {
@@ -10,14 +9,14 @@ namespace ResourceServer
     {
         public IdentityModule() : base("/api/identity")
         {
-            this.RequiresAuthentication();
+            this.RequiresMSOwinAuthentication();
 
 
             Get["/"] = _ =>
                 {
-                    var user = Context.CurrentUser as ClaimsUserIdentity;
+                    var user = Context.GetMSOwinUser();
                   
-                    var claims = from c in user.Principal.Claims
+                    var claims = from c in user.Claims
                                  select new ViewClaim
                                  {
                                      Type = c.Type,

@@ -9,7 +9,7 @@ namespace Thinktecture.Samples
     {
         //static Uri _baseAddress = new Uri(Constants.WebHostv1BaseAddress);
         static Uri _baseAddress = new Uri(Constants.WebHostv2BaseAddress);
-
+        
         static void Main(string[] args)
         {
             var response = RequestToken();

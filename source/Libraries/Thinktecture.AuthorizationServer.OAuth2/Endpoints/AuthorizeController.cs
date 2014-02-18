@@ -77,6 +77,10 @@ namespace Thinktecture.AuthorizationServer.OAuth2
             }
 
             Tracing.Verbose("No consent configured for application/client");
+
+            
+            // workaround for bug #139
+            validatedRequest.RequestedRefreshTokenExpiration = DateTime.UtcNow.AddYears(50);
             return PerformGrant(validatedRequest);
         }
 

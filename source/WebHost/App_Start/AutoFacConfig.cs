@@ -29,6 +29,8 @@ namespace Thinktecture.AuthorizationServer.WebHost
             builder.RegisterType<EFAuthorizationServerAdministration>().As<IAuthorizationServerAdministration>();
             builder.RegisterType<EFAuthorizationServerAdministratorsService>().As<IAuthorizationServerAdministratorsService>();
             builder.RegisterType<AuthorizationServerContext>().InstancePerHttpRequest();
+
+            builder.RegisterType<TokenService>().AsSelf();
             
             builder.RegisterModule(new ConfigurationSettingsReader("autofac"));
 

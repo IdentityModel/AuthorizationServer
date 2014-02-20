@@ -21,7 +21,7 @@ namespace Thinktecture.AuthorizationServer.Test
         [TestMethod]
         public void UnknownApplication()
         {
-            var controller = new AuthorizeController(null, _testConfig);
+            var controller = new AuthorizeController(null, _testConfig, null);
             var result = controller.Index("unknown", null);
 
             Assert.IsTrue(result is HttpNotFoundResult);

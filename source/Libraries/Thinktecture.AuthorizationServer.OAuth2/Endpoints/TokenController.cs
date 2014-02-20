@@ -20,17 +20,20 @@ namespace Thinktecture.AuthorizationServer.OAuth2
         IAuthorizationServerConfiguration _config;
         IStoredGrantManager _handleManager;
         IAssertionGrantValidation _assertionGrantValidator;
+        private TokenService _tokenService;
 
         public TokenController(
             IResourceOwnerCredentialValidation rocv, 
             IAuthorizationServerConfiguration config,
             IStoredGrantManager handleManager,
-            IAssertionGrantValidation assertionGrantValidator)
+            IAssertionGrantValidation assertionGrantValidator,
+            TokenService tokenService)
         {
             _rocv = rocv;
             _config = config;
             _handleManager = handleManager;
             _assertionGrantValidator = assertionGrantValidator;
+            _tokenService = tokenService;
         }
 
         public HttpResponseMessage Post([FromUri] string appName, [FromBody] TokenRequest request)
@@ -96,8 +99,7 @@ namespace Thinktecture.AuthorizationServer.OAuth2
                 return Request.CreateOAuthErrorResponse(OAuthConstants.Errors.InvalidGrant);
             }
 
-            var sts = new TokenService(_config.GlobalConfiguration);
-            var response = sts.CreateTokenResponse(validatedRequest, principal);
+            var response = _tokenService.CreateTokenResponse(validatedRequest, principal);
             return Request.CreateTokenResponse(response);
         }
 
@@ -105,8 +107,7 @@ namespace Thinktecture.AuthorizationServer.OAuth2
         {
             Tracing.Information("Processing refresh token request");
 
-            var sts = new TokenService(_config.GlobalConfiguration);
-            var response = sts.CreateTokenResponse(validatedRequest);
+            var response = _tokenService.CreateTokenResponse(validatedRequest);
             return Request.CreateTokenResponse(response);
         }
 
@@ -114,9 +115,7 @@ namespace Thinktecture.AuthorizationServer.OAuth2
         {
             Tracing.Information("Processing refresh token request");
 
-            var tokenService = new TokenService(_config.GlobalConfiguration);
-            var response = tokenService.CreateTokenResponse(validatedRequest.StoredGrant, _handleManager);
-
+            var response = _tokenService.CreateTokenResponse(validatedRequest.StoredGrant, _handleManager);
             return Request.CreateTokenResponse(response);
         }
 
@@ -124,9 +123,7 @@ namespace Thinktecture.AuthorizationServer.OAuth2
         {
             Tracing.Information("Processing authorization code request");
 
-            var tokenService = new TokenService(_config.GlobalConfiguration);
-            var response = tokenService.CreateTokenResponse(validatedRequest.StoredGrant, _handleManager);
-
+            var response = _tokenService.CreateTokenResponse(validatedRequest.StoredGrant, _handleManager);
             return Request.CreateTokenResponse(response);
         }
 

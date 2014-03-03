@@ -100,13 +100,16 @@ namespace Thinktecture.AuthorizationServer
 
             if (handle.CreateRefreshToken)
             {
+                var rememberTimeSpan = handle.Expiration.Subtract(handle.Created);
+                var newRefreshTokenExpiration = DateTime.UtcNow.Add(rememberTimeSpan);
+
                 var refreshTokenHandle = StoredGrant.CreateRefreshTokenHandle(
                     resourceOwner.GetSubject(),
                     handle.Client,
                     handle.Application,
                     resourceOwner.Claims,
                     handle.Scopes,
-                    handle.Expiration,
+                    newRefreshTokenExpiration,
                     createRefreshToken: validatedRequest.Client.AllowRefreshToken && validatedRequest.Application.AllowRefreshToken);
 
                 response.RefreshToken = refreshTokenHandle.GrantId;

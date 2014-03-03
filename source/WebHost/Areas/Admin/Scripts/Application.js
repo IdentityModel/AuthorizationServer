@@ -19,6 +19,7 @@ $(function () {
             audience: "",
             tokenLifetime: 0,
             allowRefreshToken: false,
+            slidingRefreshTokenExpiration: false,
             requireConsent: false,
             rememberConsentDecision: false,
             signingKeyId: null,
@@ -45,10 +46,17 @@ $(function () {
             return vm.requireConsent();
         });
 
+        vm.slidingRefreshTokenExpirationEnabled = ko.computed(function () {
+            return vm.allowRefreshToken();
+        });
+
         vm.save = function () {
             var data = ko.mapping.toJS(vm);
             if (!data.requireConsent) {
                 data.rememberConsentDecision = false;
+            }
+            if (!data.allowRefreshToken) {
+                data.slidingRefreshTokenExpiration = false;
             }
             if (vm.isNew()) {
                 svc.post(data).then(function (data, status, xhr) {

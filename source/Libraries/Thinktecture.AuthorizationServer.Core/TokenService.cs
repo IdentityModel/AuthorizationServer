@@ -100,17 +100,33 @@ namespace Thinktecture.AuthorizationServer
 
             if (handle.CreateRefreshToken)
             {
-                var rememberTimeSpan = handle.Expiration.Subtract(handle.Created);
-                var newRefreshTokenExpiration = DateTime.UtcNow.Add(rememberTimeSpan);
+                StoredGrant refreshTokenHandle;
 
-                var refreshTokenHandle = StoredGrant.CreateRefreshTokenHandle(
-                    resourceOwner.GetSubject(),
-                    handle.Client,
-                    handle.Application,
-                    resourceOwner.Claims,
-                    handle.Scopes,
-                    newRefreshTokenExpiration,
-                    createRefreshToken: validatedRequest.Client.AllowRefreshToken && validatedRequest.Application.AllowRefreshToken);
+                if (validatedRequest.Application.AllowSlidingRefreshTokenExpiration)
+                {
+                    var rememberTimeSpan = handle.Expiration.Subtract(handle.Created);
+                    var newRefreshTokenExpiration = DateTime.UtcNow.Add(rememberTimeSpan);
+
+                    refreshTokenHandle = StoredGrant.CreateRefreshTokenHandle(
+                        resourceOwner.GetSubject(),
+                        handle.Client,
+                        handle.Application,
+                        resourceOwner.Claims,
+                        handle.Scopes,
+                        newRefreshTokenExpiration,
+                        createRefreshToken: validatedRequest.Client.AllowRefreshToken && validatedRequest.Application.AllowRefreshToken);
+                }
+                else
+                {
+                    refreshTokenHandle = StoredGrant.CreateRefreshTokenHandle(
+                        resourceOwner.GetSubject(),
+                        handle.Client,
+                        handle.Application,
+                        resourceOwner.Claims,
+                        handle.Scopes,
+                        handle.Expiration,
+                        createRefreshToken: validatedRequest.Client.AllowRefreshToken && validatedRequest.Application.AllowRefreshToken);
+                }
 
                 response.RefreshToken = refreshTokenHandle.GrantId;
 

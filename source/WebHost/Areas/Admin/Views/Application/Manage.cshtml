@@ -52,6 +52,12 @@
             Allow Refresh Tokens
         </label>
     </div>
+    <di class="indent">
+        <label for="allowSlidingTokenExpiration" class="checkbox">
+            <input id="allowSlidingTokenExpiration" data-bind="checked: slidingRefreshTokenExpiration, enable: slidingRefreshTokenExpirationEnabled" type="checkbox" />
+            Allow Sliding Token Expiration
+        </label>
+    </di>
     <div>
         <label for="requireConsent" class="checkbox">
             <input id="requireConsent" data-bind="checked: requireConsent" type="checkbox" />

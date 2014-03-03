@@ -23,6 +23,7 @@ namespace Thinktecture.AuthorizationServer.WebHost.Areas.Admin.Models
         public bool AllowRefreshToken { get; set; }
         public bool RequireConsent { get; set; }
         public bool RememberConsentDecision { get; set; }
+        public bool SlidingRefreshTokenExpiration { get; set; }
         public int SigningKeyID { get; set; }
         public bool Enabled { get; set; }
     }

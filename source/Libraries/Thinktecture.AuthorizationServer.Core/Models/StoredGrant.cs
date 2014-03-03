@@ -48,7 +48,7 @@ namespace Thinktecture.AuthorizationServer.Models
             };
         }
 
-        public static StoredGrant CreateRefreshTokenHandle(string subject, Client client, Application application, IEnumerable<Claim> claims, IEnumerable<Scope> scopes, DateTime expiration)
+        public static StoredGrant CreateRefreshTokenHandle(string subject, Client client, Application application, IEnumerable<Claim> claims, IEnumerable<Scope> scopes, DateTime expiration, bool createRefreshToken = false)
         {
             if (client == null) throw new ArgumentNullException("client");
             if (application == null) throw new ArgumentNullException("application");
@@ -64,7 +64,8 @@ namespace Thinktecture.AuthorizationServer.Models
                 ResourceOwner = claims.ToStoredGrantClaims().ToList(),
                 Scopes = scopes.ToList(),
                 Created = DateTime.UtcNow,
-                Expiration = expiration
+                Expiration = expiration,
+                CreateRefreshToken = createRefreshToken
             };
         }
 

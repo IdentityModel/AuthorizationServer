@@ -15,7 +15,7 @@ namespace Thinktecture.AuthorizationServer.Models
         [Required]
         public virtual string ClientId { get; set; }
         [Required]
-        public virtual string ClientSecret { get; private set; }
+        public virtual string ClientSecret { get; set; }
         public virtual ClientAuthenticationMethod AuthenticationMethod { get; set; }
         [Required]
         public virtual string Name { get; set; }

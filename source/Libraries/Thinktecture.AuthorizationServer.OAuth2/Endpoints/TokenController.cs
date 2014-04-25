@@ -20,6 +20,8 @@ namespace Thinktecture.AuthorizationServer.OAuth2
         IAuthorizationServerConfiguration _config;
         IStoredGrantManager _handleManager;
         IAssertionGrantValidation _assertionGrantValidator;
+        IClientManager _clientManager;
+
         private TokenService _tokenService;
 
         public TokenController(
@@ -27,13 +29,15 @@ namespace Thinktecture.AuthorizationServer.OAuth2
             IAuthorizationServerConfiguration config,
             IStoredGrantManager handleManager,
             IAssertionGrantValidation assertionGrantValidator,
-            TokenService tokenService)
+            TokenService tokenService,
+            IClientManager clientManager)
         {
             _rocv = rocv;
             _config = config;
             _handleManager = handleManager;
             _assertionGrantValidator = assertionGrantValidator;
             _tokenService = tokenService;
+            _clientManager = clientManager;
         }
 
         public HttpResponseMessage Post([FromUri] string appName, [FromBody] TokenRequest request)
@@ -52,7 +56,7 @@ namespace Thinktecture.AuthorizationServer.OAuth2
             ValidatedRequest validatedRequest;
             try
             {
-                validatedRequest = new TokenRequestValidator(_handleManager).Validate(application, request, ClaimsPrincipal.Current);
+                validatedRequest = new TokenRequestValidator(_handleManager, _clientManager).Validate(application, request, ClaimsPrincipal.Current);
             }
             catch (TokenRequestValidationException ex)
             {

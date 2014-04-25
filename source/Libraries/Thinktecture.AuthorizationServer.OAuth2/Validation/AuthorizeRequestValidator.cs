@@ -6,12 +6,22 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Thinktecture.AuthorizationServer.Interfaces;
 using Thinktecture.AuthorizationServer.Models;
 
 namespace Thinktecture.AuthorizationServer.OAuth2
 {
     public class AuthorizeRequestValidator
     {
+        IClientManager _clientManager;
+        public AuthorizeRequestValidator()
+        {
+
+        }
+        public AuthorizeRequestValidator(IClientManager clientManager)
+        {
+            _clientManager = clientManager;
+        }
         public ValidatedRequest Validate(Application application, AuthorizeRequest request)
         {
             // If the request fails due to a missing, invalid, or mismatching
@@ -47,7 +57,8 @@ namespace Thinktecture.AuthorizationServer.OAuth2
                 throw new AuthorizeRequestResourceOwnerException("Missing client identifier");
             }
 
-            var client = validatedRequest.Application.Clients.Get(request.client_id);
+
+            var client = _clientManager.Get(request.client_id);
             if (client == null)
             {
                 throw new AuthorizeRequestResourceOwnerException("Invalid client: " + request.client_id);

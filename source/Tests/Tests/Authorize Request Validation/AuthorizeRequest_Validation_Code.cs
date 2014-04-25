@@ -1,5 +1,6 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Thinktecture.AuthorizationServer.Interfaces;
+using Thinktecture.AuthorizationServer.Models;
 using Thinktecture.AuthorizationServer.OAuth2;
 
 namespace Thinktecture.AuthorizationServer.Test
@@ -8,6 +9,7 @@ namespace Thinktecture.AuthorizationServer.Test
     public class AuthorizeRequest_Validation_Code
     {
         IAuthorizationServerConfiguration _testConfig;
+        IClientManager _clientManager;
 
         [TestInitialize]
         public void Init()
@@ -15,12 +17,13 @@ namespace Thinktecture.AuthorizationServer.Test
             DataProtectection.Instance = new NoProtection();
 
             _testConfig = new TestAuthorizationServerConfiguration();
+            _clientManager = new TestClientManager() { Id = "codeclient", Secret = "secret", OAuthFlow = OAuthFlow.Code, RedirectUri = "https://prod.local" };
         }
 
         [TestMethod]
         public void ValidRequestSingleScope()
         {
-            var validator = new AuthorizeRequestValidator();
+            var validator = new AuthorizeRequestValidator(_clientManager);
             var app = _testConfig.FindApplication("test");
             var request = new AuthorizeRequest
             {
@@ -36,7 +39,7 @@ namespace Thinktecture.AuthorizationServer.Test
         [TestMethod]
         public void ValidRequestMultipleScope()
         {
-            var validator = new AuthorizeRequestValidator();
+            var validator = new AuthorizeRequestValidator(_clientManager);
             var app = _testConfig.FindApplication("test");
             var request = new AuthorizeRequest
             {
@@ -54,7 +57,7 @@ namespace Thinktecture.AuthorizationServer.Test
         [TestMethod]
         public void UnauthorizedRedirectUri()
         {
-            var validator = new AuthorizeRequestValidator();
+            var validator = new AuthorizeRequestValidator(_clientManager);
             var app = _testConfig.FindApplication("test");
             var request = new AuthorizeRequest
             {
@@ -80,7 +83,7 @@ namespace Thinktecture.AuthorizationServer.Test
         [TestMethod]
         public void UnauthorizedResponseType()
         {
-            var validator = new AuthorizeRequestValidator();
+            var validator = new AuthorizeRequestValidator(_clientManager);
             var app = _testConfig.FindApplication("test");
             var request = new AuthorizeRequest
             {
@@ -106,7 +109,7 @@ namespace Thinktecture.AuthorizationServer.Test
         [TestMethod]
         public void UnauthorizedScopeSingle()
         {
-            var validator = new AuthorizeRequestValidator();
+            var validator = new AuthorizeRequestValidator(_clientManager);
             var app = _testConfig.FindApplication("test");
             var request = new AuthorizeRequest
             {
@@ -132,7 +135,7 @@ namespace Thinktecture.AuthorizationServer.Test
         [TestMethod]
         public void UnauthorizedScopeMultiple()
         {
-            var validator = new AuthorizeRequestValidator();
+            var validator = new AuthorizeRequestValidator(_clientManager);
             var app = _testConfig.FindApplication("test");
             var request = new AuthorizeRequest
             {

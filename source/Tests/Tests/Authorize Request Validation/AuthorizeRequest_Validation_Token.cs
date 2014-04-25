@@ -1,5 +1,6 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Thinktecture.AuthorizationServer.Interfaces;
+using Thinktecture.AuthorizationServer.Models;
 using Thinktecture.AuthorizationServer.OAuth2;
 
 namespace Thinktecture.AuthorizationServer.Test
@@ -8,6 +9,8 @@ namespace Thinktecture.AuthorizationServer.Test
     public class AuthorizeRequest_Validation_Token
     {
         IAuthorizationServerConfiguration _testConfig;
+        IClientManager _clientManager;
+
 
         [TestInitialize]
         public void Init()
@@ -15,19 +18,20 @@ namespace Thinktecture.AuthorizationServer.Test
             DataProtectection.Instance = new NoProtection();
 
             _testConfig = new TestAuthorizationServerConfiguration();
+            _clientManager = new TestClientManager { Id = "implicitclient", Secret = "secret", OAuthFlow = OAuthFlow.Implicit, RedirectUri = "https://prod.local" };
         }
 
         [TestMethod]
         public void ValidRequestSingleScope()
         {
-            var validator = new AuthorizeRequestValidator();
+            var validator = new AuthorizeRequestValidator(_clientManager);
             var app = _testConfig.FindApplication("test");
             var request = new AuthorizeRequest
             {
                 client_id = "implicitclient",
                 response_type = "token",
                 scope = "read",
-                redirect_uri = "https://test2.local"
+                redirect_uri = "https://prod.local"
             };
 
             var result = validator.Validate(app, request);
@@ -36,14 +40,14 @@ namespace Thinktecture.AuthorizationServer.Test
         [TestMethod]
         public void ValidRequestMultipleScope()
         {
-            var validator = new AuthorizeRequestValidator();
+            var validator = new AuthorizeRequestValidator(_clientManager);
             var app = _testConfig.FindApplication("test");
             var request = new AuthorizeRequest
             {
                 client_id = "implicitclient",
                 response_type = "token",
                 scope = "read browse",
-                redirect_uri = "https://test2.local"
+                redirect_uri = "https://prod.local"
             };
 
             var result = validator.Validate(app, request);
@@ -52,7 +56,7 @@ namespace Thinktecture.AuthorizationServer.Test
         [TestMethod]
         public void UnauthorizedRedirectUri()
         {
-            var validator = new AuthorizeRequestValidator();
+            var validator = new AuthorizeRequestValidator(_clientManager);
             var app = _testConfig.FindApplication("test");
             var request = new AuthorizeRequest
             {
@@ -78,14 +82,14 @@ namespace Thinktecture.AuthorizationServer.Test
         [TestMethod]
         public void UnauthorizedResponseType()
         {
-            var validator = new AuthorizeRequestValidator();
+            var validator = new AuthorizeRequestValidator(_clientManager);
             var app = _testConfig.FindApplication("test");
             var request = new AuthorizeRequest
             {
                 client_id = "implicitclient",
                 response_type = "code",
                 scope = "read",
-                redirect_uri = "https://test2.local"
+                redirect_uri = "https://prod.local"
             };
 
             try
@@ -106,14 +110,14 @@ namespace Thinktecture.AuthorizationServer.Test
         [TestMethod]
         public void UnauthorizedScopeSingle()
         {
-            var validator = new AuthorizeRequestValidator();
+            var validator = new AuthorizeRequestValidator(_clientManager);
             var app = _testConfig.FindApplication("test");
             var request = new AuthorizeRequest
             {
                 client_id = "implicitclient",
                 response_type = "token",
                 scope = "write",
-                redirect_uri = "https://test2.local"
+                redirect_uri = "https://prod.local"
             };
 
             try
@@ -132,14 +136,14 @@ namespace Thinktecture.AuthorizationServer.Test
         [TestMethod]
         public void UnauthorizedScopeMultiple()
         {
-            var validator = new AuthorizeRequestValidator();
+            var validator = new AuthorizeRequestValidator(_clientManager);
             var app = _testConfig.FindApplication("test");
             var request = new AuthorizeRequest
             {
                 client_id = "implicitclient",
                 response_type = "token",
                 scope = "read write",
-                redirect_uri = "https://test2.local"
+                redirect_uri = "https://prod.local"
             };
 
             try

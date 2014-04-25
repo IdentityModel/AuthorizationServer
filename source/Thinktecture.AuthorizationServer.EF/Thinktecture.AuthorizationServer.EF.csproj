@@ -53,6 +53,7 @@
     <Compile Include="EFAuthorizationServerAdministratorsService.cs" />
     <Compile Include="EFAuthorizationServerConfiguration.cs" />
     <Compile Include="AuthorizationServerContext.cs" />
+    <Compile Include="EFClientManager.cs" />
     <Compile Include="EFStoredGrantManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

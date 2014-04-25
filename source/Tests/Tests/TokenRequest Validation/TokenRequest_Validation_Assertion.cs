@@ -1,6 +1,7 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Security.Claims;
 using Thinktecture.AuthorizationServer.Interfaces;
+using Thinktecture.AuthorizationServer.Models;
 using Thinktecture.AuthorizationServer.OAuth2;
 using Thinktecture.IdentityModel;
 
@@ -10,6 +11,8 @@ namespace Thinktecture.AuthorizationServer.Test
     public class TokenRequest_Validation_Assertion
     {
         IAuthorizationServerConfiguration _testConfig;
+        IStoredGrantManager _storedGrantManager;
+        IClientManager _clientManager;
         ClaimsPrincipal _client;
 
         [TestInitialize]
@@ -18,6 +21,8 @@ namespace Thinktecture.AuthorizationServer.Test
             DataProtectection.Instance = new NoProtection();
     
             _testConfig = new TestAuthorizationServerConfiguration();
+            _storedGrantManager = new TestTokenHandleManager("abc", "codeclient", "https://validredirect");
+            _clientManager = new TestClientManager() { Id = "assertionclient", Secret = "secret", OAuthFlow = OAuthFlow.Assertion };
             _client = Principal.Create(
                 "Test",
                 new Claim("client_id", "assertionclient"),
@@ -27,7 +32,7 @@ namespace Thinktecture.AuthorizationServer.Test
         [TestMethod]
         public void ValidSingleScope()
         {
-            var validator = new TokenRequestValidator();
+            var validator = new TokenRequestValidator(_clientManager);
             var app = _testConfig.FindApplication("test");
             var request = new TokenRequest
             {
@@ -42,7 +47,7 @@ namespace Thinktecture.AuthorizationServer.Test
         [TestMethod]
         public void MissingScope()
         {
-            var validator = new TokenRequestValidator();
+            var validator = new TokenRequestValidator(_clientManager);
             var app = _testConfig.FindApplication("test");
             var request = new TokenRequest
             {
@@ -67,7 +72,7 @@ namespace Thinktecture.AuthorizationServer.Test
         [TestMethod]
         public void UnknownScope()
         {
-            var validator = new TokenRequestValidator();
+            var validator = new TokenRequestValidator(_clientManager);
             var app = _testConfig.FindApplication("test");
             var request = new TokenRequest
             {
@@ -92,7 +97,7 @@ namespace Thinktecture.AuthorizationServer.Test
         [TestMethod]
         public void UnauthorizedScopeSingle()
         {
-            var validator = new TokenRequestValidator();
+            var validator = new TokenRequestValidator(_clientManager);
             var app = _testConfig.FindApplication("test");
             var request = new TokenRequest
             {
@@ -117,7 +122,7 @@ namespace Thinktecture.AuthorizationServer.Test
         [TestMethod]
         public void UnauthorizedScopeMultiple()
         {
-            var validator = new TokenRequestValidator();
+            var validator = new TokenRequestValidator(_clientManager);
             var app = _testConfig.FindApplication("test");
             var request = new TokenRequest
             {
@@ -142,7 +147,7 @@ namespace Thinktecture.AuthorizationServer.Test
         [TestMethod]
         public void MissingAssertionType()
         {
-            var validator = new TokenRequestValidator();
+            var validator = new TokenRequestValidator(_clientManager);
             var app = _testConfig.FindApplication("test");
             var request = new TokenRequest
             {
@@ -166,7 +171,7 @@ namespace Thinktecture.AuthorizationServer.Test
         [TestMethod]
         public void MissingAssertionValue()
         {
-            var validator = new TokenRequestValidator();
+            var validator = new TokenRequestValidator(_clientManager);
             var app = _testConfig.FindApplication("test");
             var request = new TokenRequest
             {
@@ -190,10 +195,7 @@ namespace Thinktecture.AuthorizationServer.Test
         [TestMethod]
         public void UnauthorizedCodeGrant()
         {
-            TestTokenHandleManager handleManager =
-                new TestTokenHandleManager("abc", "codeclient", "https://validredirect");
-            
-            var validator = new TokenRequestValidator(handleManager);
+            var validator = new TokenRequestValidator(_storedGrantManager, _clientManager);
             var app = _testConfig.FindApplication("test");
             var request = new TokenRequest
             {
@@ -216,10 +218,7 @@ namespace Thinktecture.AuthorizationServer.Test
         [TestMethod]
         public void UnauthorizedClientCredentialsGrant()
         {
-            TestTokenHandleManager handleManager =
-                new TestTokenHandleManager("abc", "codeclient", "https://validredirect");
-
-            var validator = new TokenRequestValidator(handleManager);
+            var validator = new TokenRequestValidator(_storedGrantManager, _clientManager);
             var app = _testConfig.FindApplication("test");
             var request = new TokenRequest
             {
@@ -242,10 +241,7 @@ namespace Thinktecture.AuthorizationServer.Test
         [TestMethod]
         public void UnauthorizedRefreshTokenGrant()
         {
-            TestTokenHandleManager handleManager =
-                new TestTokenHandleManager("abc", "codeclient", "https://validredirect");
-
-            var validator = new TokenRequestValidator(handleManager);
+            var validator = new TokenRequestValidator(_storedGrantManager, _clientManager);
             var app = _testConfig.FindApplication("test");
             var request = new TokenRequest
             {

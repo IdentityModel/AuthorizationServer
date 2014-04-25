@@ -69,6 +69,7 @@
     <Compile Include="Interfaces\IAssertionGrantValidation.cs" />
     <Compile Include="Interfaces\IResourceOwnerCredentialValidation.cs" />
     <Compile Include="DataProtectection\IDataProtectection.cs" />
+    <Compile Include="Interfaces\IClientManager.cs" />
     <Compile Include="Interfaces\IStoredGrantManager.cs" />
     <Compile Include="Extensions\ScopeExtensions.cs" />
     <Compile Include="Extensions\RedirectUriExtensions.cs" />

@@ -9,6 +9,7 @@ namespace Thinktecture.AuthorizationServer.Test
     public class AuthorizeRequest_Validation_General
     {
         IAuthorizationServerConfiguration _testConfig;
+        IClientManager _clientManager;
 
         [TestInitialize]
         public void Init()
@@ -16,6 +17,7 @@ namespace Thinktecture.AuthorizationServer.Test
             DataProtectection.Instance = new NoProtection();
 
             _testConfig = new TestAuthorizationServerConfiguration();
+            _clientManager = new TestClientManager() { Id = "codeclient", Secret = "secret", OAuthFlow = Models.OAuthFlow.Code, RedirectUri = "https://prod.local" };
         }
 
         [TestMethod]
@@ -74,7 +76,7 @@ namespace Thinktecture.AuthorizationServer.Test
         [TestMethod]
         public void MalformedRedirectUri1()
         {
-            var validator = new AuthorizeRequestValidator();
+            var validator = new AuthorizeRequestValidator(_clientManager);
             var app = _testConfig.FindApplication("test");
             var request = new AuthorizeRequest
             {
@@ -100,7 +102,7 @@ namespace Thinktecture.AuthorizationServer.Test
         [TestMethod]
         public void MalformedRedirectUri2()
         {
-            var validator = new AuthorizeRequestValidator();
+            var validator = new AuthorizeRequestValidator(_clientManager);
             var app = _testConfig.FindApplication("test");
             var request = new AuthorizeRequest
             {
@@ -126,7 +128,7 @@ namespace Thinktecture.AuthorizationServer.Test
         [TestMethod]
         public void MissingResponseType()
         {
-            var validator = new AuthorizeRequestValidator();
+            var validator = new AuthorizeRequestValidator(_clientManager);
             var app = _testConfig.FindApplication("test");
             var request = new AuthorizeRequest
             {
@@ -151,7 +153,7 @@ namespace Thinktecture.AuthorizationServer.Test
         [TestMethod]
         public void UnsupportedResponseType()
         {
-            var validator = new AuthorizeRequestValidator();
+            var validator = new AuthorizeRequestValidator(_clientManager);
             var app = _testConfig.FindApplication("test");
             var request = new AuthorizeRequest
             {
@@ -202,7 +204,7 @@ namespace Thinktecture.AuthorizationServer.Test
         [TestMethod]
         public void UnknownClientId()
         {
-            var validator = new AuthorizeRequestValidator();
+            var validator = new AuthorizeRequestValidator(_clientManager);
             var app = _testConfig.FindApplication("test");
             var request = new AuthorizeRequest
             {
@@ -228,7 +230,7 @@ namespace Thinktecture.AuthorizationServer.Test
         [TestMethod]
         public void MissingScope()
         {
-            var validator = new AuthorizeRequestValidator();
+            var validator = new AuthorizeRequestValidator(_clientManager);
             var app = _testConfig.FindApplication("test");
             var request = new AuthorizeRequest
             {
@@ -253,7 +255,7 @@ namespace Thinktecture.AuthorizationServer.Test
         [TestMethod]
         public void NonSslRedirectUri()
         {
-            var validator = new AuthorizeRequestValidator();
+            var validator = new AuthorizeRequestValidator(_clientManager);
             var app = _testConfig.FindApplication("test");
             var request = new AuthorizeRequest
             {

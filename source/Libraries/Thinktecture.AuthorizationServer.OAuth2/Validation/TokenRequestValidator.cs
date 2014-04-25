@@ -22,6 +22,11 @@ namespace Thinktecture.AuthorizationServer.OAuth2
 
         }
 
+        public TokenRequestValidator(IClientManager clientManager)
+        {
+            _clientManager = clientManager;
+        }
+
         public TokenRequestValidator(IStoredGrantManager handleManager, IClientManager clientManager)
         {
             _handleManager = handleManager;

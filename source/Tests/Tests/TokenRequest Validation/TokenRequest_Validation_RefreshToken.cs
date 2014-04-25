@@ -1,6 +1,7 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Security.Claims;
 using Thinktecture.AuthorizationServer.Interfaces;
+using Thinktecture.AuthorizationServer.Models;
 using Thinktecture.AuthorizationServer.OAuth2;
 using Thinktecture.IdentityModel;
 
@@ -28,10 +29,8 @@ namespace Thinktecture.AuthorizationServer.Test
                 "abc", 
                 "codeclient", 
                 "https://validredirect");
-            _clientManager = new TestClientManager(
-                "MobileAppShop",
-                "12345678"
-                );
+            _clientManager = new TestClientManager() { Id = "codeclient", Secret = "secret", OAuthFlow = OAuthFlow.Code };
+
         }
 
         [TestMethod]

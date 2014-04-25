@@ -6,12 +6,22 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Thinktecture.AuthorizationServer.Interfaces;
 using Thinktecture.AuthorizationServer.Models;
 
 namespace Thinktecture.AuthorizationServer.OAuth2
 {
     public class AuthorizeRequestValidator
     {
+        IClientManager _clientManager;
+        public AuthorizeRequestValidator()
+        {
+
+        }
+        public AuthorizeRequestValidator(IClientManager clientManager)
+        {
+            _clientManager = clientManager;
+        }
         public ValidatedRequest Validate(Application application, AuthorizeRequest request)
         {
             // If the request fails due to a missing, invalid, or mismatching
@@ -46,6 +56,18 @@ namespace Thinktecture.AuthorizationServer.OAuth2
             {
                 throw new AuthorizeRequestResourceOwnerException("Missing client identifier");
             }
+
+
+            var client = _clientManager.Get(request.client_id);
+            if (client == null)
+            {
+                throw new AuthorizeRequestResourceOwnerException("Invalid client: " + request.client_id);
+            }
+
+            validatedRequest.Client = client;
+            Tracing.InformationFormat("Client: {0} ({1})",
+                validatedRequest.Client.Name,
+                validatedRequest.Client.ClientId);
 
             // make sure redirect_uri is a valid uri, and in case of http is over ssl
             Uri redirectUri;
@@ -138,6 +160,9 @@ namespace Thinktecture.AuthorizationServer.OAuth2
             }
 
             ValidateScopes(request, validatedRequest);
+
+            // TODO: fix based upon past "remember me" settings
+            validatedRequest.ShowConsent = client.RequireConsent || application.RequireConsent;
 
             Tracing.Information("Authorize request validation successful.");
             return validatedRequest;

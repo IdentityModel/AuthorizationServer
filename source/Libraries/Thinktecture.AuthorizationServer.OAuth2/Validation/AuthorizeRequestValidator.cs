@@ -47,17 +47,6 @@ namespace Thinktecture.AuthorizationServer.OAuth2
                 throw new AuthorizeRequestResourceOwnerException("Missing client identifier");
             }
 
-            var client = validatedRequest.Application.Clients.Get(request.client_id);
-            if (client == null)
-            {
-                throw new AuthorizeRequestResourceOwnerException("Invalid client: " + request.client_id);
-            }
-
-            validatedRequest.Client = client;
-            Tracing.InformationFormat("Client: {0} ({1})",
-                validatedRequest.Client.Name,
-                validatedRequest.Client.ClientId);
-
             // make sure redirect_uri is a valid uri, and in case of http is over ssl
             Uri redirectUri;
             if (Uri.TryCreate(request.redirect_uri, UriKind.Absolute, out redirectUri))
@@ -149,9 +138,6 @@ namespace Thinktecture.AuthorizationServer.OAuth2
             }
 
             ValidateScopes(request, validatedRequest);
-
-            // TODO: fix based upon past "remember me" settings
-            validatedRequest.ShowConsent = client.RequireConsent || application.RequireConsent;
 
             Tracing.Information("Authorize request validation successful.");
             return validatedRequest;

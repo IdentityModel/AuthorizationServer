@@ -12,6 +12,7 @@ namespace Thinktecture.AuthorizationServer.Test
         IAuthorizationServerConfiguration _testConfig;
         ClaimsPrincipal _client;
         TestTokenHandleManager _handleManager;
+        TestClientManager _clientManager;
 
         [TestInitialize]
         public void Init()
@@ -27,12 +28,16 @@ namespace Thinktecture.AuthorizationServer.Test
                 "abc", 
                 "codeclient", 
                 "https://validredirect");
+            _clientManager = new TestClientManager(
+                "MobileAppShop",
+                "12345678"
+                );
         }
 
         [TestMethod]
         public void ValidRequest()
         {
-            var validator = new TokenRequestValidator(_handleManager);
+            var validator = new TokenRequestValidator(_handleManager, _clientManager);
             var app = _testConfig.FindApplication("test");
             var request = new TokenRequest
             {
@@ -49,7 +54,7 @@ namespace Thinktecture.AuthorizationServer.Test
             TestTokenHandleManager handleManager =
                 new TestTokenHandleManager("abc", "codeclient", "https://validredirect", expired: true);
 
-            var validator = new TokenRequestValidator(handleManager);
+            var validator = new TokenRequestValidator(handleManager, _clientManager);
             var app = _testConfig.FindApplication("test");
             var request = new TokenRequest
             {
@@ -73,7 +78,7 @@ namespace Thinktecture.AuthorizationServer.Test
         [TestMethod]
         public void MissingCode()
         {
-            var validator = new TokenRequestValidator(_handleManager);
+            var validator = new TokenRequestValidator(_handleManager, _clientManager);
             var app = _testConfig.FindApplication("test");
             var request = new TokenRequest
             {
@@ -96,7 +101,7 @@ namespace Thinktecture.AuthorizationServer.Test
         [TestMethod]
         public void InvalidCode()
         {
-            var validator = new TokenRequestValidator(_handleManager);
+            var validator = new TokenRequestValidator(_handleManager, _clientManager);
             var app = _testConfig.FindApplication("test");
             var request = new TokenRequest
             {
@@ -123,7 +128,7 @@ namespace Thinktecture.AuthorizationServer.Test
             var handleManager =
                 new TestTokenHandleManager("abc", "someotherclient", "https://validredirect");
 
-            var validator = new TokenRequestValidator(handleManager);
+            var validator = new TokenRequestValidator(handleManager, _clientManager);
             var app = _testConfig.FindApplication("test");
             var request = new TokenRequest
             {

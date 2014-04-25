@@ -12,6 +12,7 @@ namespace Thinktecture.AuthorizationServer.Test
         IAuthorizationServerConfiguration _testConfig;
         ClaimsPrincipal _client;
         TestTokenHandleManager _handleManager;
+        TestClientManager _clientManager;
 
         [TestInitialize]
         public void Init()
@@ -24,16 +25,20 @@ namespace Thinktecture.AuthorizationServer.Test
                 new Claim("client_id", "codeclient"),
                 new Claim("secret", "secret"));
             _handleManager = new TestTokenHandleManager(
-                "abc", 
-                "codeclient", 
+                "abc",
+                "codeclient",
                 "https://validredirect");
+            _clientManager = new TestClientManager(
+                     "some client",
+                    "some secret"
+                );
 
         }
 
         [TestMethod]
         public void ValidSingleScope()
         {
-            var validator = new TokenRequestValidator(_handleManager);
+            var validator = new TokenRequestValidator(_handleManager, _clientManager);
             var app = _testConfig.FindApplication("test");
             var request = new TokenRequest
             {
@@ -48,7 +53,7 @@ namespace Thinktecture.AuthorizationServer.Test
         [TestMethod]
         public void MissingRedirectUri()
         {
-            var validator = new TokenRequestValidator(_handleManager);
+            var validator = new TokenRequestValidator(_handleManager, _clientManager);
             var app = _testConfig.FindApplication("test");
             var request = new TokenRequest
             {
@@ -72,7 +77,7 @@ namespace Thinktecture.AuthorizationServer.Test
         [TestMethod]
         public void NonMatchingRedirectUri()
         {
-            var validator = new TokenRequestValidator(_handleManager);
+            var validator = new TokenRequestValidator(_handleManager, _clientManager);
             var app = _testConfig.FindApplication("test");
             var request = new TokenRequest
             {
@@ -100,7 +105,7 @@ namespace Thinktecture.AuthorizationServer.Test
             var handleManager =
                 new TestTokenHandleManager("abc", "someotherclient", "https://validredirect");
 
-            var validator = new TokenRequestValidator(handleManager);
+            var validator = new TokenRequestValidator(handleManager, _clientManager);
             var app = _testConfig.FindApplication("test");
             var request = new TokenRequest
             {
@@ -125,7 +130,7 @@ namespace Thinktecture.AuthorizationServer.Test
         [TestMethod]
         public void MissingCode()
         {
-            var validator = new TokenRequestValidator(_handleManager);
+            var validator = new TokenRequestValidator(_handleManager, _clientManager);
             var app = _testConfig.FindApplication("test");
             var request = new TokenRequest
             {
@@ -174,7 +179,7 @@ namespace Thinktecture.AuthorizationServer.Test
         [TestMethod]
         public void InvalidCode()
         {
-            var validator = new TokenRequestValidator(_handleManager);
+            var validator = new TokenRequestValidator(_handleManager, _clientManager);
             var app = _testConfig.FindApplication("test");
             var request = new TokenRequest
             {
@@ -199,7 +204,7 @@ namespace Thinktecture.AuthorizationServer.Test
         [TestMethod]
         public void UnauthorizedPasswordGrant()
         {
-            var validator = new TokenRequestValidator(_handleManager);
+            var validator = new TokenRequestValidator(_handleManager, _clientManager);
             var app = _testConfig.FindApplication("test");
             var request = new TokenRequest
             {
@@ -222,7 +227,7 @@ namespace Thinktecture.AuthorizationServer.Test
         [TestMethod]
         public void UnauthorizedClientCredentialGrant()
         {
-            var validator = new TokenRequestValidator(_handleManager);
+            var validator = new TokenRequestValidator(_handleManager, _clientManager);
             var app = _testConfig.FindApplication("test");
             var request = new TokenRequest
             {

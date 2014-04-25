@@ -10,6 +10,7 @@ namespace Thinktecture.AuthorizationServer.Test
     public class TokenRequest_Validation_Password
     {
         IAuthorizationServerConfiguration _testConfig;
+        IClientManager _clientManager;
         ClaimsPrincipal _client;
 
         [TestInitialize]
@@ -18,6 +19,7 @@ namespace Thinktecture.AuthorizationServer.Test
             DataProtectection.Instance = new NoProtection();
     
             _testConfig = new TestAuthorizationServerConfiguration();
+            _clientManager = new TestClientManager("roclient", "secret");
             _client = Principal.Create(
                 "Test",
                 new Claim("client_id", "roclient"),
@@ -197,8 +199,8 @@ namespace Thinktecture.AuthorizationServer.Test
         {
             TestTokenHandleManager handleManager =
                 new TestTokenHandleManager("abc", "codeclient", "https://validredirect");
-            
-            var validator = new TokenRequestValidator(handleManager);
+
+            var validator = new TokenRequestValidator(handleManager, _clientManager);
             var app = _testConfig.FindApplication("test");
             var request = new TokenRequest
             {
@@ -224,7 +226,7 @@ namespace Thinktecture.AuthorizationServer.Test
             TestTokenHandleManager handleManager =
                 new TestTokenHandleManager("abc", "codeclient", "https://validredirect");
 
-            var validator = new TokenRequestValidator(handleManager);
+            var validator = new TokenRequestValidator(handleManager, _clientManager);
             var app = _testConfig.FindApplication("test");
             var request = new TokenRequest
             {
@@ -250,7 +252,7 @@ namespace Thinktecture.AuthorizationServer.Test
             TestTokenHandleManager handleManager =
                 new TestTokenHandleManager("abc", "codeclient", "https://validredirect");
 
-            var validator = new TokenRequestValidator(handleManager);
+            var validator = new TokenRequestValidator(handleManager, _clientManager);
             var app = _testConfig.FindApplication("test");
             var request = new TokenRequest
             {

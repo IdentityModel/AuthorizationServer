@@ -15,15 +15,17 @@ namespace Thinktecture.AuthorizationServer.OAuth2
     public class TokenRequestValidator
     {
         IStoredGrantManager _handleManager;
+        IClientManager _clientManager;
 
         public TokenRequestValidator()
         {
 
         }
 
-        public TokenRequestValidator(IStoredGrantManager handleManager)
+        public TokenRequestValidator(IStoredGrantManager handleManager, IClientManager clientManager)
         {
             _handleManager = handleManager;
+            _clientManager = clientManager;
         }
 
         public ValidatedRequest Validate(Application application, TokenRequest request, ClaimsPrincipal clientPrincipal)
@@ -340,9 +342,20 @@ namespace Thinktecture.AuthorizationServer.OAuth2
                 return null;
             }
 
-            return application.Clients.ValidateClient(
-                clientIdClaim.Value,
-                passwordClaim.Value);
+            var client = _clientManager.Get(clientIdClaim.Value);
+            if (client == null)
+            {
+                Tracing.Error("Unable to find client in repository.");
+                return null;
+            }
+
+            if (!client.ValidateSharedSecret(passwordClaim.Value))
+            {
+                Tracing.Error("Invalid client secret.");
+                return null;
+            }
+
+            return client;
         }
     }
 }

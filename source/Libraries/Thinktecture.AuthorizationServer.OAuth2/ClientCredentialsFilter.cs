@@ -1,9 +1,11 @@
 ﻿using System;
+using System.Collections.Specialized;
 using System.Net.Http;
 using System.Security.Claims;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Web;
 using System.Web.Http.Filters;
 using System.Web.Http.Results;
 
@@ -17,8 +19,9 @@ namespace Thinktecture.AuthorizationServer.OAuth2
         {
             string id, secret;
             var isMalformed = true;
-
-            if (TryParseBasicAuthenticationScheme(context.Request, out id, out secret, out isMalformed))
+            
+			if (TryParseBasicAuthenticationScheme(context.Request, out id, out secret, out isMalformed) 
+				|| TryParseQueryStringAuthenticationScheme(context.Request, out id, out secret, ref isMalformed))
             {
                 var identity = new ClaimsIdentity("Basic");
                 identity.AddClaim(new Claim("client_id", id));
@@ -27,7 +30,7 @@ namespace Thinktecture.AuthorizationServer.OAuth2
                 context.Principal = new ClaimsPrincipal(identity);
             }
 
-            if (isMalformed)
+	        if (isMalformed)
             {
                 context.ErrorResult = new BadRequestResult(context.Request);
             }
@@ -35,7 +38,7 @@ namespace Thinktecture.AuthorizationServer.OAuth2
             return Task.FromResult<object>(null);
         }
 
-        public Task ChallengeAsync(HttpAuthenticationChallengeContext context, CancellationToken cancellationToken)
+	    public Task ChallengeAsync(HttpAuthenticationChallengeContext context, CancellationToken cancellationToken)
         {
             return Task.FromResult<object>(null);
         }
@@ -76,5 +79,26 @@ namespace Thinktecture.AuthorizationServer.OAuth2
             isMalformed = false;
             return true;
         }
+
+		private bool TryParseQueryStringAuthenticationScheme(HttpRequestMessage request, out string id, out string secret, ref bool isMalformed)
+		{
+			id = ""; secret = "";
+
+			var content = request.Content.ReadAsStringAsync().Result;
+
+			var coll = HttpUtility.ParseQueryString(content);
+
+			if (coll["client_id"] == null ||
+				coll["client_secret"] == null)
+			{
+				return false;
+			}
+
+			id = coll["client_id"];
+			secret = coll["client_secret"];
+
+			isMalformed = false;
+			return true;
+		}
     }
 }

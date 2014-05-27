@@ -19,14 +19,9 @@ namespace Thinktecture.AuthorizationServer
     {
         GlobalConfiguration globalConfiguration;
 
-        public TokenService(GlobalConfiguration globalConfiguration)
-        {
-            this.globalConfiguration = globalConfiguration;
-        }
-
         public TokenService(IAuthorizationServerConfiguration authorizationServerConfiguration)
-            : this(authorizationServerConfiguration.GlobalConfiguration)
         {
+            globalConfiguration = authorizationServerConfiguration.GlobalConfiguration;
         }
 
         public virtual TokenResponse CreateTokenResponse(StoredGrant handle, IStoredGrantManager handleManager)

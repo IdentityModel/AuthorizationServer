@@ -144,8 +144,7 @@ namespace Thinktecture.AuthorizationServer.OAuth2
 
             if (principal != null && principal.Identity.IsAuthenticated)
             {
-                var sts = new TokenService(this._config.GlobalConfiguration);
-                var response = sts.CreateTokenResponse(validatedRequest, principal);
+                var response = _tokenService.CreateTokenResponse(validatedRequest, principal);
 
                 // check if refresh token is enabled for the client
                 if (validatedRequest.Client.AllowRefreshToken && validatedRequest.Application.AllowRefreshToken)

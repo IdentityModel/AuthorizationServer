@@ -151,7 +151,6 @@ namespace Thinktecture.AuthorizationServer.Test
             var request = new TokenRequest
             {
                 Grant_Type = OAuthConstants.GrantTypes.Password,
-                UserName = "username",
                 Scope = "read"
             };
 

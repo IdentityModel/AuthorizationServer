@@ -38,6 +38,7 @@ namespace Thinktecture.AuthorizationServer.Test
                 ClientId = "roclient",
                 AuthenticationMethod = ClientAuthenticationMethod.SharedSecret,
                 
+                Enabled = true,
                 Flow = OAuthFlow.ResourceOwner,
                 AllowRefreshToken = false
             };
@@ -49,6 +50,7 @@ namespace Thinktecture.AuthorizationServer.Test
                 ClientId = "assertionclient",
                 AuthenticationMethod = ClientAuthenticationMethod.SharedSecret,
 
+                Enabled = true,
                 Flow = OAuthFlow.Assertion,
                 AllowRefreshToken = false
             };
@@ -60,6 +62,7 @@ namespace Thinktecture.AuthorizationServer.Test
                 ClientId = "codeclient",
                 AuthenticationMethod = ClientAuthenticationMethod.SharedSecret,
 
+                Enabled = true,
                 AllowRefreshToken = true,
                 Flow = OAuthFlow.Code,
 
@@ -85,6 +88,7 @@ namespace Thinktecture.AuthorizationServer.Test
                 ClientId = "implicitclient",
                 AuthenticationMethod = ClientAuthenticationMethod.SharedSecret,
 
+                Enabled = true,
                 AllowRefreshToken = false,
                 Flow = OAuthFlow.Implicit,
 
@@ -105,6 +109,7 @@ namespace Thinktecture.AuthorizationServer.Test
                 ClientId = "trustedclient",
                 AuthenticationMethod = ClientAuthenticationMethod.SharedSecret,
 
+                Enabled = true,
                 AllowRefreshToken = true,
                 Flow = OAuthFlow.ResourceOwner,
             };
@@ -116,14 +121,37 @@ namespace Thinktecture.AuthorizationServer.Test
                 ClientId = "client",
                 AuthenticationMethod = ClientAuthenticationMethod.SharedSecret,
 
+                Enabled = true,
                 AllowRefreshToken = false,
                 Flow = OAuthFlow.Client,
             };
             serviceClient.SetSharedSecret("secret");
 
+
+            var disabledClient = new Client
+            {
+                Name = "Disabled Client",
+                ClientId = "disabledclient",
+                AuthenticationMethod = ClientAuthenticationMethod.SharedSecret,
+
+                Enabled = false,
+                AllowRefreshToken = false,
+                Flow = OAuthFlow.Code,
+
+                RedirectUris = new List<ClientRedirectUri>
+                {
+                    new ClientRedirectUri
+                    {
+                        Uri = "https://prod.local",
+                        Description = "Production"
+                    }
+                }
+            };
+            disabledClient.SetSharedSecret("secret");
+
             var readScope = new Scope
             {
-                AllowedClients = new List<Client> { codeClient, implicitClient, resourceOwnerClient, serviceClient, assertionClient },
+                AllowedClients = new List<Client> { codeClient, implicitClient, resourceOwnerClient, serviceClient, assertionClient, disabledClient },
                 Name = "read",
                 Description = "Read data",
                 Emphasize = false

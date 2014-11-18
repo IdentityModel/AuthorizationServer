@@ -16,6 +16,7 @@ namespace Thinktecture.AuthorizationServer.Test
         [TestInitialize]
         public void Init()
         {
+            DataProtectection.Instance = new NoProtection();
             _testConfig = new TestAuthorizationServerConfiguration();
         }
 
@@ -194,6 +195,33 @@ namespace Thinktecture.AuthorizationServer.Test
             catch (TokenRequestValidationException ex)
             {
                 Assert.AreEqual(OAuthConstants.Errors.UnsupportedGrantType, ex.OAuthError);
+                return;
+            }
+
+            Assert.Fail("No exception thrown.");
+        }
+
+        [TestMethod]
+        public void DisabledClient()
+        {
+            var validator = new TokenRequestValidator();
+            var app = _testConfig.FindApplication("test");
+            var request = new TokenRequest
+            {
+                Grant_Type = OAuthConstants.GrantTypes.ClientCredentials
+            };
+
+            try
+            {
+                var client = Principal.Create("Test",
+                new Claim("client_id", "disabledclient"),
+                new Claim("secret", "secret"));
+
+                var result = validator.Validate(app, request, client);
+            }
+            catch (TokenRequestValidationException ex)
+            {
+                Assert.AreEqual(OAuthConstants.Errors.InvalidClient, ex.OAuthError);
                 return;
             }
 

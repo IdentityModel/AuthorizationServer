@@ -48,9 +48,9 @@ namespace Thinktecture.AuthorizationServer.OAuth2
             }
 
             var client = validatedRequest.Application.Clients.Get(request.client_id);
-            if (client == null)
+            if (client == null || client.Enabled == false)
             {
-                throw new AuthorizeRequestResourceOwnerException("Invalid client: " + request.client_id);
+                throw new AuthorizeRequestResourceOwnerException("Invalid client or not enabled: " + request.client_id);
             }
 
             validatedRequest.Client = client;

@@ -77,10 +77,10 @@ namespace Thinktecture.AuthorizationServer.OAuth2
 
             // validate client credentials
             var client = ValidateClient(clientPrincipal, validatedRequest.Application);
-            if (client == null)
+            if (client == null || client.Enabled == false)
             {
                 throw new TokenRequestValidationException(
-                    "Invalid client: " + ClaimsPrincipal.Current.Identity.Name,
+                    "Invalid client or not enabled: " + ClaimsPrincipal.Current.Identity.Name,
                     OAuthConstants.Errors.InvalidClient);
             }
 

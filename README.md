@@ -3,6 +3,7 @@
 AuthorizationServer is the foundation for implementing application and API authorization.
 As a first step, we provide an implementation of the OAuth2 authorization framework.
 
+**Important** AuthorizationServer is not really maintained anymore - read [here](http://leastprivilege.com/2014/12/09/the-future-of-authorizationserver/) for details.
 
 ### Concepts
 

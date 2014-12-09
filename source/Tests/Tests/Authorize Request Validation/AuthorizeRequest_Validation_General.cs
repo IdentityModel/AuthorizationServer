@@ -275,5 +275,30 @@ namespace Thinktecture.AuthorizationServer.Test
 
             Assert.Fail("No exception thrown.");
         }
+
+        [TestMethod]
+        public void DisabledClient()
+        {
+            var validator = new AuthorizeRequestValidator();
+            var app = _testConfig.FindApplication("test");
+            var request = new AuthorizeRequest
+            {
+                client_id = "disabledclient",
+                response_type = "code",
+                scope = "read",
+                redirect_uri = "https://prod.local"
+            };
+
+            try
+            {
+                var result = validator.Validate(app, request);
+            }
+            catch (AuthorizeRequestResourceOwnerException ex)
+            {
+                return;
+            }
+
+            Assert.Fail("No exception thrown.");
+        }
     }
 }

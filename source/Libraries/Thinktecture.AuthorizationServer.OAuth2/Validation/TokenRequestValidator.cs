@@ -77,10 +77,10 @@ namespace Thinktecture.AuthorizationServer.OAuth2
 
             // validate client credentials
             var client = ValidateClient(clientPrincipal, validatedRequest.Application);
-            if (client == null)
+            if (client == null || client.Enabled == false)
             {
                 throw new TokenRequestValidationException(
-                    "Invalid client: " + ClaimsPrincipal.Current.Identity.Name,
+                    "Invalid client or not enabled: " + ClaimsPrincipal.Current.Identity.Name,
                     OAuthConstants.Errors.InvalidClient);
             }
 
@@ -326,7 +326,14 @@ namespace Thinktecture.AuthorizationServer.OAuth2
                 return null;
             }
 
-            var passwordClaim = clientPrincipal.FindFirst("password");
+            var clientIdClaim = clientPrincipal.FindFirst("client_id");
+            if (clientIdClaim == null)
+            {
+                Tracing.Error("No client_id provided.");
+                return null;
+            }
+
+            var passwordClaim = clientPrincipal.FindFirst("secret");
             if (passwordClaim == null)
             {
                 Tracing.Error("No client secret provided.");
@@ -334,7 +341,7 @@ namespace Thinktecture.AuthorizationServer.OAuth2
             }
 
             return application.Clients.ValidateClient(
-                clientPrincipal.Identity.Name,
+                clientIdClaim.Value,
                 passwordClaim.Value);
         }
     }

@@ -20,8 +20,8 @@ namespace Thinktecture.AuthorizationServer.Test
             _testConfig = new TestAuthorizationServerConfiguration();
             _client = Principal.Create(
                 "Test",
-                new Claim(ClaimTypes.Name, "roclient"),
-                new Claim("password", "secret"));
+                new Claim("client_id", "roclient"),
+                new Claim("secret", "secret"));
         }
 
         [TestMethod]
@@ -151,7 +151,6 @@ namespace Thinktecture.AuthorizationServer.Test
             var request = new TokenRequest
             {
                 Grant_Type = OAuthConstants.GrantTypes.Password,
-                UserName = "username",
                 Scope = "read"
             };
 

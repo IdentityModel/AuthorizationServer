@@ -42,7 +42,7 @@ namespace Thinktecture.AuthorizationServer.Models
         public override SigningCredentials GetSigningCredentials()
         {
             var cert = this.Certificate;
-            if (cert == null) return null;
+            if (cert == null) throw new InvalidOperationException("A certificate is required to create SigningCredentials");
             return new X509SigningCredentials(cert);
         }
     }

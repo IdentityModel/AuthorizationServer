@@ -27,6 +27,7 @@ namespace Thinktecture.AuthorizationServer.WebHost
                 var CodeClient = db.Clients.Find("codeclient");
                 var ImplicitClient = db.Clients.Find("implicitclient");
                 var client = db.Clients.Find("client");
+                var assertionClient = db.Clients.Find("assertionclient");
 
                 if (client == null)
                 {
@@ -39,6 +40,21 @@ namespace Thinktecture.AuthorizationServer.WebHost
                     };
                     client.SetSharedSecret("secret");
                     db.Clients.Add(client);
+                    db.SaveChanges();
+                }
+
+                if (assertionClient == null)
+                {
+                    assertionClient = new Client
+                    {
+                        Enabled = true,
+                        Name = "Assertion Client",
+                        AuthenticationMethod = ClientAuthenticationMethod.SharedSecret,
+                        ClientId = "assertionclient",
+                        Flow = OAuthFlow.Assertion
+                    };
+                    assertionClient.SetSharedSecret("secret");
+                    db.Clients.Add(assertionClient);
                     db.SaveChanges();
                 }
 
@@ -145,7 +161,7 @@ namespace Thinktecture.AuthorizationServer.WebHost
                 {
                     var readScope = new Scope
                     {
-                        AllowedClients = new List<Client> { CodeClient, ImplicitClient, resourceOwnerClient, client },
+                        AllowedClients = new List<Client> { CodeClient, ImplicitClient, resourceOwnerClient, client, assertionClient },
                         Name = "read",
                         DisplayName = "Read data",
                         Description = "Allows to read data",

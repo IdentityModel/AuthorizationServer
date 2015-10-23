@@ -21,7 +21,7 @@ namespace Thinktecture.AuthorizationServer.Test
         [TestMethod]
         public void UnknownApplication()
         {
-            var controller = new AuthorizeController(null, _testConfig);
+            var controller = new AuthorizeController(null, _testConfig, null);
             var result = controller.Index("unknown", null);
 
             Assert.IsTrue(result is HttpNotFoundResult);
@@ -267,9 +267,34 @@ namespace Thinktecture.AuthorizationServer.Test
             {
                 var result = validator.Validate(app, request);
             }
-            catch (AuthorizeRequestClientException ex)
+            catch (AuthorizeRequestResourceOwnerException ex)
             {
-                Assert.AreEqual(OAuthConstants.Errors.InvalidRequest, ex.Error);
+                // todo: check error code
+                return;
+            }
+
+            Assert.Fail("No exception thrown.");
+        }
+
+        [TestMethod]
+        public void DisabledClient()
+        {
+            var validator = new AuthorizeRequestValidator();
+            var app = _testConfig.FindApplication("test");
+            var request = new AuthorizeRequest
+            {
+                client_id = "disabledclient",
+                response_type = "code",
+                scope = "read",
+                redirect_uri = "https://prod.local"
+            };
+
+            try
+            {
+                var result = validator.Validate(app, request);
+            }
+            catch (AuthorizeRequestResourceOwnerException ex)
+            {
                 return;
             }
 

@@ -3,13 +3,12 @@
  * see license.txt
  */
 
-using System;
 using System.Web.Mvc;
-using Thinktecture.IdentityModel.Authorization.Mvc;
+using Thinktecture.IdentityModel.SystemWeb.Mvc;
 
 namespace Thinktecture.AuthorizationServer.WebHost.Areas.Admin.Controllers
 {
-    [ClaimsAuthorize(Constants.Actions.Configure, Constants.Resources.Server)]
+    [ResourceActionAuthorize(Constants.Actions.Configure, Constants.Resources.Server)]
     public class HomeController : Controller
     {
         public ActionResult Index()

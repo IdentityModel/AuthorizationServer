@@ -3,14 +3,16 @@
  * see license.txt
  */
 
-using System;
 using System.IdentityModel.Services;
+using System.IdentityModel.Tokens;
 using System.Web.Helpers;
 using System.Web.Http;
 using System.Web.Mvc;
 using System.Web.Optimization;
 using System.Web.Routing;
 using Thinktecture.AuthorizationServer.Interfaces;
+using Thinktecture.IdentityModel;
+using Thinktecture.IdentityModel.Tokens;
 
 namespace Thinktecture.AuthorizationServer.WebHost
 {
@@ -18,6 +20,13 @@ namespace Thinktecture.AuthorizationServer.WebHost
     {
         protected void Application_Start()
         {
+            FederatedAuthentication.FederationConfigurationCreated += FederatedAuthentication_FederationConfigurationCreated;
+            ClaimsAuthorization.CustomAuthorizationManager = new AuthorizationManager();
+
+            // don't let the JWT handler change claim types
+            JwtSecurityTokenHandler.InboundClaimTypeMap = ClaimMappings.None;
+            JwtSecurityTokenHandler.OutboundClaimTypeMap = ClaimMappings.None;
+
             AreaRegistration.RegisterAllAreas();
 
             WebApiConfig.Register(GlobalConfiguration.Configuration);
@@ -29,15 +38,13 @@ namespace Thinktecture.AuthorizationServer.WebHost
             DataProtectionConfig.Configure();
 
             AntiForgeryConfig.UniqueClaimTypeIdentifier = Constants.ClaimTypes.Subject;
-            FederatedAuthentication.FederationConfigurationCreated += FederatedAuthentication_FederationConfigurationCreated;
         }
 
         void FederatedAuthentication_FederationConfigurationCreated(object sender, System.IdentityModel.Services.Configuration.FederationConfigurationCreatedEventArgs e)
         {
             var svc = DependencyResolver.Current.GetService<IAuthorizationServerAdministratorsService>();
 
-            e.FederationConfiguration.IdentityConfiguration.ClaimsAuthenticationManager = new NameIdToSubjectClaimsTransformer(svc);
-            e.FederationConfiguration.IdentityConfiguration.ClaimsAuthorizationManager = new AuthorizationManager();
+            e.FederationConfiguration.IdentityConfiguration.ClaimsAuthenticationManager = new SubjectClaimsTransformer(svc);
         }
     }
 }

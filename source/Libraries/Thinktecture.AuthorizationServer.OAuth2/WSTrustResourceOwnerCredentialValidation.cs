@@ -38,11 +38,20 @@ namespace Thinktecture.AuthorizationServer.OAuth2
             credentials.UserName.Password = password;
 
             GenericXmlSecurityToken genericToken;
-            genericToken = WSTrustClient.Issue(
-                new EndpointAddress(_address),
-                new EndpointAddress(_realm),
-                binding,
-                credentials) as GenericXmlSecurityToken;
+
+            try
+            {
+                genericToken = WSTrustClient.Issue(
+                    new EndpointAddress(_address),
+                    new EndpointAddress(_realm),
+                    binding,
+                    credentials) as GenericXmlSecurityToken;
+            }
+            catch (MessageSecurityException ex)
+            {
+                Tracing.Error("WSTrustResourceOwnerCredentialValidation failed: " + ex.ToString());
+                return null;
+            }
 
             var config = new SecurityTokenHandlerConfiguration();
             config.AudienceRestriction.AllowedAudienceUris.Add(new Uri(_realm));

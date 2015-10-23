@@ -3,6 +3,7 @@
 AuthorizationServer is the foundation for implementing application and API authorization.
 As a first step, we provide an implementation of the OAuth2 authorization framework.
 
+**Important** AuthorizationServer is not really maintained anymore - read [here](http://leastprivilege.com/2014/12/09/the-future-of-authorizationserver/) for details.
 
 ### Concepts
 
@@ -19,6 +20,9 @@ A client has a client ID and a secret. A client can use exactly one OAuth2 flow 
 
 **Access Tokens**
 An access token will contain JWT standard claims like iss (issuer), aud (audience), nbf (not before), exp (expiration). In addition it will contain information about the subject (sub claim), the client that requested the token as well as the requested scopes.
+
+**Flows** 
+We support all OAuth2 flows like authorization code, implicit, resource owner and client credentials flow. In addition you can extend the token endpoint to support assertion flow, which enables delegation and federation scenarios.
 
 ### Architecture
 

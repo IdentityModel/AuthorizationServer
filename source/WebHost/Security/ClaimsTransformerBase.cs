@@ -4,6 +4,7 @@
  */
 
 using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
 using System.Security.Claims;
 using Thinktecture.AuthorizationServer.Interfaces;
@@ -27,6 +28,8 @@ namespace Thinktecture.AuthorizationServer.WebHost
             var claims = new List<Claim> { new Claim(Constants.ClaimTypes.Subject, subject) };
 
             claims.AddRange(AddInternalClaims(subject));
+            claims.AddRange(AddExternalClaims(incomingPrincipal));
+
 
             return Principal.Create("AuthorizationServer", claims.ToArray());
         }
@@ -46,6 +49,28 @@ namespace Thinktecture.AuthorizationServer.WebHost
             }
 
             return result;
+        }
+
+        private IEnumerable<Claim> AddExternalClaims(ClaimsPrincipal incomingPrincipal)
+        {
+            var claims = new List<Claim>();
+
+            var filterClaims = ConfigurationManager.AppSettings["authz:FilterIncomingClaims"];
+            if (!string.IsNullOrEmpty(filterClaims))
+            {
+                bool filterFlag;
+                if (bool.TryParse(filterClaims, out filterFlag))
+                {
+                    if (!filterFlag)
+                    {
+                        claims.AddRange(from c in incomingPrincipal.Claims
+                                        where !c.Type.Equals(Constants.ClaimTypes.Subject)
+                                        select c);
+                    }
+                }
+            }
+
+            return claims;
         }
     }
 }

@@ -3,8 +3,6 @@
  * see license.txt
  */
 
-using System;
-using System.Linq;
 using System.Collections.Generic;
 using System.Web.Mvc;
 using Thinktecture.AuthorizationServer.Interfaces;

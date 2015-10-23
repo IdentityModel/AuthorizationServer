@@ -25,7 +25,12 @@ namespace Thinktecture.AuthorizationServer.WebHost
 
         private bool AuthorizeAdminArea(AuthorizationContext context)
         {
-            return (context.Principal.IsInRole(Constants.Roles.Administrators));
+            return context.Principal.HasClaim(c => 
+                { 
+                    return c.Type   == ClaimTypes.Role &&
+                           c.Value  == Constants.Roles.Administrators &&
+                           c.Issuer == Constants.InternalIssuer; 
+                });
         }
     }
 }

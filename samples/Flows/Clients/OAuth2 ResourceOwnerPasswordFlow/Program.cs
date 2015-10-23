@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Net.Http;
+using System.Windows.Forms;
 using Thinktecture.IdentityModel.Client;
 
 namespace Thinktecture.Samples
@@ -10,14 +11,19 @@ namespace Thinktecture.Samples
         //static Uri _baseAddress = new Uri(Constants.WebHostv1BaseAddress);
         static Uri _baseAddress = new Uri(Constants.WebHostv2BaseAddress);
 
+        [STAThread]
         static void Main(string[] args)
         {
             var response = RequestToken();
 
             var token = response.AccessToken;
+            SetClipboard(token);
+
             //token = RefreshToken(response.RefreshToken);
 
             CallService(token);
+
+            //TestAuthorization(token);
         }
 
         private static TokenResponse RequestToken()
@@ -79,5 +85,23 @@ namespace Thinktecture.Samples
 
             return response.AccessToken;
         }
+
+        private static void TestAuthorization(string token)
+        {
+            var client = new HttpClient {
+                BaseAddress = _baseAddress
+            };
+
+            client.SetBearerToken(token);
+
+            var response = client.GetAsync("test").Result;
+            response.StatusCode.ToString().ConsoleRed();
+        }
+
+        private static void SetClipboard(string text)
+        {
+            Clipboard.SetText(text);
+        }
+
     }
 }

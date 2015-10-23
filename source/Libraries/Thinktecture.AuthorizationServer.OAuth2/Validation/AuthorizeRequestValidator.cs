@@ -48,9 +48,9 @@ namespace Thinktecture.AuthorizationServer.OAuth2
             }
 
             var client = validatedRequest.Application.Clients.Get(request.client_id);
-            if (client == null)
+            if (client == null || client.Enabled == false)
             {
-                throw new AuthorizeRequestResourceOwnerException("Invalid client: " + request.client_id);
+                throw new AuthorizeRequestResourceOwnerException("Invalid client or not enabled: " + request.client_id);
             }
 
             validatedRequest.Client = client;
@@ -64,12 +64,7 @@ namespace Thinktecture.AuthorizationServer.OAuth2
             {
                 if (redirectUri.Scheme == Uri.UriSchemeHttp)
                 {
-                    throw new AuthorizeRequestClientException(
-                        "Redirect URI not over SSL : " + request.redirect_uri,
-                        new Uri(request.redirect_uri),
-                        OAuthConstants.Errors.InvalidRequest,
-                        string.Empty,
-                        validatedRequest.State);
+                    throw new AuthorizeRequestResourceOwnerException("Redirect URI not over SSL : " + request.redirect_uri);
                 }
 
                 // make sure redirect uri is registered with client

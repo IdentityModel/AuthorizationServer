@@ -5,7 +5,7 @@
 
 using System.Web.Mvc;
 using Thinktecture.AuthorizationServer.WebHost.Security;
-using Thinktecture.IdentityModel.Web.Mvc;
+using Thinktecture.IdentityModel.SystemWeb.Mvc;
 
 namespace Thinktecture.AuthorizationServer.WebHost
 {

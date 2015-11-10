@@ -267,9 +267,9 @@ namespace Thinktecture.AuthorizationServer.Test
             {
                 var result = validator.Validate(app, request);
             }
-            catch (AuthorizeRequestClientException ex)
+            catch (AuthorizeRequestResourceOwnerException ex)
             {
-                Assert.AreEqual(OAuthConstants.Errors.InvalidRequest, ex.Error);
+                // todo: check error code
                 return;
             }
 

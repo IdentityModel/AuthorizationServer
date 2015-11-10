@@ -64,12 +64,7 @@ namespace Thinktecture.AuthorizationServer.OAuth2
             {
                 if (redirectUri.Scheme == Uri.UriSchemeHttp)
                 {
-                    throw new AuthorizeRequestClientException(
-                        "Redirect URI not over SSL : " + request.redirect_uri,
-                        new Uri(request.redirect_uri),
-                        OAuthConstants.Errors.InvalidRequest,
-                        string.Empty,
-                        validatedRequest.State);
+                    throw new AuthorizeRequestResourceOwnerException("Redirect URI not over SSL : " + request.redirect_uri);
                 }
 
                 // make sure redirect uri is registered with client

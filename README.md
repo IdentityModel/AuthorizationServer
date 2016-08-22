@@ -1,4 +1,4 @@
-# Thinktecture AuthorizationServer
+# AuthorizationServer
 
 AuthorizationServer is the foundation for implementing application and API authorization.
 As a first step, we provide an implementation of the OAuth2 authorization framework.

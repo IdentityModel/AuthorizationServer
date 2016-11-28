@@ -34,6 +34,7 @@ namespace Thinktecture.AuthorizationServer.Models
         public virtual bool AllowRefreshToken { get; set; }
         public virtual bool RequireConsent { get; set; }
         public virtual bool AllowRememberConsentDecision { get; set; }
+        public virtual bool AllowSlidingRefreshTokenExpiration { get; set; }
 
         public virtual bool Enabled { get; set; }
 

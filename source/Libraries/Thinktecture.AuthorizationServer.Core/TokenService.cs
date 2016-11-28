@@ -66,7 +66,8 @@ namespace Thinktecture.AuthorizationServer
                     handle.Application,
                     resourceOwner.Claims,
                     handle.Scopes,
-                    handle.RefreshTokenExpiration.Value);
+                    handle.RefreshTokenExpiration.Value,
+                    createRefreshToken: validatedRequest.Client.AllowRefreshToken && validatedRequest.Application.AllowRefreshToken);
 
                 handleManager.Add(refreshTokenHandle);
                 response.RefreshToken = refreshTokenHandle.GrantId;
@@ -96,8 +97,46 @@ namespace Thinktecture.AuthorizationServer
             };
 
             var response = CreateTokenResponse(validatedRequest, resourceOwner);
-            response.RefreshToken = handle.GrantId;
-            
+
+            if (handle.CreateRefreshToken)
+            {
+                StoredGrant refreshTokenHandle;
+
+                if (validatedRequest.Application.AllowSlidingRefreshTokenExpiration)
+                {
+                    var rememberTimeSpan = handle.Expiration.Subtract(handle.Created);
+                    var newRefreshTokenExpiration = DateTime.UtcNow.Add(rememberTimeSpan);
+
+                    refreshTokenHandle = StoredGrant.CreateRefreshTokenHandle(
+                        resourceOwner.GetSubject(),
+                        handle.Client,
+                        handle.Application,
+                        resourceOwner.Claims,
+                        handle.Scopes,
+                        newRefreshTokenExpiration,
+                        createRefreshToken: validatedRequest.Client.AllowRefreshToken && validatedRequest.Application.AllowRefreshToken);
+                }
+                else
+                {
+                    refreshTokenHandle = StoredGrant.CreateRefreshTokenHandle(
+                        resourceOwner.GetSubject(),
+                        handle.Client,
+                        handle.Application,
+                        resourceOwner.Claims,
+                        handle.Scopes,
+                        handle.Expiration,
+                        createRefreshToken: validatedRequest.Client.AllowRefreshToken && validatedRequest.Application.AllowRefreshToken);
+                }
+
+                response.RefreshToken = refreshTokenHandle.GrantId;
+
+                handleManager.Add(refreshTokenHandle);
+                handleManager.Delete(handle.GrantId);
+            }
+            else
+            {
+                response.RefreshToken = handle.GrantId;
+            }    
             return response;
         }
 
